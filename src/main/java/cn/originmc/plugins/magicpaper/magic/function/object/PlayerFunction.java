@@ -67,7 +67,7 @@ public class PlayerFunction extends NormalFunction {
 
     @Override
     public String getType() {
-        return "PAPER";
+        return "MAGIC_PAPER";
     }
 
     @Override

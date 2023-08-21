@@ -152,7 +152,7 @@ public class LocationFunction extends NormalFunction {
 
     @Override
     public String getType() {
-        return "SYSTEM";
+        return "MAGIC_PAPER";
     }
 
     @Override

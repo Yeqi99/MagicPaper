@@ -10,12 +10,12 @@ import java.util.List;
 public class PlaceholderAPIHook{
     public static boolean status = false;
 
-    public String getName() {
+    public static String getName() {
         return "PlaceholderAPI";
     }
 
     public static boolean hook() {
-        if (Bukkit.getPluginManager().getPlugin("PlaceholderAPI") != null) {
+        if (Bukkit.getPluginManager().getPlugin(getName()) != null) {
             status=true;
             return true;
         } else {

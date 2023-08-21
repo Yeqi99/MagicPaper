@@ -2,3 +2,6 @@ name: MagicPaper
 version: '${project.version}'
 main: cn.originmc.plugins.magicpaper.MagicPaper
 api-version: '1.13'
+softdepend:
+  - PlaceholderAPI
+  - Vault
