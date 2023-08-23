@@ -1,4 +1,4 @@
-package cn.originmc.plugins.magicpaper.utils.text;
+package cn.originmc.plugins.magicpaper.util.text;
 
 import cn.originmc.plugins.magicpaper.hook.PlaceholderAPIHook;
 import net.kyori.adventure.platform.bukkit.BukkitAudiences;
@@ -12,7 +12,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.List;
 
-import static cn.originmc.plugins.magicpaper.utils.text.Color.toColor;
+import static cn.originmc.plugins.magicpaper.util.text.Color.toColor;
 
 public class Sender {
     private static JavaPlugin plugin;

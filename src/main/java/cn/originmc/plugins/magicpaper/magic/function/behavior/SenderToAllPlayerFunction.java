@@ -6,7 +6,6 @@ import cn.origincraft.magic.function.results.ListResult;
 import cn.origincraft.magic.function.results.NullResult;
 import cn.origincraft.magic.object.SpellContext;
 import cn.originmc.plugins.magicpaper.MagicPaper;
-import cn.originmc.plugins.magicpaper.utils.text.Sender;
 import dev.rgbmc.expression.functions.FunctionResult;
 import dev.rgbmc.expression.results.StringResult;
 

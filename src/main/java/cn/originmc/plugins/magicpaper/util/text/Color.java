@@ -1,4 +1,4 @@
-package cn.originmc.plugins.magicpaper.utils.text;
+package cn.originmc.plugins.magicpaper.util.text;
 
 import org.bukkit.ChatColor;
 

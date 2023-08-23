@@ -86,7 +86,12 @@
         <dependency>
             <groupId>cn.origincraft.magic</groupId>
             <artifactId>Magic</artifactId>
-            <version>1.0.4b7</version>
+            <version>1.0.5</version>
+        </dependency>
+        <dependency>
+            <groupId>cn.originmc.tools.minecraft</groupId>
+            <artifactId>YamlCore</artifactId>
+            <version>1.0</version>
         </dependency>
         <dependency>
             <groupId>dev.rgbmc</groupId>
