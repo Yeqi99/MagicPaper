@@ -25,8 +25,8 @@ public class FunctionRegister {
         // behavior
         fm.register(new ConsoleCommandFunction(),"ccommand");
         fm.register(new PlayerCommandFunction(),"pcommand");
-        fm.register(new SenderToPlayerFunction(),"stp");
-        fm.register(new SenderToAllPlayerFunction(),"stap");
+        fm.register(new SendToPlayerFunction(),"stp");
+        fm.register(new SendToAllPlayerFunction(),"stap");
         fm.register(new PlayerTeleportFunction(),"ptp");
     }
 }

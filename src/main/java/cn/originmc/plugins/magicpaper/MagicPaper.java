@@ -45,7 +45,7 @@ public final class MagicPaper extends JavaPlugin {
         // 初始化魔法管理器
         magicManager = new MagicManager();
         // 保存默认配置
-        saveDefaultConfig();
+        saveRes();
         // 加载数据
         loadData();
         // 加载全局上下文
@@ -79,7 +79,7 @@ public final class MagicPaper extends JavaPlugin {
     public void registerListener(){
 
     }
-    public void saveDefaultConfig(){
+    public void saveRes(){
         getInstance().saveDefaultConfig();
         getInstance().saveResource("lang/Chinese.yml",false);
         getInstance().saveResource("magic/example.yml",false);

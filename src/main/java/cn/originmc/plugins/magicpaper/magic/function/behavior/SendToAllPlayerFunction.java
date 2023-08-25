@@ -11,7 +11,7 @@ import dev.rgbmc.expression.results.StringResult;
 
 import java.util.List;
 
-public class SenderToAllPlayerFunction extends NormalFunction {
+public class SendToAllPlayerFunction extends NormalFunction {
     @Override
     public FunctionResult whenFunctionCalled(SpellContext spellContext, List<FunctionResult> args) {
         if (args.isEmpty()) {

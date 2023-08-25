@@ -6,13 +6,13 @@
 
     <groupId>cn.originmc.plugins</groupId>
     <artifactId>MagicPaper</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <version>1.0.0b1-SNAPSHOT</version>
     <packaging>jar</packaging>
 
     <name>MagicPaper</name>
 
     <properties>
-        <java.version>17</java.version>
+        <java.version>1.8</java.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
@@ -86,7 +86,7 @@
         <dependency>
             <groupId>cn.origincraft.magic</groupId>
             <artifactId>Magic</artifactId>
-            <version>1.0.5</version>
+            <version>1.0.5b2</version>
         </dependency>
         <dependency>
             <groupId>cn.originmc.tools.minecraft</groupId>

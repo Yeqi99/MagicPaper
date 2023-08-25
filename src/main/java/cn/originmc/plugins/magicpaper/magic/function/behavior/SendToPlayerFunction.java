@@ -9,17 +9,19 @@ import cn.originmc.plugins.magicpaper.MagicPaper;
 import cn.originmc.plugins.magicpaper.magic.result.PlayerResult;
 import dev.rgbmc.expression.functions.FunctionResult;
 import dev.rgbmc.expression.results.StringResult;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class SenderToPlayerFunction extends NormalFunction {
+public class SendToPlayerFunction extends NormalFunction {
     @Override
     public FunctionResult whenFunctionCalled(SpellContext spellContext, List<FunctionResult> args) {
         if (args.size()<2){
             return new ErrorResult("INSUFFICIENT_ARGUMENTS", "SenderToPlayer function requires at least two arguments.");
         }
+
         if (args.get(0) instanceof PlayerResult){
             PlayerResult playerResult=(PlayerResult) args.get(0);
             Player player=playerResult.getPlayer();
@@ -35,6 +37,7 @@ public class SenderToPlayerFunction extends NormalFunction {
                 for (Object object:list){
                     if (object instanceof String) {
                         messageList.add((String) object);
+                        MagicPaper.getSender().sendToAllPlayer((String) object);
                     }
                 }
                 MagicPaper.getSender().sendToPlayer(player, messageList);
