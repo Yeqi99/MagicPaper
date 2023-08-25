@@ -26,6 +26,8 @@ public class MagicPaperCommand implements CommandExecutor {
             helpMessage.add("&a/magicpaper spells &7- &fList all spells");
             helpMessage.add("&a/magicpaper words <words> &7- &fExecute words");
             helpMessage.add("&a/magicpaper spell <spell> &7- &fExecute spell");
+            helpMessage.add("&a/magicpaper publicwords <words> &7- &fExecute words with public context");
+            helpMessage.add("&a/magicpaper publicspell <spell> &7- &fExecute spell with public context");
             MagicPaper.getSender().sendToSender(commandSender, helpMessage);
             return true;
         }
@@ -57,7 +59,31 @@ public class MagicPaperCommand implements CommandExecutor {
                 return true;
             }
             Spell spell = MagicDataManager.getSpell(spellID);
+            NormalContext normalContext=new NormalContext();
+            normalContext.putObject("self",commandSender);
+            SpellContext spellContext = spell.execute(normalContext);
+            if (spellContext.hasExecuteError()){
+                MagicPaper.getSender().sendToSender(commandSender,"&c"+spellContext.getExecuteError().getErrorId()+":"+spellContext.getExecuteError().getInfo());
+            }
+        }else if(args[0].equalsIgnoreCase("publicspell")){
+            String spellID=args[1];
+            if (!MagicDataManager.isSpell(spellID)){
+                MagicPaper.getSender().sendToSender(commandSender, LangData.get(MagicPaper.getLang(),"spell-not-found","&cSpell not found!"));
+                return true;
+            }
+            Spell spell = MagicDataManager.getSpell(spellID);
             SpellContext spellContext = spell.execute(MagicPaper.getContext());
+            if (spellContext.hasExecuteError()){
+                MagicPaper.getSender().sendToSender(commandSender,"&c"+spellContext.getExecuteError().getErrorId()+":"+spellContext.getExecuteError().getInfo());
+            }
+        }else if (args[0].equalsIgnoreCase("publicwords")){
+            String words=args[1];
+            words = words.replace(","," ");
+            List<String> spellList=new ArrayList<>();
+            spellList.add(words);
+            Spell spell=new Spell(spellList,MagicPaper.getMagicManager());
+            SpellContext spellContext = spell.execute(MagicPaper.getContext());
+
             if (spellContext.hasExecuteError()){
                 MagicPaper.getSender().sendToSender(commandSender,"&c"+spellContext.getExecuteError().getErrorId()+":"+spellContext.getExecuteError().getInfo());
             }
