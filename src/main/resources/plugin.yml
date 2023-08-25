@@ -4,4 +4,11 @@ main: cn.originmc.plugins.magicpaper.MagicPaper
 api-version: '1.13'
 softdepend:
   - PlaceholderAPI
-  - Vault
+commands:
+    MagicPaper:
+        description: MagicPaper command
+        usage: /<command> [reload]
+        permission: magicpaper.command
+        aliases: [mp]
+        permission-message: You do not have permission to use this command.
+        executor: cn.originmc.plugins.magicpaper.commands.MagicPaperCommand
