@@ -10,6 +10,7 @@ import cn.originmc.plugins.magicpaper.magic.result.PlayerResult;
 import dev.rgbmc.expression.functions.FunctionResult;
 import dev.rgbmc.expression.results.DoubleResult;
 import dev.rgbmc.expression.results.IntegerResult;
+import dev.rgbmc.expression.results.ObjectResult;
 import dev.rgbmc.expression.results.StringResult;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -60,7 +61,15 @@ public class PlayerFunction extends NormalFunction {
             }else {
                 return new ErrorResult("UNKNOWN_ARGUMENT_TYPE", "Unsupported argument type.");
             }
-        } else {
+        }if (firstArg instanceof ObjectResult){
+            Object o = ((ObjectResult) firstArg).getObject();
+            if (o instanceof Player) {
+                return new PlayerResult((Player) o);
+            }else {
+                return new ErrorResult("UNKNOWN_ARGUMENT_TYPE", "Unsupported argument type.");
+            }
+        }
+        else {
             return new ErrorResult("UNKNOWN_ARGUMENT_TYPE", "Unsupported argument type.");
         }
     }

@@ -1,12 +1,12 @@
 package cn.originmc.plugins.magicpaper;
 
 import cn.origincraft.magic.MagicManager;
+import cn.origincraft.magic.function.FunctionRegister;
 import cn.origincraft.magic.object.NormalContext;
 import cn.originmc.plugins.magicpaper.command.MagicPaperCommand;
 import cn.originmc.plugins.magicpaper.command.MagicPaperTabCompleter;
 import cn.originmc.plugins.magicpaper.data.config.LangData;
 import cn.originmc.plugins.magicpaper.data.config.MagicData;
-import cn.originmc.plugins.magicpaper.magic.FunctionRegister;
 import cn.originmc.plugins.magicpaper.util.text.Sender;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -44,6 +44,7 @@ public final class MagicPaper extends JavaPlugin {
         sender=new Sender(this);
         // 初始化魔法管理器
         magicManager = new MagicManager();
+
         // 保存默认配置
         saveRes();
         // 加载数据
@@ -55,7 +56,8 @@ public final class MagicPaper extends JavaPlugin {
         // 注册监听器
         registerListener();
         // 注册魔法函数
-        FunctionRegister.register(getMagicManager());
+        FunctionRegister.regDefault(getMagicManager());
+        cn.originmc.plugins.magicpaper.magic.FunctionRegister.register(getMagicManager());
     }
 
     @Override

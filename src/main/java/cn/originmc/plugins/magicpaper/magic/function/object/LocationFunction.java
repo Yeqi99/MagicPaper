@@ -7,6 +7,7 @@ import cn.originmc.plugins.magicpaper.magic.result.LocationResult;
 import cn.originmc.plugins.magicpaper.magic.result.PlayerResult;
 import dev.rgbmc.expression.functions.FunctionResult;
 import dev.rgbmc.expression.results.DoubleResult;
+import dev.rgbmc.expression.results.ObjectResult;
 import dev.rgbmc.expression.results.StringResult;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -31,7 +32,14 @@ public class LocationFunction extends NormalFunction {
             if (args.get(0) instanceof PlayerResult){
                 PlayerResult playerResult=(PlayerResult) args.get(0);
                 return new LocationResult(playerResult.getPlayer().getLocation());
-            }else {
+            }if (args.get(0) instanceof ObjectResult){
+                ObjectResult objectResult=(ObjectResult) args.get(0);
+                if (objectResult.getObject() instanceof Location) {
+                    return new LocationResult((Location) objectResult.getObject());
+                }else {
+                    return new ErrorResult("UNKNOWN_ARGUMENT_TYPE", "Unsupported argument type.");
+                }
+            } else {
                 return new ErrorResult("UNKNOWN_ARGUMENT_TYPE", "Unsupported argument type.");
             }
         }

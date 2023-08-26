@@ -6,7 +6,7 @@
 
     <groupId>cn.originmc.plugins</groupId>
     <artifactId>MagicPaper</artifactId>
-    <version>1.0.0b3-SNAPSHOT</version>
+    <version>1.0.0b4-SNAPSHOT</version>
     <packaging>jar</packaging>
 
     <name>MagicPaper</name>
@@ -86,7 +86,7 @@
         <dependency>
             <groupId>cn.origincraft.magic</groupId>
             <artifactId>Magic</artifactId>
-            <version>1.0.5b2</version>
+            <version>1.0.5b4</version>
         </dependency>
         <dependency>
             <groupId>cn.originmc.tools.minecraft</groupId>
