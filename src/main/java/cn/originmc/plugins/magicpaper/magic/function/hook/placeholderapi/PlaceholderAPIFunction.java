@@ -36,7 +36,7 @@ public class PlaceholderAPIFunction extends NormalFunction {
                 List<Object> messageList= new ArrayList<>();
                 for (Object object:list){
                     if (object instanceof String) {
-                        messageList.add(PlaceholderAPIHook.getPlaceholder(player, (String) object));
+                        messageList.add(PlaceholderAPIHook.getPlaceholder(player, "%"+object+"%"));
                     }
                 }
                 return new ListResult(messageList);

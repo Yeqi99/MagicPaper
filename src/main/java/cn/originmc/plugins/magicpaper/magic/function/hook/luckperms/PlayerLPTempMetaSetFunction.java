@@ -2,6 +2,7 @@ package cn.originmc.plugins.magicpaper.magic.function.hook.luckperms;
 
 import cn.origincraft.magic.function.NormalFunction;
 import cn.origincraft.magic.function.results.ErrorResult;
+import cn.origincraft.magic.function.results.LongResult;
 import cn.origincraft.magic.function.results.NullResult;
 import cn.origincraft.magic.object.SpellContext;
 import cn.originmc.plugins.magicpaper.hook.luckperms.LuckPermsManager;
@@ -27,15 +28,15 @@ public class PlayerLPTempMetaSetFunction extends NormalFunction {
         if (p instanceof PlayerResult) {
             if (key instanceof StringResult) {
                 if (value instanceof StringResult) {
-                    if (duration instanceof IntegerResult){
+                    if (duration instanceof LongResult){
                         PlayerResult playerResult = (PlayerResult) p;
                         StringResult keyResult = (StringResult) key;
                         StringResult valueResult = (StringResult) value;
-                        IntegerResult durationResult = (IntegerResult) duration;
+                        LongResult durationResult = (LongResult) duration;
                         Player player = playerResult.getPlayer();
                         String keyString = keyResult.getString();
                         String valueString = valueResult.getString();
-                        LuckPermsManager.setMeta(player, keyString, valueString, durationResult.getInteger());
+                        LuckPermsManager.setMeta(player, keyString, valueString, durationResult.getLong());
                         return new NullResult();
                     }else {
                         return new ErrorResult("UNKNOWN_ARGUMENT_TYPE", "Unsupported argument type.");
