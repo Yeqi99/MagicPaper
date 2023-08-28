@@ -100,7 +100,9 @@ public class Sender {
     }
     public void sendToSender(CommandSender sender, List<String> inList) {
         for (String s : inList) {
-            sender.sendMessage(toColor(s));
+            if (s!=null){
+                sender.sendMessage(toColor(s));
+            }
         }
     }
     public void sendToAllPlayer(String str){

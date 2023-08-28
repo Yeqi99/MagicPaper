@@ -86,7 +86,7 @@
         <dependency>
             <groupId>cn.origincraft.magic</groupId>
             <artifactId>Magic</artifactId>
-            <version>1.0.7</version>
+            <version>1.0.8</version>
         </dependency>
         <dependency>
             <groupId>cn.originmc.tools.minecraft</groupId>
@@ -96,7 +96,7 @@
         <dependency>
             <groupId>dev.rgbmc</groupId>
             <artifactId>FastExpression</artifactId>
-            <version>1.0.0-3e4feaa</version>
+            <version>1.0.0-2e5db94</version>
         </dependency>
         <!-- MiniMessage -->
         <dependency>
