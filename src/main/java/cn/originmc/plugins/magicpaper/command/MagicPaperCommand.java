@@ -8,6 +8,7 @@ import cn.originmc.plugins.magicpaper.MagicPaper;
 import cn.originmc.plugins.magicpaper.data.config.LangData;
 import cn.originmc.plugins.magicpaper.data.config.MagicData;
 import cn.originmc.plugins.magicpaper.data.manager.MagicDataManager;
+import cn.originmc.plugins.magicpaper.util.text.Sender;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -28,6 +29,7 @@ public class MagicPaperCommand implements CommandExecutor {
             helpMessage.add("&a/magicpaper spell <spell> &7- &fExecute spell");
             helpMessage.add("&a/magicpaper publicwords <words> &7- &fExecute words with public context");
             helpMessage.add("&a/magicpaper publicspell <spell> &7- &fExecute spell with public context");
+            helpMessage.add("&a/magicpaper functions &7- &fList all functions");
             MagicPaper.getSender().sendToSender(commandSender, helpMessage);
             return true;
         }
@@ -62,7 +64,7 @@ public class MagicPaperCommand implements CommandExecutor {
             NormalContext normalContext=new NormalContext();
             normalContext.putObject("self",commandSender);
             SpellContext spellContext = spell.execute(normalContext);
-            if (spellContext.hasExecuteError()){
+            if (MagicPaper.isDebug() && spellContext.hasExecuteError()){
                 MagicPaper.getSender().sendToSender(commandSender,"&c"+spellContext.getExecuteError().getErrorId()+":"+spellContext.getExecuteError().getInfo());
             }
         }else if(args[0].equalsIgnoreCase("publicspell")){
@@ -73,7 +75,7 @@ public class MagicPaperCommand implements CommandExecutor {
             }
             Spell spell = MagicDataManager.getSpell(spellID);
             SpellContext spellContext = spell.execute(MagicPaper.getContext());
-            if (spellContext.hasExecuteError()){
+            if (MagicPaper.isDebug() && spellContext.hasExecuteError()){
                 MagicPaper.getSender().sendToSender(commandSender,"&c"+spellContext.getExecuteError().getErrorId()+":"+spellContext.getExecuteError().getInfo());
             }
         }else if (args[0].equalsIgnoreCase("publicwords")){
@@ -84,8 +86,15 @@ public class MagicPaperCommand implements CommandExecutor {
             Spell spell=new Spell(spellList,MagicPaper.getMagicManager());
             SpellContext spellContext = spell.execute(MagicPaper.getContext());
 
-            if (spellContext.hasExecuteError()){
+            if (MagicPaper.isDebug() && spellContext.hasExecuteError()){
                 MagicPaper.getSender().sendToSender(commandSender,"&c"+spellContext.getExecuteError().getErrorId()+":"+spellContext.getExecuteError().getInfo());
+            }
+        }else if (args[0].equalsIgnoreCase("functions")){
+            List<String> message = new ArrayList<>(MagicPaper.getMagicManager().getFunctionsRealNames());
+            if (!message.isEmpty()){
+                MagicPaper.getSender().sendToSender(commandSender,message);
+            }else {
+                MagicPaper.getSender().sendToSender(commandSender, LangData.get(MagicPaper.getLang(),"functions-none","Functions is none"));
             }
         }
         return true;

@@ -1,2 +1,3 @@
 reload: "&a插件重载成功！"
 spell-not-found: "&c你输入的咒语不存在！"
+functions-none: "&c没有已注册的语义!"

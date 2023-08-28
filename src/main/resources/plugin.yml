@@ -4,6 +4,7 @@ main: cn.originmc.plugins.magicpaper.MagicPaper
 api-version: '1.13'
 softdepend:
   - PlaceholderAPI
+folia-supported: true
 commands:
     MagicPaper:
         description: MagicPaper command

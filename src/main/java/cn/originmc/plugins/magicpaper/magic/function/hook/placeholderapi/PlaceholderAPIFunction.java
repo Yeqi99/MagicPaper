@@ -16,8 +16,8 @@ import java.util.List;
 public class PlaceholderAPIFunction extends NormalFunction {
     @Override
     public FunctionResult whenFunctionCalled(SpellContext spellContext, List<FunctionResult> args) {
-        if (args.isEmpty()) {
-            return new ErrorResult("INSUFFICIENT_ARGUMENTS", "PlaceholderAPI function requires at least one argument.");
+        if (args.size()<2) {
+            return new ErrorResult("INSUFFICIENT_ARGUMENTS", "PlaceholderAPI function requires at least two arguments.");
         }
         FunctionResult p = args.get(0);
         FunctionResult message = args.get(1);
