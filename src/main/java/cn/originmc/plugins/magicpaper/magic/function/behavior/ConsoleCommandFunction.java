@@ -8,6 +8,7 @@ import dev.rgbmc.expression.functions.FunctionResult;
 import dev.rgbmc.expression.results.StringResult;
 import org.bukkit.Bukkit;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ConsoleCommandFunction extends NormalFunction {

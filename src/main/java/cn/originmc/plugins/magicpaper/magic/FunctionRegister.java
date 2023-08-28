@@ -2,6 +2,10 @@ package cn.originmc.plugins.magicpaper.magic;
 
 import cn.origincraft.magic.MagicManager;
 import cn.originmc.plugins.magicpaper.magic.function.behavior.*;
+import cn.originmc.plugins.magicpaper.magic.function.control.execute.PaperSpellAsyncExecute;
+import cn.originmc.plugins.magicpaper.magic.function.control.execute.PaperSpellAsyncTimer;
+import cn.originmc.plugins.magicpaper.magic.function.control.execute.PaperSpellExecute;
+import cn.originmc.plugins.magicpaper.magic.function.control.execute.PaperSpellTimer;
 import cn.originmc.plugins.magicpaper.magic.function.hook.luckperms.PlayerLPMetaGetFunction;
 import cn.originmc.plugins.magicpaper.magic.function.hook.luckperms.PlayerLPMetaSetFunction;
 import cn.originmc.plugins.magicpaper.magic.function.hook.luckperms.PlayerLPTempMetaSetFunction;
@@ -33,6 +37,11 @@ public class FunctionRegister {
         fm.register(new SendToPlayerFunction(),"stp");
         fm.register(new SendToAllPlayerFunction(),"stap");
         fm.register(new PlayerTeleportFunction(),"ptp");
+        // control.execute
+        fm.register(new PaperSpellExecute());
+        fm.register(new PaperSpellAsyncExecute());
+        fm.register(new PaperSpellTimer());
+        fm.register(new PaperSpellAsyncTimer());
     }
     public static void registerInfo(){
         funInfo.put("playerLPMetaGet","获取玩家的LuckPerms的meta");
