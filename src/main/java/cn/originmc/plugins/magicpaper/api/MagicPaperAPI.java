@@ -84,4 +84,11 @@ public class MagicPaperAPI {
     public static void execute(MagicWords words,SpellContext context){
         words.execute(context);
     }
+    /**
+     * 获取全局数据上下文
+     * @return 全局数据上下文
+     */
+    public static NormalContext getMainContext(){
+        return MagicPaper.getContext();
+    }
 }
