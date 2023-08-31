@@ -17,7 +17,7 @@ public class PaperSpellExecute extends NormalFunction {
     public FunctionResult whenFunctionCalled(SpellContext spellContext, List<FunctionResult> args) {
 
         if (args.isEmpty()){
-            return new ErrorResult("INSUFFICIENT_ARGUMENTS", "SpellExecute function requires at least one argument.");
+            return new ErrorResult("INSUFFICIENT_ARGUMENTS", "PaperSpellExecute function requires at least one argument.");
         }
         int count = 0;
 

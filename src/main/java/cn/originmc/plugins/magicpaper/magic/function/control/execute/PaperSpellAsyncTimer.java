@@ -20,7 +20,7 @@ public class PaperSpellAsyncTimer extends NormalFunction {
     public FunctionResult whenFunctionCalled(SpellContext spellContext, List<FunctionResult> args) {
 
         if (args.isEmpty()){
-            return new ErrorResult("INSUFFICIENT_ARGUMENTS", "SpellExecute function requires at least one argument.");
+            return new ErrorResult("INSUFFICIENT_ARGUMENTS", "PaperSpellAsyncTimer function requires at least one argument.");
         }
         FunctionResult spellResult = args.get(0);
         FunctionResult delayResult = args.get(1);

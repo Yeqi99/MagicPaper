@@ -8,10 +8,8 @@ import cn.originmc.plugins.magicpaper.command.MagicPaperTabCompleter;
 import cn.originmc.plugins.magicpaper.data.config.LangData;
 import cn.originmc.plugins.magicpaper.data.config.MagicData;
 import cn.originmc.plugins.magicpaper.util.text.Sender;
-import org.bukkit.Bukkit;
-import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.bukkit.scheduler.BukkitRunnable;
+
 
 import javax.print.DocFlavor;
 
