@@ -6,7 +6,7 @@
 
     <groupId>cn.originmc.plugins</groupId>
     <artifactId>MagicPaper</artifactId>
-    <version>1.0.8-SNAPSHOT</version>
+    <version>1.0.10-SNAPSHOT</version>
     <packaging>jar</packaging>
 
     <name>MagicPaper</name>
@@ -89,7 +89,7 @@
         <dependency>
             <groupId>cn.origincraft.magic</groupId>
             <artifactId>MagicRedis</artifactId>
-            <version>1.0.4</version>
+            <version>1.0.6</version>
         </dependency>
         <!-- YamlCore -->
         <dependency>
@@ -130,6 +130,12 @@
             <artifactId>folia-api</artifactId>
             <version>1.20.1-R0.1-SNAPSHOT</version>
             <scope>provided</scope>
+        </dependency>
+        <!-- redis -->
+        <dependency>
+            <groupId>io.lettuce</groupId>
+            <artifactId>lettuce-core</artifactId>
+            <version>6.2.6.RELEASE</version>
         </dependency>
     </dependencies>
 </project>
