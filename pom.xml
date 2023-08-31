@@ -61,10 +61,12 @@
             <id>sonatype</id>
             <url>https://oss.sonatype.org/content/groups/public/</url>
         </repository>
+        <!-- originmc -->
         <repository>
             <id>originmc-repo</id>
             <url>https://maven.originmc.cn/repository/maven-public/</url>
         </repository>
+        <!-- fly -->
         <repository>
             <id>fly-repo</id>
             <url>https://repo.fastmcmirror.org/content/repositories/releases/</url>
@@ -77,36 +79,29 @@
     </repositories>
 
     <dependencies>
+        <!-- Magic -->
         <dependency>
             <groupId>cn.origincraft.magic</groupId>
             <artifactId>Magic</artifactId>
             <version>1.0.9</version>
         </dependency>
+        <!-- MagicRedis -->
         <dependency>
             <groupId>cn.origincraft.magic</groupId>
             <artifactId>MagicRedis</artifactId>
             <version>1.0.0</version>
         </dependency>
+        <!-- YamlCore -->
         <dependency>
             <groupId>cn.originmc.tools.minecraft</groupId>
             <artifactId>YamlCore</artifactId>
             <version>1.0</version>
         </dependency>
+        <!-- FastExpression -->
         <dependency>
             <groupId>dev.rgbmc</groupId>
             <artifactId>FastExpression</artifactId>
             <version>1.0.0-2e5db94</version>
-        </dependency>
-        <!-- MiniMessage -->
-        <dependency>
-            <groupId>net.kyori</groupId>
-            <artifactId>adventure-text-minimessage</artifactId>
-            <version>4.12.0</version>
-        </dependency>
-        <dependency>
-            <groupId>net.kyori</groupId>
-            <artifactId>adventure-platform-bukkit</artifactId>
-            <version>4.2.0</version>
         </dependency>
         <!-- PlaceholderAPI -->
         <dependency>
@@ -122,6 +117,7 @@
             <version>5.4</version>
             <scope>provided</scope>
         </dependency>
+        <!-- paper -->
         <dependency>
             <groupId>io.papermc.paper</groupId>
             <artifactId>paper-api</artifactId>
