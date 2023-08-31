@@ -1,2 +1,6 @@
 lang: Chinese
 debug: true
+extended-syntax:
+  system: true
+  redis: true
+  paper: true

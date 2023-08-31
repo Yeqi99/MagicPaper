@@ -2,6 +2,7 @@ package cn.originmc.plugins.magicpaper;
 
 import cn.origincraft.magic.MagicManager;
 import cn.origincraft.magic.function.FunctionRegister;
+import cn.origincraft.magic.magicredis.MagicRedisFunctionRegister;
 import cn.origincraft.magic.object.NormalContext;
 import cn.originmc.plugins.magicpaper.command.MagicPaperCommand;
 import cn.originmc.plugins.magicpaper.command.MagicPaperTabCompleter;
@@ -59,8 +60,16 @@ public final class MagicPaper extends JavaPlugin {
         // 注册监听器
         registerListener();
         // 注册魔法函数
-        FunctionRegister.regDefault(getMagicManager());
-        cn.originmc.plugins.magicpaper.magic.FunctionRegister.register(getMagicManager());
+        if (enableExtendedSyntax("system")){
+            FunctionRegister.regDefault(getMagicManager());
+        }
+        if (enableExtendedSyntax("paper")){
+            cn.originmc.plugins.magicpaper.magic.FunctionRegister.register(getMagicManager());
+        }
+        if (enableExtendedSyntax("redis")){
+            MagicRedisFunctionRegister.reg(getMagicManager());
+        }
+
     }
 
     @Override
@@ -94,6 +103,9 @@ public final class MagicPaper extends JavaPlugin {
         MagicData.load();
         // 加载语言文件数据
         LangData.load();
+    }
+    public static boolean enableExtendedSyntax(String id){
+        return getInstance().getConfig().getBoolean("extended-syntax."+id,false);
     }
     public static boolean isDebug(){
         return getInstance().getConfig().getBoolean("debug",false);

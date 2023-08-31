@@ -83,6 +83,11 @@
             <version>1.0.9</version>
         </dependency>
         <dependency>
+            <groupId>cn.origincraft.magic</groupId>
+            <artifactId>MagicRedis</artifactId>
+            <version>1.0.0</version>
+        </dependency>
+        <dependency>
             <groupId>cn.originmc.tools.minecraft</groupId>
             <artifactId>YamlCore</artifactId>
             <version>1.0</version>
