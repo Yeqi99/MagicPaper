@@ -1,8 +1,10 @@
 package cn.originmc.plugins.magicpaper.trigger.listener;
 
 import cn.origincraft.magic.object.NormalContext;
+import cn.originmc.plugins.magicpaper.MagicPaper;
 import cn.originmc.plugins.magicpaper.trigger.MagicPaperTriggerManager;
 import cn.originmc.plugins.magicpaper.util.text.Color;
+import org.bukkit.event.Event;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerInteractEvent;
@@ -19,6 +21,7 @@ public class PlayerListener implements Listener {
     @EventHandler
     public void onPlayerJoin(PlayerJoinEvent e){
         NormalContext normalContext=new NormalContext();
+        normalContext.putVariable("event_name",e.getEventName());
         normalContext.putVariable("self",e.getPlayer());
         normalContext.putVariable("join_message",e.getJoinMessage());
         normalContext.putVariable("event",e);
@@ -30,13 +33,22 @@ public class PlayerListener implements Listener {
     @EventHandler
     public void onPlayerInteract(PlayerInteractEvent e){
         NormalContext normalContext=new NormalContext();
+        normalContext.putVariable("event_name",e.getEventName());
         normalContext.putVariable("self",e.getPlayer());
         normalContext.putVariable("action",e.getAction().name());
         normalContext.putVariable("interaction_point",e.getInteractionPoint());
         normalContext.putVariable("block_face",e.getBlockFace());
-        normalContext.putVariable("is_hand", Objects.requireNonNull(e.getHand()).isHand());
-        normalContext.putVariable("is_armor",e.getHand().isArmor());
+        normalContext.putVariable("item",e.getItem());
+        normalContext.putVariable("name",e.getMaterial().name());
+        normalContext.putVariable("cancelled",e.isCancelled());
+        normalContext.putVariable("is_block_in_hand",e.isBlockInHand());
+        normalContext.putVariable("has_block",e.hasBlock());
+        normalContext.putVariable("has_item",e.hasItem());
+        normalContext.putVariable("interacted_block",e.useInteractedBlock().name());
+        normalContext.putVariable("use_item_in_hand",e.useItemInHand().name());
         MagicPaperTriggerManager.trigger("player_interact", normalContext);
-
+        e.setCancelled((boolean) normalContext.getVariable("cancelled"));
+        e.setUseItemInHand(Event.Result.valueOf((String) normalContext.getVariable("use_item_in_hand")));
+        e.setUseInteractedBlock(Event.Result.valueOf((String) normalContext.getVariable("interacted_block")));
     }
 }

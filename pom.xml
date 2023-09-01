@@ -6,7 +6,7 @@
 
     <groupId>cn.originmc.plugins</groupId>
     <artifactId>MagicPaper</artifactId>
-    <version>1.0.11-SNAPSHOT</version>
+    <version>1.0.12-SNAPSHOT</version>
     <packaging>jar</packaging>
 
     <name>MagicPaper</name>
