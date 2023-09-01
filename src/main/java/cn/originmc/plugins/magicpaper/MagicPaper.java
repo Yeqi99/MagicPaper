@@ -8,6 +8,7 @@ import cn.originmc.plugins.magicpaper.command.MagicPaperCommand;
 import cn.originmc.plugins.magicpaper.command.MagicPaperTabCompleter;
 import cn.originmc.plugins.magicpaper.data.config.LangData;
 import cn.originmc.plugins.magicpaper.data.config.MagicData;
+import cn.originmc.plugins.magicpaper.trigger.MagicPaperTriggerManager;
 import cn.originmc.plugins.magicpaper.util.text.Sender;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -41,6 +42,10 @@ public final class MagicPaper extends JavaPlugin {
     }
 
     @Override
+    public void onLoad() {
+        MagicPaperTriggerManager.trigger("server_on_enable",new NormalContext());
+    }
+    @Override
     public void onEnable() {
         // 初始化插件实例
         instance=this;
@@ -48,6 +53,8 @@ public final class MagicPaper extends JavaPlugin {
         sender=new Sender(this);
         // 初始化魔法管理器
         magicManager = new MagicManager();
+        // 初始化触发器管理器
+        MagicPaperTriggerManager.init();
 
         // 保存默认配置
         saveRes();
@@ -69,12 +76,12 @@ public final class MagicPaper extends JavaPlugin {
         if (enableExtendedSyntax("redis")){
             MagicRedisFunctionRegister.reg(getMagicManager());
         }
-
+        MagicPaperTriggerManager.trigger("server_on_enable",new NormalContext());
     }
 
     @Override
     public void onDisable() {
-
+        MagicPaperTriggerManager.trigger("server_on_disable",new NormalContext());
     }
     public void loadContext(){
         context=new NormalContext();
