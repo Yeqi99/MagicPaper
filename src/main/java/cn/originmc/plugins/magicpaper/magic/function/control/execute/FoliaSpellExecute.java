@@ -13,7 +13,7 @@ import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.List;
 
-public class FoliaSpellAsyncExecute extends NormalFunction {
+public class FoliaSpellExecute extends NormalFunction {
 
     @Override
     public FunctionResult whenFunctionCalled(SpellContext spellContext, List<FunctionResult> args) {
@@ -47,6 +47,6 @@ public class FoliaSpellAsyncExecute extends NormalFunction {
 
     @Override
     public String getName() {
-        return "foliaSpellAsyncExecute";
+        return "foliaSpellExecute";
     }
 }

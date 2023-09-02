@@ -39,7 +39,7 @@ public class FunctionRegister {
         fm.register(new PaperSpellAsyncExecute(),"papersae");
         fm.register(new PaperSpellTimer(), "paperst");
         fm.register(new PaperSpellAsyncTimer(), "papersat");
-        fm.register(new FoliaSpellAsyncExecute(),"foliasae");
+        fm.register(new FoliaSpellExecute(),"foliase");
     }
     public static void registerInfo(){
         funInfo.put("playerLPMetaGet","获取玩家的LuckPerms的meta");
