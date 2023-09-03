@@ -7,6 +7,9 @@ import cn.originmc.plugins.magicpaper.magic.function.hook.luckperms.PlayerLPMeta
 import cn.originmc.plugins.magicpaper.magic.function.hook.luckperms.PlayerLPMetaSetFunction;
 import cn.originmc.plugins.magicpaper.magic.function.hook.luckperms.PlayerLPTempMetaSetFunction;
 import cn.originmc.plugins.magicpaper.magic.function.hook.placeholderapi.PlaceholderAPIFunction;
+import cn.originmc.plugins.magicpaper.magic.function.magictimer.AddToTimerFunction;
+import cn.originmc.plugins.magicpaper.magic.function.magictimer.FoliaTimerFunction;
+import cn.originmc.plugins.magicpaper.magic.function.magictimer.PaperTimerFunction;
 import cn.originmc.plugins.magicpaper.magic.function.object.LocationFunction;
 import cn.originmc.plugins.magicpaper.magic.function.object.PlayerFunction;
 import dev.rgbmc.expression.managers.FunctionManager;
@@ -40,6 +43,10 @@ public class FunctionRegister {
         fm.register(new PaperSpellTimer(), "paperst");
         fm.register(new PaperSpellAsyncTimer(), "papersat");
         fm.register(new FoliaSpellExecute(),"foliase");
+        // magictimer
+        fm.register(new AddToTimerFunction(),"att");
+        fm.register(new FoliaTimerFunction(),"ftimer");
+        fm.register(new PaperTimerFunction(),"ptimer");
     }
     public static void registerInfo(){
         funInfo.put("playerLPMetaGet","获取玩家的LuckPerms的meta");
