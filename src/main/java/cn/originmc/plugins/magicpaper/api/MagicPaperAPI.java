@@ -1,11 +1,16 @@
 package cn.originmc.plugins.magicpaper.api;
 
+import cn.origincraft.magic.MagicManager;
 import cn.origincraft.magic.object.MagicWords;
 import cn.origincraft.magic.object.NormalContext;
 import cn.origincraft.magic.object.Spell;
 import cn.origincraft.magic.object.SpellContext;
 import cn.originmc.plugins.magicpaper.MagicPaper;
 import cn.originmc.plugins.magicpaper.data.manager.MagicDataManager;
+import cn.originmc.plugins.magicpaper.trigger.MagicPaperTriggerManager;
+import cn.originmc.plugins.magicpaper.trigger.abs.MagicPaperTrigger;
+import cn.originmc.plugins.magicpaper.trigger.listener.timer.MagicTimer;
+import cn.originmc.plugins.magicpaper.trigger.listener.timer.MagicTimerManager;
 import dev.rgbmc.expression.functions.FastFunction;
 
 import java.util.List;
@@ -91,4 +96,22 @@ public class MagicPaperAPI {
     public static NormalContext getMainContext(){
         return MagicPaper.getContext();
     }
+
+    /**
+     * 注册触发器
+     * @param trigger 自定义触发器
+     */
+    public static void registerTrigger(MagicPaperTrigger trigger){
+        MagicPaperTriggerManager.registerTrigger(trigger);
+    }
+
+    /**
+     * 注册触发器
+     * @param id 触发器id
+     * @param magicTimer 触发器
+     */
+    public static void registerTimer(String id, MagicTimer magicTimer){
+        MagicTimerManager.registerTimer(id,magicTimer);
+    }
+
 }

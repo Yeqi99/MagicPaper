@@ -6,7 +6,7 @@ import cn.originmc.plugins.magicpaper.trigger.abs.MagicPaperTrigger;
 import cn.originmc.plugins.magicpaper.trigger.impl.PlayerJoinTrigger;
 import cn.originmc.plugins.magicpaper.trigger.impl.ServerOnEnableTrigger;
 import cn.originmc.plugins.magicpaper.trigger.impl.ServerOnLoadTrigger;
-import org.bukkit.entity.Player;
+
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,6 +22,9 @@ public class MagicPaperTriggerManager {
 
         // 注册监听器
         registerListener();
+    }
+    public static void registerTrigger(MagicPaperTrigger trigger){
+        magicPaperTriggers.add(trigger);
     }
     public static void registerListener(){
         new PlayerJoinTrigger();
