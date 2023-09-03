@@ -1,6 +1,8 @@
 package cn.originmc.plugins.magicpaper.command;
 
+import cn.originmc.plugins.magicpaper.MagicPaper;
 import cn.originmc.plugins.magicpaper.data.manager.MagicDataManager;
+import cn.originmc.plugins.magicpaper.magic.FunctionRegister;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
@@ -33,6 +35,10 @@ public class MagicPaperTabCompleter implements TabCompleter {
                 // 提示第二个参数的补全，可能是法术ID
                 List<String> spellIds = MagicDataManager.getSpellsID();
                 completions.addAll(spellIds);
+            }
+            if (args[0].equalsIgnoreCase("functioninfo")) {
+                // 提示第二个参数的补全，可能是法术ID
+                completions.addAll(new ArrayList<>(FunctionRegister.funInfo.keySet()));
             }
         }
 

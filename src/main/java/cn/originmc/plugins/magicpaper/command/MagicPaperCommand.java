@@ -32,6 +32,7 @@ public class MagicPaperCommand implements CommandExecutor {
             helpMessage.add("&a/magicpaper publicwords <words> &7- &fExecute words with public context");
             helpMessage.add("&a/magicpaper publicspell <spell> &7- &fExecute spell with public context");
             helpMessage.add("&a/magicpaper functions &7- &fList all functions");
+            helpMessage.add("&a/magicpaper functioninfo <function> &7- &fGet function info");
             MagicPaper.getSender().sendToSender(commandSender, helpMessage);
             return true;
         }

@@ -55,7 +55,6 @@ public final class MagicPaper extends JavaPlugin {
         magicManager = new MagicManager();
         // 初始化触发器管理器
         MagicPaperTriggerManager.init();
-
         // 保存默认配置
         saveRes();
         // 加载数据
@@ -76,6 +75,9 @@ public final class MagicPaper extends JavaPlugin {
         if (enableExtendedSyntax("redis")){
             MagicRedisFunctionRegister.reg(getMagicManager());
         }
+        // 注册魔法函数信息
+        cn.originmc.plugins.magicpaper.magic.FunctionRegister.registerInfo();
+        cn.originmc.plugins.magicpaper.magic.FunctionRegister.registerArgsInfo();
         MagicPaperTriggerManager.trigger("server_on_enable",new NormalContext());
     }
 
