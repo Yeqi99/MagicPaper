@@ -22,6 +22,7 @@ public class MagicPaperTabCompleter implements TabCompleter {
             completions.add("publicwords");
             completions.add("publicspell");
             completions.add("functions");
+            completions.add("functioninfo");
         } else if (args.length == 2) {
             if (args[0].equalsIgnoreCase("spell")) {
                 // 提示第二个参数的补全，可能是法术ID

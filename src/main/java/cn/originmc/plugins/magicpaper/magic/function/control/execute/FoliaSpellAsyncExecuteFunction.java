@@ -8,16 +8,16 @@ import cn.origincraft.magic.object.SpellContext;
 import cn.originmc.plugins.magicpaper.MagicPaper;
 import dev.rgbmc.expression.functions.FunctionResult;
 import dev.rgbmc.expression.results.IntegerResult;
+import org.bukkit.Bukkit;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.List;
 
-public class PaperSpellExecute extends NormalFunction {
+public class FoliaSpellAsyncExecuteFunction extends NormalFunction {
     @Override
     public FunctionResult whenFunctionCalled(SpellContext spellContext, List<FunctionResult> args) {
-
         if (args.isEmpty()){
-            return new ErrorResult("INSUFFICIENT_ARGUMENTS", "PaperSpellExecute function requires at least one argument.");
+            return new ErrorResult("INSUFFICIENT_ARGUMENTS", "SpellExecute function requires at least one argument.");
         }
         int count = 0;
 
@@ -25,12 +25,13 @@ public class PaperSpellExecute extends NormalFunction {
             if (arg instanceof SpellResult){
                 SpellResult spellResult = (SpellResult) arg;
                 Spell spell = spellResult.getSpell();
-                Object o= new BukkitRunnable() {
+                Runnable runnable= new BukkitRunnable() {
                     @Override
                     public void run() {
                         spell.execute(spellContext.getContextMap());
                     }
-                }.runTask(MagicPaper.getInstance());
+                };
+                Bukkit.getAsyncScheduler().runNow(MagicPaper.getInstance(), scheduledTask -> runnable.run());
                 count++;
             }
         }
@@ -45,6 +46,6 @@ public class PaperSpellExecute extends NormalFunction {
 
     @Override
     public String getName() {
-        return "paperSpellExecute";
+        return "foliaSpellAsyncExecute";
     }
 }

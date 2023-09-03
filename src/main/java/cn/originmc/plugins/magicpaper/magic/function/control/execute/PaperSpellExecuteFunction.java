@@ -12,12 +12,12 @@ import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.List;
 
-public class PaperSpellAsyncExecute extends NormalFunction {
+public class PaperSpellExecuteFunction extends NormalFunction {
     @Override
     public FunctionResult whenFunctionCalled(SpellContext spellContext, List<FunctionResult> args) {
 
         if (args.isEmpty()){
-            return new ErrorResult("INSUFFICIENT_ARGUMENTS", "PaperSpellAsyncExecute function requires at least one argument.");
+            return new ErrorResult("INSUFFICIENT_ARGUMENTS", "PaperSpellExecute function requires at least one argument.");
         }
         int count = 0;
 
@@ -30,7 +30,7 @@ public class PaperSpellAsyncExecute extends NormalFunction {
                     public void run() {
                         spell.execute(spellContext.getContextMap());
                     }
-                }.runTaskAsynchronously(MagicPaper.getInstance());
+                }.runTask(MagicPaper.getInstance());
                 count++;
             }
         }
@@ -45,6 +45,6 @@ public class PaperSpellAsyncExecute extends NormalFunction {
 
     @Override
     public String getName() {
-        return "paperSpellAsyncExecute";
+        return "paperSpellExecute";
     }
 }

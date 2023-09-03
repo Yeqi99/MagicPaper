@@ -38,11 +38,12 @@ public class FunctionRegister {
         fm.register(new SendToAllPlayerFunction(),"stap");
         fm.register(new PlayerTeleportFunction(),"ptp");
         // control.execute
-        fm.register(new PaperSpellExecute(),"paperse");
-        fm.register(new PaperSpellAsyncExecute(),"papersae");
-        fm.register(new PaperSpellTimer(), "paperst");
-        fm.register(new PaperSpellAsyncTimer(), "papersat");
-        fm.register(new FoliaSpellExecute(),"foliase");
+        fm.register(new PaperSpellExecuteFunction(),"paperse");
+        fm.register(new PaperSpellAsyncExecuteFunction(),"papersae");
+        fm.register(new PaperSpellTimerFunction(), "paperst");
+        fm.register(new PaperSpellAsyncTimerFunction(), "papersat");
+        fm.register(new FoliaSpellExecuteFunction(),"foliase");
+        fm.register(new FoliaSpellAsyncExecuteFunction(),"foliasae");
         // magictimer
         fm.register(new AddToTimerFunction(),"att");
         fm.register(new FoliaTimerFunction(),"ftimer");
@@ -60,6 +61,15 @@ public class FunctionRegister {
         funInfo.put("senderToPlayer","向玩家发送消息");
         funInfo.put("senderToAllPlayer","向所有玩家发送消息");
         funInfo.put("playerTeleport","玩家传送");
+        funInfo.put("paperSpellExecute","Paper执行魔咒");
+        funInfo.put("paperSpellAsyncExecute","Paper异步执行魔咒");
+        funInfo.put("foliaSpellExecute","Folia执行魔咒");
+        funInfo.put("foliaSpellAsyncExecute","Folia异步执行魔咒");
+        funInfo.put("paperSpellTimer","Paper计时器");
+        funInfo.put("paperSpellAsyncTimer","Paper异步计时器");
+        funInfo.put("paperTimer","创建Paper计时器");
+        funInfo.put("foliaTimer","创建Folia计时器");
+        funInfo.put("addToTimer","添加魔咒到计时器");
     }
     public static void registerArgsInfo(){
         argsInfo.put("playerLPMetaGet","玩家(player) meta名(str)");
@@ -73,5 +83,14 @@ public class FunctionRegister {
         argsInfo.put("senderToPlayer","玩家名(player) 消息(str)");
         argsInfo.put("senderToAllPlayer","消息(str)");
         argsInfo.put("playerTeleport","玩家名(player) 坐标(location)");
+        argsInfo.put("paperSpellExecute","魔咒(spell)...");
+        argsInfo.put("paperSpellAsyncExecute","魔咒(spell)...");
+        argsInfo.put("foliaSpellExecute","魔咒(spell)...");
+        argsInfo.put("foliaSpellAsyncExecute","魔咒(spell)...");
+        argsInfo.put("paperSpellTimer","魔咒名(str) 延迟开始(int) 间隔(int)");
+        argsInfo.put("paperSpellAsyncTimer","魔咒名(str) 延迟开始(int) 间隔(int)");
+        argsInfo.put("paperTimer","计时器名(str) 延迟开始(int) 间隔(int) 数据语境(ContextMap)");
+        argsInfo.put("foliaTimer","计时器名(str) 延迟开始(int) 间隔(int) 数据语境(ContextMap)");
+        argsInfo.put("addToTimer","计时器名(str) 魔咒(spell)");
     }
 }

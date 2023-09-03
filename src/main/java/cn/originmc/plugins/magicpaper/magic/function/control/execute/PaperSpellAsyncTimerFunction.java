@@ -1,9 +1,7 @@
 package cn.originmc.plugins.magicpaper.magic.function.control.execute;
 
-import cn.origincraft.magic.function.FunctionRegister;
 import cn.origincraft.magic.function.NormalFunction;
 import cn.origincraft.magic.function.results.ErrorResult;
-import cn.origincraft.magic.function.results.NullResult;
 import cn.origincraft.magic.function.results.SpellResult;
 import cn.origincraft.magic.object.Spell;
 import cn.origincraft.magic.object.SpellContext;
@@ -15,7 +13,7 @@ import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.List;
 
-public class PaperSpellAsyncTimer extends NormalFunction {
+public class PaperSpellAsyncTimerFunction extends NormalFunction {
     @Override
     public FunctionResult whenFunctionCalled(SpellContext spellContext, List<FunctionResult> args) {
 

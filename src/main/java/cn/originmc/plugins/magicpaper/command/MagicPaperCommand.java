@@ -8,7 +8,9 @@ import cn.originmc.plugins.magicpaper.MagicPaper;
 import cn.originmc.plugins.magicpaper.data.config.LangData;
 import cn.originmc.plugins.magicpaper.data.config.MagicData;
 import cn.originmc.plugins.magicpaper.data.manager.MagicDataManager;
+import cn.originmc.plugins.magicpaper.magic.FunctionRegister;
 import cn.originmc.plugins.magicpaper.util.text.Sender;
+import com.sun.org.apache.bcel.internal.generic.IF_ACMPEQ;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -96,6 +98,20 @@ public class MagicPaperCommand implements CommandExecutor {
             }else {
                 MagicPaper.getSender().sendToSender(commandSender, LangData.get(MagicPaper.getLang(),"functions-none","Functions is none"));
             }
+        }else if (args[0].equalsIgnoreCase("functioninfo")) {
+            String functionName = args[1];
+            String info= FunctionRegister.funInfo.get(functionName);
+            String argsInfo= FunctionRegister.argsInfo.get(functionName);
+            if (info==null){
+                MagicPaper.getSender().sendToSender(commandSender, LangData.get(MagicPaper.getLang(),"function-not-found","&cFunction not found!"));
+                return true;
+            }
+            if (argsInfo==null){
+                MagicPaper.getSender().sendToSender(commandSender, LangData.get(MagicPaper.getLang(),"function-args-not-found","&cFunction args not found!"));
+                return true;
+            }
+            MagicPaper.getSender().sendToSender(commandSender,"&a&b"+info+"&7:&c"+argsInfo);
+            return true;
         }
         return true;
     }
