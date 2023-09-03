@@ -51,7 +51,7 @@ public class MagicPaperCommand implements CommandExecutor {
             spellList.add(words);
             Spell spell=new Spell(spellList,MagicPaper.getMagicManager());
             NormalContext normalContext=new NormalContext();
-            normalContext.putObject("self",commandSender);
+            normalContext.putVariable("self",commandSender);
             SpellContext spellContext = spell.execute(normalContext);
 
             if (spellContext.hasExecuteError()){
@@ -65,7 +65,7 @@ public class MagicPaperCommand implements CommandExecutor {
             }
             Spell spell = MagicDataManager.getSpell(spellID);
             NormalContext normalContext=new NormalContext();
-            normalContext.putObject("self",commandSender);
+            normalContext.putVariable("self",commandSender);
             SpellContext spellContext = spell.execute(normalContext);
             if (MagicPaper.isDebug() && spellContext.hasExecuteError()){
                 MagicPaper.getSender().sendToSender(commandSender,"&c"+spellContext.getExecuteError().getErrorId()+":"+spellContext.getExecuteError().getInfo());
@@ -78,6 +78,7 @@ public class MagicPaperCommand implements CommandExecutor {
             }
             Spell spell = MagicDataManager.getSpell(spellID);
             SpellContext spellContext = spell.execute(MagicPaper.getContext());
+            spellContext.putVariable("self",commandSender);
             if (MagicPaper.isDebug() && spellContext.hasExecuteError()){
                 MagicPaper.getSender().sendToSender(commandSender,"&c"+spellContext.getExecuteError().getErrorId()+":"+spellContext.getExecuteError().getInfo());
             }
@@ -88,7 +89,7 @@ public class MagicPaperCommand implements CommandExecutor {
             spellList.add(words);
             Spell spell=new Spell(spellList,MagicPaper.getMagicManager());
             SpellContext spellContext = spell.execute(MagicPaper.getContext());
-
+            spellContext.putVariable("self",commandSender);
             if (MagicPaper.isDebug() && spellContext.hasExecuteError()){
                 MagicPaper.getSender().sendToSender(commandSender,"&c"+spellContext.getExecuteError().getErrorId()+":"+spellContext.getExecuteError().getInfo());
             }

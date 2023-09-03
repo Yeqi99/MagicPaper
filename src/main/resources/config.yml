@@ -1,7 +1,11 @@
+# 使用的语言
 lang: Chinese
+# debug模式
 debug: true
+# 拓展语义包含
 extended-syntax:
   system: true
   redis: true
   paper: true
-
+# 魔语快捷执行
+coding: true

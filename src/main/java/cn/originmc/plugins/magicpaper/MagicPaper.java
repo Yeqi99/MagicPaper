@@ -8,6 +8,7 @@ import cn.originmc.plugins.magicpaper.command.MagicPaperCommand;
 import cn.originmc.plugins.magicpaper.command.MagicPaperTabCompleter;
 import cn.originmc.plugins.magicpaper.data.config.LangData;
 import cn.originmc.plugins.magicpaper.data.config.MagicData;
+import cn.originmc.plugins.magicpaper.listener.CodingListener;
 import cn.originmc.plugins.magicpaper.trigger.MagicPaperTriggerManager;
 import cn.originmc.plugins.magicpaper.util.text.Sender;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -100,7 +101,10 @@ public final class MagicPaper extends JavaPlugin {
         getCommand("MagicPaper").setTabCompleter(new MagicPaperTabCompleter());
     }
     public void registerListener(){
+        if (getConfig().getBoolean("coding",false)){
+            getServer().getPluginManager().registerEvents(new CodingListener(),this);
 
+        }
     }
     public void saveRes(){
         getInstance().saveDefaultConfig();
