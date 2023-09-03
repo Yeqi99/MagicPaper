@@ -103,11 +103,11 @@ public class MagicPaperCommand implements CommandExecutor {
             String info= FunctionRegister.funInfo.get(functionName);
             String argsInfo= FunctionRegister.argsInfo.get(functionName);
             if (info==null){
-                MagicPaper.getSender().sendToSender(commandSender, LangData.get(MagicPaper.getLang(),"function-not-found","&cFunction not found!"));
+                MagicPaper.getSender().sendToSender(commandSender, LangData.get(MagicPaper.getLang(),"function-info-not-found","&cFunction info not found!"));
                 return true;
             }
             if (argsInfo==null){
-                MagicPaper.getSender().sendToSender(commandSender, LangData.get(MagicPaper.getLang(),"function-args-not-found","&cFunction args not found!"));
+                MagicPaper.getSender().sendToSender(commandSender, LangData.get(MagicPaper.getLang(),"function-args-info-not-found","&cFunction args info not found!"));
                 return true;
             }
             MagicPaper.getSender().sendToSender(commandSender,"&a&b"+info+"&7:&c"+argsInfo);

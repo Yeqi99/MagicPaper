@@ -1,3 +1,5 @@
 reload: "&a插件重载成功！"
 spell-not-found: "&c你输入的咒语不存在！"
 functions-none: "&c没有已注册的语义!"
+function-info-not-found: "&c没有找到指定的语义信息!"
+function-args-info-not-found: "&c没有找到指定的语义参数信息!"
