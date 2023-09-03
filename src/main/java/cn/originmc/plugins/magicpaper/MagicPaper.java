@@ -12,9 +12,7 @@ import cn.originmc.plugins.magicpaper.listener.CodingListener;
 import cn.originmc.plugins.magicpaper.trigger.MagicPaperTriggerManager;
 import cn.originmc.plugins.magicpaper.util.text.Sender;
 import org.bukkit.plugin.java.JavaPlugin;
-
-
-import javax.print.DocFlavor;
+import org.bstats.bukkit.Metrics;
 
 public final class MagicPaper extends JavaPlugin {
     private static JavaPlugin instance;
@@ -48,6 +46,8 @@ public final class MagicPaper extends JavaPlugin {
     }
     @Override
     public void onEnable() {
+        int pluginId = 19713; // 替换为您的插件ID
+        Metrics metrics = new Metrics(this, pluginId);
         // 初始化插件实例
         instance=this;
         // 初始化发送器
