@@ -40,8 +40,6 @@ public class FunctionRegister {
         // control.execute
         fm.register(new PaperSpellExecuteFunction(),"paperse");
         fm.register(new PaperSpellAsyncExecuteFunction(),"papersae");
-        fm.register(new PaperSpellTimerFunction(), "paperst");
-        fm.register(new PaperSpellAsyncTimerFunction(), "papersat");
         fm.register(new FoliaSpellExecuteFunction(),"foliase");
         fm.register(new FoliaSpellAsyncExecuteFunction(),"foliasae");
         // magictimer
