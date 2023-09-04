@@ -12,7 +12,6 @@ import cn.originmc.plugins.magicpaper.listener.CodingListener;
 import cn.originmc.plugins.magicpaper.trigger.MagicPaperTriggerManager;
 import cn.originmc.plugins.magicpaper.util.text.Sender;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.bstats.bukkit.Metrics;
 
 public final class MagicPaper extends JavaPlugin {
     private static JavaPlugin instance;

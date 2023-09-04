@@ -2,32 +2,34 @@ package cn.originmc.plugins.magicpaper.listener;
 
 import cn.origincraft.magic.object.MagicWords;
 import cn.origincraft.magic.object.NormalContext;
+import cn.origincraft.magic.object.Spell;
 import cn.origincraft.magic.object.SpellContext;
 import cn.originmc.plugins.magicpaper.MagicPaper;
-import io.papermc.paper.event.player.AsyncChatEvent;
 import org.bukkit.Bukkit;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class CodingListener implements Listener {
     @EventHandler
-    public void onAdminCoding(AsyncChatEvent event) {
+    public void onAdminCoding(AsyncPlayerChatEvent event) {
         if (!event.getPlayer().isOp() && !event.getPlayer().hasPermission("magicpaper.coding")) {
             return;
         }
-        if(event.message().toString().startsWith("!m")) {
-            String words = event.message().toString().substring(3);
-            MagicWords magicWords=new MagicWords(words, MagicPaper.getMagicManager());
+        if(event.getMessage().startsWith("!m")) {
+            String words = event.getMessage().substring(2);
             NormalContext context=new NormalContext();
-            SpellContext spellContext=new SpellContext();
-            spellContext.setContextMap(context);
-            spellContext.getContextMap().putVariable("self",event.getPlayer());
-            spellContext.getContextMap().putVariable("players", new ArrayList<>(Bukkit.getOnlinePlayers()));
-            MagicPaper.getSender().sendToPlayer(event.getPlayer(), words);
-            magicWords.execute(spellContext);
+            List<String> wordsList=new ArrayList<>();
+            wordsList.add(words);
+            Spell spell=new Spell(wordsList, MagicPaper.getMagicManager());
+            context.putVariable("self",event.getPlayer());
+            context.putVariable("players", new ArrayList<>(Bukkit.getOnlinePlayers()));
+            MagicPaper.getSender().sendToPlayer(event.getPlayer(), "&d"+words);
+            SpellContext spellContext = spell.execute(context);
+
             if (spellContext.hasExecuteError()){
                 MagicPaper
                         .getSender()
@@ -36,15 +38,16 @@ public class CodingListener implements Listener {
                                 "&c"+spellContext.getExecuteError().getErrorId()+":"+spellContext.getExecuteError().getInfo());
             }
             event.setCancelled(true);
-        }else if(event.message().toString().startsWith("!pm")){
-            String words = event.message().toString().substring(3);
-            MagicWords magicWords=new MagicWords(words, MagicPaper.getMagicManager());
-            SpellContext spellContext=new SpellContext();
-            spellContext.setContextMap(MagicPaper.getContext());
-            spellContext.getContextMap().putVariable("self",event.getPlayer());
-            spellContext.getContextMap().putVariable("players", new ArrayList<>(Bukkit.getOnlinePlayers()));
-            MagicPaper.getSender().sendToPlayer(event.getPlayer(), words);
-            magicWords.execute(spellContext);
+        }else if(event.getMessage().startsWith("!pm")){
+            String words = event.getMessage().substring(3);
+            NormalContext context=MagicPaper.getContext();
+            List<String> wordsList=new ArrayList<>();
+            wordsList.add(words);
+            Spell spell=new Spell(wordsList, MagicPaper.getMagicManager());
+            context.putVariable( event.getPlayer().getName()+".self",event.getPlayer());
+            context.putVariable("players", new ArrayList<>(Bukkit.getOnlinePlayers()));
+            MagicPaper.getSender().sendToPlayer(event.getPlayer(), "&d"+words);
+            SpellContext spellContext = spell.execute(context);
             if (spellContext.hasExecuteError()){
                 MagicPaper
                         .getSender()
