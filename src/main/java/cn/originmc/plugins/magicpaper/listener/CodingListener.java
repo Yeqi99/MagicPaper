@@ -1,10 +1,12 @@
 package cn.originmc.plugins.magicpaper.listener;
 
+import cn.origincraft.magic.function.results.ListResult;
 import cn.origincraft.magic.object.MagicWords;
 import cn.origincraft.magic.object.NormalContext;
 import cn.origincraft.magic.object.Spell;
 import cn.origincraft.magic.object.SpellContext;
 import cn.originmc.plugins.magicpaper.MagicPaper;
+import cn.originmc.plugins.magicpaper.magic.result.PlayerResult;
 import org.bukkit.Bukkit;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -25,8 +27,8 @@ public class CodingListener implements Listener {
             List<String> wordsList=new ArrayList<>();
             wordsList.add(words);
             Spell spell=new Spell(wordsList, MagicPaper.getMagicManager());
-            context.putVariable("self",event.getPlayer());
-            context.putVariable("players", new ArrayList<>(Bukkit.getOnlinePlayers()));
+            context.putVariable("self",new PlayerResult(event.getPlayer()));
+            context.putVariable("players", new ListResult(new ArrayList<>(Bukkit.getOnlinePlayers())));
             MagicPaper.getSender().sendToPlayer(event.getPlayer(), "&d"+words);
             SpellContext spellContext = spell.execute(context);
 
@@ -44,8 +46,8 @@ public class CodingListener implements Listener {
             List<String> wordsList=new ArrayList<>();
             wordsList.add(words);
             Spell spell=new Spell(wordsList, MagicPaper.getMagicManager());
-            context.putVariable( event.getPlayer().getName()+".self",event.getPlayer());
-            context.putVariable("players", new ArrayList<>(Bukkit.getOnlinePlayers()));
+            context.putVariable(event.getPlayer().getName()+".self",new PlayerResult(event.getPlayer()));
+            context.putVariable("players", new ListResult(new ArrayList<>(Bukkit.getOnlinePlayers())));
             MagicPaper.getSender().sendToPlayer(event.getPlayer(), "&d"+words);
             SpellContext spellContext = spell.execute(context);
             if (spellContext.hasExecuteError()){

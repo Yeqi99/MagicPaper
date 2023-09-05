@@ -3,6 +3,10 @@ package cn.originmc.plugins.magicpaper.magic;
 import cn.origincraft.magic.MagicManager;
 import cn.originmc.plugins.magicpaper.magic.function.behavior.*;
 import cn.originmc.plugins.magicpaper.magic.function.control.execute.*;
+import cn.originmc.plugins.magicpaper.magic.function.hook.abolethplus.AboAddFunction;
+import cn.originmc.plugins.magicpaper.magic.function.hook.abolethplus.AboGetFunction;
+import cn.originmc.plugins.magicpaper.magic.function.hook.abolethplus.AboGetUserFunction;
+import cn.originmc.plugins.magicpaper.magic.function.hook.abolethplus.AboSetFunction;
 import cn.originmc.plugins.magicpaper.magic.function.hook.luckperms.PlayerLPMetaGetFunction;
 import cn.originmc.plugins.magicpaper.magic.function.hook.luckperms.PlayerLPMetaSetFunction;
 import cn.originmc.plugins.magicpaper.magic.function.hook.luckperms.PlayerLPTempMetaSetFunction;
@@ -10,6 +14,7 @@ import cn.originmc.plugins.magicpaper.magic.function.hook.placeholderapi.Placeho
 import cn.originmc.plugins.magicpaper.magic.function.magictimer.AddToTimerFunction;
 import cn.originmc.plugins.magicpaper.magic.function.magictimer.FoliaTimerFunction;
 import cn.originmc.plugins.magicpaper.magic.function.magictimer.PaperTimerFunction;
+import cn.originmc.plugins.magicpaper.magic.function.object.ItemFunction;
 import cn.originmc.plugins.magicpaper.magic.function.object.LocationFunction;
 import cn.originmc.plugins.magicpaper.magic.function.object.PlayerFunction;
 import cn.originmc.plugins.magicpaper.magic.function.trigger.AddSpellToTriggerFunction;
@@ -30,9 +35,15 @@ public class FunctionRegister {
         fm.register(new PlayerLPTempMetaSetFunction(),"lptmeta");
         // hook.placeholderapi
         fm.register(new PlaceholderAPIFunction(),"papi");
+        // hook.abolethplus
+        fm.register(new AboGetUserFunction(),"abou");
+        fm.register(new AboGetFunction(),"abog");
+        fm.register(new AboAddFunction(),"aboa");
+        fm.register(new AboSetFunction(),"abos");
         // object
         fm.register(new PlayerFunction(),"p");
         fm.register(new LocationFunction(),"loc");
+        fm.register(new ItemFunction());
         // behavior
         fm.register(new ConsoleCommandFunction(),"ccommand");
         fm.register(new PlayerCommandFunction(),"pcommand");

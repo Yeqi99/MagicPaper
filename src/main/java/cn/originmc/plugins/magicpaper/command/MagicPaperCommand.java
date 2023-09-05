@@ -9,6 +9,7 @@ import cn.originmc.plugins.magicpaper.data.config.LangData;
 import cn.originmc.plugins.magicpaper.data.config.MagicData;
 import cn.originmc.plugins.magicpaper.data.manager.MagicDataManager;
 import cn.originmc.plugins.magicpaper.magic.FunctionRegister;
+import cn.originmc.plugins.magicpaper.magic.result.PlayerResult;
 import cn.originmc.plugins.magicpaper.trigger.MagicPaperTriggerManager;
 import cn.originmc.plugins.magicpaper.trigger.abs.MagicPaperTrigger;
 import cn.originmc.plugins.magicpaper.util.text.Sender;
@@ -54,7 +55,7 @@ public class MagicPaperCommand implements CommandExecutor {
             spellList.add(words);
             Spell spell=new Spell(spellList,MagicPaper.getMagicManager());
             NormalContext normalContext=new NormalContext();
-            normalContext.putVariable("self",commandSender);
+            normalContext.putVariable("self",new PlayerResult((Player) commandSender));
             SpellContext spellContext = spell.execute(normalContext);
 
             if (spellContext.hasExecuteError()){
@@ -68,7 +69,7 @@ public class MagicPaperCommand implements CommandExecutor {
             }
             Spell spell = MagicDataManager.getSpell(spellID);
             NormalContext normalContext=new NormalContext();
-            normalContext.putVariable("self",commandSender);
+            normalContext.putVariable("self",new PlayerResult((Player) commandSender));
             SpellContext spellContext = spell.execute(normalContext);
             if (MagicPaper.isDebug() && spellContext.hasExecuteError()){
                 MagicPaper.getSender().sendToSender(commandSender,"&c"+spellContext.getExecuteError().getErrorId()+":"+spellContext.getExecuteError().getInfo());
@@ -81,7 +82,7 @@ public class MagicPaperCommand implements CommandExecutor {
             }
             Spell spell = MagicDataManager.getSpell(spellID);
             SpellContext spellContext = spell.execute(MagicPaper.getContext());
-            spellContext.putVariable("self",commandSender);
+            spellContext.putVariable("self",new PlayerResult((Player) commandSender));
             if (MagicPaper.isDebug() && spellContext.hasExecuteError()){
                 MagicPaper.getSender().sendToSender(commandSender,"&c"+spellContext.getExecuteError().getErrorId()+":"+spellContext.getExecuteError().getInfo());
             }
@@ -92,7 +93,7 @@ public class MagicPaperCommand implements CommandExecutor {
             spellList.add(words);
             Spell spell=new Spell(spellList,MagicPaper.getMagicManager());
             SpellContext spellContext = spell.execute(MagicPaper.getContext());
-            spellContext.putVariable("self",commandSender);
+            spellContext.putVariable("self",new PlayerResult((Player) commandSender));
             if (MagicPaper.isDebug() && spellContext.hasExecuteError()){
                 MagicPaper.getSender().sendToSender(commandSender,"&c"+spellContext.getExecuteError().getErrorId()+":"+spellContext.getExecuteError().getInfo());
             }
