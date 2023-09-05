@@ -2,10 +2,13 @@ package cn.originmc.plugins.magicpaper.trigger;
 
 import cn.origincraft.magic.object.ContextMap;
 import cn.origincraft.magic.object.Spell;
+import cn.originmc.plugins.magicpaper.MagicPaper;
 import cn.originmc.plugins.magicpaper.trigger.abs.MagicPaperTrigger;
 import cn.originmc.plugins.magicpaper.trigger.impl.PlayerJoinTrigger;
 import cn.originmc.plugins.magicpaper.trigger.impl.ServerOnEnableTrigger;
 import cn.originmc.plugins.magicpaper.trigger.impl.ServerOnLoadTrigger;
+import cn.originmc.plugins.magicpaper.trigger.listener.PlayerListener;
+import org.bukkit.plugin.java.JavaPlugin;
 
 
 import java.util.ArrayList;
@@ -21,13 +24,13 @@ public class MagicPaperTriggerManager {
         magicPaperTriggers.add(new PlayerJoinTrigger());
 
         // 注册监听器
-        registerListener();
+        registerListener(MagicPaper.getInstance());
     }
     public static void registerTrigger(MagicPaperTrigger trigger){
         magicPaperTriggers.add(trigger);
     }
-    public static void registerListener(){
-        new PlayerJoinTrigger();
+    public static void registerListener(JavaPlugin plugin){
+        new PlayerListener(plugin);
     }
     public static void trigger(String name, ContextMap contextMap){
         for(MagicPaperTrigger trigger:magicPaperTriggers){
