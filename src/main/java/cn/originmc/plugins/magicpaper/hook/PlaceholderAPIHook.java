@@ -1,5 +1,6 @@
 package cn.originmc.plugins.magicpaper.hook;
 
+import cn.originmc.plugins.magicpaper.MagicPaper;
 import me.clip.placeholderapi.PlaceholderAPI;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -16,9 +17,11 @@ public class PlaceholderAPIHook{
 
     public static boolean hook() {
         if (Bukkit.getPluginManager().getPlugin(getName()) != null) {
+            MagicPaper.getSender().sendToLogger("&a成功挂钩PlaceholderAPI插件");
             status=true;
             return true;
         } else {
+            MagicPaper.getSender().sendToLogger("&c未找到PlaceholderAPI插件");
             status=false;
             return false;
         }

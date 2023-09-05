@@ -2,6 +2,9 @@ package cn.originmc.plugins.magicpaper.magic;
 
 import cn.origincraft.magic.MagicManager;
 import cn.originmc.plugins.magicpaper.magic.function.behavior.*;
+import cn.originmc.plugins.magicpaper.magic.function.behavior.item.ItemGivePlayerFunction;
+import cn.originmc.plugins.magicpaper.magic.function.behavior.item.ItemLoreAddLineFunction;
+import cn.originmc.plugins.magicpaper.magic.function.behavior.item.ItemSetPlayerFunction;
 import cn.originmc.plugins.magicpaper.magic.function.control.execute.*;
 import cn.originmc.plugins.magicpaper.magic.function.hook.abolethplus.AboAddFunction;
 import cn.originmc.plugins.magicpaper.magic.function.hook.abolethplus.AboGetFunction;
@@ -11,6 +14,7 @@ import cn.originmc.plugins.magicpaper.magic.function.hook.luckperms.PlayerLPMeta
 import cn.originmc.plugins.magicpaper.magic.function.hook.luckperms.PlayerLPMetaSetFunction;
 import cn.originmc.plugins.magicpaper.magic.function.hook.luckperms.PlayerLPTempMetaSetFunction;
 import cn.originmc.plugins.magicpaper.magic.function.hook.placeholderapi.PlaceholderAPIFunction;
+import cn.originmc.plugins.magicpaper.magic.function.info.PlayerNameFunction;
 import cn.originmc.plugins.magicpaper.magic.function.magictimer.AddToTimerFunction;
 import cn.originmc.plugins.magicpaper.magic.function.magictimer.FoliaTimerFunction;
 import cn.originmc.plugins.magicpaper.magic.function.magictimer.PaperTimerFunction;
@@ -50,6 +54,10 @@ public class FunctionRegister {
         fm.register(new SendToPlayerFunction(),"stp");
         fm.register(new SendToAllPlayerFunction(),"stap");
         fm.register(new PlayerTeleportFunction(),"ptp");
+        // behavior.item
+        fm.register(new ItemLoreAddLineFunction(),"iladd");
+        fm.register(new ItemSetPlayerFunction(),"iset");
+        fm.register(new ItemGivePlayerFunction(),"igive");
         // control.execute
         fm.register(new PaperSpellExecuteFunction(),"paperse");
         fm.register(new PaperSpellAsyncExecuteFunction(),"papersae");
@@ -63,6 +71,8 @@ public class FunctionRegister {
         // trigger
         fm.register(new AddSpellToTriggerFunction(),"astt");
         fm.register(new TriggerClearSpellFunction(),"tcs");
+        // info
+        fm.register(new PlayerNameFunction(),"pname");
     }
     public static void registerInfo(){
         funInfo.put("playerLPMetaGet","获取玩家的LuckPerms的meta");

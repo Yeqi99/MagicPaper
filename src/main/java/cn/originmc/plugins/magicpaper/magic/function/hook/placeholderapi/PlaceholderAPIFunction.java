@@ -26,6 +26,7 @@ public class PlaceholderAPIFunction extends NormalFunction {
                 Player player=((PlayerResult) p).getPlayer();
                 StringResult stringResult = (StringResult) message;
                 String messageString = stringResult.getString();
+                messageString="%"+messageString+"%";
                 String result = PlaceholderAPIHook.getPlaceholder(player, messageString);
                 return new StringResult(result);
             }else  if (message instanceof ListResult){

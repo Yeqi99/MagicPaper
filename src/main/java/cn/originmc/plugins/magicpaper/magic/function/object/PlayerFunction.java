@@ -25,9 +25,9 @@ public class PlayerFunction extends NormalFunction {
     @Override
     public FunctionResult whenFunctionCalled(SpellContext spellContext, List<FunctionResult> args) {
         if (args.isEmpty()) {
-            if (spellContext.getContextMap().hasObject("self")) {
-                if (spellContext.getContextMap().getObject("self") instanceof Player){
-                    return new PlayerResult((Player) spellContext.getContextMap().getObject("self"));
+            if (spellContext.getContextMap().hasVariable("self")) {
+                if (spellContext.getContextMap().getVariable("self") instanceof PlayerResult){
+                    return (FunctionResult) spellContext.getContextMap().getVariable("self");
                 }else {
                     return new ErrorResult("ERROR", "self is not a player.");
                 }

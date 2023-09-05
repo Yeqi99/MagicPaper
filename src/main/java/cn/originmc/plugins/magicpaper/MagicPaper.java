@@ -10,6 +10,8 @@ import cn.originmc.plugins.magicpaper.command.MagicPaperCommand;
 import cn.originmc.plugins.magicpaper.command.MagicPaperTabCompleter;
 import cn.originmc.plugins.magicpaper.data.config.LangData;
 import cn.originmc.plugins.magicpaper.data.config.MagicData;
+import cn.originmc.plugins.magicpaper.hook.LuckPermsHook;
+import cn.originmc.plugins.magicpaper.hook.PlaceholderAPIHook;
 import cn.originmc.plugins.magicpaper.listener.CodingListener;
 import cn.originmc.plugins.magicpaper.trigger.MagicPaperTriggerManager;
 import cn.originmc.plugins.magicpaper.util.text.Sender;
@@ -55,6 +57,7 @@ public final class MagicPaper extends JavaPlugin {
         sender=new Sender(this);
         // 初始化魔法管理器
         magicManager = new MagicManager();
+        hook();
         // 初始化触发器管理器
         MagicPaperTriggerManager.init();
         // 保存默认配置
@@ -93,7 +96,7 @@ public final class MagicPaper extends JavaPlugin {
         context=new NormalContext();
     }
     public static String getVersion(){
-        return "1.0.19";
+        return "1.0.20";
     }
     public static String getLang(){
         return getInstance().getConfig().getString("lang");
@@ -115,6 +118,10 @@ public final class MagicPaper extends JavaPlugin {
         getInstance().saveResource("magic/HelloWorld.yml",false);
         getInstance().saveResource("onload/HelloWorld.m",false);
         getInstance().saveResource("import/HelloWorld.m",false);
+    }
+    public void hook(){
+        PlaceholderAPIHook.hook();
+        LuckPermsHook.hook();
     }
     public void loadData(){
         // 加载魔咒数据
