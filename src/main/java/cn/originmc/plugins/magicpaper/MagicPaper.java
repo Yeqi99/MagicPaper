@@ -3,7 +3,10 @@ package cn.originmc.plugins.magicpaper;
 import cn.origincraft.magic.MagicManager;
 import cn.origincraft.magic.function.FunctionRegister;
 import cn.origincraft.magic.magicredis.MagicRedisFunctionRegister;
+import cn.origincraft.magic.manager.MagicInstance;
+import cn.origincraft.magic.manager.MagicPackage;
 import cn.origincraft.magic.object.NormalContext;
+import cn.origincraft.magic.object.SpellContext;
 import cn.originmc.plugins.magicpaper.command.MagicPaperCommand;
 import cn.originmc.plugins.magicpaper.command.MagicPaperTabCompleter;
 import cn.originmc.plugins.magicpaper.data.config.LangData;
@@ -79,6 +82,7 @@ public final class MagicPaper extends JavaPlugin {
         cn.originmc.plugins.magicpaper.magic.FunctionRegister.registerInfo();
         cn.originmc.plugins.magicpaper.magic.FunctionRegister.registerArgsInfo();
         MagicPaperTriggerManager.trigger("server_on_enable",new NormalContext());
+        onLoadSpell();
     }
 
     @Override
@@ -89,7 +93,7 @@ public final class MagicPaper extends JavaPlugin {
         context=new NormalContext();
     }
     public static String getVersion(){
-        return "1.0.14";
+        return "1.0.17";
     }
     public static String getLang(){
         return getInstance().getConfig().getString("lang");
@@ -123,4 +127,11 @@ public final class MagicPaper extends JavaPlugin {
         return getInstance().getConfig().getBoolean("debug",false);
     }
 
+    public static void onLoadSpell(){
+        MagicPackage magicPackage=new MagicPackage("paper.onload");
+        magicPackage.importPackage(getContext(),getMagicManager());
+        for (MagicInstance value : magicPackage.getMagicInstances().values()) {
+            value.getSpell(getMagicManager()).execute(getContext());
+        }
+    }
 }

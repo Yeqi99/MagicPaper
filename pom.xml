@@ -6,7 +6,7 @@
 
     <groupId>cn.originmc.plugins</groupId>
     <artifactId>MagicPaper</artifactId>
-    <version>1.0.16-SNAPSHOT</version>
+    <version>1.0.18-SNAPSHOT</version>
     <packaging>jar</packaging>
 
     <name>MagicPaper</name>
@@ -82,13 +82,13 @@
         <dependency>
             <groupId>cn.origincraft.magic</groupId>
             <artifactId>Magic</artifactId>
-            <version>1.0.14</version>
+            <version>1.0.17</version>
         </dependency>
         <!-- MagicRedis -->
         <dependency>
             <groupId>cn.origincraft.magic</groupId>
             <artifactId>MagicRedis</artifactId>
-            <version>1.0.10</version>
+            <version>1.0.13</version>
         </dependency>
         <!-- YamlCore -->
         <dependency>
