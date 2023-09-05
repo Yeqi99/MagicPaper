@@ -59,10 +59,10 @@ public final class MagicPaper extends JavaPlugin {
         MagicPaperTriggerManager.init();
         // 保存默认配置
         saveRes();
-        // 加载数据
-        loadData();
         // 加载全局上下文
         loadContext();
+        // 加载数据
+        loadData();
         // 注册命令
         registerCommand();
         // 注册监听器
@@ -81,6 +81,8 @@ public final class MagicPaper extends JavaPlugin {
         cn.originmc.plugins.magicpaper.magic.FunctionRegister.registerInfo();
         cn.originmc.plugins.magicpaper.magic.FunctionRegister.registerArgsInfo();
         MagicPaperTriggerManager.trigger("server_on_enable",new NormalContext());
+        importSpell();
+        onLoadSpell();
     }
 
     @Override
@@ -119,8 +121,6 @@ public final class MagicPaper extends JavaPlugin {
         MagicData.load();
         // 加载语言文件数据
         LangData.load();
-        onLoadSpell();
-        importSpell();
     }
     public static boolean enableExtendedSyntax(String id){
         return getInstance().getConfig().getBoolean("extended-syntax."+id,false);
@@ -131,14 +131,14 @@ public final class MagicPaper extends JavaPlugin {
 
     public static void onLoadSpell(){
         MagicPackage magicPackage=new MagicPackage("paper.onload");
-        magicPackage.loadFiles("./onload");
+        magicPackage.loadFiles(getInstance().getDataFolder()+"/onload");
         for (MagicInstance value : magicPackage.getMagicInstances().values()) {
             value.getSpell(getMagicManager()).execute(getContext());
         }
     }
     public static void importSpell(){
-        MagicPackage magicPackage=new MagicPackage("paper.onload");
-        magicPackage.loadFiles("./import");
+        MagicPackage magicPackage=new MagicPackage("paper.import");
+        magicPackage.loadFiles(getInstance().getDataFolder()+"/import");
         magicPackage.importPackage(getContext(),getMagicManager());
     }
 }
