@@ -20,7 +20,6 @@ public class PlayerListener implements Listener {
     }
     @EventHandler
     public void onPlayerJoin(PlayerJoinEvent e){
-        MagicPaper.getSender().sendToAllPlayer(e.getJoinMessage());
         NormalContext normalContext=new NormalContext();
         normalContext.putVariable("event_name",e.getEventName());
         normalContext.putVariable("self",e.getPlayer());

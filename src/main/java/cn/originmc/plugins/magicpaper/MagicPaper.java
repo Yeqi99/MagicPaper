@@ -6,7 +6,6 @@ import cn.origincraft.magic.magicredis.MagicRedisFunctionRegister;
 import cn.origincraft.magic.manager.MagicInstance;
 import cn.origincraft.magic.manager.MagicPackage;
 import cn.origincraft.magic.object.NormalContext;
-import cn.origincraft.magic.object.SpellContext;
 import cn.originmc.plugins.magicpaper.command.MagicPaperCommand;
 import cn.originmc.plugins.magicpaper.command.MagicPaperTabCompleter;
 import cn.originmc.plugins.magicpaper.data.config.LangData;
@@ -82,7 +81,6 @@ public final class MagicPaper extends JavaPlugin {
         cn.originmc.plugins.magicpaper.magic.FunctionRegister.registerInfo();
         cn.originmc.plugins.magicpaper.magic.FunctionRegister.registerArgsInfo();
         MagicPaperTriggerManager.trigger("server_on_enable",new NormalContext());
-        onLoadSpell();
     }
 
     @Override
@@ -112,13 +110,17 @@ public final class MagicPaper extends JavaPlugin {
     public void saveRes(){
         getInstance().saveDefaultConfig();
         getInstance().saveResource("lang/Chinese.yml",false);
-        getInstance().saveResource("magic/example.yml",false);
+        getInstance().saveResource("magic/HelloWorld.yml",false);
+        getInstance().saveResource("onload/HelloWorld.m",false);
+        getInstance().saveResource("import/HelloWorld.m",false);
     }
     public void loadData(){
         // 加载魔咒数据
         MagicData.load();
         // 加载语言文件数据
         LangData.load();
+        onLoadSpell();
+        importSpell();
     }
     public static boolean enableExtendedSyntax(String id){
         return getInstance().getConfig().getBoolean("extended-syntax."+id,false);
@@ -129,9 +131,14 @@ public final class MagicPaper extends JavaPlugin {
 
     public static void onLoadSpell(){
         MagicPackage magicPackage=new MagicPackage("paper.onload");
-        magicPackage.importPackage(getContext(),getMagicManager());
+        magicPackage.loadFiles("./onload");
         for (MagicInstance value : magicPackage.getMagicInstances().values()) {
             value.getSpell(getMagicManager()).execute(getContext());
         }
+    }
+    public static void importSpell(){
+        MagicPackage magicPackage=new MagicPackage("paper.onload");
+        magicPackage.loadFiles("./import");
+        magicPackage.importPackage(getContext(),getMagicManager());
     }
 }
