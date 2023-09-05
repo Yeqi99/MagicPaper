@@ -12,6 +12,8 @@ import cn.originmc.plugins.magicpaper.magic.function.magictimer.FoliaTimerFuncti
 import cn.originmc.plugins.magicpaper.magic.function.magictimer.PaperTimerFunction;
 import cn.originmc.plugins.magicpaper.magic.function.object.LocationFunction;
 import cn.originmc.plugins.magicpaper.magic.function.object.PlayerFunction;
+import cn.originmc.plugins.magicpaper.magic.function.trigger.AddSpellToTriggerFunction;
+import cn.originmc.plugins.magicpaper.magic.function.trigger.TriggerClearSpellFunction;
 import dev.rgbmc.expression.managers.FunctionManager;
 
 import java.util.HashMap;
@@ -42,10 +44,14 @@ public class FunctionRegister {
         fm.register(new PaperSpellAsyncExecuteFunction(),"papersae");
         fm.register(new FoliaSpellExecuteFunction(),"foliase");
         fm.register(new FoliaSpellAsyncExecuteFunction(),"foliasae");
+        fm.register(new PublicContextGetFunction(),"getpc");
         // magictimer
         fm.register(new AddToTimerFunction(),"att");
         fm.register(new FoliaTimerFunction(),"ftimer");
         fm.register(new PaperTimerFunction(),"ptimer");
+        // trigger
+        fm.register(new AddSpellToTriggerFunction(),"astt");
+        fm.register(new TriggerClearSpellFunction(),"tcs");
     }
     public static void registerInfo(){
         funInfo.put("playerLPMetaGet","获取玩家的LuckPerms的meta");

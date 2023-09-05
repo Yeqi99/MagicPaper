@@ -9,6 +9,8 @@ import cn.originmc.plugins.magicpaper.data.config.LangData;
 import cn.originmc.plugins.magicpaper.data.config.MagicData;
 import cn.originmc.plugins.magicpaper.data.manager.MagicDataManager;
 import cn.originmc.plugins.magicpaper.magic.FunctionRegister;
+import cn.originmc.plugins.magicpaper.trigger.MagicPaperTriggerManager;
+import cn.originmc.plugins.magicpaper.trigger.abs.MagicPaperTrigger;
 import cn.originmc.plugins.magicpaper.util.text.Sender;
 import com.sun.org.apache.bcel.internal.generic.IF_ACMPEQ;
 import org.bukkit.command.Command;
@@ -114,6 +116,10 @@ public class MagicPaperCommand implements CommandExecutor {
             }
             MagicPaper.getSender().sendToSender(commandSender,"&a&b"+info+"&7:&c"+argsInfo);
             return true;
+        }else if(args[0].equalsIgnoreCase("triggers")){
+            for (MagicPaperTrigger magicPaperTrigger : MagicPaperTriggerManager.magicPaperTriggers) {
+                MagicPaper.getSender().sendToSender(commandSender, magicPaperTrigger.getName());
+            }
         }
         return true;
     }

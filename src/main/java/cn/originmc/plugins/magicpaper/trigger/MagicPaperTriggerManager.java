@@ -53,6 +53,15 @@ public class MagicPaperTriggerManager {
             }
         }
     }
+    public static void clear(String name){
+        for(MagicPaperTrigger trigger:magicPaperTriggers){
+            if (trigger.getName().equalsIgnoreCase(name)){
+                trigger.getSpells().clear();
+                return;
+            }
+        }
+    }
+
     public static void unregisterAll(Spell spell){
         for(MagicPaperTrigger trigger:magicPaperTriggers){
             trigger.unregister(spell);
