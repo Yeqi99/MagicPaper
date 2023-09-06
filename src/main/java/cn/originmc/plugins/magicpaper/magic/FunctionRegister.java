@@ -6,10 +6,7 @@ import cn.originmc.plugins.magicpaper.magic.function.behavior.item.ItemGivePlaye
 import cn.originmc.plugins.magicpaper.magic.function.behavior.item.ItemLoreAddLineFunction;
 import cn.originmc.plugins.magicpaper.magic.function.behavior.item.ItemSetPlayerFunction;
 import cn.originmc.plugins.magicpaper.magic.function.control.execute.*;
-import cn.originmc.plugins.magicpaper.magic.function.hook.abolethplus.AboAddFunction;
-import cn.originmc.plugins.magicpaper.magic.function.hook.abolethplus.AboGetFunction;
-import cn.originmc.plugins.magicpaper.magic.function.hook.abolethplus.AboGetUserFunction;
-import cn.originmc.plugins.magicpaper.magic.function.hook.abolethplus.AboSetFunction;
+import cn.originmc.plugins.magicpaper.magic.function.hook.abolethplus.*;
 import cn.originmc.plugins.magicpaper.magic.function.hook.luckperms.PlayerLPMetaGetFunction;
 import cn.originmc.plugins.magicpaper.magic.function.hook.luckperms.PlayerLPMetaSetFunction;
 import cn.originmc.plugins.magicpaper.magic.function.hook.luckperms.PlayerLPTempMetaSetFunction;
@@ -44,6 +41,8 @@ public class FunctionRegister {
         fm.register(new AboGetFunction(),"abog");
         fm.register(new AboAddFunction(),"aboa");
         fm.register(new AboSetFunction(),"abos");
+        fm.register(new AboEditFunction(),"aboe");
+        fm.register(new AboSetTimeFunction(),"abost");
         // object
         fm.register(new PlayerFunction(),"p");
         fm.register(new LocationFunction(),"loc");
