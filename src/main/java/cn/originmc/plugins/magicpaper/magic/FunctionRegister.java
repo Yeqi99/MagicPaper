@@ -2,9 +2,7 @@ package cn.originmc.plugins.magicpaper.magic;
 
 import cn.origincraft.magic.MagicManager;
 import cn.originmc.plugins.magicpaper.magic.function.behavior.*;
-import cn.originmc.plugins.magicpaper.magic.function.behavior.item.ItemGivePlayerFunction;
-import cn.originmc.plugins.magicpaper.magic.function.behavior.item.ItemLoreAddLineFunction;
-import cn.originmc.plugins.magicpaper.magic.function.behavior.item.ItemSetPlayerFunction;
+import cn.originmc.plugins.magicpaper.magic.function.behavior.item.*;
 import cn.originmc.plugins.magicpaper.magic.function.control.execute.*;
 import cn.originmc.plugins.magicpaper.magic.function.hook.abolethplus.*;
 import cn.originmc.plugins.magicpaper.magic.function.hook.luckperms.PlayerLPMetaGetFunction;
@@ -15,6 +13,7 @@ import cn.originmc.plugins.magicpaper.magic.function.info.PlayerNameFunction;
 import cn.originmc.plugins.magicpaper.magic.function.magictimer.AddToTimerFunction;
 import cn.originmc.plugins.magicpaper.magic.function.magictimer.FoliaTimerFunction;
 import cn.originmc.plugins.magicpaper.magic.function.magictimer.PaperTimerFunction;
+import cn.originmc.plugins.magicpaper.magic.function.object.CloneItemFunction;
 import cn.originmc.plugins.magicpaper.magic.function.object.ItemFunction;
 import cn.originmc.plugins.magicpaper.magic.function.object.LocationFunction;
 import cn.originmc.plugins.magicpaper.magic.function.object.PlayerFunction;
@@ -43,10 +42,13 @@ public class FunctionRegister {
         fm.register(new AboSetFunction(),"abos");
         fm.register(new AboEditFunction(),"aboe");
         fm.register(new AboSetTimeFunction(),"abost");
+        fm.register(new AboAddItemFunction(),"aboai");
+        fm.register(new AboGetItemFunction(),"abogi");
         // object
         fm.register(new PlayerFunction(),"p");
         fm.register(new LocationFunction(),"loc");
         fm.register(new ItemFunction());
+        fm.register(new CloneItemFunction(),"citem");
         // behavior
         fm.register(new ConsoleCommandFunction(),"ccommand");
         fm.register(new PlayerCommandFunction(),"pcommand");
@@ -57,6 +59,11 @@ public class FunctionRegister {
         fm.register(new ItemLoreAddLineFunction(),"iladd");
         fm.register(new ItemSetPlayerFunction(),"iset");
         fm.register(new ItemGivePlayerFunction(),"igive");
+        fm.register(new ItemNBTRemoveFunction(),"inbtr");
+        fm.register(new ItemNBTAddFunction(),"inbta");
+        fm.register(new ItemNBTGetFunction(),"inbtg");
+        fm.register(new ItemToStringFunction(),"itostr");
+        fm.register(new StringToItemFunction(),"strtoi");
         // control.execute
         fm.register(new PaperSpellExecuteFunction(),"paperse");
         fm.register(new PaperSpellAsyncExecuteFunction(),"papersae");
