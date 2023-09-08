@@ -120,7 +120,7 @@ public final class MagicPaper extends JavaPlugin {
         getInstance().saveResource("magic/HelloWorld.yml",false);
         getInstance().saveResource("onload/HelloWorld.m",false);
         getInstance().saveResource("import/HelloWorld.m",false);
-        getInstance().saveResource("item-format/Default.yml",false);
+        getInstance().saveResource("item-format/default.yml",false);
     }
     public void hook(){
         PlaceholderAPIHook.hook();
