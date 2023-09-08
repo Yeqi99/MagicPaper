@@ -12,7 +12,7 @@ import org.bukkit.inventory.ItemStack;
 
 import java.util.List;
 
-public class refreshVarFunction extends NormalFunction {
+public class RefreshVarFunction extends NormalFunction {
     @Override
     public FunctionResult whenFunctionCalled(SpellContext spellContext, List<FunctionResult> args) {
         if (args.size()<2){

@@ -74,6 +74,7 @@ public class FunctionRegister {
         fm.register(new ItemLoreHasLineNoColorFunction(),"ilhasnc");
         fm.register(new ItemVarParseFunction(),"ivarp");
         fm.register(new NewItemFunction(),"newi");
+        fm.register(new RefreshVarFunction(),"rfv");
 
         // control.execute
         fm.register(new PaperSpellExecuteFunction(),"paperse");
