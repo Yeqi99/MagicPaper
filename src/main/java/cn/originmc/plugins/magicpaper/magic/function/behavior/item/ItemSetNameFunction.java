@@ -4,6 +4,7 @@ import cn.origincraft.magic.function.NormalFunction;
 import cn.origincraft.magic.function.results.ErrorResult;
 import cn.origincraft.magic.object.SpellContext;
 import cn.originmc.plugins.magicpaper.magic.result.ItemStackResult;
+import cn.originmc.plugins.magicpaper.util.text.Color;
 import dev.rgbmc.expression.functions.FunctionResult;
 import dev.rgbmc.expression.results.StringResult;
 import org.bukkit.inventory.ItemStack;
@@ -23,6 +24,7 @@ public class ItemSetNameFunction extends NormalFunction {
             if (name instanceof StringResult){
                 ItemStack itemStack = ((ItemStackResult) item).getItemStack();
                 String nameString = ((StringResult) name).getString();
+                nameString = Color.toColor(nameString);
                 ItemMeta itemMeta = itemStack.getItemMeta();
                 itemMeta.setDisplayName(nameString);
                 itemStack.setItemMeta(itemMeta);
