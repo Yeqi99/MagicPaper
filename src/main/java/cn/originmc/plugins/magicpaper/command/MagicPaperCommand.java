@@ -45,7 +45,7 @@ public class MagicPaperCommand implements CommandExecutor {
             LangData.load();
             MagicData.load();
             ItemFormatData.load();
-            MagicPaper.importSpell();
+            MagicPaper.importSpell(MagicPaper.getContext());
             MagicPaper.getSender().sendToSender(commandSender, LangData.get(MagicPaper.getLang(),"reload","&aReloaded!"));
         }else if (args[0].equalsIgnoreCase("spells")){
             List<String> spells= MagicDataManager.getSpellsID();
@@ -57,6 +57,7 @@ public class MagicPaperCommand implements CommandExecutor {
             spellList.add(words);
             Spell spell=new Spell(spellList,MagicPaper.getMagicManager());
             NormalContext normalContext=new NormalContext();
+            MagicPaper.importSpell(normalContext);
             normalContext.putVariable("self",new PlayerResult((Player) commandSender));
             SpellContext spellContext = spell.execute(normalContext);
 
@@ -71,6 +72,7 @@ public class MagicPaperCommand implements CommandExecutor {
             }
             Spell spell = MagicDataManager.getSpell(spellID);
             NormalContext normalContext=new NormalContext();
+            MagicPaper.importSpell(normalContext);
             normalContext.putVariable("self",new PlayerResult((Player) commandSender));
             SpellContext spellContext = spell.execute(normalContext);
             if (MagicPaper.isDebug() && spellContext.hasExecuteError()){

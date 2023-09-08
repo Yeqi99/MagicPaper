@@ -5,6 +5,7 @@ import cn.origincraft.magic.function.FunctionRegister;
 import cn.origincraft.magic.magicredis.MagicRedisFunctionRegister;
 import cn.origincraft.magic.manager.MagicInstance;
 import cn.origincraft.magic.manager.MagicPackage;
+import cn.origincraft.magic.object.ContextMap;
 import cn.origincraft.magic.object.NormalContext;
 import cn.originmc.plugins.magicpaper.command.MagicPaperCommand;
 import cn.originmc.plugins.magicpaper.command.MagicPaperTabCompleter;
@@ -85,7 +86,7 @@ public final class MagicPaper extends JavaPlugin {
         cn.originmc.plugins.magicpaper.magic.FunctionRegister.registerInfo();
         cn.originmc.plugins.magicpaper.magic.FunctionRegister.registerArgsInfo();
         MagicPaperTriggerManager.trigger("server_on_enable",new NormalContext());
-        importSpell();
+        importSpell(getContext());
         onLoadSpell();
     }
 
@@ -147,9 +148,9 @@ public final class MagicPaper extends JavaPlugin {
             value.getSpell(getMagicManager()).execute(getContext());
         }
     }
-    public static void importSpell(){
+    public static void importSpell(ContextMap contextMap){
         MagicPackage magicPackage=new MagicPackage("paper.import");
         magicPackage.loadFiles(getInstance().getDataFolder()+"/import");
-        magicPackage.importPackage(getContext(),getMagicManager());
+        magicPackage.importPackage(contextMap,getMagicManager());
     }
 }

@@ -23,6 +23,7 @@ public class CodingListener implements Listener {
         if(event.getMessage().startsWith("!m")) {
             String words = event.getMessage().substring(2);
             NormalContext context= (NormalContext) contextMap;
+            MagicPaper.importSpell(contextMap);
             List<String> wordsList=new ArrayList<>();
             wordsList.add(words);
             Spell spell=new Spell(wordsList, MagicPaper.getMagicManager());
@@ -59,6 +60,7 @@ public class CodingListener implements Listener {
             event.setCancelled(true);
         }else if(event.getMessage().startsWith("!clear")){
             contextMap=new NormalContext();
+            MagicPaper.importSpell(contextMap);
             MagicPaper.getSender().sendToPlayer(event.getPlayer(), "&dCoding数据已清空");
             event.setCancelled(true);
         }
