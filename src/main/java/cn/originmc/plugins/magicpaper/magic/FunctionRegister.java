@@ -19,6 +19,7 @@ import cn.originmc.plugins.magicpaper.magic.function.object.LocationFunction;
 import cn.originmc.plugins.magicpaper.magic.function.object.PlayerFunction;
 import cn.originmc.plugins.magicpaper.magic.function.trigger.AddSpellToTriggerFunction;
 import cn.originmc.plugins.magicpaper.magic.function.trigger.TriggerClearSpellFunction;
+import cn.originmc.plugins.magicpaper.magic.function.yaml.*;
 import dev.rgbmc.expression.managers.FunctionManager;
 
 import java.util.HashMap;
@@ -57,6 +58,7 @@ public class FunctionRegister {
         fm.register(new PlayerTeleportFunction(),"ptp");
         // behavior.item
         fm.register(new ItemLoreAddLineFunction(),"iladd");
+        fm.register(new ItemLoreRemoveFunction(),"ilremove");
         fm.register(new ItemSetPlayerFunction(),"iset");
         fm.register(new ItemGivePlayerFunction(),"igive");
         fm.register(new ItemNBTRemoveFunction(),"inbtr");
@@ -64,6 +66,14 @@ public class FunctionRegister {
         fm.register(new ItemNBTGetFunction(),"inbtg");
         fm.register(new ItemToStringFunction(),"itostr");
         fm.register(new StringToItemFunction(),"strtoi");
+        fm.register(new ItemSetNameFunction(),"inames");
+        fm.register(new ItemGetNameFunction(),"inameg");
+        fm.register(new ItemTypeSetFunction(),"itypes");
+        fm.register(new ItemTypeGetFunction(),"itypeg");
+        fm.register(new ItemLoreHasLineFunction(),"ilhas");
+        fm.register(new ItemLoreHasLineNoColorFunction(),"ilhasnc");
+        fm.register(new ItemVarParseFunction(),"ivarp");
+
         // control.execute
         fm.register(new PaperSpellExecuteFunction(),"paperse");
         fm.register(new PaperSpellAsyncExecuteFunction(),"papersae");
@@ -79,6 +89,13 @@ public class FunctionRegister {
         fm.register(new TriggerClearSpellFunction(),"tcs");
         // info
         fm.register(new PlayerNameFunction(),"pname");
+        // yaml
+        fm.register(new YamlManagerFunction(),"yamlm");
+        fm.register(new YamlSaveAllFunction(),"yalmsa");
+        fm.register(new YamlSaveFunction(),"yamls");
+        fm.register(new YamlGetFunction(),"yamlg");
+        fm.register(new YamlSetFunction(),"yamls");
+        fm.register(new NewYamlFunction(),"nyaml");
     }
     public static void registerInfo(){
         funInfo.put("playerLPMetaGet","获取玩家的LuckPerms的meta");
@@ -101,6 +118,19 @@ public class FunctionRegister {
         funInfo.put("paperTimer","创建Paper计时器");
         funInfo.put("foliaTimer","创建Folia计时器");
         funInfo.put("addToTimer","添加魔咒到计时器");
+        funInfo.put("itemLoreAddLine","添加物品lore");
+        funInfo.put("itemSetPlayer","设置物品所有者");
+        funInfo.put("itemGivePlayer","给予玩家物品");
+        funInfo.put("itemNBTRemove","移除物品NBT");
+        funInfo.put("itemNBTAdd","添加物品NBT");
+        funInfo.put("itemNBTGet","获取物品NBT");
+        funInfo.put("itemToString","物品转字符串");
+        funInfo.put("stringToItem","字符串转物品");
+        funInfo.put("publicContextGet","获取公共数据");
+        funInfo.put("addSpellToTrigger","添加魔咒到触发器");
+        funInfo.put("triggerClearSpell","清除触发器的魔咒");
+        funInfo.put("playerName","获取玩家名");
+
     }
     public static void registerArgsInfo(){
         argsInfo.put("playerLPMetaGet","玩家(player) meta名(str)");

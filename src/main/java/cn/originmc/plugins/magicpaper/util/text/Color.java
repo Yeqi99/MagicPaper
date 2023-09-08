@@ -27,16 +27,16 @@ public class Color {
         return list;
     }
     public static String removeColor(String inStr){
-        String returnStr="";
+        StringBuilder returnStr= new StringBuilder();
         for (int i=0;i<inStr.length();i++){
             char c=inStr.charAt(i);
             if (c=='§'){
                 i++;
             }else {
-                returnStr+=c;
+                returnStr.append(c);
             }
         }
-        return returnStr;
+        return returnStr.toString();
     }
     public static List<String> removeColor(List<String> inList){
         List<String> returnList=new ArrayList<>();
