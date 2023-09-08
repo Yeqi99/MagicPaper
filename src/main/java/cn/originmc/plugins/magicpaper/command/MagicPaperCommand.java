@@ -7,6 +7,7 @@ import cn.origincraft.magic.object.SpellContext;
 import cn.originmc.plugins.magicpaper.MagicPaper;
 import cn.originmc.plugins.magicpaper.data.config.LangData;
 import cn.originmc.plugins.magicpaper.data.config.MagicData;
+import cn.originmc.plugins.magicpaper.data.item.format.ItemFormatData;
 import cn.originmc.plugins.magicpaper.data.manager.MagicDataManager;
 import cn.originmc.plugins.magicpaper.magic.FunctionRegister;
 import cn.originmc.plugins.magicpaper.magic.result.PlayerResult;
@@ -43,6 +44,7 @@ public class MagicPaperCommand implements CommandExecutor {
             MagicPaper.getInstance().reloadConfig();
             LangData.load();
             MagicData.load();
+            ItemFormatData.load();
             MagicPaper.importSpell();
             MagicPaper.getSender().sendToSender(commandSender, LangData.get(MagicPaper.getLang(),"reload","&aReloaded!"));
         }else if (args[0].equalsIgnoreCase("spells")){

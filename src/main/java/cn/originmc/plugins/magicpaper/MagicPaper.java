@@ -10,6 +10,7 @@ import cn.originmc.plugins.magicpaper.command.MagicPaperCommand;
 import cn.originmc.plugins.magicpaper.command.MagicPaperTabCompleter;
 import cn.originmc.plugins.magicpaper.data.config.LangData;
 import cn.originmc.plugins.magicpaper.data.config.MagicData;
+import cn.originmc.plugins.magicpaper.data.item.format.ItemFormatData;
 import cn.originmc.plugins.magicpaper.hook.LuckPermsHook;
 import cn.originmc.plugins.magicpaper.hook.PlaceholderAPIHook;
 import cn.originmc.plugins.magicpaper.listener.CodingListener;
@@ -128,6 +129,8 @@ public final class MagicPaper extends JavaPlugin {
         MagicData.load();
         // 加载语言文件数据
         LangData.load();
+        // 加载物品格式数据
+        ItemFormatData.load();
     }
     public static boolean enableExtendedSyntax(String id){
         return getInstance().getConfig().getBoolean("extended-syntax."+id,false);

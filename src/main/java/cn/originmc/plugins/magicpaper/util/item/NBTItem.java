@@ -167,6 +167,13 @@ public class NBTItem {
         }
         return getItemStack().getEnchantmentLevel(e);
     }
+    public void refreshVar(List<String> format,char varChar){
+        List<String> lore= ItemVariable.parse(getItemStack(),format,varChar);
+        ItemMeta itemMeta=origin.getItemMeta();
+        itemMeta.setLore(lore);
+        origin.setItemMeta(itemMeta);
+    }
+
     private UUID getAttributeUUID(Attribute attribute, String id) {
         ItemMeta itemMeta = getItemStack().getItemMeta();
         if (!itemMeta.hasAttributeModifiers()) {
