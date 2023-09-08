@@ -58,7 +58,7 @@ public final class MagicPaper extends JavaPlugin {
         // 初始化发送器
         sender=new Sender(this);
         // 初始化魔法管理器
-        magicManager = new MagicManager();
+        initMagicManager();
         hook();
         // 初始化触发器管理器
         MagicPaperTriggerManager.init();
@@ -72,6 +72,17 @@ public final class MagicPaper extends JavaPlugin {
         registerCommand();
         // 注册监听器
         registerListener();
+
+        // 注册魔法函数信息
+        cn.originmc.plugins.magicpaper.magic.FunctionRegister.registerInfo();
+        cn.originmc.plugins.magicpaper.magic.FunctionRegister.registerArgsInfo();
+        MagicPaperTriggerManager.trigger("server_on_enable",new NormalContext());
+        importSpell(getContext());
+        onLoadSpell();
+    }
+    public static void initMagicManager(){
+        // 初始化魔法管理器
+        magicManager = new MagicManager();
         // 注册魔法函数
         if (enableExtendedSyntax("system")){
             FunctionRegister.regDefault(getMagicManager());
@@ -82,14 +93,7 @@ public final class MagicPaper extends JavaPlugin {
         if (enableExtendedSyntax("redis")){
             MagicRedisFunctionRegister.reg(getMagicManager());
         }
-        // 注册魔法函数信息
-        cn.originmc.plugins.magicpaper.magic.FunctionRegister.registerInfo();
-        cn.originmc.plugins.magicpaper.magic.FunctionRegister.registerArgsInfo();
-        MagicPaperTriggerManager.trigger("server_on_enable",new NormalContext());
-        importSpell(getContext());
-        onLoadSpell();
     }
-
     @Override
     public void onDisable() {
         MagicPaperTriggerManager.trigger("server_on_disable",new NormalContext());

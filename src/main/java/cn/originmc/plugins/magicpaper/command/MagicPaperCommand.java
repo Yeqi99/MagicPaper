@@ -47,6 +47,14 @@ public class MagicPaperCommand implements CommandExecutor {
             ItemFormatData.load();
             MagicPaper.importSpell(MagicPaper.getContext());
             MagicPaper.getSender().sendToSender(commandSender, LangData.get(MagicPaper.getLang(),"reload","&aReloaded!"));
+        }else if(args[0].equalsIgnoreCase("reloadall")){
+            MagicPaper.getInstance().reloadConfig();
+            LangData.load();
+            MagicData.load();
+            ItemFormatData.load();
+            MagicPaper.importSpell(MagicPaper.getContext());
+            MagicPaper.getSender().sendToSender(commandSender, LangData.get(MagicPaper.getLang(),"reload","&aReloaded!"));
+            MagicPaper.initMagicManager();
         }else if (args[0].equalsIgnoreCase("spells")){
             List<String> spells= MagicDataManager.getSpellsID();
             MagicPaper.getSender().sendToSender(commandSender, spells);
