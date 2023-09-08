@@ -30,6 +30,7 @@ public class MagicPaperCommand implements CommandExecutor {
             List<String> helpMessage=new ArrayList<>();
             helpMessage.add("&aMagicPaper &7v"+MagicPaper.getVersion());
             helpMessage.add("&a/magicpaper reload &7- &fReload config");
+            helpMessage.add("&a/magicpaper reloadall &7- &fReload all");
             helpMessage.add("&a/magicpaper spells &7- &fList all spells");
             helpMessage.add("&a/magicpaper words <words> &7- &fExecute words");
             helpMessage.add("&a/magicpaper spell <spell> &7- &fExecute spell");
@@ -37,6 +38,9 @@ public class MagicPaperCommand implements CommandExecutor {
             helpMessage.add("&a/magicpaper publicspell <spell> &7- &fExecute spell with public context");
             helpMessage.add("&a/magicpaper functions &7- &fList all functions");
             helpMessage.add("&a/magicpaper functioninfo <function> &7- &fGet function info");
+            helpMessage.add("&a/magicpaper triggers &7- &fList all triggers");
+            helpMessage.add("&a/magicpaper onload &7- &fExecute onload spell");
+
             MagicPaper.getSender().sendToSender(commandSender, helpMessage);
             return true;
         }
@@ -134,6 +138,8 @@ public class MagicPaperCommand implements CommandExecutor {
             for (MagicPaperTrigger magicPaperTrigger : MagicPaperTriggerManager.magicPaperTriggers) {
                 MagicPaper.getSender().sendToSender(commandSender, magicPaperTrigger.getName());
             }
+        }else if (args[0].equalsIgnoreCase("onload")){
+            MagicPaper.onLoadSpell();
         }
         return true;
     }

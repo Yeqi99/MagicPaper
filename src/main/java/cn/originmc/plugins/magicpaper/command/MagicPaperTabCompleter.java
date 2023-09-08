@@ -28,6 +28,7 @@ public class MagicPaperTabCompleter implements TabCompleter {
             completions.add("functioninfo");
             completions.add("triggers");
             completions.add("reloadall");
+            completions.add("onload");
         } else if (args.length == 2) {
             if (args[0].equalsIgnoreCase("spell")) {
                 // 提示第二个参数的补全，可能是法术ID
