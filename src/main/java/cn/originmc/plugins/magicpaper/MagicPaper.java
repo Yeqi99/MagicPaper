@@ -96,7 +96,7 @@ public final class MagicPaper extends JavaPlugin {
         context=new NormalContext();
     }
     public static String getVersion(){
-        return "1.0.20";
+        return "1.0.24";
     }
     public static String getLang(){
         return getInstance().getConfig().getString("lang");
