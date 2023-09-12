@@ -98,6 +98,8 @@ public class FunctionRegister {
         fm.register(new YamlGetFunction(),"yamlg");
         fm.register(new YamlSetFunction(),"yamls");
         fm.register(new NewYamlFunction(),"nyaml");
+        fm.register(new HasYamlFunction(),"hasym");
+        fm.register(new HasYamlKeyFunction(),"hasymk");
     }
     public static void registerInfo(){
         funInfo.put("playerLPMetaGet","获取玩家的LuckPerms的meta");

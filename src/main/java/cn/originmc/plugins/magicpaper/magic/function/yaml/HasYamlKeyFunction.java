@@ -11,15 +11,15 @@ import dev.rgbmc.expression.results.StringResult;
 
 import java.util.List;
 
-public class HasYamlFunction extends NormalFunction{
-
+public class HasYamlKeyFunction extends NormalFunction {
     @Override
     public FunctionResult whenFunctionCalled(SpellContext spellContext, List<FunctionResult> args) {
-        if (args.size()<2){
+        if (args.size()<3){
             return new ErrorResult("ARGUMENTS_EMPTY", "HasYaml don't have enough args.");
         }
         FunctionResult arg0=args.get(0);
         FunctionResult arg1=args.get(1);
+        FunctionResult arg2=args.get(2);
         if (arg0 instanceof ObjectResult) {
             ObjectResult objectResult = (ObjectResult) arg0;
             Object object = objectResult.getObject();
@@ -29,10 +29,18 @@ public class HasYamlFunction extends NormalFunction{
             if (!(arg1 instanceof StringResult)) {
                 return new ErrorResult("TYPE_ERROR", "The second arg of HasYaml must be a string.");
             }
+            if (!(arg2 instanceof StringResult)) {
+                return new ErrorResult("TYPE_ERROR", "The third arg of HasYaml must be a string.");
+            }
             YamlManager yamlManager = (YamlManager) object;
-            String key = ((StringResult) arg1).getString();
-            if (yamlManager.hasElement(key)) {
-                return new BooleanResult(true);
+            String id = ((StringResult) arg1).getString();
+            String key = ((StringResult) arg2).getString();
+            if (yamlManager.hasElement(id)) {
+                if (yamlManager.has(id,key)) {
+                    return new BooleanResult(true);
+                } else {
+                    return new BooleanResult(false);
+                }
             } else {
                 return new BooleanResult(false);
             }
@@ -48,6 +56,6 @@ public class HasYamlFunction extends NormalFunction{
 
     @Override
     public String getName() {
-        return "hasyaml";
+        return "hasyamlkey";
     }
 }
