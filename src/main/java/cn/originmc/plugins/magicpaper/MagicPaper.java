@@ -12,6 +12,7 @@ import cn.originmc.plugins.magicpaper.command.MagicPaperTabCompleter;
 import cn.originmc.plugins.magicpaper.data.config.LangData;
 import cn.originmc.plugins.magicpaper.data.config.MagicData;
 import cn.originmc.plugins.magicpaper.data.item.format.ItemFormatData;
+import cn.originmc.plugins.magicpaper.hook.AbolethplusHook;
 import cn.originmc.plugins.magicpaper.hook.LuckPermsHook;
 import cn.originmc.plugins.magicpaper.hook.PlaceholderAPIHook;
 import cn.originmc.plugins.magicpaper.listener.CodingListener;
@@ -102,7 +103,7 @@ public final class MagicPaper extends JavaPlugin {
         context=new NormalContext();
     }
     public static String getVersion(){
-        return "1.0.24";
+        return "1.0.30";
     }
     public static String getLang(){
         return getInstance().getConfig().getString("lang");
@@ -131,6 +132,7 @@ public final class MagicPaper extends JavaPlugin {
     public void hook(){
         PlaceholderAPIHook.hook();
         LuckPermsHook.hook();
+        AbolethplusHook.hook();
     }
     public void loadData(){
         // 加载魔咒数据
