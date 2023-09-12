@@ -17,11 +17,11 @@ public class PlaceholderAPIHook{
 
     public static boolean hook() {
         if (Bukkit.getPluginManager().getPlugin(getName()) != null) {
-            MagicPaper.getSender().sendToLogger("&a成功挂钩PlaceholderAPI插件");
+            MagicPaper.getSender().sendToLogger("&a成功挂钩"+getName()+"插件");
             status=true;
             return true;
         } else {
-            MagicPaper.getSender().sendToLogger("&c未找到PlaceholderAPI插件");
+            MagicPaper.getSender().sendToLogger("&c未找到"+getName()+"插件");
             status=false;
             return false;
         }
