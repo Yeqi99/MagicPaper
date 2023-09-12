@@ -28,19 +28,33 @@ public class MagicPaperCommand implements CommandExecutor {
     public boolean onCommand(CommandSender commandSender, Command command, String s, String[] args) {
         if (args.length==0){
             List<String> helpMessage=new ArrayList<>();
-            helpMessage.add("&aMagicPaper &7v"+MagicPaper.getVersion());
-            helpMessage.add("&a/magicpaper reload &7- &fReload config");
-            helpMessage.add("&a/magicpaper reloadall &7- &fReload all");
-            helpMessage.add("&a/magicpaper spells &7- &fList all spells");
-            helpMessage.add("&a/magicpaper words <words> &7- &fExecute words");
-            helpMessage.add("&a/magicpaper spell <spell> &7- &fExecute spell");
-            helpMessage.add("&a/magicpaper publicwords <words> &7- &fExecute words with public context");
-            helpMessage.add("&a/magicpaper publicspell <spell> &7- &fExecute spell with public context");
-            helpMessage.add("&a/magicpaper functions &7- &fList all functions");
-            helpMessage.add("&a/magicpaper functioninfo <function> &7- &fGet function info");
-            helpMessage.add("&a/magicpaper triggers &7- &fList all triggers");
-            helpMessage.add("&a/magicpaper onload &7- &fExecute onload spell");
-
+            if (!MagicPaper.getLang().contains("Chinese")){
+                helpMessage.add("&aMagicPaper &7v"+MagicPaper.getVersion());
+                helpMessage.add("&a/magicpaper reload &7- &fReload config");
+                helpMessage.add("&a/magicpaper reloadall &7- &fReload all");
+                helpMessage.add("&a/magicpaper spells &7- &fList all spells");
+                helpMessage.add("&a/magicpaper words <words> &7- &fExecute words");
+                helpMessage.add("&a/magicpaper spell <spell> &7- &fExecute spell");
+                helpMessage.add("&a/magicpaper publicwords <words> &7- &fExecute words with public context");
+                helpMessage.add("&a/magicpaper publicspell <spell> &7- &fExecute spell with public context");
+                helpMessage.add("&a/magicpaper functions &7- &fList all functions");
+                helpMessage.add("&a/magicpaper functioninfo <function> &7- &fGet function info");
+                helpMessage.add("&a/magicpaper triggers &7- &fList all triggers");
+                helpMessage.add("&a/magicpaper onload &7- &fExecute onload spell");
+            }else {
+                helpMessage.add("&aMagicPaper &7v"+MagicPaper.getVersion());
+                helpMessage.add("&a/magicpaper reload &7- &f重载配置");
+                helpMessage.add("&a/magicpaper reloadall &7- &f重载所有");
+                helpMessage.add("&a/magicpaper spells &7- &f列出所有法术");
+                helpMessage.add("&a/magicpaper words <words> &7- &f执行语句");
+                helpMessage.add("&a/magicpaper spell <spell> &7- &f执行法术");
+                helpMessage.add("&a/magicpaper publicwords <words> &7- &f执行语句(公共上下文)");
+                helpMessage.add("&a/magicpaper publicspell <spell> &7- &f执行法术(公共上下文)");
+                helpMessage.add("&a/magicpaper functions &7- &f列出所有函数");
+                helpMessage.add("&a/magicpaper functioninfo <function> &7- &f获取函数信息");
+                helpMessage.add("&a/magicpaper triggers &7- &f列出所有触发器");
+                helpMessage.add("&a/magicpaper onload &7- &f执行onload法术");
+            }
             MagicPaper.getSender().sendToSender(commandSender, helpMessage);
             return true;
         }
