@@ -12,6 +12,7 @@ import dev.rgbmc.expression.results.StringResult;
 import org.bukkit.event.Event;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -54,5 +55,9 @@ public class PlayerListener implements Listener {
         e.setCancelled(((BooleanResult) normalContext.getVariable("cancelled")).getBoolean());
         e.setUseItemInHand(Event.Result.valueOf(((StringResult) normalContext.getVariable("use_item_in_hand")).getString()));
         e.setUseInteractedBlock(Event.Result.valueOf(((StringResult) normalContext.getVariable("interacted_block")).getString()));
+    }
+    @EventHandler
+    public void onPlayerClickPlayer(PlayerInteractEntityEvent e){
+        
     }
 }
