@@ -296,7 +296,7 @@ public class NBTItem {
         de.tr7zw.nbtapi.NBTItem nbtItem =new de.tr7zw.nbtapi.NBTItem(getItemStack());
         NBTCompound compound = nbtItem;
 
-        String[] addressParts = address.split("/");
+        String[] addressParts = address.startsWith("/") ? address.substring(1).split("/") : address.split("/");
         for (String addressPart : addressParts) {
             if (!addressPart.isEmpty()) {
                 NBTCompound nextCompound = compound.getCompound(addressPart);
