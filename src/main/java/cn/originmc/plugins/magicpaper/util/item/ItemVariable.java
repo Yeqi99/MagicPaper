@@ -10,7 +10,11 @@ public class ItemVariable {
     public static List<String> parse(ItemStack itemStack,List<String> lines,char sign){
         List<String> newLines=new ArrayList<>();
         for (String s : lines) {
-            newLines.add(parse(itemStack,s,sign));
+            String vs=parse(itemStack,s,sign);
+            if (vs.isEmpty()){
+                continue;
+            }
+            newLines.add(vs);
         }
         return newLines;
     }
@@ -26,6 +30,8 @@ public class ItemVariable {
             if (nbtItem.hasKey(key,path)){
                 String value= nbtItem.get(key,DataType.valueOf(dataType),path)+"";
                 variableString.setVariable(s,value);
+            }else {
+                return "";
             }
         }
         return variableString.getResultString();

@@ -58,13 +58,14 @@ public final class MagicPaper extends JavaPlugin {
         instance=this;
         // 初始化发送器
         sender=new Sender(this);
+        // 保存默认配置
+        saveRes();
         // 初始化魔法管理器
         initMagicManager();
         hook();
         // 初始化触发器管理器
         MagicPaperTriggerManager.init();
-        // 保存默认配置
-        saveRes();
+
         // 加载全局上下文
         loadContext();
         // 加载数据

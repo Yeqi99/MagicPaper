@@ -4,7 +4,6 @@ import cn.origincraft.magic.object.ContextMap;
 import cn.origincraft.magic.object.Spell;
 import cn.originmc.plugins.magicpaper.MagicPaper;
 import cn.originmc.plugins.magicpaper.trigger.abs.MagicPaperTrigger;
-import cn.originmc.plugins.magicpaper.trigger.impl.PlayerClickPlayerTrigger;
 import cn.originmc.plugins.magicpaper.trigger.impl.PlayerJoinTrigger;
 import cn.originmc.plugins.magicpaper.trigger.impl.ServerOnEnableTrigger;
 import cn.originmc.plugins.magicpaper.trigger.impl.ServerOnLoadTrigger;
@@ -23,7 +22,6 @@ public class MagicPaperTriggerManager {
         magicPaperTriggers.add(new ServerOnLoadTrigger());
         magicPaperTriggers.add(new PlayerJoinTrigger());
         magicPaperTriggers.add(new PlayerJoinTrigger());
-        magicPaperTriggers.add(new PlayerClickPlayerTrigger());
 
         // 注册监听器
         registerListener(MagicPaper.getInstance());
