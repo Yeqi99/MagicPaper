@@ -56,8 +56,4 @@ public class PlayerListener implements Listener {
         e.setUseItemInHand(Event.Result.valueOf(((StringResult) normalContext.getVariable("use_item_in_hand")).getString()));
         e.setUseInteractedBlock(Event.Result.valueOf(((StringResult) normalContext.getVariable("interacted_block")).getString()));
     }
-    @EventHandler
-    public void onPlayerClickPlayer(PlayerInteractEntityEvent e){
-        
-    }
 }
