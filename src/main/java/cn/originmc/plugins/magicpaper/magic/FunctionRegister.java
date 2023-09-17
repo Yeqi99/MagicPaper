@@ -75,6 +75,8 @@ public class FunctionRegister {
         fm.register(new ItemVarParseFunction(),"ivarp");
         fm.register(new NewItemFunction(),"newi");
         fm.register(new RefreshVarFunction(),"rfv");
+        fm.register(new ItemModeSetlFunction(),"imodel");
+
 
         // control.execute
         fm.register(new PaperSpellExecuteFunction(),"paperse");

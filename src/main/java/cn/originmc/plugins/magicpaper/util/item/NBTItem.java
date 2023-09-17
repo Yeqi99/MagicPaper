@@ -319,57 +319,57 @@ public class NBTItem {
                 return true;
             }
             case DOUBLE:{
-                nbtItem.setDouble(key, (Double) value);
+                compound.setDouble(key, (Double) value);
                 updateOrigin(nbtItem.getItem());
                 return true;
             }
             case STRING:{
-                nbtItem.setString(key, (String) value);
+                compound.setString(key, (String) value);
                 updateOrigin(nbtItem.getItem());
                 return true;
             }
             case ITEMSTACK:{
-                nbtItem.setItemStack(key,(ItemStack) value);
+                compound.setItemStack(key,(ItemStack) value);
                 updateOrigin(nbtItem.getItem());
                 return true;
             }
             case BOOLEAN:{
-                nbtItem.setBoolean(key,(Boolean) value);
+                compound.setBoolean(key,(Boolean) value);
                 updateOrigin(nbtItem.getItem());
                 return true;
             }
             case LONG:{
-                nbtItem.setLong(key, (Long) value);
+                compound.setLong(key, (Long) value);
                 updateOrigin(nbtItem.getItem());
                 return true;
             }
             case UUID:{
-                nbtItem.setUUID(key, (UUID) value);
+                compound.setUUID(key, (UUID) value);
                 updateOrigin(nbtItem.getItem());
                 return true;
             }
             case SHORT:{
-                nbtItem.setShort(key, (Short) value);
+                compound.setShort(key, (Short) value);
                 updateOrigin(nbtItem.getItem());
                 return true;
             }
             case INTARRAY:{
-                nbtItem.setIntArray(key, (int[]) value);
+                compound.setIntArray(key, (int[]) value);
                 updateOrigin(nbtItem.getItem());
                 return true;
             }
             case ITEMSTACKARRAY:{
-                nbtItem.setItemStackArray(key, (ItemStack[]) value);
+                compound.setItemStackArray(key, (ItemStack[]) value);
                 updateOrigin(nbtItem.getItem());
                 return true;
             }
             case BYTE:{
-                nbtItem.setByte(key, (Byte) value);
+                compound.setByte(key, (Byte) value);
                 updateOrigin(nbtItem.getItem());
                 return true;
             }
             case BYTEARRAY:{
-                nbtItem.setByteArray(key, (byte[]) value);
+                compound.setByteArray(key, (byte[]) value);
                 updateOrigin(nbtItem.getItem());
                 return true;
             }
