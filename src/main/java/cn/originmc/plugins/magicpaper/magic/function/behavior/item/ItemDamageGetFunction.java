@@ -23,6 +23,9 @@ public class ItemDamageGetFunction extends NormalFunction {
         }
         ItemStack itemStack = ((ItemStackResult) item).getItemStack();
         Damageable damageable=(Damageable) itemStack.getItemMeta();
+        if (damageable.isUnbreakable()){
+            return new IntegerResult(-1);
+        }
         if (!damageable.hasDamage()){
             return new IntegerResult(0);
         }

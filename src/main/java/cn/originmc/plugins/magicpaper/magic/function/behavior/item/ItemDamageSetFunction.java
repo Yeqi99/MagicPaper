@@ -5,6 +5,7 @@ import cn.origincraft.magic.function.results.ErrorResult;
 import cn.origincraft.magic.object.SpellContext;
 import cn.origincraft.magic.utils.VariableUtil;
 import cn.originmc.plugins.magicpaper.magic.result.ItemStackResult;
+import cn.originmc.plugins.magicpaper.util.item.NBTItem;
 import dev.rgbmc.expression.functions.FunctionResult;
 import dev.rgbmc.expression.results.StringResult;
 import org.bukkit.inventory.ItemStack;
@@ -33,6 +34,18 @@ public class ItemDamageSetFunction extends NormalFunction {
             return new ErrorResult("TYPE_ERROR", "itemDamageSet need a int str.");
         }
         int damageInt = Integer.parseInt(damageString);
+        if (damageInt == -1){
+            ItemMeta itemMeta=itemStack.getItemMeta();
+            itemMeta.setUnbreakable(true);
+            itemStack.setItemMeta(itemMeta);
+            return new ItemStackResult(itemStack);
+        }
+        if (damageInt == -2){
+            ItemMeta itemMeta=itemStack.getItemMeta();
+            itemMeta.setUnbreakable(false);
+            itemStack.setItemMeta(itemMeta);
+            return new ItemStackResult(itemStack);
+        }
         Damageable damageable=(Damageable) itemStack.getItemMeta();
         damageable.setDamage(damageInt);
         itemStack.setItemMeta(damageable);
