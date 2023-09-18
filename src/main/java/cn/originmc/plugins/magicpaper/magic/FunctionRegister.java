@@ -85,7 +85,7 @@ public class FunctionRegister {
         fm.register(new ItemEnchantmentGetFunction(),"ienchantg");
         fm.register(new ItemAttributeSetFunction(),"iattributes");
         fm.register(new ItemAttributeGetFunction(),"iattributeg");
-
+        fm.register(new ItemFlagFunction(),"iflags");
 
         // control.execute
         fm.register(new PaperSpellExecuteFunction(),"paperse");
