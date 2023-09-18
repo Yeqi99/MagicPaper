@@ -556,7 +556,7 @@ public class NBTItem {
                 return EquipmentSlot.HAND;
             case "oh":
                 return EquipmentSlot.OFF_HAND;
-            case "f":
+            case "s":
                 return EquipmentSlot.FEET;
             case "l":
                 return EquipmentSlot.LEGS;
