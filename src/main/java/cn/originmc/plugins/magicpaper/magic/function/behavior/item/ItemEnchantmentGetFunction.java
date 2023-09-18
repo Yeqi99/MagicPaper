@@ -31,14 +31,7 @@ public class ItemEnchantmentGetFunction extends NormalFunction {
         }
         ItemStack itemStack = ((ItemStackResult) item).getItemStack();
         String keyString = ((StringResult) key).getString();
-        String nameSpace="minecraft";
-        if (keyString.contains(":")){
-            String[] split = keyString.split(":");
-            nameSpace=split[0];
-            keyString=split[1];
-        }
-        NamespacedKey namespacedKey = new NamespacedKey(nameSpace,keyString);
-        Enchantment enchantment= Enchantment.getByKey(namespacedKey);
+        Enchantment enchantment= Enchantment.getByName(keyString);
         NBTItem nbtItem=new NBTItem(itemStack);
         if (enchantment==null){
             return new ErrorResult("ARGUMENT_ERROR", "Don't have this enchantment.");

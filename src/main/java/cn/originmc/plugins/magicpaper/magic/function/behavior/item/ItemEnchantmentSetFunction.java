@@ -39,13 +39,7 @@ public class ItemEnchantmentSetFunction extends NormalFunction {
             return new ErrorResult("TYPE_ERROR", "itemEnchantmentSet need a int str.");
         }
         int valueInt = Integer.parseInt(valueString);
-        String nameSpace="minecraft";
-        if (keyString.contains(":")){
-            String[] split = keyString.split(":");
-            nameSpace=split[0];
-            keyString=split[1];
-        }
-        Enchantment enchantment = Enchantment.getByKey(new NamespacedKey(nameSpace,keyString));
+        Enchantment enchantment = Enchantment.getByName(keyString);
         if (enchantment==null){
             return new ErrorResult("ARGUMENT_ERROR", "Don't have this enchantment.");
         }
