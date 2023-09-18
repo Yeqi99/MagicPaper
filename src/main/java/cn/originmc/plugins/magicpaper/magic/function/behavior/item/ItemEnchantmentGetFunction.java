@@ -8,7 +8,6 @@ import cn.originmc.plugins.magicpaper.util.item.NBTItem;
 import dev.rgbmc.expression.functions.FunctionResult;
 import dev.rgbmc.expression.results.IntegerResult;
 import dev.rgbmc.expression.results.StringResult;
-import org.bukkit.NamespacedKey;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemStack;
 

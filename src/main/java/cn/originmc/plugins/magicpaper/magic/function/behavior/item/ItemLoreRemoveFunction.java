@@ -6,7 +6,6 @@ import cn.origincraft.magic.object.SpellContext;
 import cn.origincraft.magic.utils.VariableUtil;
 import cn.originmc.plugins.magicpaper.magic.result.ItemStackResult;
 import dev.rgbmc.expression.functions.FunctionResult;
-import dev.rgbmc.expression.results.IntegerResult;
 import dev.rgbmc.expression.results.StringResult;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;

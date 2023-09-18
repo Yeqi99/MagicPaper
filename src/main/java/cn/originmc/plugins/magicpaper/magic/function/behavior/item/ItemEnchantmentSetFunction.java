@@ -4,11 +4,9 @@ import cn.origincraft.magic.function.NormalFunction;
 import cn.origincraft.magic.function.results.ErrorResult;
 import cn.origincraft.magic.object.SpellContext;
 import cn.origincraft.magic.utils.VariableUtil;
-import cn.originmc.plugins.magicpaper.MagicPaper;
 import cn.originmc.plugins.magicpaper.magic.result.ItemStackResult;
 import dev.rgbmc.expression.functions.FunctionResult;
 import dev.rgbmc.expression.results.StringResult;
-import org.bukkit.NamespacedKey;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemStack;
 

@@ -9,7 +9,6 @@ import cn.originmc.plugins.magicpaper.MagicPaper;
 import cn.originmc.plugins.magicpaper.magic.result.PlayerResult;
 import dev.rgbmc.expression.functions.FunctionResult;
 import dev.rgbmc.expression.results.StringResult;
-import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
 import java.util.ArrayList;

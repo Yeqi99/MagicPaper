@@ -5,7 +5,6 @@ import cn.origincraft.magic.function.results.ErrorResult;
 import cn.origincraft.magic.object.SpellContext;
 import cn.origincraft.magic.utils.VariableUtil;
 import cn.originmc.plugins.magicpaper.magic.result.ItemStackResult;
-import cn.originmc.plugins.magicpaper.util.item.NBTItem;
 import dev.rgbmc.expression.functions.FunctionResult;
 import dev.rgbmc.expression.results.StringResult;
 import org.bukkit.inventory.ItemStack;

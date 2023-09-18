@@ -8,7 +8,6 @@ import cn.originmc.plugins.magicpaper.magic.result.LocationResult;
 import cn.originmc.plugins.magicpaper.magic.result.PlayerResult;
 import dev.rgbmc.expression.functions.FunctionResult;
 
-import javax.xml.stream.Location;
 import java.util.List;
 
 public class PlayerTeleportFunction extends NormalFunction {

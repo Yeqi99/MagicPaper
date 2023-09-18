@@ -3,7 +3,6 @@ package cn.originmc.plugins.magicpaper.magic.function.behavior.item;
 import cn.origincraft.magic.function.NormalFunction;
 import cn.origincraft.magic.function.results.ErrorResult;
 import cn.origincraft.magic.object.SpellContext;
-import cn.originmc.plugins.magicpaper.magic.FunctionRegister;
 import cn.originmc.plugins.magicpaper.magic.result.ItemStackResult;
 import cn.originmc.plugins.magicpaper.util.item.DataType;
 import cn.originmc.plugins.magicpaper.util.item.NBTItem;
