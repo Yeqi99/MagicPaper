@@ -75,7 +75,16 @@ public class FunctionRegister {
         fm.register(new ItemVarParseFunction(),"ivarp");
         fm.register(new NewItemFunction(),"newi");
         fm.register(new RefreshVarFunction(),"rfv");
-        fm.register(new ItemModeSetlFunction(),"imodel");
+        fm.register(new ItemModeSetlFunction(),"imodels");
+        fm.register(new ItemModelGetFunction(),"imodelg");
+        fm.register(new ItemAmountSetFunction(),"iamounts");
+        fm.register(new ItemAmountGetFunction(),"iamountg");
+        fm.register(new ItemDamageSetFunction(),"idamages");
+        fm.register(new ItemDamageGetFunction(),"idamageg");
+        fm.register(new ItemEnchantmentSetFunction(),"ienchants");
+        fm.register(new ItemEnchantmentGetFunction(),"ienchantg");
+        fm.register(new ItemAttributeSetFunction(),"iattributes");
+        fm.register(new ItemAttributeGetFunction(),"iattributeg");
 
 
         // control.execute

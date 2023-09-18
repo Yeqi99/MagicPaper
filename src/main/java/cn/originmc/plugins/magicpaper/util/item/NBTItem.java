@@ -537,4 +537,35 @@ public class NBTItem {
         ReadWriteNBT nbt = NBT.itemStackToNBT(itemStack);
         return nbt.toString();
     }
+
+    public static AttributeModifier.Operation getOperation(String sign){
+        switch (sign){
+            case "+":
+                return AttributeModifier.Operation.ADD_NUMBER;
+            case "+%":
+                return AttributeModifier.Operation.ADD_SCALAR;
+            case "+*":
+                return AttributeModifier.Operation.MULTIPLY_SCALAR_1;
+            default:
+                return AttributeModifier.Operation.ADD_NUMBER;
+        }
+    }
+    public static EquipmentSlot getSlot(String sign){
+        switch (sign){
+            case "mh":
+                return EquipmentSlot.HAND;
+            case "oh":
+                return EquipmentSlot.OFF_HAND;
+            case "f":
+                return EquipmentSlot.FEET;
+            case "l":
+                return EquipmentSlot.LEGS;
+            case "c":
+                return EquipmentSlot.CHEST;
+            case "h":
+                return EquipmentSlot.HEAD;
+            default:
+                return EquipmentSlot.HAND;
+        }
+    }
 }

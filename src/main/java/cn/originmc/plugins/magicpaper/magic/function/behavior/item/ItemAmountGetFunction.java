@@ -7,26 +7,21 @@ import cn.originmc.plugins.magicpaper.magic.result.ItemStackResult;
 import dev.rgbmc.expression.functions.FunctionResult;
 import dev.rgbmc.expression.results.IntegerResult;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.List;
 
-public class ItemModelGetFunction extends NormalFunction {
+public class ItemAmountGetFunction extends NormalFunction {
     @Override
     public FunctionResult whenFunctionCalled(SpellContext spellContext, List<FunctionResult> args) {
         if (args.isEmpty()){
-            return new ErrorResult("FUNCTION_ARGS_ERROR", "itemModelGet don't have enough args.");
+            return new ErrorResult("FUNCTION_ARGS_ERROR", "itemAmountGet don't have enough args.");
         }
         FunctionResult item = args.get(0);
         if(!(item instanceof ItemStackResult)){
-            return new ErrorResult("TYPE_ERROR", "itemModelGet need a itemStack.");
+            return new ErrorResult("TYPE_ERROR", "itemAmountGet need a itemStack.");
         }
         ItemStack itemStack = ((ItemStackResult) item).getItemStack();
-        ItemMeta itemMeta=itemStack.getItemMeta();
-        if(!itemMeta.hasCustomModelData()){
-            return new IntegerResult(-1);
-        }
-        return new IntegerResult(itemMeta.getCustomModelData());
+        return new IntegerResult(itemStack.getAmount());
     }
 
     @Override
@@ -36,6 +31,6 @@ public class ItemModelGetFunction extends NormalFunction {
 
     @Override
     public String getName() {
-        return "itemModelGet";
+        return "itemAmountGet";
     }
 }
