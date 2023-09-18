@@ -12,7 +12,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.List;
 
-public class ItemModeSetlFunction extends NormalFunction {
+public class ItemModelSetFunction extends NormalFunction {
     @Override
     public FunctionResult whenFunctionCalled(SpellContext spellContext, List<FunctionResult> args) {
         if (args.size()<2){

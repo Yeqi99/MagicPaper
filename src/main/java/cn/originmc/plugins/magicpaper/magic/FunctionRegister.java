@@ -75,7 +75,7 @@ public class FunctionRegister {
         fm.register(new ItemVarParseFunction(),"ivarp");
         fm.register(new NewItemFunction(),"newi");
         fm.register(new RefreshVarFunction(),"rfv");
-        fm.register(new ItemModeSetlFunction(),"imodels");
+        fm.register(new ItemModelSetFunction(),"imodels");
         fm.register(new ItemModelGetFunction(),"imodelg");
         fm.register(new ItemAmountSetFunction(),"iamounts");
         fm.register(new ItemAmountGetFunction(),"iamountg");
