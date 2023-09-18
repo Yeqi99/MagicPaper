@@ -39,7 +39,7 @@ public class ItemEnchantmentSetFunction extends NormalFunction {
             return new ErrorResult("TYPE_ERROR", "itemEnchantmentSet need a int str.");
         }
         int valueInt = Integer.parseInt(valueString);
-        String nameSpace="MINECRAFT";
+        String nameSpace="minecraft";
         if (keyString.contains(":")){
             String[] split = keyString.split(":");
             nameSpace=split[0];
