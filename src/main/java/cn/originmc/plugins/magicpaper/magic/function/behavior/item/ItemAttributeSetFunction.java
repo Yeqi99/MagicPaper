@@ -28,22 +28,22 @@ public class ItemAttributeSetFunction extends NormalFunction {
         FunctionResult slot = args.get(4);
         FunctionResult operation = args.get(5);
         if (!(item instanceof ItemStackResult)){
-            return new ErrorResult("TYPE_ERROR", "itemAttributeAdd need a itemStack.");
+            return new ErrorResult("TYPE_ERROR", "itemAttributeSet need a itemStack.");
         }
         if (!(id instanceof StringResult)){
-            return new ErrorResult("TYPE_ERROR", "itemAttributeAdd need a str.");
+            return new ErrorResult("TYPE_ERROR", "itemAttributeSet need a str.");
         }
         if (!(attribute instanceof StringResult)){
-            return new ErrorResult("TYPE_ERROR", "itemAttributeAdd need a str.");
+            return new ErrorResult("TYPE_ERROR", "itemAttributeSet need a str.");
         }
         if (!(value instanceof StringResult)){
-            return new ErrorResult("TYPE_ERROR", "itemAttributeAdd need a str double.");
+            return new ErrorResult("TYPE_ERROR", "itemAttributeSet need a str double.");
         }
         if (!(slot instanceof StringResult)){
-            return new ErrorResult("TYPE_ERROR", "itemAttributeAdd need a str.");
+            return new ErrorResult("TYPE_ERROR", "itemAttributeSet need a str.");
         }
         if (!(operation instanceof StringResult)){
-            return new ErrorResult("TYPE_ERROR", "itemAttributeAdd need a str.");
+            return new ErrorResult("TYPE_ERROR", "itemAttributeSet need a str.");
         }
         ItemStack itemStack = ((ItemStackResult) item).getItemStack();
         String idString = ((StringResult) id).getString();
@@ -51,8 +51,8 @@ public class ItemAttributeSetFunction extends NormalFunction {
         String valueString = ((StringResult) value).getString();
         String slotString = ((StringResult) slot).getString();
         String operationString = ((StringResult) operation).getString();
-        if (!VariableUtil.isDouble(valueString)){
-            return new ErrorResult("TYPE_ERROR", "itemAttributeAdd need a str double.");
+        if (!VariableUtil.tryDouble(valueString)){
+            return new ErrorResult("TYPE_ERROR", "itemAttributeSet need a str double.");
         }
         double valueDouble=Double.parseDouble(valueString);
         EquipmentSlot slotResult=NBTItem.getSlot(slotString);
