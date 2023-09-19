@@ -87,7 +87,8 @@ public class FunctionRegister {
         fm.register(new ItemAttributeSetFunction(),"iattributes");
         fm.register(new ItemAttributeGetFunction(),"iattributeg");
         fm.register(new ItemFlagFunction(),"iflags");
-
+        fm.register(new ItemEnableRefreshFunction(),"irefreshe");
+        fm.register(new ItemFormatSetFunction(),"iformats");
         // control.execute
         fm.register(new PaperSpellExecuteFunction(),"paperse");
         fm.register(new PaperSpellAsyncExecuteFunction(),"papersae");
