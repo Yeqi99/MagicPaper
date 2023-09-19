@@ -1,5 +1,7 @@
 package cn.originmc.plugins.magicpaper.util.item;
 
+import cn.originmc.plugins.magicpaper.hook.PlaceholderAPIHook;
+import cn.originmc.plugins.magicpaper.util.text.Color;
 import de.tr7zw.nbtapi.NBT;
 import de.tr7zw.nbtapi.NBTCompound;
 import de.tr7zw.nbtapi.iface.ReadWriteNBT;
@@ -7,6 +9,7 @@ import org.bukkit.Material;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.attribute.AttributeModifier;
 import org.bukkit.enchantments.Enchantment;
+import org.bukkit.entity.Player;
 import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -169,11 +172,18 @@ public class NBTItem {
     }
     public void refreshVar(List<String> format,char varChar){
         List<String> lore= ItemVariable.parse(getItemStack(),format,varChar);
+        lore = Color.toColor(lore);
         ItemMeta itemMeta=origin.getItemMeta();
         itemMeta.setLore(lore);
         origin.setItemMeta(itemMeta);
     }
-
+    public void refreshPapi(List<String> format, Player player){
+        List<String> lore= PlaceholderAPIHook.getPlaceholder(player,format);
+        lore = Color.toColor(lore);
+        ItemMeta itemMeta=origin.getItemMeta();
+        itemMeta.setLore(lore);
+        origin.setItemMeta(itemMeta);
+    }
     private UUID getAttributeUUID(Attribute attribute, String id) {
         ItemMeta itemMeta = getItemStack().getItemMeta();
         if (!itemMeta.hasAttributeModifiers()) {

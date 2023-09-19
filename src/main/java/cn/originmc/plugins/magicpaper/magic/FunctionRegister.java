@@ -56,6 +56,7 @@ public class FunctionRegister {
         fm.register(new SendToPlayerFunction(),"stp");
         fm.register(new SendToAllPlayerFunction(),"stap");
         fm.register(new PlayerTeleportFunction(),"ptp");
+        fm.register(new UpdateInventoryFunction(),"upinv");
         // behavior.item
         fm.register(new ItemLoreAddLineFunction(),"iladd");
         fm.register(new ItemLoreRemoveFunction(),"ilremove");

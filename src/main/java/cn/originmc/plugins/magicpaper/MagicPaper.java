@@ -15,7 +15,9 @@ import cn.originmc.plugins.magicpaper.data.item.format.ItemFormatData;
 import cn.originmc.plugins.magicpaper.hook.AbolethplusHook;
 import cn.originmc.plugins.magicpaper.hook.LuckPermsHook;
 import cn.originmc.plugins.magicpaper.hook.PlaceholderAPIHook;
+import cn.originmc.plugins.magicpaper.hook.ProtocolLibHook;
 import cn.originmc.plugins.magicpaper.listener.CodingListener;
+import cn.originmc.plugins.magicpaper.listener.ItemVariableRefreshListener;
 import cn.originmc.plugins.magicpaper.trigger.MagicPaperTriggerManager;
 import cn.originmc.plugins.magicpaper.util.text.Sender;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -74,7 +76,6 @@ public final class MagicPaper extends JavaPlugin {
         registerCommand();
         // 注册监听器
         registerListener();
-
         // 注册魔法函数信息
         cn.originmc.plugins.magicpaper.magic.FunctionRegister.registerInfo();
         cn.originmc.plugins.magicpaper.magic.FunctionRegister.registerArgsInfo();
@@ -104,7 +105,7 @@ public final class MagicPaper extends JavaPlugin {
         context=new NormalContext();
     }
     public static String getVersion(){
-        return "1.0.36";
+        return "1.0.37";
     }
     public static String getLang(){
         return getInstance().getConfig().getString("lang");
@@ -117,8 +118,9 @@ public final class MagicPaper extends JavaPlugin {
     public void registerListener(){
         if (getConfig().getBoolean("coding",false)){
             getServer().getPluginManager().registerEvents(new CodingListener(),this);
-
         }
+        // protocolLib修改物品发包解析监听器
+        ProtocolLibHook.pm.addPacketListener(new ItemVariableRefreshListener(this));
     }
     public void saveRes(){
         getInstance().saveDefaultConfig();
@@ -131,6 +133,7 @@ public final class MagicPaper extends JavaPlugin {
         getInstance().saveResource("item-format/default.yml",false);
     }
     public void hook(){
+        ProtocolLibHook.hook();
         PlaceholderAPIHook.hook();
         LuckPermsHook.hook();
         AbolethplusHook.hook();

@@ -6,6 +6,7 @@ softdepend:
   - PlaceholderAPI
   - LuckPerms
   - Abolethplus
+  - ProtocolLib
 folia-supported: true
 commands:
     MagicPaper:

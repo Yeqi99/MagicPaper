@@ -9,3 +9,8 @@ extended-syntax:
   paper: true
 # 魔语快捷执行
 coding: true
+
+# ProtocolLib支持
+ProtocolLib:
+  item-variable-refresh: true
+  item-papi-refresh: true
