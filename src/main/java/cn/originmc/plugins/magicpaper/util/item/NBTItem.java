@@ -170,19 +170,21 @@ public class NBTItem {
         }
         return getItemStack().getEnchantmentLevel(e);
     }
-    public void refreshVar(List<String> format,char varChar){
+    public List<String> refreshVar(List<String> format,char varChar){
         List<String> lore= ItemVariable.parse(getItemStack(),format,varChar);
         lore = Color.toColor(lore);
         ItemMeta itemMeta=origin.getItemMeta();
         itemMeta.setLore(lore);
         origin.setItemMeta(itemMeta);
+        return lore;
     }
-    public void refreshPapi(List<String> format, Player player){
+    public List<String> refreshPapi(List<String> format, Player player){
         List<String> lore= PlaceholderAPIHook.getPlaceholder(player,format);
         lore = Color.toColor(lore);
         ItemMeta itemMeta=origin.getItemMeta();
         itemMeta.setLore(lore);
         origin.setItemMeta(itemMeta);
+        return lore;
     }
     private UUID getAttributeUUID(Attribute attribute, String id) {
         ItemMeta itemMeta = getItemStack().getItemMeta();

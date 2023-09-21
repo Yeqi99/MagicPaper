@@ -8,6 +8,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class MagicItem extends NBTItem {
@@ -42,35 +43,33 @@ public class MagicItem extends NBTItem {
         return (String) get("lore-format", DataType.STRING, "/MagicPaper");
     }
 
-    public void refreshVar() {
-        if (!isRefreshVar()) {
-            return;
+    public void refresh(boolean refreshVar, boolean refreshPapi, Player player) {
+        List<String> lore=new ArrayList<>();
+        if (refreshVar) {
+            if (!isRefreshVar()) {
+                return ;
+            }
+            String format_id = getFormat();
+            if (format_id == null) {
+                return;
+            }
+            lore = ItemFormatManager.getFormat(format_id);
+            if (lore == null) {
+                return;
+            }
+            lore = refreshVar(lore, '*');
         }
-        String format_id = getFormat();
-        if (format_id == null) {
-            return;
+        if (refreshPapi) {
+            if (!PlaceholderAPIHook.status) {
+                return;
+            }
+            if (lore == null) {
+                return;
+            }
+            refreshPapi(lore, player);
         }
-        List<String> format = ItemFormatManager.getFormat(format_id);
-        if (format == null) {
-            return;
-        }
-        refreshVar(format, '*');
     }
 
-    public void refreshPapi(Player player) {
-        if (!PlaceholderAPIHook.status) {
-            return;
-        }
-        String format_id = getFormat();
-        if (format_id == null) {
-            return;
-        }
-        List<String> format = ItemFormatManager.getFormat(format_id);
-        if (format == null) {
-            return;
-        }
-        refreshPapi(format, player);
-    }
 
 
 }

@@ -14,3 +14,7 @@ coding: true
 ProtocolLib:
   item-variable-refresh: true
   item-papi-refresh: true
+
+
+constants:
+  plugin-name: "MagicPaper"

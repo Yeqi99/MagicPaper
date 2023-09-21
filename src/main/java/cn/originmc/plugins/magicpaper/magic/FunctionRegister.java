@@ -9,6 +9,7 @@ import cn.originmc.plugins.magicpaper.magic.function.hook.luckperms.PlayerLPMeta
 import cn.originmc.plugins.magicpaper.magic.function.hook.luckperms.PlayerLPMetaSetFunction;
 import cn.originmc.plugins.magicpaper.magic.function.hook.luckperms.PlayerLPTempMetaSetFunction;
 import cn.originmc.plugins.magicpaper.magic.function.hook.placeholderapi.PlaceholderAPIFunction;
+import cn.originmc.plugins.magicpaper.magic.function.info.PaperConstantsFunction;
 import cn.originmc.plugins.magicpaper.magic.function.info.PlayerNameFunction;
 import cn.originmc.plugins.magicpaper.magic.function.magictimer.AddToTimerFunction;
 import cn.originmc.plugins.magicpaper.magic.function.magictimer.FoliaTimerFunction;
@@ -104,6 +105,7 @@ public class FunctionRegister {
         fm.register(new TriggerClearSpellFunction(),"tcs");
         // info
         fm.register(new PlayerNameFunction(),"pname");
+        fm.register(new PaperConstantsFunction(),"pconst");
         // yaml
         fm.register(new YamlManagerFunction(),"yamlm");
         fm.register(new YamlSaveAllFunction(),"yalmsa");

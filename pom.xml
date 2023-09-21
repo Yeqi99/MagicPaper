@@ -6,7 +6,7 @@
 
     <groupId>cn.originmc.plugins</groupId>
     <artifactId>MagicPaper</artifactId>
-    <version>1.0.37-SNAPSHOT</version>
+    <version>1.0.38-SNAPSHOT</version>
     <packaging>jar</packaging>
 
     <name>MagicPaper</name>
@@ -152,6 +152,7 @@
             <groupId>cn.originmc.api</groupId>
             <artifactId>AbolethPlusAdder</artifactId>
             <version>1.3</version>
+            <scope>provided</scope>
         </dependency>
         <!-- NBTAPI -->
         <dependency>
@@ -164,6 +165,7 @@
             <groupId>com.comphenix.protocol</groupId>
             <artifactId>ProtocolLib</artifactId>
             <version>5.1.0</version>
+            <scope>provided</scope>
         </dependency>
     </dependencies>
 </project>

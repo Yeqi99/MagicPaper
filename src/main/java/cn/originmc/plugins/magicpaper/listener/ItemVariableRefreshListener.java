@@ -40,12 +40,7 @@ public class ItemVariableRefreshListener extends PacketAdapter {
                 continue;
             }
             MagicItem magicItem=new MagicItem(item);
-            if(canVarRefresh()){
-                magicItem.refreshVar();
-            }
-            if (canPapiRefresh()){
-                magicItem.refreshPapi(player);
-            }
+            magicItem.refresh(canVarRefresh(),canPapiRefresh(),player);
             resultItems.add(magicItem.getItemStack());
         }
         packet.getItemListModifier().write(0,resultItems);
