@@ -62,7 +62,6 @@ public class FunctionRegister {
         fm.register(new SendToAllPlayerFunction(),"stap");
         fm.register(new PlayerTeleportFunction(),"ptp");
         fm.register(new UpdateInventoryFunction(),"upinv");
-        fm.register(new ItemInfoSetFunction(),"iinfos");
         // behavior.item
         fm.register(new ItemLoreAddLineFunction(),"iladd");
         fm.register(new ItemLoreRemoveFunction(),"ilremove");
@@ -95,6 +94,8 @@ public class FunctionRegister {
         fm.register(new ItemFlagFunction(),"iflags");
         fm.register(new ItemEnableRefreshFunction(),"irefreshe");
         fm.register(new ItemFormatSetFunction(),"iformats");
+        fm.register(new ItemInfoSetFunction(),"iinfos");
+        fm.register(new ItemInfoAddFunction(),"iinfoa");
         // control.execute
         fm.register(new PaperSpellExecuteFunction(),"paperse");
         fm.register(new PaperSpellAsyncExecuteFunction(),"papersae");

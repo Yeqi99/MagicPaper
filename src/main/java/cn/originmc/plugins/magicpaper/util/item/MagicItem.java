@@ -43,15 +43,24 @@ public class MagicItem extends NBTItem {
         return (String) get("lore-format", DataType.STRING, "/MagicPaper");
     }
 
+    public void addInfo(String info){
+        if (!hasKey("info", "/ItemInfo")){
+            setInfo(info);
+            return;
+        }
+        String s= (String) get("info",DataType.STRING,"/ItemInfo");
+        s=s+"|"+info;
+        set("info", s, "/ItemInfo");
+    }
     public void setInfo(String info) {
-        set("info", info, "/MagicPaper");
+        set("info", info, "/ItemInfo");
     }
     public List<String> getInfo(){
-        if (!hasKey("info", "/MagicPaper")){
+        if (!hasKey("info", "/ItemInfo")){
             return null;
         }
-        String s= (String) get("info",DataType.STRING,"/MagicPaper");
-        String[] strs= s.split("\n");
+        String s= (String) get("info",DataType.STRING,"/ItemInfo");
+        String[] strs= s.split("\\|");
         List<String> list=new ArrayList<>();
         for (String str : strs) {
             list.add(Color.toColor(str));
