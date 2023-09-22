@@ -21,7 +21,7 @@ public class PaperConstantsFunction extends NormalFunction {
             return new ErrorResult("FUNCTION_ARGS_ERROR", "PaperConstants don't have enough args.");
         }
         String keyStr = ((StringResult) key).getString();
-        String value = MagicPaper.getInstance().getConfig().getString(keyStr,"");
+        String value = MagicPaper.getInstance().getConfig().getString("constants."+keyStr,"");
         if (value.isEmpty()){
             return new NullResult();
         }else {

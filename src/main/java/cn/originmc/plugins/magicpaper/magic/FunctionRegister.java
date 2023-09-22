@@ -9,8 +9,10 @@ import cn.originmc.plugins.magicpaper.magic.function.hook.luckperms.PlayerLPMeta
 import cn.originmc.plugins.magicpaper.magic.function.hook.luckperms.PlayerLPMetaSetFunction;
 import cn.originmc.plugins.magicpaper.magic.function.hook.luckperms.PlayerLPTempMetaSetFunction;
 import cn.originmc.plugins.magicpaper.magic.function.hook.placeholderapi.PlaceholderAPIFunction;
+import cn.originmc.plugins.magicpaper.magic.function.info.IgnoreCaseStringComparisonFunction;
 import cn.originmc.plugins.magicpaper.magic.function.info.PaperConstantsFunction;
 import cn.originmc.plugins.magicpaper.magic.function.info.PlayerNameFunction;
+import cn.originmc.plugins.magicpaper.magic.function.info.StringComparisonFunction;
 import cn.originmc.plugins.magicpaper.magic.function.magictimer.AddToTimerFunction;
 import cn.originmc.plugins.magicpaper.magic.function.magictimer.FoliaTimerFunction;
 import cn.originmc.plugins.magicpaper.magic.function.magictimer.PaperTimerFunction;
@@ -18,6 +20,8 @@ import cn.originmc.plugins.magicpaper.magic.function.object.CloneItemFunction;
 import cn.originmc.plugins.magicpaper.magic.function.object.ItemFunction;
 import cn.originmc.plugins.magicpaper.magic.function.object.LocationFunction;
 import cn.originmc.plugins.magicpaper.magic.function.object.PlayerFunction;
+import cn.originmc.plugins.magicpaper.magic.function.random.RandomDoubleFunction;
+import cn.originmc.plugins.magicpaper.magic.function.random.WeightRandomFunction;
 import cn.originmc.plugins.magicpaper.magic.function.trigger.AddSpellToTriggerFunction;
 import cn.originmc.plugins.magicpaper.magic.function.trigger.TriggerClearSpellFunction;
 import cn.originmc.plugins.magicpaper.magic.function.yaml.*;
@@ -58,6 +62,7 @@ public class FunctionRegister {
         fm.register(new SendToAllPlayerFunction(),"stap");
         fm.register(new PlayerTeleportFunction(),"ptp");
         fm.register(new UpdateInventoryFunction(),"upinv");
+        fm.register(new ItemInfoSetFunction(),"iinfos");
         // behavior.item
         fm.register(new ItemLoreAddLineFunction(),"iladd");
         fm.register(new ItemLoreRemoveFunction(),"ilremove");
@@ -106,6 +111,8 @@ public class FunctionRegister {
         // info
         fm.register(new PlayerNameFunction(),"pname");
         fm.register(new PaperConstantsFunction(),"pconst");
+        fm.register(new IgnoreCaseStringComparisonFunction(),"stric");
+        fm.register(new StringComparisonFunction(),"strc");
         // yaml
         fm.register(new YamlManagerFunction(),"yamlm");
         fm.register(new YamlSaveAllFunction(),"yalmsa");
@@ -115,6 +122,9 @@ public class FunctionRegister {
         fm.register(new NewYamlFunction(),"nyaml");
         fm.register(new HasYamlFunction(),"hasym");
         fm.register(new HasYamlKeyFunction(),"hasymk");
+        // random
+        fm.register(new RandomDoubleFunction(),"randd");
+        fm.register(new WeightRandomFunction(),"randw");
     }
     public static void registerInfo(){
         funInfo.put("playerLPMetaGet","获取玩家的LuckPerms的meta");
