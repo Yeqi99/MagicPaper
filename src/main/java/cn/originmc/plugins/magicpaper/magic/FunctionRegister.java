@@ -96,6 +96,10 @@ public class FunctionRegister {
         fm.register(new ItemFormatSetFunction(),"iformats");
         fm.register(new ItemInfoSetFunction(),"iinfos");
         fm.register(new ItemInfoAddFunction(),"iinfoa");
+        fm.register(new ItemBoreSetFunction(),"ibores");
+        fm.register(new ItemSupportBoreAddressSetFunction(),"iboresupport");
+        fm.register(new AddItemToBoreFunction(),"iboreadd");
+        fm.register(new RemoveItemFromBoreFunction(),"iboreremove");
         // control.execute
         fm.register(new PaperSpellExecuteFunction(),"paperse");
         fm.register(new PaperSpellAsyncExecuteFunction(),"papersae");

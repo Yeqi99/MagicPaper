@@ -16,6 +16,7 @@ import cn.originmc.plugins.magicpaper.hook.AbolethplusHook;
 import cn.originmc.plugins.magicpaper.hook.LuckPermsHook;
 import cn.originmc.plugins.magicpaper.hook.PlaceholderAPIHook;
 import cn.originmc.plugins.magicpaper.hook.ProtocolLibHook;
+import cn.originmc.plugins.magicpaper.listener.AdditionalItemListener;
 import cn.originmc.plugins.magicpaper.listener.CodingListener;
 import cn.originmc.plugins.magicpaper.listener.ItemVariableRefreshListener;
 import cn.originmc.plugins.magicpaper.trigger.MagicPaperTriggerManager;
@@ -105,7 +106,7 @@ public final class MagicPaper extends JavaPlugin {
         context=new NormalContext();
     }
     public static String getVersion(){
-        return "1.0.39";
+        return "1.1.0";
     }
     public static String getLang(){
         return getInstance().getConfig().getString("lang");
@@ -121,6 +122,7 @@ public final class MagicPaper extends JavaPlugin {
         }
         // protocolLib修改物品发包解析监听器
         ProtocolLibHook.pm.addPacketListener(new ItemVariableRefreshListener(this));
+        getServer().getPluginManager().registerEvents(new AdditionalItemListener(), this);
     }
     public void saveRes(){
         getInstance().saveDefaultConfig();
