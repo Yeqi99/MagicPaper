@@ -32,7 +32,7 @@ public class RemoveItemFromBoreFunction extends NormalFunction {
         }
 
         String index = ((StringResult) indexResult).getString();
-        if (VariableUtil.tryInt(index)){
+        if (!VariableUtil.tryInt(index)){
             return new ErrorResult("ARGUMENTS_ERROR","RemoveItemFromBoreFunction need String int as second argument");
         }
         ItemStack itemStack = ((ItemStackResult) itemResult).getItemStack();

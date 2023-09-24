@@ -41,7 +41,7 @@ public class ItemBoreSetFunction extends NormalFunction {
         ItemStack itemStack = ((ItemStackResult) itemResult).getItemStack();
         String boreName = ((StringResult) boreNameResult).getString();
         String max = ((StringResult) maxResult).getString();
-        if (VariableUtil.tryInt(max)){
+        if (!VariableUtil.tryInt(max)){
             return new ErrorResult("ARGUMENTS_ERROR","ItemBoreSetFunction need String int as third argument");
         }
         String targetAddress = ((StringResult) targetAddressResult).getString();
