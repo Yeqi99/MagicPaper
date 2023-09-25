@@ -694,12 +694,16 @@ public class NBTItem {
                 if (targetCompound.hasKey(key)) {
                     value = value + targetCompound.getDouble(key);
                 }
+                DecimalFormat decimalFormat = new DecimalFormat("#.#");
+                value=Double.parseDouble(decimalFormat.format(value));
                 set(key, value, targetAddress);
             } else if (nbtType == NBTType.NBTTagFloat) {
                 float value = originCompound.getFloat(key);
                 if (targetCompound.hasKey(key)) {
                     value = value + targetCompound.getFloat(key);
                 }
+                DecimalFormat decimalFormat = new DecimalFormat("#.#");
+                value=Float.parseFloat(decimalFormat.format(value));
                 set(key, value, targetAddress);
             } else if (nbtType == NBTType.NBTTagInt) {
                 int value = originCompound.getInteger(key);
