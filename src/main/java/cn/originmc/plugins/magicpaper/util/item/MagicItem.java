@@ -139,6 +139,8 @@ public class MagicItem extends NBTItem {
         return (String) get("support-bore-address",DataType.STRING,"/MagicPaper");
     }
     public boolean addItemToBore(ItemStack itemStack){
+        itemStack=itemStack.clone();
+        itemStack.setAmount(1);
         MagicItem magicItem = new MagicItem(itemStack);
         String address = magicItem.getSupportBoreAddress();
         if (address == null){
@@ -183,6 +185,7 @@ public class MagicItem extends NBTItem {
         removeKey((totalItems - 1)+"", boreAddress);
         // 更新物品总数
         setBoreCurrent(boreAddress, totalItems - 1);
+        itemStack.setAmount(1);
         return itemStack;
     }
 }

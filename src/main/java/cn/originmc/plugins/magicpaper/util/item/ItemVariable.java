@@ -45,6 +45,20 @@ public class ItemVariable {
                     return "";
                 }
             }
+            // 获取某个key上存的物品名字
+            if (s.contains("$")){
+                String str = s.replace("$", "");
+                String[] split = str.split(":");
+                String address=split[0];
+                String key=split[1];
+                if (nbtItem.hasKey(key,address)) {
+                    ItemStack item = (ItemStack) nbtItem.get(key, DataType.ITEMSTACK,address);
+                    if (item==null){
+                        return "";
+                    }
+                    variableString.setVariable(s,item.getItemMeta().getDisplayName());
+                }
+            }
             // 附魔变量
             if (s.contains("@")){
                 String str = s.replace("@", "");
@@ -66,6 +80,16 @@ public class ItemVariable {
                 double aValue= nbtItem.getAttributeValue(id,attribute,operation,equipmentSlot);
                 if (aValue>0) {
                     variableString.setVariable(s, aValue + "");
+                }else {
+                    return "";
+                }
+            }
+            if (s.contains("%")){
+                String[] split = s.split(":");
+                String path=split[0];
+                String key=split[1];
+                if (nbtItem.hasKey(key,path)){
+                    variableString.setVariable(s,"");
                 }else {
                     return "";
                 }
