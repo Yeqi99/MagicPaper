@@ -172,6 +172,15 @@ public class MagicPaperCommand implements CommandExecutor {
             }
             player.getInventory().addItem(removeItem);
             player.getInventory().setItemInMainHand(magicItem.getItemStack());
+        }else if (args[0].equalsIgnoreCase("restart")){
+            MagicPaper.getInstance().reloadConfig();
+            LangData.load();
+            MagicData.load();
+            ItemFormatData.load();
+            MagicPaper.importSpell(MagicPaper.getContext());
+            MagicPaper.initMagicManager();
+            MagicPaper.onLoadSpell();
+            MagicPaper.getSender().sendToSender(commandSender, LangData.get(MagicPaper.getLang(),"reload","&aReloaded!"));
         }
         return true;
     }

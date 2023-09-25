@@ -105,9 +105,12 @@ public final class MagicPaper extends JavaPlugin {
         if (enableExtendedSyntax("paper")){
             cn.originmc.plugins.magicpaper.magic.FunctionRegister.register(getMagicManager());
         }
+        /*
         if (enableExtendedSyntax("redis")){
             MagicRedisFunctionRegister.reg(getMagicManager());
         }
+
+         */
     }
     @Override
     public void onDisable() {
