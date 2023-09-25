@@ -9,6 +9,7 @@ import cn.originmc.plugins.magicpaper.data.config.LangData;
 import cn.originmc.plugins.magicpaper.data.config.MagicData;
 import cn.originmc.plugins.magicpaper.data.item.format.ItemFormatData;
 import cn.originmc.plugins.magicpaper.data.manager.MagicDataManager;
+import cn.originmc.plugins.magicpaper.hook.PlaceholderAPIHook;
 import cn.originmc.plugins.magicpaper.magic.FunctionRegister;
 import cn.originmc.plugins.magicpaper.magic.result.PlayerResult;
 import cn.originmc.plugins.magicpaper.trigger.MagicPaperTriggerManager;
@@ -159,6 +160,10 @@ public class MagicPaperCommand implements CommandExecutor {
             MagicPaper.getSender().sendToSender(commandSender, LangData.get(MagicPaper.getLang(),"onload","&aOnload spell executed!"));
         }else  if(args[0].equalsIgnoreCase("boreremove")){
             Player player= (Player) commandSender;
+            if (args.length!=3){
+                MagicPaper.getSender().sendToSender(commandSender, LangData.get(MagicPaper.getLang(),"args-error","&cArgs error!"));
+                return true;
+            }
             ItemStack itemStack=player.getInventory().getItemInMainHand();
             if (itemStack.getType().isAir()){
                 MagicPaper.getSender().sendToSender(commandSender, LangData.get(MagicPaper.getLang(),"item-not-found","&cItem not found!"));
@@ -171,6 +176,7 @@ public class MagicPaperCommand implements CommandExecutor {
                 return true;
             }
             player.getInventory().addItem(removeItem);
+            magicItem.refresh(true, PlaceholderAPIHook.status,player);
             player.getInventory().setItemInMainHand(magicItem.getItemStack());
         }else if (args[0].equalsIgnoreCase("restart")){
             MagicPaper.getInstance().reloadConfig();

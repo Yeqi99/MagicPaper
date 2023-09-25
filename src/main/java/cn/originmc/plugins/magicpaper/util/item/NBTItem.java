@@ -16,6 +16,7 @@ import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
+import java.text.DecimalFormat;
 import java.util.*;
 
 public class NBTItem {
@@ -742,6 +743,9 @@ public class NBTItem {
                 if (targetCompound.hasKey(key)) {
                     value = targetCompound.getDouble(key) - value;
                 }
+                DecimalFormat decimalFormat = new DecimalFormat("#.#");
+                value=Double.parseDouble(decimalFormat.format(value));
+
                 if (value <= 0) {
                     removeKey(key, targetAddress);
                 } else {
@@ -752,6 +756,8 @@ public class NBTItem {
                 if (targetCompound.hasKey(key)) {
                     value = targetCompound.getFloat(key) - value;
                 }
+                DecimalFormat decimalFormat = new DecimalFormat("#.#");
+                value=Float.parseFloat(decimalFormat.format(value));
                 if (value <= 0) {
                     removeKey(key, targetAddress);
                 } else {
