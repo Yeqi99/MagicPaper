@@ -335,6 +335,7 @@ public class NBTItem {
         }
         return true;
     }
+
     public void removeSpace(String spaceName) {
         if (!spaceName.equals("/")) {
             return;
@@ -361,6 +362,7 @@ public class NBTItem {
         }
         updateOrigin(nbtItem.getItem());
     }
+
     public boolean set(String key, Object value, String address) {
         if (isNull() || isAir()) {
             return false;
@@ -690,7 +692,6 @@ public class NBTItem {
                 double value = originCompound.getDouble(key);
                 if (targetCompound.hasKey(key)) {
                     value = value + targetCompound.getDouble(key);
-                    MagicPaper.getSender().sendToAllPlayer(value+"");
                 }
                 set(key, value, targetAddress);
             } else if (nbtType == NBTType.NBTTagFloat) {
@@ -739,7 +740,7 @@ public class NBTItem {
             if (nbtType == NBTType.NBTTagDouble) {
                 double value = originCompound.getDouble(key);
                 if (targetCompound.hasKey(key)) {
-                    value = value - targetCompound.getDouble(key);
+                    value = targetCompound.getDouble(key) - value;
                 }
                 if (value <= 0) {
                     removeKey(key, targetAddress);
@@ -749,7 +750,7 @@ public class NBTItem {
             } else if (nbtType == NBTType.NBTTagFloat) {
                 float value = originCompound.getFloat(key);
                 if (targetCompound.hasKey(key)) {
-                    value = value - targetCompound.getFloat(key);
+                    value = targetCompound.getFloat(key) - value;
                 }
                 if (value <= 0) {
                     removeKey(key, targetAddress);
@@ -759,7 +760,7 @@ public class NBTItem {
             } else if (nbtType == NBTType.NBTTagInt) {
                 int value = originCompound.getInteger(key);
                 if (targetCompound.hasKey(key)) {
-                    value = value - targetCompound.getInteger(key);
+                    value = targetCompound.getInteger(key) - value;
                 }
                 if (value <= 0) {
                     removeKey(key, targetAddress);
@@ -769,7 +770,7 @@ public class NBTItem {
             } else if (nbtType == NBTType.NBTTagLong) {
                 long value = originCompound.getLong(key);
                 if (targetCompound.hasKey(key)) {
-                    value = value - targetCompound.getLong(key);
+                    value =targetCompound.getLong(key)- value;
                 }
                 if (value <= 0) {
                     removeKey(key, targetAddress);
@@ -779,7 +780,7 @@ public class NBTItem {
             } else if (nbtType == NBTType.NBTTagShort) {
                 short value = originCompound.getShort(key);
                 if (targetCompound.hasKey(key)) {
-                    value = (short) (value - targetCompound.getShort(key));
+                    value = (short) (targetCompound.getShort(key)-value);
                 }
                 if (value <= 0) {
                     removeKey(key, targetAddress);

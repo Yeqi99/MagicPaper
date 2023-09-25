@@ -18,3 +18,8 @@ ProtocolLib:
 
 constants:
   plugin-name: "MagicPaper"
+
+cool-down:
+  bore-add:
+    time: 1000
+    message: "&c你的操作过于频繁，请稍后再试"

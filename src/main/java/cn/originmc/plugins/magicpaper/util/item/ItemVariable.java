@@ -1,5 +1,9 @@
 package cn.originmc.plugins.magicpaper.util.item;
 
+import de.tr7zw.nbtapi.NBT;
+import org.bukkit.attribute.Attribute;
+import org.bukkit.attribute.AttributeModifier;
+import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.ArrayList;
@@ -37,6 +41,31 @@ public class ItemVariable {
                 if (nbtItem.hasSpace(str)){
                     variableString.setVariable(s,"");
                     continue;
+                }else {
+                    return "";
+                }
+            }
+            // 附魔变量
+            if (s.contains("@")){
+                String str = s.replace("@", "");
+                int eLevel= nbtItem.getEnchantmentLevel(str);
+                if (eLevel>0){
+                    variableString.setVariable(s,eLevel+"");
+                }else {
+                    return "";
+                }
+            }
+            // 原版属性变量
+            if (s.contains("#")){
+                String str = s.replace("#", "");
+                String[] split = str.split(":");
+                String id=split[0];
+                Attribute attribute=Attribute.valueOf(split[1]);
+                AttributeModifier.Operation operation=NBTItem.getOperation(split[2]);
+                EquipmentSlot equipmentSlot= NBTItem.getSlot(split[3]);
+                double aValue= nbtItem.getAttributeValue(id,attribute,operation,equipmentSlot);
+                if (aValue>0) {
+                    variableString.setVariable(s, aValue + "");
                 }else {
                     return "";
                 }

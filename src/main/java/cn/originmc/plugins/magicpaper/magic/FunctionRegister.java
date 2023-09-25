@@ -4,6 +4,8 @@ import cn.origincraft.magic.MagicManager;
 import cn.originmc.plugins.magicpaper.magic.function.behavior.*;
 import cn.originmc.plugins.magicpaper.magic.function.behavior.item.*;
 import cn.originmc.plugins.magicpaper.magic.function.control.execute.*;
+import cn.originmc.plugins.magicpaper.magic.function.cooldown.AddCoolDownFunction;
+import cn.originmc.plugins.magicpaper.magic.function.cooldown.CheckCoolDownFunction;
 import cn.originmc.plugins.magicpaper.magic.function.hook.abolethplus.*;
 import cn.originmc.plugins.magicpaper.magic.function.hook.luckperms.PlayerLPMetaGetFunction;
 import cn.originmc.plugins.magicpaper.magic.function.hook.luckperms.PlayerLPMetaSetFunction;
@@ -130,6 +132,9 @@ public class FunctionRegister {
         // random
         fm.register(new RandomDoubleFunction(),"randd");
         fm.register(new WeightRandomFunction(),"randw");
+        // cooldown
+        fm.register(new AddCoolDownFunction(),"addcd");
+        fm.register(new CheckCoolDownFunction(),"checkcd");
     }
     public static void registerInfo(){
         funInfo.put("playerLPMetaGet","获取玩家的LuckPerms的meta");

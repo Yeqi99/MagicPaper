@@ -1,6 +1,7 @@
 package cn.originmc.plugins.magicpaper.util.item;
 
 
+import cn.originmc.plugins.magicpaper.MagicPaper;
 import cn.originmc.plugins.magicpaper.data.manager.ItemFormatManager;
 import cn.originmc.plugins.magicpaper.hook.PlaceholderAPIHook;
 import cn.originmc.plugins.magicpaper.util.text.Color;
@@ -138,7 +139,8 @@ public class MagicItem extends NBTItem {
         return (String) get("support-bore-address",DataType.STRING,"/MagicPaper");
     }
     public boolean addItemToBore(ItemStack itemStack){
-        String address = getSupportBoreAddress();
+        MagicItem magicItem = new MagicItem(itemStack);
+        String address = magicItem.getSupportBoreAddress();
         if (address == null){
             return false;
         }

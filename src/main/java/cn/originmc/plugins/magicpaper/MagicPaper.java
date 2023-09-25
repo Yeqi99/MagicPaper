@@ -9,6 +9,7 @@ import cn.origincraft.magic.object.ContextMap;
 import cn.origincraft.magic.object.NormalContext;
 import cn.originmc.plugins.magicpaper.command.MagicPaperCommand;
 import cn.originmc.plugins.magicpaper.command.MagicPaperTabCompleter;
+import cn.originmc.plugins.magicpaper.cooldown.CoolDownManager;
 import cn.originmc.plugins.magicpaper.data.config.LangData;
 import cn.originmc.plugins.magicpaper.data.config.MagicData;
 import cn.originmc.plugins.magicpaper.data.item.format.ItemFormatData;
@@ -28,6 +29,7 @@ public final class MagicPaper extends JavaPlugin {
     private static Sender sender;
     private static MagicManager magicManager;
     private static NormalContext context;
+    private static CoolDownManager coolDownManager;
 
     public static JavaPlugin getInstance() {
         return instance;
@@ -49,6 +51,14 @@ public final class MagicPaper extends JavaPlugin {
         MagicPaper.context = context;
     }
 
+    public static CoolDownManager getCoolDownManager() {
+        return coolDownManager;
+    }
+
+    public static void setCoolDownManager(CoolDownManager coolDownManager) {
+        MagicPaper.coolDownManager = coolDownManager;
+    }
+
     @Override
     public void onLoad() {
         MagicPaperTriggerManager.trigger("server_on_enable",new NormalContext());
@@ -68,7 +78,8 @@ public final class MagicPaper extends JavaPlugin {
         hook();
         // 初始化触发器管理器
         MagicPaperTriggerManager.init();
-
+        // 初始化冷却管理器
+        coolDownManager=new CoolDownManager();
         // 加载全局上下文
         loadContext();
         // 加载数据
@@ -106,7 +117,7 @@ public final class MagicPaper extends JavaPlugin {
         context=new NormalContext();
     }
     public static String getVersion(){
-        return "1.1.0";
+        return "1.1.1";
     }
     public static String getLang(){
         return getInstance().getConfig().getString("lang");

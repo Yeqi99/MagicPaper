@@ -13,12 +13,14 @@ import cn.originmc.plugins.magicpaper.magic.FunctionRegister;
 import cn.originmc.plugins.magicpaper.magic.result.PlayerResult;
 import cn.originmc.plugins.magicpaper.trigger.MagicPaperTriggerManager;
 import cn.originmc.plugins.magicpaper.trigger.abs.MagicPaperTrigger;
+import cn.originmc.plugins.magicpaper.util.item.MagicItem;
 import cn.originmc.plugins.magicpaper.util.text.Sender;
 import com.sun.org.apache.bcel.internal.generic.IF_ACMPEQ;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -154,6 +156,22 @@ public class MagicPaperCommand implements CommandExecutor {
             }
         }else if (args[0].equalsIgnoreCase("onload")){
             MagicPaper.onLoadSpell();
+            MagicPaper.getSender().sendToSender(commandSender, LangData.get(MagicPaper.getLang(),"onload","&aOnload spell executed!"));
+        }else  if(args[0].equalsIgnoreCase("boreremove")){
+            Player player= (Player) commandSender;
+            ItemStack itemStack=player.getInventory().getItemInMainHand();
+            if (itemStack.getType().isAir()){
+                MagicPaper.getSender().sendToSender(commandSender, LangData.get(MagicPaper.getLang(),"item-not-found","&cItem not found!"));
+                return true;
+            }
+            MagicItem magicItem=new MagicItem(itemStack);
+            ItemStack removeItem= magicItem.removeItemFromBore(args[1],Integer.parseInt(args[2]));
+            if (removeItem==null){
+                MagicPaper.getSender().sendToSender(commandSender, LangData.get(MagicPaper.getLang(),"dont-have-item-bore","&cDont have item in bore!"));
+                return true;
+            }
+            player.getInventory().addItem(removeItem);
+            player.getInventory().setItemInMainHand(magicItem.getItemStack());
         }
         return true;
     }

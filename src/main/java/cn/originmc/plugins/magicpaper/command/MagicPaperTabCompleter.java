@@ -29,6 +29,7 @@ public class MagicPaperTabCompleter implements TabCompleter {
             completions.add("triggers");
             completions.add("reloadall");
             completions.add("onload");
+            completions.add("boreremove");
         } else if (args.length == 2) {
             if (args[0].equalsIgnoreCase("spell")) {
                 // 提示第二个参数的补全，可能是法术ID
@@ -48,13 +49,22 @@ public class MagicPaperTabCompleter implements TabCompleter {
                 // 提示第二个参数的补全，可能是法术ID
                 completions.addAll(MagicPaper.getMagicManager().getFunctionsRealNames());
             }
-            if (args[0].equalsIgnoreCase("triggers")){
+            if (args[0].equalsIgnoreCase("triggers")) {
                 completions.addAll(MagicPaperTriggerManager.getTriggerNames());
+            }
+            if (args[0].equalsIgnoreCase("boreremove")) {
+                completions.add("address");
+            }
+        } else if (args.length == 3){
+            if (args[0].equalsIgnoreCase("boreremove")) {
+                if (args[1].equalsIgnoreCase("address")) {
+                    completions.add("index");
+                }
             }
         }
 
-        // 对补全进行排序，可以自行根据需要更改
-        completions.sort(String.CASE_INSENSITIVE_ORDER);
+            // 对补全进行排序，可以自行根据需要更改
+            completions.sort(String.CASE_INSENSITIVE_ORDER);
 
         return completions;
     }
