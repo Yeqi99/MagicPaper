@@ -102,6 +102,7 @@ public class FunctionRegister {
         fm.register(new ItemSupportBoreAddressSetFunction(),"iboresupport");
         fm.register(new AddItemToBoreFunction(),"iboreadd");
         fm.register(new RemoveItemFromBoreFunction(),"iboreremove");
+        fm.register(new ItemAddSpellFunction(),"iaddspell");
         // control.execute
         fm.register(new PaperSpellExecuteFunction(),"paperse");
         fm.register(new PaperSpellAsyncExecuteFunction(),"papersae");

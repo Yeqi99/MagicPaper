@@ -19,6 +19,7 @@ import cn.originmc.plugins.magicpaper.hook.PlaceholderAPIHook;
 import cn.originmc.plugins.magicpaper.hook.ProtocolLibHook;
 import cn.originmc.plugins.magicpaper.listener.AdditionalItemListener;
 import cn.originmc.plugins.magicpaper.listener.CodingListener;
+import cn.originmc.plugins.magicpaper.listener.ItemTriggerListener;
 import cn.originmc.plugins.magicpaper.listener.ItemVariableRefreshListener;
 import cn.originmc.plugins.magicpaper.trigger.MagicPaperTriggerManager;
 import cn.originmc.plugins.magicpaper.util.text.Sender;
@@ -109,7 +110,6 @@ public final class MagicPaper extends JavaPlugin {
         if (enableExtendedSyntax("redis")){
             MagicRedisFunctionRegister.reg(getMagicManager());
         }
-
          */
     }
     @Override
@@ -138,6 +138,9 @@ public final class MagicPaper extends JavaPlugin {
         ProtocolLibHook.pm.addPacketListener(new ItemVariableRefreshListener(this));
         if (getConfig().getBoolean("bore-listener",false)){
             getServer().getPluginManager().registerEvents(new AdditionalItemListener(), this);
+        }
+        if (getConfig().getBoolean("item-trigger-listener",false)){
+            getServer().getPluginManager().registerEvents(new ItemTriggerListener(), this);
         }
     }
     public void saveRes(){

@@ -27,3 +27,5 @@ cool-down:
 bore-listener: true
 
 default-file: true
+
+item-trigger-listener: true

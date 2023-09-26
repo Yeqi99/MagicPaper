@@ -188,4 +188,73 @@ public class MagicItem extends NBTItem {
         itemStack.setAmount(1);
         return itemStack;
     }
+
+    public void setLeftSpell(String spellName,long coolDown,String slot) {
+        set("left-spell", spellName, "/SpellExecute");
+        set("left-spell-cool-down", coolDown, "/SpellExecute");
+        set("left-spell-slot", slot, "/SpellExecute");
+    }
+    public boolean hasLeftSpell() {
+        return hasKey("left-spell", "/SpellExecute");
+    }
+    public String getLeftSpell() {
+        return (String) get("left-spell", DataType.STRING, "/SpellExecute");
+    }
+    public long getLeftSpellCoolDown() {
+        return (long) get("left-spell-cool-down", DataType.LONG, "/SpellExecute");
+    }
+    public String getLeftSpellSlot() {
+        return (String) get("left-spell-slot", DataType.STRING, "/SpellExecute");
+    }
+    public void setRightSpell(String spellName,long coolDown,String slot) {
+        set("right-spell", spellName, "/SpellExecute");
+        set("right-spell-cool-down", coolDown, "/SpellExecute");
+        set("right-spell-slot", slot, "/SpellExecute");
+    }
+    public boolean hasRightSpell() {
+        return hasKey("right-spell", "/SpellExecute");
+    }
+    public String getRightSpell() {
+        return (String) get("right-spell", DataType.STRING, "/SpellExecute");
+    }
+    public long getRightSpellCoolDown() {
+        return (long) get("right-spell-cool-down", DataType.LONG, "/SpellExecute");
+    }
+    public String getRightSpellSlot() {
+        return (String) get("right-spell-slot", DataType.STRING, "/SpellExecute");
+    }
+    public void setShiftLeftSpell(String spellName,long coolDown,String slot) {
+        set("shift-left-spell", spellName, "/SpellExecute");
+        set("shift-left-spell-cool-down", coolDown, "/SpellExecute");
+        set("shift-left-spell-slot", slot, "/SpellExecute");
+    }
+    public boolean hasShiftLeftSpell() {
+        return hasKey("shift-left-spell", "/SpellExecute");
+    }
+    public String getShiftLeftSpell() {
+        return (String) get("shift-left-spell", DataType.STRING, "/SpellExecute");
+    }
+    public long getShiftLeftSpellCoolDown() {
+        return (long) get("shift-left-spell-cool-down", DataType.LONG, "/SpellExecute");
+    }
+    public String getShiftLeftSpellSlot() {
+        return (String) get("shift-left-spell-slot", DataType.STRING, "/SpellExecute");
+    }
+    public void setShiftRightSpell(String spellName,long coolDown,String slot) {
+        set("shift-right-spell", spellName, "/SpellExecute");
+        set("shift-right-spell-cool-down", coolDown, "/SpellExecute");
+        set("shift-right-spell-slot", slot, "/SpellExecute");
+    }
+    public boolean hasShiftRightSpell() {
+        return hasKey("shift-right-spell", "/SpellExecute");
+    }
+    public String getShiftRightSpell() {
+        return (String) get("shift-right-spell", DataType.STRING, "/SpellExecute");
+    }
+    public long getShiftRightSpellCoolDown() {
+        return (long) get("shift-right-spell-cool-down", DataType.LONG, "/SpellExecute");
+    }
+    public String getShiftRightSpellSlot() {
+        return (String) get("shift-right-spell-slot", DataType.STRING, "/SpellExecute");
+    }
 }
