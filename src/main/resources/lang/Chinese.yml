@@ -7,3 +7,7 @@ onload: "onload执行成功！"
 dont-have-item-bore: "&c镶嵌孔没有物品！"
 item-not-found: "&c没有找到指定的物品！"
 args-error: "&c参数错误！"
+item-left-click-cool-down: "&c这个物品的左键释放冷却中！" # ~是当前冷却的变量 @是魔咒名的变量
+item-right-click-cool-down: "&c这个物品的右键释放冷却中！"
+item-shift-left-click-cool-down: "&c这个物品的Shift+左键释放冷却中！"
+item-shift-right-click-cool-down: "&c这个物品的Shift+右键释放冷却中！"

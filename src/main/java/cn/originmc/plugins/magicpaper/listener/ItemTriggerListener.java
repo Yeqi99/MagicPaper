@@ -4,6 +4,8 @@ import cn.origincraft.magic.object.NormalContext;
 import cn.origincraft.magic.object.Spell;
 import cn.originmc.plugins.magicpaper.MagicPaper;
 import cn.originmc.plugins.magicpaper.cooldown.CoolDown;
+import cn.originmc.plugins.magicpaper.cooldown.CoolDownManager;
+import cn.originmc.plugins.magicpaper.data.config.LangData;
 import cn.originmc.plugins.magicpaper.data.manager.MagicDataManager;
 import cn.originmc.plugins.magicpaper.magic.result.ItemStackResult;
 import cn.originmc.plugins.magicpaper.magic.result.PlayerResult;
@@ -30,10 +32,19 @@ public class ItemTriggerListener implements Listener{
 
         // 处理左键点击事件
         if (event.getAction() == Action.LEFT_CLICK_AIR || event.getAction() == Action.LEFT_CLICK_BLOCK) {
-            if(MagicPaper.getCoolDownManager().isCoolDownActive(player.getUniqueId()+".leftClick")){
+            MagicItem magicItem = new MagicItem(player.getInventory().getItemInMainHand());
+            String id =magicItem.getId();
+            if (id==null){
                 return;
             }
-            MagicItem magicItem = new MagicItem(player.getInventory().getItemInMainHand());
+            if(MagicPaper.getCoolDownManager().isCoolDownActive(player.getUniqueId()+"."+id+".leftClick")){
+                CoolDown coolDown = MagicPaper.getCoolDownManager().getCoolDown(player.getUniqueId()+"."+id+".leftClick");
+                String message = LangData.get(MagicPaper.getLang(),"item-left-click-cool-down","&c@冷却中...&7(~s)");
+                message = message.replace("~",(coolDown.getResultDuration()/1000)+"");
+                message = message.replace("@",MagicDataManager.getSpellDisplayName(magicItem.getLeftSpell()));
+                MagicPaper.getSender().sendToPlayer(player, message);
+                return;
+            }
             if (!magicItem.getLeftSpellSlot().equalsIgnoreCase("mh")){
                 return;
             }
@@ -52,7 +63,7 @@ public class ItemTriggerListener implements Listener{
             context.putVariable("item",new ItemStackResult(player.getInventory().getItemInMainHand()));
             context.putVariable("action",new StringResult("left"));
             spell.execute(context);
-            CoolDown coolDown=new CoolDown(player.getUniqueId()+".leftClick",coolDownTime);
+            CoolDown coolDown=new CoolDown(player.getUniqueId()+"."+id+".leftClick",coolDownTime);
             MagicPaper.getCoolDownManager().addCoolDown(coolDown);
             event.setCancelled(true);
             return;
@@ -60,10 +71,19 @@ public class ItemTriggerListener implements Listener{
 
         // 处理右键点击事件
         if (event.getAction() == Action.RIGHT_CLICK_AIR || event.getAction() == Action.RIGHT_CLICK_BLOCK) {
-            if(MagicPaper.getCoolDownManager().isCoolDownActive(player.getUniqueId()+".rightClick")){
+            MagicItem magicItem = new MagicItem(player.getInventory().getItemInMainHand());
+            String id =magicItem.getId();
+            if (id==null){
                 return;
             }
-            MagicItem magicItem = new MagicItem(player.getInventory().getItemInMainHand());
+            if(MagicPaper.getCoolDownManager().isCoolDownActive(player.getUniqueId()+"."+id+".rightClick")){
+                CoolDown coolDown = MagicPaper.getCoolDownManager().getCoolDown(player.getUniqueId()+"."+id+".rightClick");
+                String message = LangData.get(MagicPaper.getLang(),"item-right-click-cool-down","&c@冷却中...&7(~s)");
+                message = message.replace("~",(coolDown.getResultDuration()/1000)+"");
+                message = message.replace("@",MagicDataManager.getSpellDisplayName(magicItem.getRightSpell()));
+                MagicPaper.getSender().sendToPlayer(player, message);
+                return;
+            }
             if (!magicItem.getRightSpellSlot().equalsIgnoreCase("mh")){
                 return;
             }
@@ -82,7 +102,7 @@ public class ItemTriggerListener implements Listener{
             context.putVariable("item",new ItemStackResult(player.getInventory().getItemInMainHand()));
             context.putVariable("action",new StringResult("right"));
             spell.execute(context);
-            CoolDown coolDown=new CoolDown(player.getUniqueId()+".rightClick",coolDownTime);
+            CoolDown coolDown=new CoolDown(player.getUniqueId()+"."+id+".rightClick",coolDownTime);
             MagicPaper.getCoolDownManager().addCoolDown(coolDown);
             event.setCancelled(true);
             return;
@@ -90,10 +110,19 @@ public class ItemTriggerListener implements Listener{
 
         // 处理蹲下加左键事件
         if (event.getAction() == Action.LEFT_CLICK_AIR || event.getAction() == Action.LEFT_CLICK_BLOCK && player.isSneaking()) {
-            if(MagicPaper.getCoolDownManager().isCoolDownActive(player.getUniqueId()+".shiftLeftClick")){
+            MagicItem magicItem = new MagicItem(player.getInventory().getItemInMainHand());
+            String id =magicItem.getId();
+            if (id==null){
                 return;
             }
-            MagicItem magicItem = new MagicItem(player.getInventory().getItemInMainHand());
+            if(MagicPaper.getCoolDownManager().isCoolDownActive(player.getUniqueId()+"."+id+".shiftLeftClick")){
+                CoolDown coolDown = MagicPaper.getCoolDownManager().getCoolDown(player.getUniqueId()+"."+id+".shiftLeftClick");
+                String message = LangData.get(MagicPaper.getLang(),"item-shift-left-click-cool-down","&c@冷却中...&7(~s)");
+                message = message.replace("~",(coolDown.getResultDuration()/1000)+"");
+                message = message.replace("@",MagicDataManager.getSpellDisplayName(magicItem.getShiftLeftSpell()));
+                MagicPaper.getSender().sendToPlayer(player, message);
+                return;
+            }
             if (!magicItem.getShiftLeftSpellSlot().equalsIgnoreCase("mh")){
                 return;
             }
@@ -112,7 +141,7 @@ public class ItemTriggerListener implements Listener{
             context.putVariable("item",new ItemStackResult(player.getInventory().getItemInMainHand()));
             context.putVariable("action",new StringResult("shiftLeft"));
             spell.execute(context);
-            CoolDown coolDown=new CoolDown(player.getUniqueId()+".shiftLeftClick",coolDownTime);
+            CoolDown coolDown=new CoolDown(player.getUniqueId()+"."+id+".shiftLeftClick",coolDownTime);
             MagicPaper.getCoolDownManager().addCoolDown(coolDown);
             event.setCancelled(true);
             return;
@@ -120,10 +149,19 @@ public class ItemTriggerListener implements Listener{
 
         // 处理蹲下加右键事件
         if (event.getAction() == Action.RIGHT_CLICK_AIR || event.getAction() == Action.RIGHT_CLICK_BLOCK && player.isSneaking()) {
-            if(MagicPaper.getCoolDownManager().isCoolDownActive(player.getUniqueId()+".shiftRightClick")){
+            MagicItem magicItem = new MagicItem(player.getInventory().getItemInMainHand());
+            String id =magicItem.getId();
+            if (id==null){
                 return;
             }
-            MagicItem magicItem = new MagicItem(player.getInventory().getItemInMainHand());
+            if(MagicPaper.getCoolDownManager().isCoolDownActive(player.getUniqueId()+"."+id+".shiftRightClick")){
+                CoolDown coolDown = MagicPaper.getCoolDownManager().getCoolDown(player.getUniqueId()+"."+id+".shiftRightClick");
+                String message = LangData.get(MagicPaper.getLang(),"item-shift-right-click-cool-down","&c@冷却中...&7(~s)");
+                message = message.replace("~",(coolDown.getResultDuration()/1000)+"");
+                message = message.replace("@",MagicDataManager.getSpellDisplayName(magicItem.getShiftRightSpell()));
+                MagicPaper.getSender().sendToPlayer(player, message);
+                return;
+            }
             if (!magicItem.getShiftRightSpellSlot().equalsIgnoreCase("mh")){
                 return;
             }
@@ -142,7 +180,7 @@ public class ItemTriggerListener implements Listener{
             context.putVariable("item",new ItemStackResult(player.getInventory().getItemInMainHand()));
             context.putVariable("action",new StringResult("shiftRight"));
             spell.execute(context);
-            CoolDown coolDown=new CoolDown(player.getUniqueId()+".shiftRightClick",coolDownTime);
+            CoolDown coolDown=new CoolDown(player.getUniqueId()+"."+id+".shiftRightClick",coolDownTime);
             MagicPaper.getCoolDownManager().addCoolDown(coolDown);
             event.setCancelled(true);
             return;

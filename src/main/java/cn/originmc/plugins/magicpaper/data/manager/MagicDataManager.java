@@ -21,4 +21,13 @@ public class MagicDataManager {
     public static boolean isSpell(String id){
         return MagicData.yamlManager.has(id,"spell");
     }
+    public static String getSpellDisplayName(String id){
+        if (!MagicData.yamlManager.has(id,"display")){
+            return null;
+        }
+        return (String) MagicData.yamlManager.get(id,"display");
+    }
+    public static List<String> getSpellDescription(String id){
+        return (List<String>) MagicData.yamlManager.get(id,"description");
+    }
 }

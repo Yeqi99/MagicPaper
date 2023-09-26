@@ -1,6 +1,6 @@
 spell:
   - vdef(item newItem(IRON_SWORD))
-  - vdef(item itemSetName(item str(pconst(iprefix1) &c初心之剑)))
+  - vdef(item itemSetName(item &c初心之剑)))
   - vdef(value double(100))
   - vdef(item itemNBTAdd(item str(/attribute_tag) 物理伤害 object(value)))
   - vdef(item itemNBTAdd(item str(/attribute_tag) 生命力 object(value)))
@@ -15,3 +15,6 @@ spell:
   - vdef(item itemFlag(item 63))
   - vdef(item itemFormatSet(item default))
   - igive(player(Yeqi) item)
+display: "测试物品"
+description:
+  - "这是一个测试咒语"

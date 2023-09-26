@@ -3,6 +3,7 @@ package cn.originmc.plugins.magicpaper.util.item;
 
 import cn.originmc.plugins.magicpaper.MagicPaper;
 import cn.originmc.plugins.magicpaper.data.manager.ItemFormatManager;
+import cn.originmc.plugins.magicpaper.data.manager.MagicDataManager;
 import cn.originmc.plugins.magicpaper.hook.PlaceholderAPIHook;
 import cn.originmc.plugins.magicpaper.util.text.Color;
 import org.bukkit.entity.Player;
@@ -98,6 +99,7 @@ public class MagicItem extends NBTItem {
             refreshPapi(lore, player);
         }
     }
+
     public boolean hasBore(String boreAddress){
         return hasSpace(boreAddress);
     }
@@ -198,6 +200,9 @@ public class MagicItem extends NBTItem {
         return hasKey("left-spell", "/SpellExecute");
     }
     public String getLeftSpell() {
+        if (!hasKey("left-spell", "/SpellExecute")){
+            return null;
+        }
         return (String) get("left-spell", DataType.STRING, "/SpellExecute");
     }
     public long getLeftSpellCoolDown() {
@@ -215,6 +220,9 @@ public class MagicItem extends NBTItem {
         return hasKey("right-spell", "/SpellExecute");
     }
     public String getRightSpell() {
+        if (!hasKey("right-spell", "/SpellExecute")){
+            return null;
+        }
         return (String) get("right-spell", DataType.STRING, "/SpellExecute");
     }
     public long getRightSpellCoolDown() {
@@ -232,6 +240,9 @@ public class MagicItem extends NBTItem {
         return hasKey("shift-left-spell", "/SpellExecute");
     }
     public String getShiftLeftSpell() {
+        if (!hasKey("shift-left-spell", "/SpellExecute")){
+            return null;
+        }
         return (String) get("shift-left-spell", DataType.STRING, "/SpellExecute");
     }
     public long getShiftLeftSpellCoolDown() {
@@ -249,6 +260,9 @@ public class MagicItem extends NBTItem {
         return hasKey("shift-right-spell", "/SpellExecute");
     }
     public String getShiftRightSpell() {
+        if (!hasKey("shift-right-spell", "/SpellExecute")){
+            return null;
+        }
         return (String) get("shift-right-spell", DataType.STRING, "/SpellExecute");
     }
     public long getShiftRightSpellCoolDown() {
@@ -257,4 +271,70 @@ public class MagicItem extends NBTItem {
     public String getShiftRightSpellSlot() {
         return (String) get("shift-right-spell-slot", DataType.STRING, "/SpellExecute");
     }
+    public void setId(String id) {
+        set("id", id, "/MagicPaper");
+    }
+    public String getId() {
+        return (String) get("id", DataType.STRING, "/MagicPaper");
+    }
+    public boolean hasId() {
+        return hasKey("id", "/MagicPaper");
+    }
+    public String getLeftSpellDisplay() {
+        String spellName= getLeftSpell();
+        if (spellName==null){
+            return null;
+        }
+        return MagicDataManager.getSpellDisplayName(spellName);
+    }
+    public List<String> getLeftSpellDescription() {
+        String spellName= getLeftSpell();
+        if (spellName==null){
+            return null;
+        }
+        return MagicDataManager.getSpellDescription(spellName);
+    }
+    public String getRightSpellDisplay() {
+        String spellName= getRightSpell();
+        if (spellName==null){
+            return null;
+        }
+        return MagicDataManager.getSpellDisplayName(spellName);
+    }
+    public List<String> getRightSpellDescription() {
+        String spellName= getRightSpell();
+        if (spellName==null){
+            return null;
+        }
+        return MagicDataManager.getSpellDescription(spellName);
+    }
+    public String getShiftLeftSpellDisplay() {
+        String spellName= getShiftLeftSpell();
+        if (spellName==null){
+            return null;
+        }
+        return MagicDataManager.getSpellDisplayName(spellName);
+    }
+    public List<String> getShiftLeftSpellDescription() {
+        String spellName= getShiftLeftSpell();
+        if (spellName==null){
+            return null;
+        }
+        return MagicDataManager.getSpellDescription(spellName);
+    }
+    public String getShiftRightSpellDisplay() {
+        String spellName= getShiftRightSpell();
+        if (spellName==null){
+            return null;
+        }
+        return MagicDataManager.getSpellDisplayName(spellName);
+    }
+    public List<String> getShiftRightSpellDescription() {
+        String spellName= getShiftRightSpell();
+        if (spellName==null){
+            return null;
+        }
+        return MagicDataManager.getSpellDescription(spellName);
+    }
+
 }
