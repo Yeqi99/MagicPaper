@@ -15,17 +15,20 @@ ProtocolLib:
   item-variable-refresh: true
   item-papi-refresh: true
 
-
+# 自定义全局常量
 constants:
   plugin-name: "MagicPaper"
 
+# 冷却管理
 cool-down:
+  # 镶嵌冷却设置
   bore-add:
     time: 1000
     message: "&c你的操作过于频繁，请稍后再试"
 
+# 镶嵌监听器
 bore-listener: true
-
+# 默认资源生成
 default-file: true
-
+# 物品触发魔咒监听
 item-trigger-listener: true
