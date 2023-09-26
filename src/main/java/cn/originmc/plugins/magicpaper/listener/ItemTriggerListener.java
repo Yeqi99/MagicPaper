@@ -4,7 +4,6 @@ import cn.origincraft.magic.object.NormalContext;
 import cn.origincraft.magic.object.Spell;
 import cn.originmc.plugins.magicpaper.MagicPaper;
 import cn.originmc.plugins.magicpaper.cooldown.CoolDown;
-import cn.originmc.plugins.magicpaper.cooldown.CoolDownManager;
 import cn.originmc.plugins.magicpaper.data.config.LangData;
 import cn.originmc.plugins.magicpaper.data.manager.MagicDataManager;
 import cn.originmc.plugins.magicpaper.magic.result.ItemStackResult;
@@ -31,7 +30,7 @@ public class ItemTriggerListener implements Listener{
         }
 
         // 处理左键点击事件
-        if (event.getAction() == Action.LEFT_CLICK_AIR || event.getAction() == Action.LEFT_CLICK_BLOCK) {
+        if (event.getAction() == Action.LEFT_CLICK_AIR || event.getAction() == Action.LEFT_CLICK_BLOCK && !player.isSneaking()) {
             MagicItem magicItem = new MagicItem(player.getInventory().getItemInMainHand());
             String id =magicItem.getId();
             if (id==null){
@@ -70,7 +69,7 @@ public class ItemTriggerListener implements Listener{
         }
 
         // 处理右键点击事件
-        if (event.getAction() == Action.RIGHT_CLICK_AIR || event.getAction() == Action.RIGHT_CLICK_BLOCK) {
+        if (event.getAction() == Action.RIGHT_CLICK_AIR || event.getAction() == Action.RIGHT_CLICK_BLOCK && !player.isSneaking()) {
             MagicItem magicItem = new MagicItem(player.getInventory().getItemInMainHand());
             String id =magicItem.getId();
             if (id==null){
