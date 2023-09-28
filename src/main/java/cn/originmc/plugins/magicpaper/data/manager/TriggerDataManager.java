@@ -30,12 +30,13 @@ public class TriggerDataManager {
         MagicPaperTriggerManager.register(id,spells);
     }
     public static void initDefaultTrigger(){
-        registerTrigger("PlayerJoinTrigger");
-        registerTrigger("ServerOnEnableTrigger");
-        registerTrigger("ServerOnLoadTrigger");
-        registerTrigger("ServerOnDisableTrigger");
-        registerTrigger("PlayerInteractTrigger");
-        MagicPaper.getSender().sendToLogger("§a[§bMagicPaper§a] §e触发器已加载");
+        for (String s : TriggerData.yamlManager.getIdList()) {
+            if (!MagicPaperTriggerManager.isTrigger(s)){
+                MagicPaper.getSender().sendToLogger("§a[§bMagicPaper§a] §c触发器 §a" + s + " §c不存在,注册失败");
+            }
+            registerTrigger(s);
+            MagicPaper.getSender().sendToLogger("§a[§bMagicPaper§a] §e触发器 §a" + s + " §e已注册");
+        }
     }
     public static void reInit(){
         MagicPaperTriggerManager.magicPaperTriggers.clear();

@@ -29,6 +29,7 @@ import cn.originmc.plugins.magicpaper.timer.MagicTimerManager;
 import cn.originmc.plugins.magicpaper.trigger.MagicPaperTriggerManager;
 import cn.originmc.plugins.magicpaper.util.text.Sender;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.bukkit.scheduler.BukkitRunnable;
 
 public final class MagicPaper extends JavaPlugin {
     private static JavaPlugin instance;
@@ -105,6 +106,7 @@ public final class MagicPaper extends JavaPlugin {
         // 启动计时器
         TimerDataManager.initConfigTimer();
         sender.sendOnEnableMsgToLogger("MagicPaper","Yeqi",getVersion(),"Public");
+
     }
     public static void initMagicManager(){
         // 初始化魔法管理器

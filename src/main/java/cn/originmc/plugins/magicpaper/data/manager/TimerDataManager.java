@@ -44,7 +44,7 @@ public class TimerDataManager {
                 foliaTimer.start();
                 result.add(foliaTimer);
             }
-            MagicPaper.getSender().sendToLogger("§a[§bMagicPaper§a] §e计时器 §a" + s + " §e已加载");
+            MagicPaper.getSender().sendToLogger("§a[§bMagicPaper§a] §e计时器 §a" + s + " §e已注册");
         }
         return result;
     }
