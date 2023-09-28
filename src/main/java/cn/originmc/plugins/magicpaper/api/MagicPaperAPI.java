@@ -5,11 +5,14 @@ import cn.origincraft.magic.object.NormalContext;
 import cn.origincraft.magic.object.Spell;
 import cn.origincraft.magic.object.SpellContext;
 import cn.originmc.plugins.magicpaper.MagicPaper;
+import cn.originmc.plugins.magicpaper.cooldown.CoolDownManager;
 import cn.originmc.plugins.magicpaper.data.manager.MagicDataManager;
 import cn.originmc.plugins.magicpaper.trigger.MagicPaperTriggerManager;
 import cn.originmc.plugins.magicpaper.trigger.abs.MagicPaperTrigger;
 import cn.originmc.plugins.magicpaper.timer.MagicTimer;
 import cn.originmc.plugins.magicpaper.timer.MagicTimerManager;
+import cn.originmc.plugins.magicpaper.util.item.MagicItem;
+import org.bukkit.inventory.ItemStack;
 
 import java.util.List;
 
@@ -111,5 +114,17 @@ public class MagicPaperAPI {
     public static void registerTimer(String id, MagicTimer magicTimer){
         MagicTimerManager.registerTimer(id,magicTimer);
     }
-
+    /**
+     * 获取冷却管理器
+     */
+    public static CoolDownManager getCoolDownManager(){
+        return MagicPaper.getCoolDownManager();
+    }
+    /**
+     * 获取魔法物品
+     * @param itemStack 物品
+     */
+    public static MagicItem getMagicItem(ItemStack itemStack){
+        return new MagicItem(itemStack);
+    }
 }

@@ -2,6 +2,7 @@ package cn.originmc.plugins.magicpaper.magic;
 
 import cn.origincraft.magic.MagicManager;
 import cn.originmc.plugins.magicpaper.magic.function.behavior.*;
+import cn.originmc.plugins.magicpaper.magic.function.behavior.entity.NewEntityFunction;
 import cn.originmc.plugins.magicpaper.magic.function.behavior.item.*;
 import cn.originmc.plugins.magicpaper.magic.function.control.execute.*;
 import cn.originmc.plugins.magicpaper.magic.function.cooldown.AddCoolDownFunction;
@@ -18,11 +19,9 @@ import cn.originmc.plugins.magicpaper.magic.function.info.StringComparisonFuncti
 import cn.originmc.plugins.magicpaper.magic.function.magictimer.AddToTimerFunction;
 import cn.originmc.plugins.magicpaper.magic.function.magictimer.FoliaTimerFunction;
 import cn.originmc.plugins.magicpaper.magic.function.magictimer.PaperTimerFunction;
-import cn.originmc.plugins.magicpaper.magic.function.object.CloneItemFunction;
-import cn.originmc.plugins.magicpaper.magic.function.object.ItemFunction;
-import cn.originmc.plugins.magicpaper.magic.function.object.LocationFunction;
-import cn.originmc.plugins.magicpaper.magic.function.object.PlayerFunction;
+import cn.originmc.plugins.magicpaper.magic.function.object.*;
 import cn.originmc.plugins.magicpaper.magic.function.random.RandomDoubleFunction;
+import cn.originmc.plugins.magicpaper.magic.function.random.RandomUUIDFunction;
 import cn.originmc.plugins.magicpaper.magic.function.random.WeightRandomFunction;
 import cn.originmc.plugins.magicpaper.magic.function.trigger.AddSpellToTriggerFunction;
 import cn.originmc.plugins.magicpaper.magic.function.trigger.TriggerClearSpellFunction;
@@ -57,6 +56,7 @@ public class FunctionRegister {
         fm.register(new LocationFunction(),"loc");
         fm.register(new ItemFunction());
         fm.register(new CloneItemFunction(),"citem");
+        fm.register(new EntityFunction());
         // behavior
         fm.register(new ConsoleCommandFunction(),"ccommand");
         fm.register(new PlayerCommandFunction(),"pcommand");
@@ -103,6 +103,8 @@ public class FunctionRegister {
         fm.register(new AddItemToBoreFunction(),"iboreadd");
         fm.register(new RemoveItemFromBoreFunction(),"iboreremove");
         fm.register(new ItemAddSpellFunction(),"iaddspell");
+        // behavior.entity
+        fm.register(new NewEntityFunction(),"newe");
         // control.execute
         fm.register(new PaperSpellExecuteFunction(),"paperse");
         fm.register(new PaperSpellAsyncExecuteFunction(),"papersae");
@@ -133,6 +135,7 @@ public class FunctionRegister {
         // random
         fm.register(new RandomDoubleFunction(),"randd");
         fm.register(new WeightRandomFunction(),"randw");
+        fm.register(new RandomUUIDFunction(),"ruuid");
         // cooldown
         fm.register(new AddCoolDownFunction(),"addcd");
         fm.register(new CheckCoolDownFunction(),"checkcd");
