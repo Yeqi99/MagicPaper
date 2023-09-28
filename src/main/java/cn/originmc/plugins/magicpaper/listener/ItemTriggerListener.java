@@ -23,14 +23,15 @@ public class ItemTriggerListener implements Listener{
     @EventHandler
     public void onPlayerInteractUseMHItem(PlayerInteractEvent event) {
         Player player = event.getPlayer();
-
+        if (player.isSneaking()){
+            return;
+        }
         // 检查手持物品是否为空或为 air
         if (player.getInventory().getItemInMainHand().getType() == Material.AIR) {
             return;
         }
-
         // 处理左键点击事件
-        if (event.getAction() == Action.LEFT_CLICK_AIR || event.getAction() == Action.LEFT_CLICK_BLOCK && !player.isSneaking()) {
+        if (event.getAction() == Action.LEFT_CLICK_AIR || event.getAction() == Action.LEFT_CLICK_BLOCK) {
             MagicItem magicItem = new MagicItem(player.getInventory().getItemInMainHand());
             String id =magicItem.getId();
             if (id==null){
@@ -69,7 +70,7 @@ public class ItemTriggerListener implements Listener{
         }
 
         // 处理右键点击事件
-        if (event.getAction() == Action.RIGHT_CLICK_AIR || event.getAction() == Action.RIGHT_CLICK_BLOCK && !player.isSneaking()) {
+        if (event.getAction() == Action.RIGHT_CLICK_AIR || event.getAction() == Action.RIGHT_CLICK_BLOCK) {
             MagicItem magicItem = new MagicItem(player.getInventory().getItemInMainHand());
             String id =magicItem.getId();
             if (id==null){
@@ -106,9 +107,20 @@ public class ItemTriggerListener implements Listener{
             event.setCancelled(true);
             return;
         }
+    }
+    @EventHandler
+    public void onPlayerShiftInteractUseMHItem(PlayerInteractEvent event) {
+        Player player = event.getPlayer();
+        if (!player.isSneaking()){
+            return;
+        }
+        // 检查手持物品是否为空或为 air
+        if (player.getInventory().getItemInMainHand().getType() == Material.AIR) {
+            return;
+        }
 
         // 处理蹲下加左键事件
-        if (event.getAction() == Action.LEFT_CLICK_AIR || event.getAction() == Action.LEFT_CLICK_BLOCK && player.isSneaking()) {
+        if (event.getAction() == Action.LEFT_CLICK_AIR || event.getAction() == Action.LEFT_CLICK_BLOCK) {
             MagicItem magicItem = new MagicItem(player.getInventory().getItemInMainHand());
             String id =magicItem.getId();
             if (id==null){
@@ -147,7 +159,7 @@ public class ItemTriggerListener implements Listener{
         }
 
         // 处理蹲下加右键事件
-        if (event.getAction() == Action.RIGHT_CLICK_AIR || event.getAction() == Action.RIGHT_CLICK_BLOCK && player.isSneaking()) {
+        if (event.getAction() == Action.RIGHT_CLICK_AIR || event.getAction() == Action.RIGHT_CLICK_BLOCK) {
             MagicItem magicItem = new MagicItem(player.getInventory().getItemInMainHand());
             String id =magicItem.getId();
             if (id==null){

@@ -11,6 +11,8 @@ import cn.originmc.plugins.magicpaper.magic.function.hook.abolethplus.*;
 import cn.originmc.plugins.magicpaper.magic.function.hook.luckperms.PlayerLPMetaGetFunction;
 import cn.originmc.plugins.magicpaper.magic.function.hook.luckperms.PlayerLPMetaSetFunction;
 import cn.originmc.plugins.magicpaper.magic.function.hook.luckperms.PlayerLPTempMetaSetFunction;
+import cn.originmc.plugins.magicpaper.magic.function.hook.mythicmobs.CastSkillFunction;
+import cn.originmc.plugins.magicpaper.magic.function.hook.mythicmobs.SpawnMobFunction;
 import cn.originmc.plugins.magicpaper.magic.function.hook.placeholderapi.PlaceholderAPIFunction;
 import cn.originmc.plugins.magicpaper.magic.function.info.IgnoreCaseStringComparisonFunction;
 import cn.originmc.plugins.magicpaper.magic.function.info.PaperConstantsFunction;
@@ -51,6 +53,9 @@ public class FunctionRegister {
         fm.register(new AboSetTimeFunction(),"abost");
         fm.register(new AboAddItemFunction(),"aboai");
         fm.register(new AboGetItemFunction(),"abogi");
+        // hook.mythicmobs
+        fm.register(new CastSkillFunction(),"mmskill");
+        fm.register(new SpawnMobFunction(),"mmob");
         // object
         fm.register(new PlayerFunction(),"p");
         fm.register(new LocationFunction(),"loc");
