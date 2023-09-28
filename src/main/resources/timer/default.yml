@@ -1,0 +1,6 @@
+type: paper # 计时器类型，支持 paper/folia
+later: 1000 # 延迟执行时间, 单位毫秒
+interval: 1000 # 间隔执行时间, 单位毫秒
+
+execute-spell:
+  - HelloWorld

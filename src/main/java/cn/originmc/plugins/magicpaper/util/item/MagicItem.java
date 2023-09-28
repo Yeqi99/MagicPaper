@@ -1,8 +1,7 @@
 package cn.originmc.plugins.magicpaper.util.item;
 
 
-import cn.originmc.plugins.magicpaper.MagicPaper;
-import cn.originmc.plugins.magicpaper.data.manager.ItemFormatManager;
+import cn.originmc.plugins.magicpaper.data.manager.ItemFormatDataManager;
 import cn.originmc.plugins.magicpaper.data.manager.MagicDataManager;
 import cn.originmc.plugins.magicpaper.hook.PlaceholderAPIHook;
 import cn.originmc.plugins.magicpaper.util.text.Color;
@@ -83,7 +82,7 @@ public class MagicItem extends NBTItem {
             if (format_id == null) {
                 return;
             }
-            lore = ItemFormatManager.getFormat(format_id);
+            lore = ItemFormatDataManager.getFormat(format_id);
             if (lore == null) {
                 return;
             }

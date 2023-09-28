@@ -1,8 +1,7 @@
-package cn.originmc.plugins.magicpaper.trigger.listener.timer;
+package cn.originmc.plugins.magicpaper.timer;
 
 import cn.origincraft.magic.object.ContextMap;
 import cn.origincraft.magic.object.Spell;
-import cn.origincraft.magic.object.SpellContext;
 import org.bukkit.Bukkit;
 
 import java.util.ArrayList;

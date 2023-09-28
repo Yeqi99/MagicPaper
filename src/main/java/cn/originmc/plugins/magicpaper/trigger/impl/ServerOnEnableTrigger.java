@@ -10,6 +10,6 @@ public class ServerOnEnableTrigger extends MagicPaperTrigger {
 
     @Override
     public String getName() {
-        return "server_on_enable";
+        return "ServerOnEnableTrigger";
     }
 }

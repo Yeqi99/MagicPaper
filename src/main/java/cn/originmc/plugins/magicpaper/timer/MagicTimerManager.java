@@ -1,10 +1,9 @@
-package cn.originmc.plugins.magicpaper.trigger.listener.timer;
+package cn.originmc.plugins.magicpaper.timer;
 
 import cn.origincraft.magic.object.ContextMap;
 import cn.origincraft.magic.object.Spell;
-import cn.originmc.plugins.magicpaper.trigger.listener.timer.impl.FoliaTimer;
-import cn.originmc.plugins.magicpaper.trigger.listener.timer.impl.PaperTimer;
-import org.checkerframework.checker.index.qual.PolyUpperBound;
+import cn.originmc.plugins.magicpaper.timer.impl.FoliaTimer;
+import cn.originmc.plugins.magicpaper.timer.impl.PaperTimer;
 
 import java.util.HashMap;
 import java.util.List;
@@ -22,6 +21,11 @@ public class MagicTimerManager {
     }
     public static void registerTimer(String id, MagicTimer magicTimer){
         magicTimerMap.put(id,magicTimer);
+    }
+    public static void registerTimer(List<MagicTimer> magicTimerList){
+        for (MagicTimer magicTimer : magicTimerList) {
+            magicTimerMap.put(magicTimer.getId(),magicTimer);
+        }
     }
     public static void addTask(String id, Spell task){
         MagicTimer magicTimer=magicTimerMap.get(id);

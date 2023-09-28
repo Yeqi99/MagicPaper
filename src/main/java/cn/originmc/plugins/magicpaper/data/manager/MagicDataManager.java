@@ -30,4 +30,15 @@ public class MagicDataManager {
     public static List<String> getSpellDescription(String id){
         return (List<String>) MagicData.yamlManager.get(id,"description");
     }
+    public static List<Spell> getSpell(List<String> spellNames){
+        List<Spell> result=new ArrayList<>();
+        for (String spellName : spellNames) {
+            if (!isSpell(spellName)){
+                continue;
+            }
+            Spell spell=getSpell(spellName);
+            result.add(spell);
+        }
+        return result;
+    }
 }

@@ -15,6 +15,9 @@ public abstract class MagicPaperTrigger {
     public void register(Spell spell){
         spells.add(spell);
     }
+    public void register(List<Spell> spells){
+        this.spells.addAll(spells);
+    }
     public void unregister(Spell spell){
         spells.remove(spell);
     }

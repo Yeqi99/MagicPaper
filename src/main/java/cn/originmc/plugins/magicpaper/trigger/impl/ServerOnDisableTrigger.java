@@ -10,6 +10,6 @@ public class ServerOnDisableTrigger extends MagicPaperTrigger {
 
     @Override
     public String getName() {
-        return "server_on_disable";
+        return "ServerOnDisableTrigger";
     }
 }

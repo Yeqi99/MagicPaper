@@ -1,8 +1,8 @@
-package cn.originmc.plugins.magicpaper.trigger.listener.timer.impl;
+package cn.originmc.plugins.magicpaper.timer.impl;
 
 import cn.origincraft.magic.object.ContextMap;
 import cn.originmc.plugins.magicpaper.MagicPaper;
-import cn.originmc.plugins.magicpaper.trigger.listener.timer.MagicTimer;
+import cn.originmc.plugins.magicpaper.timer.MagicTimer;
 import org.bukkit.scheduler.BukkitRunnable;
 
 public class PaperTimer extends MagicTimer {

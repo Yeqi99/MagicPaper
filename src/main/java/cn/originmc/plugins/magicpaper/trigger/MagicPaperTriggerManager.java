@@ -4,9 +4,7 @@ import cn.origincraft.magic.object.ContextMap;
 import cn.origincraft.magic.object.Spell;
 import cn.originmc.plugins.magicpaper.MagicPaper;
 import cn.originmc.plugins.magicpaper.trigger.abs.MagicPaperTrigger;
-import cn.originmc.plugins.magicpaper.trigger.impl.PlayerJoinTrigger;
-import cn.originmc.plugins.magicpaper.trigger.impl.ServerOnEnableTrigger;
-import cn.originmc.plugins.magicpaper.trigger.impl.ServerOnLoadTrigger;
+import cn.originmc.plugins.magicpaper.trigger.impl.*;
 import cn.originmc.plugins.magicpaper.trigger.listener.PlayerListener;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -18,13 +16,17 @@ public class MagicPaperTriggerManager {
     public static List<MagicPaperTrigger> magicPaperTriggers=new ArrayList<>();
     public static void init(){
         // 将需要的触发器加入到触发器列表
-        magicPaperTriggers.add(new ServerOnEnableTrigger());
-        magicPaperTriggers.add(new ServerOnLoadTrigger());
-        magicPaperTriggers.add(new PlayerJoinTrigger());
-        magicPaperTriggers.add(new PlayerJoinTrigger());
+        registerDefaultTrigger();
 
         // 注册监听器
         registerListener(MagicPaper.getInstance());
+    }
+    public static void registerDefaultTrigger(){
+        magicPaperTriggers.add(new ServerOnEnableTrigger());
+        magicPaperTriggers.add(new ServerOnLoadTrigger());
+        magicPaperTriggers.add(new PlayerJoinTrigger());
+        magicPaperTriggers.add(new ServerOnDisableTrigger());
+        magicPaperTriggers.add(new PlayerInteractTrigger());
     }
     public static void registerTrigger(MagicPaperTrigger trigger){
         magicPaperTriggers.add(trigger);
@@ -41,6 +43,14 @@ public class MagicPaperTriggerManager {
         }
     }
     public static void register(String name, Spell spell){
+        for(MagicPaperTrigger trigger:magicPaperTriggers){
+            if (trigger.getName().equalsIgnoreCase(name)){
+                trigger.register(spell);
+                return;
+            }
+        }
+    }
+    public static void register(String name,List<Spell> spell){
         for(MagicPaperTrigger trigger:magicPaperTriggers){
             if (trigger.getName().equalsIgnoreCase(name)){
                 trigger.register(spell);

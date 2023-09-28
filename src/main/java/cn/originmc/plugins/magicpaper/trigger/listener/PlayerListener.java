@@ -30,7 +30,7 @@ public class PlayerListener implements Listener {
         normalContext.putVariable("event_name",new StringResult(e.getEventName()));
         normalContext.putVariable("self",new PlayerResult(e.getPlayer()));
         normalContext.putVariable("join_message",new StringResult(e.getJoinMessage()));
-        MagicPaperTriggerManager.trigger("player_join", normalContext);
+        MagicPaperTriggerManager.trigger("PlayerJoinTrigger", normalContext);
         String message= ((StringResult) normalContext.getVariable("join_message")).getString();
         message= Color.toColor(message);
         e.setJoinMessage(message);
@@ -51,7 +51,7 @@ public class PlayerListener implements Listener {
         normalContext.putVariable("has_item",new BooleanResult(e.hasItem()));
         normalContext.putVariable("interacted_block",new StringResult(e.useInteractedBlock().name()));
         normalContext.putVariable("use_item_in_hand",new StringResult(e.useItemInHand().name()));
-        MagicPaperTriggerManager.trigger("player_interact", normalContext);
+        MagicPaperTriggerManager.trigger("PlayerInteractTrigger", normalContext);
         e.setCancelled(((BooleanResult) normalContext.getVariable("cancelled")).getBoolean());
         e.setUseItemInHand(Event.Result.valueOf(((StringResult) normalContext.getVariable("use_item_in_hand")).getString()));
         e.setUseInteractedBlock(Event.Result.valueOf(((StringResult) normalContext.getVariable("interacted_block")).getString()));

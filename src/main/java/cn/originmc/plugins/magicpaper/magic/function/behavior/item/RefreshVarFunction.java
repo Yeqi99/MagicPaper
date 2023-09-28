@@ -3,7 +3,7 @@ package cn.originmc.plugins.magicpaper.magic.function.behavior.item;
 import cn.origincraft.magic.function.NormalFunction;
 import cn.origincraft.magic.function.results.ErrorResult;
 import cn.origincraft.magic.object.SpellContext;
-import cn.originmc.plugins.magicpaper.data.manager.ItemFormatManager;
+import cn.originmc.plugins.magicpaper.data.manager.ItemFormatDataManager;
 import cn.originmc.plugins.magicpaper.magic.result.ItemStackResult;
 import cn.originmc.plugins.magicpaper.util.item.NBTItem;
 import dev.rgbmc.expression.functions.FunctionResult;
@@ -29,7 +29,7 @@ public class RefreshVarFunction extends NormalFunction {
         ItemStack item=((ItemStackResult) itemResult).getItemStack();
         String formatName=((StringResult) formatNameResult).getString();
         NBTItem nbtItem=new NBTItem(item);
-        List<String> format= ItemFormatManager.getFormat(formatName);
+        List<String> format= ItemFormatDataManager.getFormat(formatName);
         nbtItem.refreshVar(format,'*');
         return new ItemStackResult(nbtItem.getItemStack());
     }

@@ -10,6 +10,6 @@ public class PlayerJoinTrigger extends MagicPaperTrigger {
 
     @Override
     public String getName() {
-        return "player_join";
+        return "PlayerJoinTrigger";
     }
 }

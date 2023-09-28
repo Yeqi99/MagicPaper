@@ -1,6 +1,5 @@
 package cn.originmc.plugins.magicpaper.api;
 
-import cn.origincraft.magic.MagicManager;
 import cn.origincraft.magic.object.MagicWords;
 import cn.origincraft.magic.object.NormalContext;
 import cn.origincraft.magic.object.Spell;
@@ -9,9 +8,8 @@ import cn.originmc.plugins.magicpaper.MagicPaper;
 import cn.originmc.plugins.magicpaper.data.manager.MagicDataManager;
 import cn.originmc.plugins.magicpaper.trigger.MagicPaperTriggerManager;
 import cn.originmc.plugins.magicpaper.trigger.abs.MagicPaperTrigger;
-import cn.originmc.plugins.magicpaper.trigger.listener.timer.MagicTimer;
-import cn.originmc.plugins.magicpaper.trigger.listener.timer.MagicTimerManager;
-import dev.rgbmc.expression.functions.FastFunction;
+import cn.originmc.plugins.magicpaper.timer.MagicTimer;
+import cn.originmc.plugins.magicpaper.timer.MagicTimerManager;
 
 import java.util.List;
 

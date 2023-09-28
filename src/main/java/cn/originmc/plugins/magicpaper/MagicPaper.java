@@ -13,6 +13,10 @@ import cn.originmc.plugins.magicpaper.cooldown.CoolDownManager;
 import cn.originmc.plugins.magicpaper.data.config.LangData;
 import cn.originmc.plugins.magicpaper.data.config.MagicData;
 import cn.originmc.plugins.magicpaper.data.item.format.ItemFormatData;
+import cn.originmc.plugins.magicpaper.data.manager.TimerDataManager;
+import cn.originmc.plugins.magicpaper.data.manager.TriggerDataManager;
+import cn.originmc.plugins.magicpaper.data.timer.TimerData;
+import cn.originmc.plugins.magicpaper.data.trigger.TriggerData;
 import cn.originmc.plugins.magicpaper.hook.AbolethplusHook;
 import cn.originmc.plugins.magicpaper.hook.LuckPermsHook;
 import cn.originmc.plugins.magicpaper.hook.PlaceholderAPIHook;
@@ -21,6 +25,7 @@ import cn.originmc.plugins.magicpaper.listener.AdditionalItemListener;
 import cn.originmc.plugins.magicpaper.listener.CodingListener;
 import cn.originmc.plugins.magicpaper.listener.ItemTriggerListener;
 import cn.originmc.plugins.magicpaper.listener.ItemVariableRefreshListener;
+import cn.originmc.plugins.magicpaper.timer.MagicTimerManager;
 import cn.originmc.plugins.magicpaper.trigger.MagicPaperTriggerManager;
 import cn.originmc.plugins.magicpaper.util.text.Sender;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -62,7 +67,7 @@ public final class MagicPaper extends JavaPlugin {
 
     @Override
     public void onLoad() {
-        MagicPaperTriggerManager.trigger("server_on_enable",new NormalContext());
+        MagicPaperTriggerManager.trigger("ServerOnLoad",new NormalContext());
     }
     @Override
     public void onEnable() {
@@ -92,9 +97,14 @@ public final class MagicPaper extends JavaPlugin {
         // 注册魔法函数信息
         cn.originmc.plugins.magicpaper.magic.FunctionRegister.registerInfo();
         cn.originmc.plugins.magicpaper.magic.FunctionRegister.registerArgsInfo();
-        MagicPaperTriggerManager.trigger("server_on_enable",new NormalContext());
+        MagicPaperTriggerManager.trigger("ServerOnEnable",new NormalContext());
         importSpell(getContext());
         onLoadSpell();
+        // 载入触发器魔咒
+        TriggerDataManager.initDefaultTrigger();
+        // 启动计时器
+        TimerDataManager.initConfigTimer();
+        sender.sendOnEnableMsgToLogger("MagicPaper","Yeqi",getVersion(),"Public");
     }
     public static void initMagicManager(){
         // 初始化魔法管理器
@@ -114,13 +124,14 @@ public final class MagicPaper extends JavaPlugin {
     }
     @Override
     public void onDisable() {
-        MagicPaperTriggerManager.trigger("server_on_disable",new NormalContext());
+        MagicPaperTriggerManager.trigger("ServerOnDisable",new NormalContext());
+        sender.sendOnDisableMsgToLogger("MagicPaper","Yeqi",getVersion(),"Public");
     }
     public void loadContext(){
         context=new NormalContext();
     }
     public static String getVersion(){
-        return "1.1.4";
+        return "1.1.5";
     }
     public static String getLang(){
         return getInstance().getConfig().getString("lang");
@@ -153,6 +164,12 @@ public final class MagicPaper extends JavaPlugin {
             getInstance().saveResource("import/aitem.m",false);
             getInstance().saveResource("import/nbt.m",false);
             getInstance().saveResource("item-format/default.yml",false);
+            getInstance().saveResource("trigger/PlayerJoinTrigger.yml",false);
+            getInstance().saveResource("trigger/ServerOnDisableTrigger.yml",false);
+            getInstance().saveResource("trigger/ServerOnEnableTrigger.yml",false);
+            getInstance().saveResource("trigger/ServerOnLoadTrigger.yml",false);
+            getInstance().saveResource("trigger/PlayerInteractTrigger.yml",false);
+            getInstance().saveResource("timer/default.yml",false);
         }
     }
     public void hook(){
@@ -161,13 +178,17 @@ public final class MagicPaper extends JavaPlugin {
         LuckPermsHook.hook();
         AbolethplusHook.hook();
     }
-    public void loadData(){
+    public static void loadData(){
         // 加载魔咒数据
         MagicData.load();
         // 加载语言文件数据
         LangData.load();
         // 加载物品格式数据
         ItemFormatData.load();
+        // 加载触发器数据
+        TriggerData.load();
+        // 加载计时器数据
+        TimerData.load();
     }
     public static boolean enableExtendedSyntax(String id){
         return getInstance().getConfig().getBoolean("extended-syntax."+id,false);
@@ -188,4 +209,5 @@ public final class MagicPaper extends JavaPlugin {
         magicPackage.loadFiles(getInstance().getDataFolder()+"/import");
         magicPackage.importPackage(contextMap,getMagicManager());
     }
+
 }
