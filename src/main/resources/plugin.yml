@@ -9,6 +9,9 @@ softdepend:
   - ProtocolLib
   - Vault
   - MythicMobs
+  - AdvancedEnchantments
+  - PlayerPoints
+  - ItemsAdder
 folia-supported: true
 commands:
     MagicPaper:

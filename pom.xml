@@ -226,5 +226,11 @@
             <version>3.2.4</version>
             <scope>provided</scope>
         </dependency>
+        <!-- AdvancedEnchantments -->
+        <dependency>
+            <groupId>cn.originmc.api</groupId>
+            <artifactId>AdvancedEnchantments</artifactId>
+            <version>8.7.4</version>
+        </dependency>
     </dependencies>
 </project>
