@@ -116,12 +116,12 @@
             <artifactId>Magic</artifactId>
             <version>1.0.24</version>
         </dependency>
-        <!-- MagicRedis -->
+        <!-- MagicRedis
         <dependency>
             <groupId>cn.origincraft.magic</groupId>
             <artifactId>MagicRedis</artifactId>
             <version>1.0.14</version>
-        </dependency>
+        </dependency>-->
         <!-- YamlCore-->
         <dependency>
             <groupId>cn.originmc.tools.minecraft</groupId>
