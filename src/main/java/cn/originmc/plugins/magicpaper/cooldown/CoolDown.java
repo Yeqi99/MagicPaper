@@ -1,7 +1,5 @@
 package cn.originmc.plugins.magicpaper.cooldown;
 
-import org.bukkit.entity.Player;
-
 public class CoolDown {
     private String id;
 

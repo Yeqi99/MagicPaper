@@ -3,7 +3,6 @@ package cn.originmc.plugins.magicpaper.listener;
 
 import cn.originmc.plugins.magicpaper.MagicPaper;
 import cn.originmc.plugins.magicpaper.cooldown.CoolDown;
-import cn.originmc.plugins.magicpaper.cooldown.CoolDownManager;
 import cn.originmc.plugins.magicpaper.hook.PlaceholderAPIHook;
 import cn.originmc.plugins.magicpaper.util.item.MagicItem;
 import org.bukkit.Material;

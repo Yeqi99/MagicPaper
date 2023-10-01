@@ -1,9 +1,7 @@
 package cn.originmc.plugins.magicpaper.util.item;
 
-import de.tr7zw.nbtapi.NBT;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.attribute.AttributeModifier;
-import org.bukkit.entity.Item;
 import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
 

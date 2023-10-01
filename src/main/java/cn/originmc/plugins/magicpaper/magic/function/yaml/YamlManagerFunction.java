@@ -1,6 +1,5 @@
 package cn.originmc.plugins.magicpaper.magic.function.yaml;
 
-import cn.origincraft.magic.MagicManager;
 import cn.origincraft.magic.function.NormalFunction;
 import cn.origincraft.magic.function.results.ErrorResult;
 import cn.origincraft.magic.object.SpellContext;

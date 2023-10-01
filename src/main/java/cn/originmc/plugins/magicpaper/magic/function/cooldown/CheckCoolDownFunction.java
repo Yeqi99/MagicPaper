@@ -2,13 +2,9 @@ package cn.originmc.plugins.magicpaper.magic.function.cooldown;
 
 import cn.origincraft.magic.function.NormalFunction;
 import cn.origincraft.magic.function.results.ErrorResult;
-import cn.origincraft.magic.function.results.LongResult;
 import cn.origincraft.magic.function.results.NullResult;
 import cn.origincraft.magic.object.SpellContext;
-import cn.origincraft.magic.utils.VariableUtil;
 import cn.originmc.plugins.magicpaper.MagicPaper;
-import cn.originmc.plugins.magicpaper.cooldown.CoolDown;
-import cn.originmc.plugins.magicpaper.cooldown.CoolDownManager;
 import dev.rgbmc.expression.functions.FunctionResult;
 import dev.rgbmc.expression.results.StringResult;
 

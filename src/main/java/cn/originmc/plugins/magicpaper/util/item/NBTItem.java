@@ -1,6 +1,5 @@
 package cn.originmc.plugins.magicpaper.util.item;
 
-import cn.originmc.plugins.magicpaper.MagicPaper;
 import cn.originmc.plugins.magicpaper.hook.PlaceholderAPIHook;
 import cn.originmc.plugins.magicpaper.util.text.Color;
 import de.tr7zw.nbtapi.NBT;

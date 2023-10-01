@@ -7,10 +7,10 @@ import cn.origincraft.magic.object.SpellContext;
 import cn.originmc.plugins.magicpaper.MagicPaper;
 import cn.originmc.plugins.magicpaper.cooldown.CoolDownManager;
 import cn.originmc.plugins.magicpaper.data.manager.MagicDataManager;
-import cn.originmc.plugins.magicpaper.trigger.MagicPaperTriggerManager;
-import cn.originmc.plugins.magicpaper.trigger.abs.MagicPaperTrigger;
 import cn.originmc.plugins.magicpaper.timer.MagicTimer;
 import cn.originmc.plugins.magicpaper.timer.MagicTimerManager;
+import cn.originmc.plugins.magicpaper.trigger.MagicPaperTriggerManager;
+import cn.originmc.plugins.magicpaper.trigger.abs.MagicPaperTrigger;
 import cn.originmc.plugins.magicpaper.util.item.MagicItem;
 import org.bukkit.inventory.ItemStack;
 

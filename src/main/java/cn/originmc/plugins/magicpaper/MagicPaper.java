@@ -2,7 +2,6 @@ package cn.originmc.plugins.magicpaper;
 
 import cn.origincraft.magic.MagicManager;
 import cn.origincraft.magic.function.FunctionRegister;
-import cn.origincraft.magic.magicredis.MagicRedisFunctionRegister;
 import cn.origincraft.magic.manager.MagicInstance;
 import cn.origincraft.magic.manager.MagicPackage;
 import cn.origincraft.magic.object.ContextMap;
@@ -25,11 +24,9 @@ import cn.originmc.plugins.magicpaper.listener.AdditionalItemListener;
 import cn.originmc.plugins.magicpaper.listener.CodingListener;
 import cn.originmc.plugins.magicpaper.listener.ItemTriggerListener;
 import cn.originmc.plugins.magicpaper.listener.ItemVariableRefreshListener;
-import cn.originmc.plugins.magicpaper.timer.MagicTimerManager;
 import cn.originmc.plugins.magicpaper.trigger.MagicPaperTriggerManager;
 import cn.originmc.plugins.magicpaper.util.text.Sender;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.bukkit.scheduler.BukkitRunnable;
 
 public final class MagicPaper extends JavaPlugin {
     private static JavaPlugin instance;

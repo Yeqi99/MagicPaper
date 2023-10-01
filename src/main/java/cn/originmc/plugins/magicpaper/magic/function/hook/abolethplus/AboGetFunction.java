@@ -1,6 +1,5 @@
 package cn.originmc.plugins.magicpaper.magic.function.hook.abolethplus;
 
-import cn.origincraft.magic.function.FunctionRegister;
 import cn.origincraft.magic.function.NormalFunction;
 import cn.origincraft.magic.function.results.ErrorResult;
 import cn.origincraft.magic.object.SpellContext;

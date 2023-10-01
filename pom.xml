@@ -122,7 +122,7 @@
             <artifactId>MagicRedis</artifactId>
             <version>1.0.14</version>
         </dependency>
-        <!-- YamlCore -->
+        <!-- YamlCore-->
         <dependency>
             <groupId>cn.originmc.tools.minecraft</groupId>
             <artifactId>YamlCore</artifactId>

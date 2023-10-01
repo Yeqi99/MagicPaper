@@ -8,7 +8,6 @@ import dev.rgbmc.expression.functions.FunctionResult;
 import dev.rgbmc.expression.results.StringResult;
 import ray.maplex.top.abolethplusadder.AbolethPlusAdder;
 
-
 import java.util.List;
 import java.util.UUID;
 

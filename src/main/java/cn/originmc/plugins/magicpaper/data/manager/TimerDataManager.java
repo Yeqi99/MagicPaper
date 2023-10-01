@@ -9,7 +9,6 @@ import cn.originmc.plugins.magicpaper.timer.MagicTimerManager;
 import cn.originmc.plugins.magicpaper.timer.impl.FoliaTimer;
 import cn.originmc.plugins.magicpaper.timer.impl.PaperTimer;
 
-
 import java.util.ArrayList;
 import java.util.List;
 

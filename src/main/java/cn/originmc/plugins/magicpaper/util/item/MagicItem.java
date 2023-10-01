@@ -8,10 +8,8 @@ import cn.originmc.plugins.magicpaper.util.text.Color;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
-
-import java.util.*;
-
-import static org.apache.commons.lang3.StringUtils.remove;
+import java.util.ArrayList;
+import java.util.List;
 
 public class MagicItem extends NBTItem {
     public MagicItem(ItemStack itemStack) {

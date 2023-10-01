@@ -8,7 +8,6 @@ import cn.originmc.plugins.magicpaper.trigger.impl.*;
 import cn.originmc.plugins.magicpaper.trigger.listener.PlayerListener;
 import org.bukkit.plugin.java.JavaPlugin;
 
-
 import java.util.ArrayList;
 import java.util.List;
 

@@ -2,7 +2,6 @@ package cn.originmc.plugins.magicpaper.trigger.abs;
 
 
 import cn.origincraft.magic.object.ContextMap;
-import cn.origincraft.magic.object.NormalContext;
 import cn.origincraft.magic.object.Spell;
 import cn.originmc.plugins.magicpaper.MagicPaper;
 import cn.originmc.plugins.magicpaper.data.config.LangData;

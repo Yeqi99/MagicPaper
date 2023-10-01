@@ -8,8 +8,6 @@ import cn.origincraft.magic.object.SpellContext;
 import cn.originmc.plugins.magicpaper.hook.luckperms.LuckPermsManager;
 import cn.originmc.plugins.magicpaper.magic.result.PlayerResult;
 import dev.rgbmc.expression.functions.FunctionResult;
-import dev.rgbmc.expression.results.DoubleResult;
-import dev.rgbmc.expression.results.IntegerResult;
 import dev.rgbmc.expression.results.StringResult;
 import org.bukkit.entity.Player;
 

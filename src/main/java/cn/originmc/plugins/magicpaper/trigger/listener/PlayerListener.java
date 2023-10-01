@@ -1,7 +1,6 @@
 package cn.originmc.plugins.magicpaper.trigger.listener;
 
 import cn.origincraft.magic.object.NormalContext;
-import cn.originmc.plugins.magicpaper.MagicPaper;
 import cn.originmc.plugins.magicpaper.magic.result.ItemStackResult;
 import cn.originmc.plugins.magicpaper.magic.result.LocationResult;
 import cn.originmc.plugins.magicpaper.magic.result.PlayerResult;
@@ -12,12 +11,9 @@ import dev.rgbmc.expression.results.StringResult;
 import org.bukkit.event.Event;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.plugin.java.JavaPlugin;
-
-import java.util.Objects;
 
 public class PlayerListener implements Listener {
     public PlayerListener(JavaPlugin plugin){
