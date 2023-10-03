@@ -17,8 +17,8 @@ public class TimerDataManager {
         List<MagicTimer> result = new ArrayList<>();
         for (String s : TimerData.yamlManager.getIdList()) {
             String type = (String) TimerData.yamlManager.get(s, "type", "paper");
-            int later = (int) TimerData.yamlManager.get(s, "later", 20L);
-            int interval = (int) TimerData.yamlManager.get(s, "interval", 20L);
+            int later = (int) TimerData.yamlManager.get(s, "later", 20);
+            int interval = (int) TimerData.yamlManager.get(s, "interval", 20);
             List<String> executeSpellNames = (List<String>) TimerData.yamlManager.get(s, "execute-spell", null);
             if (executeSpellNames == null) {
                 continue;

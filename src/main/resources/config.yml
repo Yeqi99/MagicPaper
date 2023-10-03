@@ -12,8 +12,12 @@ coding: true
 
 # ProtocolLib支持
 ProtocolLib:
+  # 物品nbt变量到lore解析
   item-variable-refresh: true
+  # 物品papi变量到lore解析
   item-papi-refresh: true
+  # 无限制刷新，为false时，只有被允许的物品才会刷新，否则所有物品都会刷新
+  unlimitedRefresh: false
 
 # 自定义全局常量
 constants:

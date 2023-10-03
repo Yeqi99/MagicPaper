@@ -76,11 +76,11 @@ public class MagicItem extends NBTItem {
             if (!isRefreshVar()) {
                 return;
             }
-            String format_id = getFormat();
-            if (format_id == null) {
+            String formatId = getFormat();
+            if (formatId == null) {
                 return;
             }
-            lore = ItemFormatDataManager.getFormat(format_id);
+            lore = ItemFormatDataManager.getFormat(formatId);
             if (lore == null) {
                 return;
             }
@@ -96,7 +96,49 @@ public class MagicItem extends NBTItem {
             refreshPapi(lore, player);
         }
     }
-
+    public void refresh(boolean refreshVar, boolean refreshPapi, Player player,String formatId) {
+        List<String> lore = new ArrayList<>();
+        if (refreshVar) {
+            if (!isRefreshVar()) {
+                return;
+            }
+            if (formatId == null) {
+                return;
+            }
+            lore = ItemFormatDataManager.getFormat(formatId);
+            if (lore == null) {
+                return;
+            }
+            lore = refreshVar(lore, '*');
+        }
+        if (refreshPapi) {
+            if (!PlaceholderAPIHook.status) {
+                return;
+            }
+            if (lore == null) {
+                return;
+            }
+            refreshPapi(lore, player);
+        }
+    }
+    public void unlimitedRefresh(boolean refreshVar, boolean refreshPapi, Player player,List<String> format) {
+        List<String> lore = format;
+        if (refreshVar) {
+            if (lore == null) {
+                return;
+            }
+            lore = refreshVar(lore, '*');
+        }
+        if (refreshPapi) {
+            if (!PlaceholderAPIHook.status) {
+                return;
+            }
+            if (lore == null) {
+                return;
+            }
+            refreshPapi(lore, player);
+        }
+    }
     public boolean hasBore(String boreAddress){
         return hasSpace(boreAddress);
     }
