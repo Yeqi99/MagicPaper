@@ -10,7 +10,6 @@ import cn.originmc.plugins.magicpaper.data.manager.MagicDataManager;
 import cn.originmc.plugins.magicpaper.data.manager.TimerDataManager;
 import cn.originmc.plugins.magicpaper.data.manager.TriggerDataManager;
 import cn.originmc.plugins.magicpaper.hook.PlaceholderAPIHook;
-import cn.originmc.plugins.magicpaper.hook.advancedenchantments.AEItem;
 import cn.originmc.plugins.magicpaper.magic.FunctionRegister;
 import cn.originmc.plugins.magicpaper.magic.result.PlayerResult;
 import cn.originmc.plugins.magicpaper.trigger.MagicPaperTriggerManager;
@@ -186,19 +185,6 @@ public class MagicPaperCommand implements CommandExecutor {
             MagicPaper.getSender().sendToSender(commandSender, LangData.get(MagicPaper.getLang(), "reload", "&aReloaded!"));
             TriggerDataManager.reInit();
             TimerDataManager.reInit();
-        }else if(args[0].equalsIgnoreCase("test")){
-            Player player = (Player) commandSender;
-            ItemStack itemStack = player.getInventory().getItemInMainHand();
-            AEItem aeItem = new AEItem(itemStack);
-            if (aeItem.isAir()){
-                return true;
-            }
-            if (!aeItem.hasLore()){
-                return true;
-            }
-            MagicPaper.getSender().sendToPlayer(player,aeItem.getOriginLore());
-            aeItem.removeAELore();
-            player.getInventory().addItem(aeItem.getItemStack());
         }
         return true;
     }
