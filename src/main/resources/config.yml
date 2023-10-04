@@ -5,7 +5,6 @@ debug: true
 # 拓展语义包含
 extended-syntax:
   system: true
-  redis: true
   paper: true
 # 魔语快捷执行
 coding: true
@@ -16,8 +15,6 @@ ProtocolLib:
   item-variable-refresh: true
   # 物品papi变量到lore解析
   item-papi-refresh: true
-  # 无限制刷新，为false时，只有被允许的物品才会刷新，否则所有物品都会刷新
-  unlimitedRefresh: false
 
 # 自定义全局常量
 constants:

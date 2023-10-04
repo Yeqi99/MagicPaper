@@ -87,14 +87,14 @@ public class ItemTriggerListener implements Listener{
             if (!magicItem.getRightSpellSlot().equalsIgnoreCase("mh")){
                 return;
             }
-            String spellName= magicItem.getLeftSpell();
+            String spellName= magicItem.getRightSpell();
             if (spellName==null){
                 return;
             }
             if(!MagicDataManager.isSpell(spellName)){
                 return;
             }
-            long coolDownTime=magicItem.getLeftSpellCoolDown();
+            long coolDownTime=magicItem.getRightSpellCoolDown();
             Spell spell=MagicDataManager.getSpell(spellName);
             NormalContext context=new NormalContext();
             MagicPaper.importSpell(context);
@@ -137,14 +137,14 @@ public class ItemTriggerListener implements Listener{
             if (!magicItem.getShiftLeftSpellSlot().equalsIgnoreCase("mh")){
                 return;
             }
-            String spellName= magicItem.getLeftSpell();
+            String spellName= magicItem.getShiftLeftSpell();
             if (spellName==null){
                 return;
             }
             if(!MagicDataManager.isSpell(spellName)){
                 return;
             }
-            long coolDownTime=magicItem.getLeftSpellCoolDown();
+            long coolDownTime=magicItem.getShiftLeftSpellCoolDown();
             Spell spell=MagicDataManager.getSpell(spellName);
             NormalContext context=new NormalContext();
             MagicPaper.importSpell(context);
@@ -176,14 +176,14 @@ public class ItemTriggerListener implements Listener{
             if (!magicItem.getShiftRightSpellSlot().equalsIgnoreCase("mh")){
                 return;
             }
-            String spellName= magicItem.getLeftSpell();
+            String spellName= magicItem.getShiftRightSpell();
             if (spellName==null){
                 return;
             }
             if(!MagicDataManager.isSpell(spellName)){
                 return;
             }
-            long coolDownTime=magicItem.getLeftSpellCoolDown();
+            long coolDownTime=magicItem.getShiftRightSpellCoolDown();
             Spell spell=MagicDataManager.getSpell(spellName);
             NormalContext context=new NormalContext();
             MagicPaper.importSpell(context);

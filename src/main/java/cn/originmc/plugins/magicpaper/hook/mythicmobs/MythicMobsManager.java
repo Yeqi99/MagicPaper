@@ -110,8 +110,15 @@ public class MythicMobsManager {
     }
     public static boolean castSkill(Player player,String skill,Float power){
         LivingEntity livingEntity=MythicMobsManager.getTarget(player);
+        if (livingEntity==null){
+            return MythicMobsManager.castSkill(player,skill,player,player.getLocation(),null,null,power,null);
+        }
         List<Entity> targets = new ArrayList();
         targets.add(livingEntity);
-        return MythicMobsManager.castSkill(player,skill,player,player.getLocation(),targets,null,power,null);
+        List<Location> targetL=new ArrayList<>();
+        for (Entity target : targets) {
+            targetL.add(target.getLocation());
+        }
+        return MythicMobsManager.castSkill(player,skill,player,player.getLocation(),targets,targetL,power,null);
     }
 }
