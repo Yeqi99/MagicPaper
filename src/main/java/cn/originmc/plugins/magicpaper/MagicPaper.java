@@ -16,10 +16,7 @@ import cn.originmc.plugins.magicpaper.data.manager.TimerDataManager;
 import cn.originmc.plugins.magicpaper.data.manager.TriggerDataManager;
 import cn.originmc.plugins.magicpaper.data.timer.TimerData;
 import cn.originmc.plugins.magicpaper.data.trigger.TriggerData;
-import cn.originmc.plugins.magicpaper.hook.AbolethplusHook;
-import cn.originmc.plugins.magicpaper.hook.LuckPermsHook;
-import cn.originmc.plugins.magicpaper.hook.PlaceholderAPIHook;
-import cn.originmc.plugins.magicpaper.hook.ProtocolLibHook;
+import cn.originmc.plugins.magicpaper.hook.*;
 import cn.originmc.plugins.magicpaper.listener.AdditionalItemListener;
 import cn.originmc.plugins.magicpaper.listener.CodingListener;
 import cn.originmc.plugins.magicpaper.listener.ItemTriggerListener;
@@ -176,6 +173,10 @@ public final class MagicPaper extends JavaPlugin {
         PlaceholderAPIHook.hook();
         LuckPermsHook.hook();
         AbolethplusHook.hook();
+        MythicMobsHook.hook();
+        ItemsAdderHook.hook();
+        PlayerPointsHook.hook();
+        VaultHook.hook();
     }
     public static void loadData(){
         // 加载魔咒数据
