@@ -84,6 +84,7 @@ public class FunctionRegister {
         fm.register(new ItemFunction());
         fm.register(new CloneItemFunction(), "citem");
         fm.register(new EntityFunction());
+        fm.register(new BossBarFunction());
         // behavior
         fm.register(new ConsoleCommandFunction(), "ccommand");
         fm.register(new PlayerCommandFunction(), "pcommand");
