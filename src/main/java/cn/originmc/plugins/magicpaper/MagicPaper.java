@@ -154,6 +154,7 @@ public final class MagicPaper extends JavaPlugin {
         getInstance().saveDefaultConfig();
         if (getConfig().getBoolean("default-file",true)){
             getInstance().saveResource("lang/Chinese.yml",false);
+            getInstance().saveResource("lang/English.yml",false);
             getInstance().saveResource("magic/HelloWorld.yml",false);
             getInstance().saveResource("onload/register.m",false);
             getInstance().saveResource("import/HelloWorld.m",false);
