@@ -16,6 +16,11 @@ import cn.originmc.plugins.magicpaper.magic.function.hook.luckperms.PlayerLPTemp
 import cn.originmc.plugins.magicpaper.magic.function.hook.mythicmobs.CastSkillFunction;
 import cn.originmc.plugins.magicpaper.magic.function.hook.mythicmobs.SpawnMobFunction;
 import cn.originmc.plugins.magicpaper.magic.function.hook.placeholderapi.PlaceholderAPIFunction;
+import cn.originmc.plugins.magicpaper.magic.function.hook.playerpoints.*;
+import cn.originmc.plugins.magicpaper.magic.function.hook.vault.VaultGetFunction;
+import cn.originmc.plugins.magicpaper.magic.function.hook.vault.VaultGiveFunction;
+import cn.originmc.plugins.magicpaper.magic.function.hook.vault.VaultHasFunction;
+import cn.originmc.plugins.magicpaper.magic.function.hook.vault.VaultTakeFunction;
 import cn.originmc.plugins.magicpaper.magic.function.info.IgnoreCaseStringComparisonFunction;
 import cn.originmc.plugins.magicpaper.magic.function.info.PaperConstantsFunction;
 import cn.originmc.plugins.magicpaper.magic.function.info.PlayerNameFunction;
@@ -62,6 +67,17 @@ public class FunctionRegister {
         // hook.itemsadder
         fm.register(new IAItemFunction(), "iaitem");
         fm.register(new PlaceIABlockFunction(), "placeiab");
+        // hook.vault
+        fm.register(new VaultGetFunction());
+        fm.register(new VaultGiveFunction());
+        fm.register(new VaultHasFunction());
+        fm.register(new VaultTakeFunction());
+        // hook.playerpoints
+        fm.register(new PlayerPointsGetFunction(), "ppget");
+        fm.register(new PlayerPointsGiveFunction(), "ppgive");
+        fm.register(new PlayerPointsHasFunction(), "pphas");
+        fm.register(new PlayerPointsSetFunction(), "ppset");
+        fm.register(new PlayerPointsTakeFunction(), "pptake");
         // object
         fm.register(new PlayerFunction(), "p");
         fm.register(new LocationFunction(), "loc");

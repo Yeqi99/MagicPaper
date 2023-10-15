@@ -1,5 +1,6 @@
 package cn.originmc.plugins.magicpaper.util.item;
 
+import cn.originmc.plugins.magicpaper.MagicPaper;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.attribute.AttributeModifier;
 import org.bukkit.inventory.EquipmentSlot;
@@ -40,7 +41,7 @@ public class ItemVariable {
                 newLines.addAll(info);
                 continue;
             }
-            if (s.equalsIgnoreCase("!shiftLeft-info")){
+                if (s.equalsIgnoreCase("!shiftLeft-info")){
                 MagicItem magicItem = new MagicItem(itemStack);
                 List<String> info = magicItem.getShiftLeftSpellDescription();
                 if (info == null) {
@@ -71,6 +72,17 @@ public class ItemVariable {
         VariableString variableString = new VariableString(line, sign);
         MagicItem nbtItem = new MagicItem(itemStack);
         for (String s : variableString.getAllVariable()) {
+            if(s.contains("!!")){
+                String str = s.replace("!", "");
+                String value = MagicPaper.getInstance().getConfig().getString("constants."+str,"");
+                if (!value.isEmpty()){
+                    variableString.setVariable(s,value);
+                    continue;
+                }else {
+                    variableString.setVariable(s, "");
+                    continue;
+                }
+            }
             if (s.contains("!")) {
                 String str = s.replace("!", "");
                 if (nbtItem.hasSpace(str)) {
