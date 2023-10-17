@@ -34,7 +34,7 @@ public class PlayerTeleportFunction extends NormalFunction {
 
     @Override
     public String getType() {
-        return "BEHAVIOR";
+        return "PAPER_BEHAVIOR";
     }
 
     @Override

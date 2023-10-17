@@ -66,6 +66,5 @@ public class PlayerListener implements Listener {
         normalContext.putVariable("isPressed",new BooleanResult(e.isPressed()));
         normalContext.putVariable("isRelease",new BooleanResult(e.isRelease()));
         MagicPaperTriggerManager.trigger("PlayerKeyboardTrigger", normalContext);
-        MagicPaper.getSender().sendToAllPlayer("触发了奇怪的东西");
     }
 }

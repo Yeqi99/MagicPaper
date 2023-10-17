@@ -34,7 +34,7 @@ public class PlayerCommandFunction extends NormalFunction {
 
     @Override
     public String getType() {
-        return "BEHAVIOR";
+        return "PAPER_BEHAVIOR";
     }
 
     @Override

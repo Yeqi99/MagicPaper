@@ -6,6 +6,7 @@ import cn.origincraft.magic.function.results.NullResult;
 import cn.origincraft.magic.object.SpellContext;
 import cn.originmc.plugins.magicpaper.MagicPaper;
 import dev.rgbmc.expression.functions.FunctionResult;
+import dev.rgbmc.expression.results.BooleanResult;
 import dev.rgbmc.expression.results.StringResult;
 
 import java.util.List;
@@ -22,8 +23,7 @@ public class CheckCoolDownFunction extends NormalFunction {
             return new ErrorResult("ARGS_TYPE_ERROR","Function addCoolDown need 1 to be String");
         }
         String id = ((StringResult) arg0).getString();
-        MagicPaper.getCoolDownManager().isCoolDownActive(id);
-        return new NullResult();
+        return new BooleanResult(MagicPaper.getCoolDownManager().isCoolDownActive(id));
     }
 
     @Override
