@@ -12,6 +12,7 @@ softdepend:
   - AdvancedEnchantments
   - PlayerPoints
   - ItemsAdder
+  - RemoteKeyboardBukkit
 folia-supported: true
 commands:
     MagicPaper:

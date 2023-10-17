@@ -1,13 +1,17 @@
 package cn.originmc.plugins.magicpaper.trigger.listener;
 
 import cn.origincraft.magic.object.NormalContext;
+import cn.originmc.plugins.magicpaper.MagicPaper;
 import cn.originmc.plugins.magicpaper.magic.result.ItemStackResult;
 import cn.originmc.plugins.magicpaper.magic.result.LocationResult;
 import cn.originmc.plugins.magicpaper.magic.result.PlayerResult;
 import cn.originmc.plugins.magicpaper.trigger.MagicPaperTriggerManager;
 import cn.originmc.plugins.magicpaper.util.text.Color;
 import dev.rgbmc.expression.results.BooleanResult;
+import dev.rgbmc.expression.results.IntegerResult;
 import dev.rgbmc.expression.results.StringResult;
+import dev.rgbmc.remotekeyboard.events.KeyInputEvent;
+import org.bukkit.Bukkit;
 import org.bukkit.event.Event;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -51,5 +55,17 @@ public class PlayerListener implements Listener {
         e.setCancelled(((BooleanResult) normalContext.getVariable("cancelled")).getBoolean());
         e.setUseItemInHand(Event.Result.valueOf(((StringResult) normalContext.getVariable("use_item_in_hand")).getString()));
         e.setUseInteractedBlock(Event.Result.valueOf(((StringResult) normalContext.getVariable("interacted_block")).getString()));
+    }
+    @EventHandler
+    public void onPlayerKeyboard(KeyInputEvent e){
+        NormalContext normalContext=new NormalContext();
+        normalContext.putVariable("event_name",new StringResult(e.getEventName()));
+        normalContext.putVariable("self",new PlayerResult(Bukkit.getPlayer(e.getPlayer())));
+        normalContext.putVariable("key",new IntegerResult(e.getKeycode()));
+        normalContext.putVariable("mod",new IntegerResult(e.getMods()));
+        normalContext.putVariable("isPressed",new BooleanResult(e.isPressed()));
+        normalContext.putVariable("isRelease",new BooleanResult(e.isRelease()));
+        MagicPaperTriggerManager.trigger("PlayerKeyboardTrigger", normalContext);
+        MagicPaper.getSender().sendToAllPlayer("触发了奇怪的东西");
     }
 }

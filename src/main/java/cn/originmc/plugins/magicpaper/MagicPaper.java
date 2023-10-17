@@ -127,7 +127,7 @@ public final class MagicPaper extends JavaPlugin {
         context=new NormalContext();
     }
     public static String getVersion(){
-        return "1.1.9";
+        return "1.2.0";
     }
     public static String getLang(){
         return getInstance().getConfig().getString("lang");
@@ -142,7 +142,9 @@ public final class MagicPaper extends JavaPlugin {
             getServer().getPluginManager().registerEvents(new CodingListener(),this);
         }
         // protocolLib修改物品发包解析监听器
-        ProtocolLibHook.pm.addPacketListener(new ItemVariableRefreshListener(this));
+        if (ProtocolLibHook.status){
+            ProtocolLibHook.pm.addPacketListener(new ItemVariableRefreshListener(this));
+        }
         if (getConfig().getBoolean("bore-listener",false)){
             getServer().getPluginManager().registerEvents(new AdditionalItemListener(), this);
         }
@@ -178,6 +180,7 @@ public final class MagicPaper extends JavaPlugin {
         ItemsAdderHook.hook();
         PlayerPointsHook.hook();
         VaultHook.hook();
+        RemoteKeyboardBukkitHook.hook();
     }
     public static void loadData(){
         // 加载魔咒数据

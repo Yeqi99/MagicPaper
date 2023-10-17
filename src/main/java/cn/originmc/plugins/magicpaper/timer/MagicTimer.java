@@ -2,6 +2,8 @@ package cn.originmc.plugins.magicpaper.timer;
 
 import cn.origincraft.magic.object.ContextMap;
 import cn.origincraft.magic.object.Spell;
+import dev.rgbmc.expression.results.IntegerResult;
+import dev.rgbmc.expression.results.ObjectResult;
 import org.bukkit.Bukkit;
 
 import java.util.ArrayList;
@@ -25,9 +27,8 @@ public abstract class MagicTimer {
     }
     public void execute(){
         for (Spell task : tasks) {
-            getContextMap().putVariable("players", new ArrayList<>(Bukkit.getOnlinePlayers()));
-            getContextMap().putVariable("players_amount", Bukkit.getOnlinePlayers().size());
-            Bukkit.getOnlinePlayers();
+            getContextMap().putVariable("players", new ObjectResult(new ArrayList<>(Bukkit.getOnlinePlayers())));
+            getContextMap().putVariable("players_amount", new IntegerResult(Bukkit.getOnlinePlayers().size()));
             task.execute(contextMap);
         }
     }

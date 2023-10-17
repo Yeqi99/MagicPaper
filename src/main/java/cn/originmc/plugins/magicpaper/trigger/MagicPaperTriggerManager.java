@@ -26,6 +26,7 @@ public class MagicPaperTriggerManager {
         magicPaperTriggers.add(new PlayerJoinTrigger());
         magicPaperTriggers.add(new ServerOnDisableTrigger());
         magicPaperTriggers.add(new PlayerInteractTrigger());
+        magicPaperTriggers.add(new PlayerKeyboardTrigger());
     }
     public static void registerTrigger(MagicPaperTrigger trigger){
         magicPaperTriggers.add(trigger);

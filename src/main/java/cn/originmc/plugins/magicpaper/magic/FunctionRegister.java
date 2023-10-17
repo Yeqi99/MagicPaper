@@ -5,6 +5,7 @@ import cn.originmc.plugins.magicpaper.magic.function.behavior.*;
 import cn.originmc.plugins.magicpaper.magic.function.behavior.bossbar.*;
 import cn.originmc.plugins.magicpaper.magic.function.behavior.entity.NewEntityFunction;
 import cn.originmc.plugins.magicpaper.magic.function.behavior.item.*;
+import cn.originmc.plugins.magicpaper.magic.function.control.PlayerTraversalFunction;
 import cn.originmc.plugins.magicpaper.magic.function.control.execute.*;
 import cn.originmc.plugins.magicpaper.magic.function.cooldown.AddCoolDownFunction;
 import cn.originmc.plugins.magicpaper.magic.function.cooldown.CheckCoolDownFunction;
@@ -142,6 +143,8 @@ public class FunctionRegister {
         fm.register(new BossBarVisibleFunction());
         fm.register(new HideBossBarFunction());
         fm.register(new ShowBossBarFunction());
+        // control
+        fm.register(new PlayerTraversalFunction(),"playerT");
         // control.execute
         fm.register(new PaperSpellExecuteFunction(), "paperse");
         fm.register(new PaperSpellAsyncExecuteFunction(), "papersae");
