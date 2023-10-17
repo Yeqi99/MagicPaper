@@ -2,9 +2,7 @@ package cn.originmc.plugins.magicpaper.magic;
 
 import cn.origincraft.magic.MagicManager;
 import cn.originmc.plugins.magicpaper.magic.function.behavior.*;
-import cn.originmc.plugins.magicpaper.magic.function.behavior.bossbar.AddFlagFunction;
-import cn.originmc.plugins.magicpaper.magic.function.behavior.bossbar.HideBossBarFunction;
-import cn.originmc.plugins.magicpaper.magic.function.behavior.bossbar.ShowBossBarFunction;
+import cn.originmc.plugins.magicpaper.magic.function.behavior.bossbar.*;
 import cn.originmc.plugins.magicpaper.magic.function.behavior.entity.NewEntityFunction;
 import cn.originmc.plugins.magicpaper.magic.function.behavior.item.*;
 import cn.originmc.plugins.magicpaper.magic.function.control.execute.*;
@@ -140,8 +138,8 @@ public class FunctionRegister {
         fm.register(new NewEntityFunction(), "newe");
         // behavior.bossbar
         fm.register(new AddFlagFunction());
-        fm.register(new BossBarFunction());
-        fm.register(new BossBarFunction());
+        fm.register(new BossBarGetFunction());
+        fm.register(new BossBarVisibleFunction());
         fm.register(new HideBossBarFunction());
         fm.register(new ShowBossBarFunction());
         // control.execute
