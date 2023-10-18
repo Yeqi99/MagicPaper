@@ -2,9 +2,13 @@ package cn.originmc.plugins.magicpaper.timer;
 
 import cn.origincraft.magic.object.ContextMap;
 import cn.origincraft.magic.object.Spell;
+import cn.originmc.plugins.magicpaper.magic.result.PlayerResult;
+import cn.originmc.plugins.magicpaper.trigger.MagicPaperTriggerManager;
 import dev.rgbmc.expression.results.IntegerResult;
 import dev.rgbmc.expression.results.ObjectResult;
+import dev.rgbmc.expression.results.StringResult;
 import org.bukkit.Bukkit;
+import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,9 +30,14 @@ public abstract class MagicTimer {
         this.contextMap = contextMap;
     }
     public void execute(){
+        List< Player> players=new ArrayList<>(Bukkit.getOnlinePlayers());
+        for (Player player : players) {
+            getContextMap().putVariable("self",new PlayerResult(player));
+            getContextMap().putVariable("timer_id",new StringResult(getId()));
+            getContextMap().putVariable("player_amount",new IntegerResult(players.size()));
+            MagicPaperTriggerManager.trigger("TimerTrigger",getContextMap());
+        }
         for (Spell task : tasks) {
-            getContextMap().putVariable("players", new ObjectResult(new ArrayList<>(Bukkit.getOnlinePlayers())));
-            getContextMap().putVariable("players_amount", new IntegerResult(Bukkit.getOnlinePlayers().size()));
             task.execute(contextMap);
         }
     }

@@ -15,6 +15,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.event.Event;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -66,5 +67,15 @@ public class PlayerListener implements Listener {
         normalContext.putVariable("isPressed",new BooleanResult(e.isPressed()));
         normalContext.putVariable("isRelease",new BooleanResult(e.isRelease()));
         MagicPaperTriggerManager.trigger("PlayerKeyboardTrigger", normalContext);
+    }
+    @EventHandler
+    public void onPlayerDrop(PlayerDropItemEvent event){
+        NormalContext normalContext=new NormalContext();
+        normalContext.putVariable("event_name",new StringResult(event.getEventName()));
+        normalContext.putVariable("self",new PlayerResult(event.getPlayer()));
+        normalContext.putVariable("item",new ItemStackResult(event.getItemDrop().getItemStack()));
+        normalContext.putVariable("cancelled",new BooleanResult(event.isCancelled()));
+        MagicPaperTriggerManager.trigger("PlayerDropTrigger", normalContext);
+        event.setCancelled(((BooleanResult) normalContext.getVariable("cancelled")).getBoolean());
     }
 }
