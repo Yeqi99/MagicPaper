@@ -9,6 +9,7 @@ import cn.originmc.plugins.magicpaper.magic.function.control.PlayerTraversalFunc
 import cn.originmc.plugins.magicpaper.magic.function.control.execute.*;
 import cn.originmc.plugins.magicpaper.magic.function.cooldown.AddCoolDownFunction;
 import cn.originmc.plugins.magicpaper.magic.function.cooldown.CheckCoolDownFunction;
+import cn.originmc.plugins.magicpaper.magic.function.cooldown.GOCDFunction;
 import cn.originmc.plugins.magicpaper.magic.function.hook.abolethplus.*;
 import cn.originmc.plugins.magicpaper.magic.function.hook.itemsadder.IAItemFunction;
 import cn.originmc.plugins.magicpaper.magic.function.hook.itemsadder.PlaceIABlockFunction;
@@ -182,6 +183,7 @@ public class FunctionRegister {
         // cooldown
         fm.register(new AddCoolDownFunction(), "addcd");
         fm.register(new CheckCoolDownFunction(), "checkcd");
+        fm.register(new GOCDFunction());
     }
 
     public static void registerInfo() {

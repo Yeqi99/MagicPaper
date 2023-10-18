@@ -57,12 +57,12 @@ public class PlayerListener implements Listener {
         normalContext.putVariable("is_block_in_hand",new BooleanResult(e.isBlockInHand()));
         normalContext.putVariable("has_block",new BooleanResult(e.hasBlock()));
         normalContext.putVariable("has_item",new BooleanResult(e.hasItem()));
-        normalContext.putVariable("interacted_block",new StringResult(e.useInteractedBlock().name()));
-        normalContext.putVariable("use_item_in_hand",new StringResult(e.useItemInHand().name()));
+        normalContext.putVariable("interacted_block",e.useInteractedBlock().name());
+        normalContext.putVariable("use_item_in_hand",e.useItemInHand().name());
         MagicPaperTriggerManager.trigger("PlayerInteractTrigger", normalContext);
         e.setCancelled((Boolean) normalContext.getVariable("cancelled"));
-        e.setUseItemInHand(Event.Result.valueOf(((StringResult) normalContext.getVariable("use_item_in_hand")).getString()));
-        e.setUseInteractedBlock(Event.Result.valueOf(((StringResult) normalContext.getVariable("interacted_block")).getString()));
+        e.setUseItemInHand(Event.Result.valueOf((String) normalContext.getVariable("use_item_in_hand")));
+        e.setUseInteractedBlock(Event.Result.valueOf((String) normalContext.getVariable("interacted_block")));
     }
     @EventHandler(priority = EventPriority.HIGHEST)
     public void onPlayerKeyboard(KeyInputEvent e){
