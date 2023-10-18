@@ -12,21 +12,20 @@ import cn.originmc.plugins.magicpaper.magic.function.cooldown.CheckCoolDownFunct
 import cn.originmc.plugins.magicpaper.magic.function.hook.abolethplus.*;
 import cn.originmc.plugins.magicpaper.magic.function.hook.itemsadder.IAItemFunction;
 import cn.originmc.plugins.magicpaper.magic.function.hook.itemsadder.PlaceIABlockFunction;
+import cn.originmc.plugins.magicpaper.magic.function.hook.luckperms.PlayerHasPermissionFunction;
 import cn.originmc.plugins.magicpaper.magic.function.hook.luckperms.PlayerLPMetaGetFunction;
 import cn.originmc.plugins.magicpaper.magic.function.hook.luckperms.PlayerLPMetaSetFunction;
 import cn.originmc.plugins.magicpaper.magic.function.hook.luckperms.PlayerLPTempMetaSetFunction;
 import cn.originmc.plugins.magicpaper.magic.function.hook.mythicmobs.CastSkillFunction;
 import cn.originmc.plugins.magicpaper.magic.function.hook.mythicmobs.SpawnMobFunction;
+import cn.originmc.plugins.magicpaper.magic.function.hook.placeholderapi.PapiStrFunction;
 import cn.originmc.plugins.magicpaper.magic.function.hook.placeholderapi.PlaceholderAPIFunction;
 import cn.originmc.plugins.magicpaper.magic.function.hook.playerpoints.*;
 import cn.originmc.plugins.magicpaper.magic.function.hook.vault.VaultGetFunction;
 import cn.originmc.plugins.magicpaper.magic.function.hook.vault.VaultGiveFunction;
 import cn.originmc.plugins.magicpaper.magic.function.hook.vault.VaultHasFunction;
 import cn.originmc.plugins.magicpaper.magic.function.hook.vault.VaultTakeFunction;
-import cn.originmc.plugins.magicpaper.magic.function.info.IgnoreCaseStringComparisonFunction;
-import cn.originmc.plugins.magicpaper.magic.function.info.PaperConstantsFunction;
-import cn.originmc.plugins.magicpaper.magic.function.info.PlayerNameFunction;
-import cn.originmc.plugins.magicpaper.magic.function.info.StringComparisonFunction;
+import cn.originmc.plugins.magicpaper.magic.function.info.*;
 import cn.originmc.plugins.magicpaper.magic.function.magictimer.AddToTimerFunction;
 import cn.originmc.plugins.magicpaper.magic.function.magictimer.FoliaTimerFunction;
 import cn.originmc.plugins.magicpaper.magic.function.magictimer.PaperTimerFunction;
@@ -52,8 +51,10 @@ public class FunctionRegister {
         fm.register(new PlayerLPMetaGetFunction(), "getlpmeta");
         fm.register(new PlayerLPMetaSetFunction(), "lpmeta");
         fm.register(new PlayerLPTempMetaSetFunction(), "lptmeta");
+        fm.register(new PlayerHasPermissionFunction(),"lphasp");
         // hook.placeholderapi
         fm.register(new PlaceholderAPIFunction(), "papi");
+        fm.register(new PapiStrFunction());
         // hook.abolethplus
         fm.register(new AboGetUserFunction(), "abou");
         fm.register(new AboGetFunction(), "abog");
@@ -95,6 +96,7 @@ public class FunctionRegister {
         fm.register(new PlayerTeleportFunction(), "ptp");
         fm.register(new UpdateInventoryFunction(), "upinv");
         fm.register(new SendActionMsgFunction());
+        fm.register(new PlayerCloseInvFunction(), "closeinv");
         // behavior.item
         fm.register(new ItemLoreAddLineFunction(), "iladd");
         fm.register(new ItemLoreRemoveFunction(), "ilremove");
@@ -144,7 +146,7 @@ public class FunctionRegister {
         fm.register(new HideBossBarFunction());
         fm.register(new ShowBossBarFunction());
         // control
-        fm.register(new PlayerTraversalFunction(),"playerT");
+        fm.register(new PlayerTraversalFunction(), "playerT");
         // control.execute
         fm.register(new PaperSpellExecuteFunction(), "paperse");
         fm.register(new PaperSpellAsyncExecuteFunction(), "papersae");
@@ -163,6 +165,7 @@ public class FunctionRegister {
         fm.register(new PaperConstantsFunction(), "pconst");
         fm.register(new IgnoreCaseStringComparisonFunction(), "stric");
         fm.register(new StringComparisonFunction(), "strc");
+        fm.register(new ColorFunction());
         // yaml
         fm.register(new YamlManagerFunction(), "yamlm");
         fm.register(new YamlSaveAllFunction(), "yalmsa");

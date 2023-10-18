@@ -29,6 +29,9 @@ public class MagicPaperTriggerManager {
         magicPaperTriggers.add(new PlayerKeyboardTrigger());
         magicPaperTriggers.add(new PlayerDropTrigger());
         magicPaperTriggers.add(new TimerTrigger());
+        magicPaperTriggers.add(new PlayerBreakTrigger());
+        magicPaperTriggers.add(new PlayerPlaceTrigger());
+        magicPaperTriggers.add(new EntityDamageTrigger());
     }
     public static void registerTrigger(MagicPaperTrigger trigger){
         magicPaperTriggers.add(trigger);

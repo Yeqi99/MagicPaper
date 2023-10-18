@@ -17,6 +17,7 @@ import cn.originmc.plugins.magicpaper.data.manager.TriggerDataManager;
 import cn.originmc.plugins.magicpaper.data.timer.TimerData;
 import cn.originmc.plugins.magicpaper.data.trigger.TriggerData;
 import cn.originmc.plugins.magicpaper.hook.*;
+import cn.originmc.plugins.magicpaper.hook.placeholderapi.SpellExpansion;
 import cn.originmc.plugins.magicpaper.listener.AdditionalItemListener;
 import cn.originmc.plugins.magicpaper.listener.CodingListener;
 import cn.originmc.plugins.magicpaper.listener.ItemTriggerListener;
@@ -128,7 +129,7 @@ public final class MagicPaper extends JavaPlugin {
         context=new NormalContext();
     }
     public static String getVersion(){
-        return "1.2.1";
+        return "1.2.2";
     }
     public static String getLang(){
         return getInstance().getConfig().getString("lang");
@@ -141,6 +142,9 @@ public final class MagicPaper extends JavaPlugin {
     public void registerListener(){
         if (getConfig().getBoolean("coding",false)){
             getServer().getPluginManager().registerEvents(new CodingListener(),this);
+        }
+        if (PlaceholderAPIHook.status){
+            new SpellExpansion().register();
         }
         // protocolLib修改物品发包解析监听器
         if (ProtocolLibHook.status){
@@ -159,6 +163,7 @@ public final class MagicPaper extends JavaPlugin {
             getInstance().saveResource("lang/Chinese.yml",false);
             getInstance().saveResource("lang/English.yml",false);
             getInstance().saveResource("magic/HelloWorld.yml",false);
+            getInstance().saveResource("magic/nothing.yml",false);
             getInstance().saveResource("onload/register.m",false);
             getInstance().saveResource("import/HelloWorld.m",false);
             getInstance().saveResource("import/aitem.m",false);
@@ -171,6 +176,8 @@ public final class MagicPaper extends JavaPlugin {
             getInstance().saveResource("trigger/PlayerInteractTrigger.yml",false);
             getInstance().saveResource("trigger/PlayerDropTrigger.yml",false);
             getInstance().saveResource("trigger/TimerTrigger.yml",false);
+            getInstance().saveResource("trigger/PlayerBreakTrigger.yml",false);
+            getInstance().saveResource("trigger/PlayerPlaceTrigger.yml",false);
             if (RemoteKeyboardBukkitHook.status){
                 getInstance().saveResource("trigger/PlayerKeyboardTrigger.yml",false);
             }

@@ -5,6 +5,7 @@ import cn.origincraft.magic.function.NormalFunction;
 import cn.origincraft.magic.function.results.ErrorResult;
 import cn.origincraft.magic.function.results.ListResult;
 import cn.origincraft.magic.object.SpellContext;
+import cn.originmc.plugins.magicpaper.magic.result.EntityResult;
 import cn.originmc.plugins.magicpaper.magic.result.LocationResult;
 import cn.originmc.plugins.magicpaper.magic.result.PlayerResult;
 import dev.rgbmc.expression.functions.FunctionResult;
@@ -14,6 +15,7 @@ import dev.rgbmc.expression.results.ObjectResult;
 import dev.rgbmc.expression.results.StringResult;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
@@ -44,6 +46,13 @@ public class PlayerFunction extends NormalFunction {
                 return new ErrorResult("PLAYER_NOT_FOUND", "Player not found.");
             }
             return new PlayerResult(player);
+        }else if(firstArg instanceof EntityResult){
+            Entity entity = ((EntityResult) firstArg).getEntity();
+            if (entity instanceof Player) {
+                return new PlayerResult((Player) entity);
+            }else {
+                return firstArg;
+            }
         } else if (firstArg instanceof PlayerResult) {
             return firstArg;
         } else if (firstArg instanceof LocationResult) {
@@ -71,8 +80,7 @@ public class PlayerFunction extends NormalFunction {
             }else {
                 return new ErrorResult("UNKNOWN_ARGUMENT_TYPE", "Unsupported argument type.");
             }
-        }
-        else {
+        } else {
             return new ErrorResult("UNKNOWN_ARGUMENT_TYPE", "Unsupported argument type.");
         }
     }
