@@ -14,6 +14,7 @@ import dev.rgbmc.remotekeyboard.events.KeyInputEvent;
 import org.bukkit.Bukkit;
 import org.bukkit.event.Event;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
@@ -36,7 +37,7 @@ public class PlayerListener implements Listener {
         message= Color.toColor(message);
         e.setJoinMessage(message);
     }
-    @EventHandler
+    @EventHandler(priority = EventPriority.HIGHEST)
     public void onPlayerInteract(PlayerInteractEvent e){
         NormalContext normalContext=new NormalContext();
         normalContext.putVariable("event_name",new StringResult(e.getEventName()));
@@ -46,18 +47,18 @@ public class PlayerListener implements Listener {
         normalContext.putVariable("block_face",e.getBlockFace());
         normalContext.putVariable("item", new ItemStackResult(e.getItem()));
         normalContext.putVariable("name",new StringResult(e.getMaterial().name()));
-        normalContext.putVariable("cancelled",new BooleanResult(e.isCancelled()));
+        normalContext.putVariable("cancelled",e.isCancelled());
         normalContext.putVariable("is_block_in_hand",new BooleanResult(e.isBlockInHand()));
         normalContext.putVariable("has_block",new BooleanResult(e.hasBlock()));
         normalContext.putVariable("has_item",new BooleanResult(e.hasItem()));
         normalContext.putVariable("interacted_block",new StringResult(e.useInteractedBlock().name()));
         normalContext.putVariable("use_item_in_hand",new StringResult(e.useItemInHand().name()));
         MagicPaperTriggerManager.trigger("PlayerInteractTrigger", normalContext);
-        e.setCancelled(((BooleanResult) normalContext.getVariable("cancelled")).getBoolean());
+        e.setCancelled((Boolean) normalContext.getVariable("cancelled"));
         e.setUseItemInHand(Event.Result.valueOf(((StringResult) normalContext.getVariable("use_item_in_hand")).getString()));
         e.setUseInteractedBlock(Event.Result.valueOf(((StringResult) normalContext.getVariable("interacted_block")).getString()));
     }
-    @EventHandler
+    @EventHandler(priority = EventPriority.HIGHEST)
     public void onPlayerKeyboard(KeyInputEvent e){
         NormalContext normalContext=new NormalContext();
         normalContext.putVariable("event_name",new StringResult(e.getEventName()));
@@ -68,14 +69,14 @@ public class PlayerListener implements Listener {
         normalContext.putVariable("isRelease",new BooleanResult(e.isRelease()));
         MagicPaperTriggerManager.trigger("PlayerKeyboardTrigger", normalContext);
     }
-    @EventHandler
+    @EventHandler(priority = EventPriority.HIGHEST)
     public void onPlayerDrop(PlayerDropItemEvent event){
         NormalContext normalContext=new NormalContext();
         normalContext.putVariable("event_name",new StringResult(event.getEventName()));
         normalContext.putVariable("self",new PlayerResult(event.getPlayer()));
         normalContext.putVariable("item",new ItemStackResult(event.getItemDrop().getItemStack()));
-        normalContext.putVariable("cancelled",new BooleanResult(event.isCancelled()));
+        normalContext.putVariable("cancelled",event.isCancelled());
         MagicPaperTriggerManager.trigger("PlayerDropTrigger", normalContext);
-        event.setCancelled(((BooleanResult) normalContext.getVariable("cancelled")).getBoolean());
+        event.setCancelled((Boolean) normalContext.getVariable("cancelled"));
     }
 }

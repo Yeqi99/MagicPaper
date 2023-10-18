@@ -1,5 +1,7 @@
 package cn.originmc.plugins.magicpaper.data.manager;
 
+import cn.origincraft.magic.MagicManager;
+import cn.origincraft.magic.manager.MagicInstance;
 import cn.origincraft.magic.object.Spell;
 import cn.originmc.plugins.magicpaper.MagicPaper;
 import cn.originmc.plugins.magicpaper.data.config.MagicData;
@@ -16,6 +18,14 @@ public class MagicDataManager {
         return result;
     }
     public static Spell getSpell(String id){
+        if (id.startsWith("!")){
+            id = id.substring(1);
+            MagicInstance magicInstance= MagicPaper.magicPackage.getMagicInstance(id);
+            if (magicInstance==null){
+                return null;
+            }
+            return magicInstance.getSpell(MagicPaper.getMagicManager());
+        }
         return new Spell((List<String>) MagicData.yamlManager.get(id,"spell"), MagicPaper.getMagicManager());
     }
     public static boolean isSpell(String id){

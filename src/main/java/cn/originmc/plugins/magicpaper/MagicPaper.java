@@ -31,6 +31,7 @@ public final class MagicPaper extends JavaPlugin {
     private static MagicManager magicManager;
     private static NormalContext context;
     private static CoolDownManager coolDownManager;
+    public static MagicPackage magicPackage;
 
     public static JavaPlugin getInstance() {
         return instance;
@@ -66,7 +67,7 @@ public final class MagicPaper extends JavaPlugin {
     }
     @Override
     public void onEnable() {
-        int pluginId = 19713; // 替换为您的插件ID
+        int pluginId = 19713;
         Metrics metrics = new Metrics(this, pluginId);
         // 初始化插件实例
         instance=this;
@@ -127,7 +128,7 @@ public final class MagicPaper extends JavaPlugin {
         context=new NormalContext();
     }
     public static String getVersion(){
-        return "1.2.0";
+        return "1.2.1";
     }
     public static String getLang(){
         return getInstance().getConfig().getString("lang");
@@ -214,7 +215,7 @@ public final class MagicPaper extends JavaPlugin {
         }
     }
     public static void importSpell(ContextMap contextMap){
-        MagicPackage magicPackage=new MagicPackage("paper.import");
+        magicPackage=new MagicPackage("paper.import");
         magicPackage.loadFiles(getInstance().getDataFolder()+"/import");
         magicPackage.importPackage(contextMap,getMagicManager());
     }
