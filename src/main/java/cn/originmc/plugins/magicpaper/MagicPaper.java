@@ -186,6 +186,11 @@ public final class MagicPaper extends JavaPlugin {
             if (RemoteKeyboardBukkitHook.status){
                 getInstance().saveResource("trigger/PlayerKeyboardTrigger.yml",false);
             }
+            if (EpicCraftingsPlusHook.status){
+                getInstance().saveResource("trigger/EpicCraftingsPreCraftTrigger.yml",false);
+                getInstance().saveResource("trigger/EpicCraftingsCraftTrigger.yml",false);
+                getInstance().saveResource("trigger/EpicCraftingsPlaceClickTrigger.yml",false);
+            }
             getInstance().saveResource("timer/default.yml",false);
         }
     }
