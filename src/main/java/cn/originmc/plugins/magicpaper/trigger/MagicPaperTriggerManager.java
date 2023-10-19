@@ -3,8 +3,12 @@ package cn.originmc.plugins.magicpaper.trigger;
 import cn.origincraft.magic.object.ContextMap;
 import cn.origincraft.magic.object.Spell;
 import cn.originmc.plugins.magicpaper.MagicPaper;
+import cn.originmc.plugins.magicpaper.hook.EpicCraftingsPlusHook;
 import cn.originmc.plugins.magicpaper.trigger.abs.MagicPaperTrigger;
 import cn.originmc.plugins.magicpaper.trigger.impl.*;
+import cn.originmc.plugins.magicpaper.trigger.impl.hook.epiccraftingsplus.EpicCraftingsCraftTrigger;
+import cn.originmc.plugins.magicpaper.trigger.impl.hook.epiccraftingsplus.EpicCraftingsPlaceClickTrigger;
+import cn.originmc.plugins.magicpaper.trigger.impl.hook.epiccraftingsplus.EpicCraftingsPreCraftTrigger;
 import cn.originmc.plugins.magicpaper.trigger.listener.PlayerListener;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -32,6 +36,11 @@ public class MagicPaperTriggerManager {
         magicPaperTriggers.add(new PlayerBreakTrigger());
         magicPaperTriggers.add(new PlayerPlaceTrigger());
         magicPaperTriggers.add(new EntityDamageTrigger());
+        if (EpicCraftingsPlusHook.status){
+            magicPaperTriggers.add(new EpicCraftingsCraftTrigger());
+            magicPaperTriggers.add(new EpicCraftingsPreCraftTrigger());
+            magicPaperTriggers.add(new EpicCraftingsPlaceClickTrigger());
+        }
     }
     public static void registerTrigger(MagicPaperTrigger trigger){
         magicPaperTriggers.add(trigger);

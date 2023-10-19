@@ -13,6 +13,7 @@ softdepend:
   - PlayerPoints
   - ItemsAdder
   - RemoteKeyboardBukkit
+  - EpicCraftingsPlus
 folia-supported: true
 commands:
     MagicPaper:

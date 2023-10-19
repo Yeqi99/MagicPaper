@@ -23,6 +23,7 @@ import cn.originmc.plugins.magicpaper.listener.CodingListener;
 import cn.originmc.plugins.magicpaper.listener.ItemTriggerListener;
 import cn.originmc.plugins.magicpaper.listener.ItemVariableRefreshListener;
 import cn.originmc.plugins.magicpaper.trigger.MagicPaperTriggerManager;
+import cn.originmc.plugins.magicpaper.trigger.listener.EpicCraftingPlusListener;
 import cn.originmc.plugins.magicpaper.util.text.Sender;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -146,6 +147,9 @@ public final class MagicPaper extends JavaPlugin {
         if (PlaceholderAPIHook.status){
             new SpellExpansion().register();
         }
+        if (EpicCraftingsPlusHook.status){
+            getServer().getPluginManager().registerEvents(new EpicCraftingPlusListener(), this);
+        }
         // protocolLib修改物品发包解析监听器
         if (ProtocolLibHook.status){
             ProtocolLibHook.pm.addPacketListener(new ItemVariableRefreshListener(this));
@@ -195,6 +199,7 @@ public final class MagicPaper extends JavaPlugin {
         PlayerPointsHook.hook();
         VaultHook.hook();
         RemoteKeyboardBukkitHook.hook();
+        EpicCraftingsPlusHook.hook();
     }
     public static void loadData(){
         // 加载魔咒数据
