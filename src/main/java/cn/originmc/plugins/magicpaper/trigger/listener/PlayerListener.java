@@ -14,12 +14,14 @@ import dev.rgbmc.expression.results.IntegerResult;
 import dev.rgbmc.expression.results.StringResult;
 import dev.rgbmc.remotekeyboard.events.KeyInputEvent;
 import org.bukkit.Bukkit;
+import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
+import org.bukkit.event.block.BlockDropItemEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.player.PlayerDropItemEvent;
@@ -90,7 +92,7 @@ public class PlayerListener implements Listener {
         NormalContext normalContext=new NormalContext();
         normalContext.putVariable("event_name",new StringResult(e.getEventName()));
         normalContext.putVariable("self",new PlayerResult(e.getPlayer()));
-        normalContext.putVariable("block",new LocationResult(e.getBlock().getLocation()));
+        normalContext.putVariable("btype",new StringResult(e.getBlock().getType().name()));
         normalContext.putVariable("cancelled",e.isCancelled());
         MagicPaperTriggerManager.trigger("PlayerBreakTrigger", normalContext);
         e.setCancelled((Boolean) normalContext.getVariable("cancelled"));
@@ -100,10 +102,20 @@ public class PlayerListener implements Listener {
         NormalContext normalContext=new NormalContext();
         normalContext.putVariable("event_name",new StringResult(e.getEventName()));
         normalContext.putVariable("self",new PlayerResult(e.getPlayer()));
-        normalContext.putVariable("block",new LocationResult(e.getBlock().getLocation()));
+        normalContext.putVariable("btype",new StringResult(e.getBlock().getType().name()));
         normalContext.putVariable("cancelled",e.isCancelled());
         MagicPaperTriggerManager.trigger("PlayerPlaceTrigger", normalContext);
         e.setCancelled((Boolean) normalContext.getVariable("cancelled"));
+    }
+    @EventHandler(priority = EventPriority.HIGHEST)
+    public void onBlockDrop(BlockDropItemEvent event){
+        NormalContext normalContext=new NormalContext();
+        normalContext.putVariable("self",new PlayerResult(event.getPlayer()));
+        MagicPaperTriggerManager.trigger("BlockDropTrigger", normalContext);
+        for (Item item : event.getItems()) {
+            normalContext.putVariable("item",item.getItemStack());
+            MagicPaperTriggerManager.trigger("ItemDropTrigger", normalContext);
+        }
     }
     @EventHandler(priority = EventPriority.HIGHEST)
     public void onPlayerDamage(EntityDamageByEntityEvent event){
