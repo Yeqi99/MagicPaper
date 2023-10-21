@@ -57,7 +57,7 @@ public class GOCDFunction extends NormalFunction {
 
     @Override
     public String getType() {
-        return "MAGIC_PAPER_HOOK";
+        return "COOLDOWN";
     }
 
     @Override
