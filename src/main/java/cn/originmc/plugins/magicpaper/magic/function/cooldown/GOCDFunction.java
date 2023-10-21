@@ -9,6 +9,7 @@ import cn.originmc.plugins.magicpaper.MagicPaper;
 import cn.originmc.plugins.magicpaper.cooldown.CoolDown;
 import cn.originmc.plugins.magicpaper.cooldown.CoolDownManager;
 import cn.originmc.plugins.magicpaper.magic.result.PlayerResult;
+import cn.originmc.plugins.magicpaper.util.text.Color;
 import dev.rgbmc.expression.functions.FunctionResult;
 import dev.rgbmc.expression.results.StringResult;
 import org.bukkit.entity.Player;
@@ -45,7 +46,7 @@ public class GOCDFunction extends NormalFunction {
                 String str = ((StringResult) functionResult).getString();
                 PlayerResult playerResult= (PlayerResult) spellContext.getContextMap().getVariable("self");
                 Player self = playerResult.getPlayer();
-                MagicPaper.getSender().sendToPlayer(self, str);
+                self.sendActionBar(Color.toColor(str));
                 return new NullResult();
             }
         } else {
