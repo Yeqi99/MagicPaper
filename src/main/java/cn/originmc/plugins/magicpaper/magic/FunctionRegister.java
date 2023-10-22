@@ -168,6 +168,7 @@ public class FunctionRegister {
         fm.register(new IgnoreCaseStringComparisonFunction(), "stric");
         fm.register(new StringComparisonFunction(), "strc");
         fm.register(new ColorFunction());
+        fm.register(new IsTimeRangeFunction(),"istime");
         // yaml
         fm.register(new YamlManagerFunction(), "yamlm");
         fm.register(new YamlSaveAllFunction(), "yalmsa");

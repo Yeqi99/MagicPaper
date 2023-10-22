@@ -24,9 +24,7 @@ import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockDropItemEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
-import org.bukkit.event.player.PlayerDropItemEvent;
-import org.bukkit.event.player.PlayerInteractEvent;
-import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.event.player.*;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class PlayerListener implements Listener {
@@ -132,5 +130,19 @@ public class PlayerListener implements Listener {
             event.setCancelled((Boolean) normalContext.getVariable("cancelled"));
             event.setDamage((Double) normalContext.getVariable("damage"));
         }
+    }
+    @EventHandler(priority = EventPriority.HIGHEST)
+    public void onPlayerTeleport(PlayerTeleportEvent event){
+        NormalContext normalContext=new NormalContext();
+        normalContext.putVariable("event_name",new StringResult(event.getEventName()));
+        normalContext.putVariable("self",new PlayerResult(event.getPlayer()));
+        normalContext.putVariable("from",new LocationResult(event.getFrom()));
+        normalContext.putVariable("to",new LocationResult(event.getTo()));
+        normalContext.putVariable("to_world_str",event.getTo().getWorld().getName());
+        normalContext.putVariable("from_world_str",event.getFrom().getWorld().getName());
+        normalContext.putVariable("cause",event.getCause());
+        normalContext.putVariable("cancelled",event.isCancelled());
+        MagicPaperTriggerManager.trigger("PlayerTeleportTrigger", normalContext);
+        event.setCancelled((Boolean) normalContext.getVariable("cancelled"));
     }
 }
