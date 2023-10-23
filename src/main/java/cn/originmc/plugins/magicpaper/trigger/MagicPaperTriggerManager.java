@@ -37,6 +37,8 @@ public class MagicPaperTriggerManager {
         magicPaperTriggers.add(new PlayerPlaceTrigger());
         magicPaperTriggers.add(new EntityDamageTrigger());
         magicPaperTriggers.add(new ItemDropTrigger());
+        magicPaperTriggers.add(new PlayerTeleportTrigger());
+        magicPaperTriggers.add(new AsyncPlayerChatTrigger());
         if (EpicCraftingsPlusHook.status){
             magicPaperTriggers.add(new EpicCraftingsCraftTrigger());
             magicPaperTriggers.add(new EpicCraftingsPreCraftTrigger());

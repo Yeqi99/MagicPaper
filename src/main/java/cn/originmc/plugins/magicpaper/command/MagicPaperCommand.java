@@ -10,6 +10,7 @@ import cn.originmc.plugins.magicpaper.data.manager.MagicDataManager;
 import cn.originmc.plugins.magicpaper.data.manager.TimerDataManager;
 import cn.originmc.plugins.magicpaper.data.manager.TriggerDataManager;
 import cn.originmc.plugins.magicpaper.hook.PlaceholderAPIHook;
+import cn.originmc.plugins.magicpaper.listener.CodingListener;
 import cn.originmc.plugins.magicpaper.magic.FunctionRegister;
 import cn.originmc.plugins.magicpaper.magic.result.PlayerResult;
 import cn.originmc.plugins.magicpaper.trigger.MagicPaperTriggerManager;
@@ -185,6 +186,17 @@ public class MagicPaperCommand implements CommandExecutor {
             MagicPaper.getSender().sendToSender(commandSender, LangData.get(MagicPaper.getLang(), "reload", "&aReloaded!"));
             TriggerDataManager.reInit();
             TimerDataManager.reInit();
+        }else if(args[0].equalsIgnoreCase("coding")){
+            if (commandSender instanceof Player){
+                Player player= (Player) commandSender;
+                if (CodingListener.codingPlayers.contains(player.getName())) {
+                    CodingListener.codingPlayers.remove(player.getName());
+                    return true;
+                }else {
+                    CodingListener.codingPlayers.add(player.getName());
+                    return true;
+                }
+            }
         }
         return true;
     }

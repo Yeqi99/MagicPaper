@@ -145,4 +145,17 @@ public class PlayerListener implements Listener {
         MagicPaperTriggerManager.trigger("PlayerTeleportTrigger", normalContext);
         event.setCancelled((Boolean) normalContext.getVariable("cancelled"));
     }
+    @EventHandler(priority = EventPriority.HIGHEST)
+    public void onAsyncPlayerChat(AsyncPlayerChatEvent event){
+        NormalContext normalContext=new NormalContext();
+        normalContext.putVariable("event_name",new StringResult(event.getEventName()));
+        normalContext.putVariable("self",new PlayerResult(event.getPlayer()));
+        normalContext.putVariable("message",event.getMessage());
+        normalContext.putVariable("format",event.getFormat());
+        normalContext.putVariable("cancelled",event.isCancelled());
+        MagicPaperTriggerManager.trigger("AsyncPlayerChatTrigger", normalContext);
+        event.setCancelled((Boolean) normalContext.getVariable("cancelled"));
+        event.setFormat((String) normalContext.getVariable("format"));
+        event.setMessage((String) normalContext.getVariable("message"));
+    }
 }

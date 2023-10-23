@@ -7,6 +7,7 @@ import cn.originmc.plugins.magicpaper.MagicPaper;
 import cn.originmc.plugins.magicpaper.data.config.MagicData;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class MagicDataManager {
@@ -50,5 +51,23 @@ public class MagicDataManager {
             result.add(spell);
         }
         return result;
+    }
+    public static void saveSpell(String id, List<String> words,String display,String description){
+        if (MagicData.yamlManager.hasElement(id)){
+            MagicData.yamlManager.set(id,"spell",words);
+            MagicData.yamlManager.set(id,"display",display);
+            String[] strings= description.split("\n");
+            List<String> descriptionList = new ArrayList<>(Arrays.asList(strings));
+            MagicData.yamlManager.set(id,"description",descriptionList);
+            MagicData.yamlManager.save(id);
+        }else {
+            MagicData.yamlManager.create(id);
+            MagicData.yamlManager.set(id,"spell",words);
+            MagicData.yamlManager.set(id,"display",display);
+            String[] strings= description.split("\n");
+            List<String> descriptionList = new ArrayList<>(Arrays.asList(strings));
+            MagicData.yamlManager.set(id,"description",descriptionList);
+            MagicData.yamlManager.save(id);
+        }
     }
 }
