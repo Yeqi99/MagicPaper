@@ -33,3 +33,5 @@ bore-listener: true
 default-file: true
 # 物品触发魔咒监听
 item-trigger-listener: true
+
+buff-system-enable: true

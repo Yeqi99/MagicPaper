@@ -5,8 +5,11 @@ import cn.originmc.plugins.magicpaper.magic.function.behavior.*;
 import cn.originmc.plugins.magicpaper.magic.function.behavior.bossbar.*;
 import cn.originmc.plugins.magicpaper.magic.function.behavior.entity.NewEntityFunction;
 import cn.originmc.plugins.magicpaper.magic.function.behavior.item.*;
+import cn.originmc.plugins.magicpaper.magic.function.behavior.potion.PotionAddFunction;
 import cn.originmc.plugins.magicpaper.magic.function.behavior.skill.JumpSkillFunction;
 import cn.originmc.plugins.magicpaper.magic.function.behavior.skill.JumpToLocationSkillFunction;
+import cn.originmc.plugins.magicpaper.magic.function.buff.BuffAddFunction;
+import cn.originmc.plugins.magicpaper.magic.function.buff.BuffTimeGetFunction;
 import cn.originmc.plugins.magicpaper.magic.function.control.PlayerTraversalFunction;
 import cn.originmc.plugins.magicpaper.magic.function.control.execute.*;
 import cn.originmc.plugins.magicpaper.magic.function.cooldown.AddCoolDownFunction;
@@ -154,6 +157,11 @@ public class FunctionRegister {
         // behavior.skill
         fm.register(new JumpSkillFunction(),"pjump");
         fm.register(new JumpToLocationSkillFunction(),"pjumpto");
+        // behavior.potion
+        fm.register(new PotionAddFunction());
+        // buff
+        fm.register(new BuffAddFunction());
+        fm.register(new BuffTimeGetFunction());
         // control
         fm.register(new PlayerTraversalFunction(), "playerT");
         // control.execute

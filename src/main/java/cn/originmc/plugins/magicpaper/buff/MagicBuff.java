@@ -6,6 +6,7 @@ public class MagicBuff {
     private long duration;
     private float reduction=1;
     private long fixedReduction=0;
+    private String buffSetting="";
     public MagicBuff(String id,long startTime, long duration, float reduction, long fixedReduction){
         this.id = id;
         this.startTime = startTime;
@@ -78,5 +79,13 @@ public class MagicBuff {
 
     public void setFixedReduction(long fixedReduction) {
         this.fixedReduction = fixedReduction;
+    }
+
+    public String getBuffSetting() {
+        return buffSetting;
+    }
+
+    public void setBuffSetting(String buffSetting) {
+        this.buffSetting = buffSetting;
     }
 }

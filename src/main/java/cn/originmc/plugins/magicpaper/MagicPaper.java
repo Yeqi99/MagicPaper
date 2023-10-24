@@ -6,6 +6,7 @@ import cn.origincraft.magic.manager.MagicInstance;
 import cn.origincraft.magic.manager.MagicPackage;
 import cn.origincraft.magic.object.ContextMap;
 import cn.origincraft.magic.object.NormalContext;
+import cn.originmc.plugins.magicpaper.buff.BuffListener;
 import cn.originmc.plugins.magicpaper.buff.MagicBuffManager;
 import cn.originmc.plugins.magicpaper.command.MagicPaperCommand;
 import cn.originmc.plugins.magicpaper.command.MagicPaperTabCompleter;
@@ -63,6 +64,14 @@ public final class MagicPaper extends JavaPlugin {
 
     public static void setCoolDownManager(CoolDownManager coolDownManager) {
         MagicPaper.coolDownManager = coolDownManager;
+    }
+
+    public static MagicBuffManager getMagicBuffManager() {
+        return magicBuffManager;
+    }
+
+    public static void setMagicBuffManager(MagicBuffManager magicBuffManager) {
+        MagicPaper.magicBuffManager = magicBuffManager;
     }
 
     @Override
@@ -134,7 +143,7 @@ public final class MagicPaper extends JavaPlugin {
         context=new NormalContext();
     }
     public static String getVersion(){
-        return "1.2.9";
+        return "1.3.0";
     }
     public static String getLang(){
         return getInstance().getConfig().getString("lang");
@@ -145,6 +154,9 @@ public final class MagicPaper extends JavaPlugin {
         getCommand("MagicPaper").setTabCompleter(new MagicPaperTabCompleter());
     }
     public void registerListener(){
+        if (getConfig().getBoolean("buff-system-enable")){
+            getServer().getPluginManager().registerEvents(new BuffListener(),this);
+        }
         if (getConfig().getBoolean("coding",false)){
             getServer().getPluginManager().registerEvents(new CodingListener(),this);
         }
