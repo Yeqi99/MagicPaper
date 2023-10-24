@@ -26,6 +26,7 @@ import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.player.*;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.spigotmc.event.player.PlayerSpawnLocationEvent;
 
 public class PlayerListener implements Listener {
     public PlayerListener(JavaPlugin plugin){
@@ -37,10 +38,9 @@ public class PlayerListener implements Listener {
         NormalContext normalContext=new NormalContext();
         normalContext.putVariable("event_name",new StringResult(e.getEventName()));
         normalContext.putVariable("self",new PlayerResult(e.getPlayer()));
-        normalContext.putVariable("join_message",new StringResult(e.getJoinMessage()));
+        normalContext.putVariable("join_message",e.getJoinMessage());
         MagicPaperTriggerManager.trigger("PlayerJoinTrigger", normalContext);
-        String message= ((StringResult) normalContext.getVariable("join_message")).getString();
-        message= Color.toColor(message);
+        String message= (String) normalContext.getVariable("join_message");
         e.setJoinMessage(message);
     }
     @EventHandler(priority = EventPriority.HIGHEST)
@@ -109,7 +109,6 @@ public class PlayerListener implements Listener {
     public void onBlockDrop(BlockDropItemEvent event){
         NormalContext normalContext=new NormalContext();
         normalContext.putVariable("self",new PlayerResult(event.getPlayer()));
-        MagicPaperTriggerManager.trigger("BlockDropTrigger", normalContext);
         for (Item item : event.getItems()) {
             normalContext.putVariable("item",item.getItemStack());
             MagicPaperTriggerManager.trigger("ItemDropTrigger", normalContext);

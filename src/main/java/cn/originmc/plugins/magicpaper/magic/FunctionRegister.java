@@ -90,12 +90,14 @@ public class FunctionRegister {
         fm.register(new CloneItemFunction(), "citem");
         fm.register(new EntityFunction());
         fm.register(new BossBarFunction());
+        fm.register(new MagicLocationFunction(),"mloc");
         // behavior
         fm.register(new ConsoleCommandFunction(), "ccommand");
         fm.register(new PlayerCommandFunction(), "pcommand");
         fm.register(new SendToPlayerFunction(), "stp");
         fm.register(new SendToAllPlayerFunction(), "stap");
         fm.register(new PlayerTeleportFunction(), "ptp");
+        fm.register(new PlayerAsyncTeleportFunction(),"patp");
         fm.register(new UpdateInventoryFunction(), "upinv");
         fm.register(new SendActionMsgFunction());
         fm.register(new PlayerCloseInvFunction(), "closeinv");
