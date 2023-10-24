@@ -6,6 +6,7 @@ import cn.origincraft.magic.manager.MagicInstance;
 import cn.origincraft.magic.manager.MagicPackage;
 import cn.origincraft.magic.object.ContextMap;
 import cn.origincraft.magic.object.NormalContext;
+import cn.originmc.plugins.magicpaper.buff.MagicBuffManager;
 import cn.originmc.plugins.magicpaper.command.MagicPaperCommand;
 import cn.originmc.plugins.magicpaper.command.MagicPaperTabCompleter;
 import cn.originmc.plugins.magicpaper.cooldown.CoolDownManager;
@@ -33,6 +34,7 @@ public final class MagicPaper extends JavaPlugin {
     private static MagicManager magicManager;
     private static NormalContext context;
     private static CoolDownManager coolDownManager;
+    private static MagicBuffManager magicBuffManager;
     public static MagicPackage magicPackage;
 
     public static JavaPlugin getInstance() {
@@ -84,6 +86,8 @@ public final class MagicPaper extends JavaPlugin {
         MagicPaperTriggerManager.init();
         // 初始化冷却管理器
         coolDownManager=new CoolDownManager();
+        // 初始化Buff管理器
+        magicBuffManager=new MagicBuffManager();
         // 加载全局上下文
         loadContext();
         // 加载数据

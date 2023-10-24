@@ -1,5 +1,6 @@
 package cn.originmc.plugins.magicpaper.cooldown;
 
+import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class CoolDownManager {
@@ -31,5 +32,8 @@ public class CoolDownManager {
 
     public CoolDown getCoolDown(String id) {
         return coolDowns.get(id);
+    }
+    public List<String> lookCoolDowns(){
+        return new java.util.ArrayList<>(coolDowns.keySet());
     }
 }

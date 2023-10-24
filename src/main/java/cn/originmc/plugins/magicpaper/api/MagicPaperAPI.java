@@ -127,4 +127,5 @@ public class MagicPaperAPI {
     public static MagicItem getMagicItem(ItemStack itemStack){
         return new MagicItem(itemStack);
     }
+
 }
