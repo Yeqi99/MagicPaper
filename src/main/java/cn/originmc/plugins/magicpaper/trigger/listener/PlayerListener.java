@@ -157,4 +157,13 @@ public class PlayerListener implements Listener {
         event.setFormat((String) normalContext.getVariable("format"));
         event.setMessage((String) normalContext.getVariable("message"));
     }
+    @EventHandler(priority = EventPriority.HIGHEST)
+    public void onPlayerRespawn(PlayerRespawnEvent event){
+        NormalContext normalContext=new NormalContext();
+        normalContext.putVariable("event_name",new StringResult(event.getEventName()));
+        normalContext.putVariable("self",new PlayerResult(event.getPlayer()));
+        normalContext.putVariable("location",new LocationResult(event.getRespawnLocation()));
+        MagicPaperTriggerManager.trigger("PlayerRespawnTrigger", normalContext);
+        event.setRespawnLocation(((LocationResult) normalContext.getVariable("location")).getLocation());
+    }
 }

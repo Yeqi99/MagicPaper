@@ -130,7 +130,7 @@ public final class MagicPaper extends JavaPlugin {
         context=new NormalContext();
     }
     public static String getVersion(){
-        return "1.2.8";
+        return "1.2.9";
     }
     public static String getLang(){
         return getInstance().getConfig().getString("lang");
@@ -186,6 +186,7 @@ public final class MagicPaper extends JavaPlugin {
             getInstance().saveResource("trigger/ItemDropTrigger.yml",false);
             getInstance().saveResource("trigger/PlayerTeleportTrigger.yml",false);
             getInstance().saveResource("trigger/AsyncPlayerChatTrigger.yml",false);
+            getInstance().saveResource("trigger/PlayerRespawnTrigger.yml",false);
             if (RemoteKeyboardBukkitHook.status){
                 getInstance().saveResource("trigger/PlayerKeyboardTrigger.yml",false);
             }

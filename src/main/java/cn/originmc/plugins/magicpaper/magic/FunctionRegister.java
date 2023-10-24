@@ -5,6 +5,8 @@ import cn.originmc.plugins.magicpaper.magic.function.behavior.*;
 import cn.originmc.plugins.magicpaper.magic.function.behavior.bossbar.*;
 import cn.originmc.plugins.magicpaper.magic.function.behavior.entity.NewEntityFunction;
 import cn.originmc.plugins.magicpaper.magic.function.behavior.item.*;
+import cn.originmc.plugins.magicpaper.magic.function.behavior.skill.JumpSkillFunction;
+import cn.originmc.plugins.magicpaper.magic.function.behavior.skill.JumpToLocationSkillFunction;
 import cn.originmc.plugins.magicpaper.magic.function.control.PlayerTraversalFunction;
 import cn.originmc.plugins.magicpaper.magic.function.control.execute.*;
 import cn.originmc.plugins.magicpaper.magic.function.cooldown.AddCoolDownFunction;
@@ -149,6 +151,9 @@ public class FunctionRegister {
         fm.register(new BossBarVisibleFunction());
         fm.register(new HideBossBarFunction());
         fm.register(new ShowBossBarFunction());
+        // behavior.skill
+        fm.register(new JumpSkillFunction(),"pjump");
+        fm.register(new JumpToLocationSkillFunction(),"pjumpto");
         // control
         fm.register(new PlayerTraversalFunction(), "playerT");
         // control.execute
@@ -171,6 +176,7 @@ public class FunctionRegister {
         fm.register(new StringComparisonFunction(), "strc");
         fm.register(new ColorFunction());
         fm.register(new IsTimeRangeFunction(),"istime");
+        fm.register(new InLocationRangeFunction(),"inlrange");
         // yaml
         fm.register(new YamlManagerFunction(), "yamlm");
         fm.register(new YamlSaveAllFunction(), "yalmsa");

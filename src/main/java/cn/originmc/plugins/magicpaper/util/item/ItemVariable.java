@@ -1,8 +1,15 @@
 package cn.originmc.plugins.magicpaper.util.item;
 
+import cn.origincraft.magic.object.NormalContext;
+import cn.origincraft.magic.object.Spell;
+import cn.origincraft.magic.object.SpellContext;
 import cn.originmc.plugins.magicpaper.MagicPaper;
+import cn.originmc.plugins.magicpaper.data.manager.MagicDataManager;
+import dev.rgbmc.expression.functions.FunctionResult;
+import dev.rgbmc.expression.results.StringResult;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.attribute.AttributeModifier;
+import org.bukkit.entity.Player;
 import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
 
@@ -72,6 +79,24 @@ public class ItemVariable {
         VariableString variableString = new VariableString(line, sign);
         MagicItem nbtItem = new MagicItem(itemStack);
         for (String s : variableString.getAllVariable()) {
+            if (s.contains("~")){
+                String str = s.replace("~", "");
+                Spell spell= MagicDataManager.getSpell(str);
+                if (spell==null){
+                    return "";
+                }
+                NormalContext normalContext=new NormalContext();
+                normalContext.putVariable("item",itemStack);
+                SpellContext spellContext= spell.execute(normalContext);
+                FunctionResult functionResult=spellContext.getSpellReturn();
+                if (functionResult instanceof StringResult){
+                    String value = ((StringResult) functionResult).getString();
+                    variableString.setVariable(s,value);
+                    continue;
+                }else {
+                    return "";
+                }
+            }
             if(s.contains("!!")){
                 String str = s.replace("!", "");
                 String value = MagicPaper.getInstance().getConfig().getString("constants."+str,"");
