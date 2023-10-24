@@ -95,10 +95,13 @@ public final class MagicPaper extends JavaPlugin {
         MagicPaperTriggerManager.init();
         // 初始化冷却管理器
         coolDownManager=new CoolDownManager();
+        sender.sendToLogger("§a[§bMagicPaper§a] §e冷却管理器初始化完成");
         // 初始化Buff管理器
         magicBuffManager=new MagicBuffManager();
+        sender.sendToLogger("§a[§bMagicPaper§a] §eBuff管理器初始化完成");
         // 加载全局上下文
         loadContext();
+        sender.sendToLogger("§a[§bMagicPaper§a] §e全局上下文加载完成");
         // 加载数据
         loadData();
         // 注册命令
@@ -110,10 +113,14 @@ public final class MagicPaper extends JavaPlugin {
         cn.originmc.plugins.magicpaper.magic.FunctionRegister.registerArgsInfo();
         MagicPaperTriggerManager.trigger("ServerOnEnable",new NormalContext());
         importSpell(getContext());
+        sender.sendToLogger("§a[§bMagicPaper§a] §e载入import魔咒完成");
         onLoadSpell();
+        sender.sendToLogger("§a[§bMagicPaper§a] §e执行onload魔咒完成");
         // 载入触发器魔咒
+        sender.sendToLogger("§a[§bMagicPaper§a] §e启动触发器...");
         TriggerDataManager.initDefaultTrigger();
         // 启动计时器
+        sender.sendToLogger("§a[§bMagicPaper§a] §e启动计时器...");
         TimerDataManager.initConfigTimer();
         sender.sendOnEnableMsgToLogger("MagicPaper","Yeqi",getVersion(),"Public");
 
@@ -124,15 +131,18 @@ public final class MagicPaper extends JavaPlugin {
         // 注册魔法函数
         if (enableExtendedSyntax("system")){
             FunctionRegister.regDefault(getMagicManager());
+            sender.sendToLogger("§a[§bMagicPaper§a] §eMagic系统语义注册完成");
         }
         if (enableExtendedSyntax("paper")){
             cn.originmc.plugins.magicpaper.magic.FunctionRegister.register(getMagicManager());
+            sender.sendToLogger("§a[§bMagicPaper§a] §eMagicPaper语义注册完成");
         }
         /*
         if (enableExtendedSyntax("redis")){
             MagicRedisFunctionRegister.reg(getMagicManager());
         }
          */
+        sender.sendToLogger("§a[§bMagicPaper§a] §eMagic管理器初始化完成");
     }
     @Override
     public void onDisable() {
@@ -152,6 +162,7 @@ public final class MagicPaper extends JavaPlugin {
     public void registerCommand(){
         getCommand("MagicPaper").setExecutor(new MagicPaperCommand());
         getCommand("MagicPaper").setTabCompleter(new MagicPaperTabCompleter());
+        sender.sendToLogger("§a[§bMagicPaper§a] §e命令注册完成");
     }
     public void registerListener(){
         if (getConfig().getBoolean("buff-system-enable")){
@@ -176,6 +187,7 @@ public final class MagicPaper extends JavaPlugin {
         if (getConfig().getBoolean("item-trigger-listener",false)){
             getServer().getPluginManager().registerEvents(new ItemTriggerListener(), this);
         }
+        sender.sendToLogger("§a[§bMagicPaper§a] §e监听器注册完成");
     }
     public void saveRes(){
         getInstance().saveDefaultConfig();
@@ -213,8 +225,11 @@ public final class MagicPaper extends JavaPlugin {
             }
             getInstance().saveResource("timer/default.yml",false);
         }
+        sender.sendToLogger("§a[§bMagicPaper§a] §e默认配置保存完成");
     }
     public void hook(){
+        sender.sendToLogger("§a[§bMagicPaper§a] §e正在挂钩插件");
+        sender.sendToLogger("§8挂钩仅用于提供更多功能,不挂钩不影响插件正常使用");
         ProtocolLibHook.hook();
         PlaceholderAPIHook.hook();
         LuckPermsHook.hook();
@@ -225,6 +240,7 @@ public final class MagicPaper extends JavaPlugin {
         VaultHook.hook();
         RemoteKeyboardBukkitHook.hook();
         EpicCraftingsPlusHook.hook();
+        sender.sendToLogger("§a[§bMagicPaper§a] §e插件挂钩完成");
     }
     public static void loadData(){
         // 加载魔咒数据
@@ -237,6 +253,7 @@ public final class MagicPaper extends JavaPlugin {
         TriggerData.load();
         // 加载计时器数据
         TimerData.load();
+        sender.sendToLogger("§a[§bMagicPaper§a] §e数据加载完成");
     }
     public static boolean enableExtendedSyntax(String id){
         return getInstance().getConfig().getBoolean("extended-syntax."+id,false);

@@ -12,12 +12,12 @@ public class AbolethplusHook {
 
     public static boolean hook() {
         if (Bukkit.getPluginManager().getPlugin(getName()) != null) {
-            MagicPaper.getSender().sendToLogger("&a成功挂钩"+getName()+"插件");
-            status=true;
+            MagicPaper.getSender().sendToLogger("&a成功挂钩" + getName() + "插件");
+            status = true;
             return true;
         } else {
-            MagicPaper.getSender().sendToLogger("&c未找到"+getName()+"插件");
-            status=false;
+            MagicPaper.getSender().sendToLogger("&c未找到" + getName() + "插件");
+            status = false;
             return false;
         }
     }
