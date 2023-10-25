@@ -16,6 +16,7 @@ import cn.originmc.plugins.magicpaper.magic.result.PlayerResult;
 import cn.originmc.plugins.magicpaper.trigger.MagicPaperTriggerManager;
 import cn.originmc.plugins.magicpaper.trigger.abs.MagicPaperTrigger;
 import cn.originmc.plugins.magicpaper.util.item.MagicItem;
+import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -43,6 +44,10 @@ public class MagicPaperCommand implements CommandExecutor {
                 helpMessage.add("&a/magicpaper functioninfo <function> &7- &fGet function info");
                 helpMessage.add("&a/magicpaper triggers &7- &fList all triggers");
                 helpMessage.add("&a/magicpaper onload &7- &fExecute onload spell");
+                helpMessage.add("&a/magicpaper boreremove <id> <amount> &7- &fRemove item from bore");
+                helpMessage.add("&a/magicpaper restart &7- &fRestart plugin");
+                helpMessage.add("&a/magicpaper coding &7- &fOpen coding mode");
+                helpMessage.add("&a/magicpaper gui <id> [player] &7- &fOpen gui");
             } else {
                 helpMessage.add("&aMagicPaper &7v" + MagicPaper.getVersion());
                 helpMessage.add("&a/magicpaper reload &7- &f重载配置");
@@ -56,6 +61,10 @@ public class MagicPaperCommand implements CommandExecutor {
                 helpMessage.add("&a/magicpaper functioninfo <function> &7- &f获取函数信息");
                 helpMessage.add("&a/magicpaper triggers &7- &f列出所有触发器");
                 helpMessage.add("&a/magicpaper onload &7- &f执行onload法术");
+                helpMessage.add("&a/magicpaper boreremove <address> <index> &7- &f移除某个镶嵌孔的物品");
+                helpMessage.add("&a/magicpaper restart &7- &f重启插件");
+                helpMessage.add("&a/magicpaper coding &7- &f切换编码模式");
+                helpMessage.add("&a/magicpaper gui <id> [player] &7- &f打开gui");
             }
             MagicPaper.getSender().sendToSender(commandSender, helpMessage);
             return true;
@@ -197,6 +206,22 @@ public class MagicPaperCommand implements CommandExecutor {
                     return true;
                 }
             }
+        }else if (args[0].equalsIgnoreCase("gui")){
+            if (!(commandSender instanceof Player)){
+                return true;
+            }
+            if (args.length<2){
+                return true;
+            }
+            String id=args[1];
+            Player player= (Player) commandSender;
+            if (args.length>3){
+                player= Bukkit.getPlayer(args[2]);
+                if (player==null){
+                    return true;
+                }
+            }
+            MagicPaper.getMagicGuiManager().getGui(player,id).open(player);
         }
         return true;
     }

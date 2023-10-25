@@ -10,6 +10,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryHolder;
+import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
@@ -18,47 +19,67 @@ import java.util.List;
 import java.util.Map;
 
 public class MagicGui implements InventoryHolder {
-    private Inventory inv;
+    private String id;
+    private Map<Integer, Inventory> inv = new HashMap<>();
     private List<Integer> unLimitSlots = new ArrayList<>();
-    private Map<String,ContextMap> context=new HashMap<>();
-    private Map<Integer,List<Spell>> spellMap=new HashMap<>();
+    private ContextMap context = new NormalContext();
+    private Map<Character, List<Spell>> spellMap = new HashMap<>();
+    private Map<Character, ItemStack> buttonItemMap = new HashMap<>();
+    private boolean isOpen=false;
+    private int page = 0;
+    private Map<Integer, MagicGuiFormat> formatMap = new HashMap<>();
+    private int size = 54;
+    private String title="";
 
     public MagicGui(int size, String title) {
-        inv = Bukkit.createInventory(this, size, title);
+        this.size=size;
+        this.title=title;
     }
 
     public MagicGui(int size, String title, List<Integer> unLimitSlots) {
-        inv = Bukkit.createInventory(this, size, title);
+        this.size=size;
+        this.title=title;
         this.unLimitSlots = unLimitSlots;
     }
 
     public MagicGui(Inventory inv) {
-        this.inv = inv;
+        this.inv.put(0,inv);
     }
 
     public MagicGui(String title, InventoryType inventoryType) {
-        inv = Bukkit.createInventory(this, inventoryType, title);
+        this.title=title;
     }
 
     @Override
     public @NotNull Inventory getInventory() {
-        return inv;
+        return inv.get(page);
     }
 
     public void open(Player player) {
-        player.openInventory(inv);
-    }
-
-    public ContextMap getPlayerContext(Player player){
-        if(!context.containsKey(player.getUniqueId().toString())){
-            context.put(player.getUniqueId().toString(),new NormalContext());
+        page = page % formatMap.size();
+        MagicGuiFormat format = formatMap.get(page);
+        if(!inv.containsKey(page)){
+            inv.put(page, Bukkit.createInventory(this, size, title));
+            format.apply(inv.get(page));
         }
-        return context.get(player.getUniqueId().toString());
+        player.openInventory(inv.get(page));
     }
 
+    public void nextPage(Player player) {
+        page++;
+        open(player);
+    }
 
-    public void setInv(Inventory inv) {
-        this.inv = inv;
+    public void previousPage(Player player) {
+        if (page == 0) {
+            open(player);
+        }
+        page--;
+        open(player);
+    }
+
+    public void setInv(int index,Inventory inv) {
+        this.inv.put(index,inv);
     }
 
     public void addUnLimitSlot(int slot) {
@@ -81,50 +102,135 @@ public class MagicGui implements InventoryHolder {
         this.unLimitSlots = unLimitSlots;
     }
 
-    public Map<String, ContextMap> getContext() {
-        return context;
-    }
-
-    public void setContext(Map<String, ContextMap> context) {
-        this.context = context;
-    }
-
-    public Map<Integer, List<Spell>> getSpellMap() {
-        return spellMap;
-    }
-
-    public void setSpellMap(Map<Integer, List<Spell>> spellMap) {
-        this.spellMap = spellMap;
-    }
-    public void addSpellToIndex(int index,Spell spell){
-        if (!spellMap.containsKey(index)){
-            spellMap.put(index,new ArrayList<>());
+    public void addSpellToButton(char id, Spell spell) {
+        if (!spellMap.containsKey(id)) {
+            spellMap.put(id, new ArrayList<>());
         }
-        spellMap.get(index).add(spell);
+        spellMap.get(id).add(spell);
     }
-    public void removeSpellFromIndex(int index,Spell spell){
-        if (!spellMap.containsKey(index)){
+
+    public void removeSpellFromIndex(int index, Spell spell) {
+        if (!spellMap.containsKey(index)) {
             return;
         }
         spellMap.get(index).remove(spell);
     }
-    public void clearSpellFromIndex(int index){
-        if (!spellMap.containsKey(index)){
+
+    public void clearSpellFromIndex(int index) {
+        if (!spellMap.containsKey(index)) {
             return;
         }
         spellMap.get(index).clear();
     }
-    public void executeSpell(int index,Player player){
-        if (!spellMap.containsKey(index)){
+
+    public void executeSpell(int index, Player player) {
+        char buttonId = getButtonId(index, player);
+        if (buttonId == ' ') {
             return;
         }
-        ContextMap contextMap=getPlayerContext(player);
-        contextMap.putVariable("self",new PlayerResult(player));
-        for (Spell spell : spellMap.get(index)) {
-            SpellContext spellContext = spell.execute(contextMap);
-            if (spellContext.hasExecuteError()){
-                player.sendMessage("§c执行时错误: "+spellContext.getExecuteError());
+        if (!spellMap.containsKey(buttonId)) {
+            return;
+        }
+        context.putVariable("self", new PlayerResult(player));
+        for (Spell spell : spellMap.get(buttonId)) {
+            SpellContext spellContext = spell.execute(context);
+            if (spellContext.hasExecuteError()) {
+                player.sendMessage("§c执行时错误: " + spellContext.getExecuteError());
             }
         }
+    }
+
+
+    public Map<Integer, MagicGuiFormat> getFormatMap() {
+        return formatMap;
+    }
+
+    public void setFormatMap(Map<Integer, MagicGuiFormat> formatMap) {
+        this.formatMap = formatMap;
+    }
+
+
+    public void addButton(char id, ItemStack itemStack) {
+        getButtonItemMap().put(id, itemStack);
+    }
+
+    public void setPageFormat(int page, MagicGuiFormat format) {
+        getFormatMap().put(page, format);
+    }
+
+    public void addPageFormat(MagicGuiFormat format) {
+        setPageFormat(getFormatMap().size(), format);
+    }
+
+    public char getButtonId(int index, Player player) {
+        MagicGuiFormat format = getFormatMap().get(page);
+        if (format == null) {
+            return ' ';
+        }
+        return format.getIndex(index);
+    }
+
+    public Map<Character, ItemStack> getButtonItemMap() {
+        return buttonItemMap;
+    }
+
+    public void setButtonItemMap(Map<Character, ItemStack> buttonItemMap) {
+        this.buttonItemMap = buttonItemMap;
+    }
+
+    public int getPage() {
+        return page;
+    }
+
+    public void setPage(int page) {
+        this.page = page;
+    }
+
+    public ContextMap getContext() {
+        return context;
+    }
+
+    public void setContext(ContextMap context) {
+        this.context = context;
+    }
+
+    public Map<Character, List<Spell>> getSpellMap1() {
+        return spellMap;
+    }
+
+    public void setSpellMap(Map<Character, List<Spell>> spellMap) {
+        this.spellMap = spellMap;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public int getSize() {
+        return size;
+    }
+
+    public void setSize(int size) {
+        this.size = size;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public boolean isOpen() {
+        return isOpen;
+    }
+
+    public void setOpen(boolean open) {
+        isOpen = open;
     }
 }

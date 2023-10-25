@@ -1,0 +1,22 @@
+title: "测试菜单"
+size: 9
+format:
+  - - "AAA"
+    - "BBB"
+  - - "CCC"
+    - "DDD"
+unLimitSlots:
+  - 0
+  - 1
+A:
+  display: "测试按钮"
+  material: PAPER
+  amount: 1
+  customModelData: 1000
+  lore:
+    - "测试按钮"
+  spell:
+    - "checkperm(测试菜单A按钮)"
+    - "stap(666)"
+
+

@@ -13,12 +13,14 @@ import cn.originmc.plugins.magicpaper.command.MagicPaperTabCompleter;
 import cn.originmc.plugins.magicpaper.cooldown.CoolDownManager;
 import cn.originmc.plugins.magicpaper.data.config.LangData;
 import cn.originmc.plugins.magicpaper.data.config.MagicData;
+import cn.originmc.plugins.magicpaper.data.gui.GuiData;
 import cn.originmc.plugins.magicpaper.data.item.format.ItemFormatData;
 import cn.originmc.plugins.magicpaper.data.manager.TimerDataManager;
 import cn.originmc.plugins.magicpaper.data.manager.TriggerDataManager;
 import cn.originmc.plugins.magicpaper.data.timer.TimerData;
 import cn.originmc.plugins.magicpaper.data.trigger.TriggerData;
 import cn.originmc.plugins.magicpaper.gui.MagicGuiListener;
+import cn.originmc.plugins.magicpaper.gui.MagicGuiManager;
 import cn.originmc.plugins.magicpaper.hook.*;
 import cn.originmc.plugins.magicpaper.hook.placeholderapi.SpellExpansion;
 import cn.originmc.plugins.magicpaper.listener.AdditionalItemListener;
@@ -37,6 +39,7 @@ public final class MagicPaper extends JavaPlugin {
     private static NormalContext context;
     private static CoolDownManager coolDownManager;
     private static MagicBuffManager magicBuffManager;
+    private static MagicGuiManager magicGuiManager;
     public static MagicPackage magicPackage;
 
     public static JavaPlugin getInstance() {
@@ -75,6 +78,14 @@ public final class MagicPaper extends JavaPlugin {
         MagicPaper.magicBuffManager = magicBuffManager;
     }
 
+    public static MagicGuiManager getMagicGuiManager() {
+        return magicGuiManager;
+    }
+
+    public static void setMagicGuiManager(MagicGuiManager magicGuiManager) {
+        MagicPaper.magicGuiManager = magicGuiManager;
+    }
+
     @Override
     public void onLoad() {
         MagicPaperTriggerManager.trigger("ServerOnLoad",new NormalContext());
@@ -94,6 +105,8 @@ public final class MagicPaper extends JavaPlugin {
         hook();
         // 初始化触发器管理器
         MagicPaperTriggerManager.init();
+        // 初始化Gui管理器
+        magicGuiManager=new MagicGuiManager();
         // 初始化冷却管理器
         coolDownManager=new CoolDownManager();
         sender.sendToLogger("§a[§bMagicPaper§a] §e冷却管理器初始化完成");
@@ -154,7 +167,7 @@ public final class MagicPaper extends JavaPlugin {
         context=new NormalContext();
     }
     public static String getVersion(){
-        return "1.3.0";
+        return "1.3.1";
     }
     public static String getLang(){
         return getInstance().getConfig().getString("lang");
@@ -257,6 +270,8 @@ public final class MagicPaper extends JavaPlugin {
         TriggerData.load();
         // 加载计时器数据
         TimerData.load();
+        // 加载GUI数据
+        GuiData.load();
         sender.sendToLogger("§a[§bMagicPaper§a] §e数据加载完成");
     }
     public static boolean enableExtendedSyntax(String id){

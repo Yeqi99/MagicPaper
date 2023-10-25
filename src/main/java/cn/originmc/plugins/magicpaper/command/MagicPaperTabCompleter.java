@@ -17,7 +17,6 @@ public class MagicPaperTabCompleter implements TabCompleter {
         List<String> completions = new ArrayList<>();
 
         if (args.length == 1) {
-            // 提示第一个参数的补全
             completions.add("reload");
             completions.add("spells");
             completions.add("words");
@@ -32,7 +31,13 @@ public class MagicPaperTabCompleter implements TabCompleter {
             completions.add("boreremove");
             completions.add("restart");
             completions.add("coding");
+            completions.add("gui");
         } else if (args.length == 2) {
+            if (args[0].equalsIgnoreCase("gui")){
+                MagicPaper.getMagicGuiManager().getMagicGuiSettings().forEach(magicGuiSetting -> {
+                    completions.add(magicGuiSetting.getId());
+                });
+            }
             if (args[0].equalsIgnoreCase("spell")) {
                 // 提示第二个参数的补全，可能是法术ID
                 List<String> spellIds = MagicDataManager.getSpellsID();
@@ -65,8 +70,8 @@ public class MagicPaperTabCompleter implements TabCompleter {
             }
         }
 
-            // 对补全进行排序，可以自行根据需要更改
-            completions.sort(String.CASE_INSENSITIVE_ORDER);
+        // 对补全进行排序，可以自行根据需要更改
+        completions.sort(String.CASE_INSENSITIVE_ORDER);
 
         return completions;
     }
