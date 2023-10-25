@@ -232,6 +232,7 @@ public final class MagicPaper extends JavaPlugin {
             getInstance().saveResource("trigger/PlayerTeleportTrigger.yml",false);
             getInstance().saveResource("trigger/AsyncPlayerChatTrigger.yml",false);
             getInstance().saveResource("trigger/PlayerRespawnTrigger.yml",false);
+            getInstance().saveResource("gui/example.yml",false);
             if (RemoteKeyboardBukkitHook.status){
                 getInstance().saveResource("trigger/PlayerKeyboardTrigger.yml",false);
             }
