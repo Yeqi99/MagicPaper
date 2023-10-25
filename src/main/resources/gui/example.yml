@@ -1,8 +1,9 @@
 title: "测试菜单"
-size: 9
+size: 54
 format:
   - - "AAA"
     - "BBB"
+    - "CCC"
   - - "CCC"
     - "DDD"
 unLimitSlots:
@@ -16,7 +17,24 @@ A:
   lore:
     - "测试按钮"
   spell:
-    - "checkperm(测试菜单A按钮)"
-    - "stap(666)"
+    - "stap(AAA)"
 
+B:
+  display: "测试按钮"
+  material: PAPER
+  amount: 1
+  customModelData: 1000
+  lore:
+    - "测试按钮"
+  spell:
+    - "stap(BBB)"
 
+C:
+  display: "测试按钮"
+  material: PAPER
+  amount: 1
+  customModelData: 1000
+  lore:
+    - "测试按钮"
+  spell:
+    - "stap(CCC)"
