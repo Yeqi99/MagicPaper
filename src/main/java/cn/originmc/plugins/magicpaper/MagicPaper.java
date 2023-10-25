@@ -18,6 +18,7 @@ import cn.originmc.plugins.magicpaper.data.manager.TimerDataManager;
 import cn.originmc.plugins.magicpaper.data.manager.TriggerDataManager;
 import cn.originmc.plugins.magicpaper.data.timer.TimerData;
 import cn.originmc.plugins.magicpaper.data.trigger.TriggerData;
+import cn.originmc.plugins.magicpaper.gui.MagicGuiListener;
 import cn.originmc.plugins.magicpaper.hook.*;
 import cn.originmc.plugins.magicpaper.hook.placeholderapi.SpellExpansion;
 import cn.originmc.plugins.magicpaper.listener.AdditionalItemListener;
@@ -170,6 +171,9 @@ public final class MagicPaper extends JavaPlugin {
         }
         if (getConfig().getBoolean("coding",false)){
             getServer().getPluginManager().registerEvents(new CodingListener(),this);
+        }
+        if (getConfig().getBoolean("gui-listener",false)){
+            getServer().getPluginManager().registerEvents(new MagicGuiListener(),this);
         }
         if (PlaceholderAPIHook.status){
             new SpellExpansion().register();

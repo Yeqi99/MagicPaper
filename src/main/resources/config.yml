@@ -35,3 +35,5 @@ default-file: true
 item-trigger-listener: true
 
 buff-system-enable: true
+
+gui-listener: true
