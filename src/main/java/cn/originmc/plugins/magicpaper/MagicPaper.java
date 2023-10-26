@@ -29,6 +29,7 @@ import cn.originmc.plugins.magicpaper.listener.ItemTriggerListener;
 import cn.originmc.plugins.magicpaper.listener.ItemVariableRefreshListener;
 import cn.originmc.plugins.magicpaper.trigger.MagicPaperTriggerManager;
 import cn.originmc.plugins.magicpaper.trigger.listener.EpicCraftingPlusListener;
+import cn.originmc.plugins.magicpaper.trigger.listener.RemoteKeyboardBukkitListener;
 import cn.originmc.plugins.magicpaper.util.text.Sender;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -88,16 +89,17 @@ public final class MagicPaper extends JavaPlugin {
 
     @Override
     public void onLoad() {
-        MagicPaperTriggerManager.trigger("ServerOnLoad",new NormalContext());
+        MagicPaperTriggerManager.trigger("ServerOnLoad", new NormalContext());
     }
+
     @Override
     public void onEnable() {
         int pluginId = 19713;
         Metrics metrics = new Metrics(this, pluginId);
         // 初始化插件实例
-        instance=this;
+        instance = this;
         // 初始化发送器
-        sender=new Sender(this);
+        sender = new Sender(this);
         // 保存默认配置
         saveRes();
         // 初始化魔法管理器
@@ -106,12 +108,12 @@ public final class MagicPaper extends JavaPlugin {
         // 初始化触发器管理器
         MagicPaperTriggerManager.init();
         // 初始化Gui管理器
-        magicGuiManager=new MagicGuiManager();
+        magicGuiManager = new MagicGuiManager();
         // 初始化冷却管理器
-        coolDownManager=new CoolDownManager();
+        coolDownManager = new CoolDownManager();
         sender.sendToLogger("§a[§bMagicPaper§a] §e冷却管理器初始化完成");
         // 初始化Buff管理器
-        magicBuffManager=new MagicBuffManager();
+        magicBuffManager = new MagicBuffManager();
         sender.sendToLogger("§a[§bMagicPaper§a] §eBuff管理器初始化完成");
         // 加载全局上下文
         loadContext();
@@ -125,7 +127,7 @@ public final class MagicPaper extends JavaPlugin {
         // 注册魔法函数信息
         cn.originmc.plugins.magicpaper.magic.FunctionRegister.registerInfo();
         cn.originmc.plugins.magicpaper.magic.FunctionRegister.registerArgsInfo();
-        MagicPaperTriggerManager.trigger("ServerOnEnable",new NormalContext());
+        MagicPaperTriggerManager.trigger("ServerOnEnable", new NormalContext());
         importSpell(getContext());
         sender.sendToLogger("§a[§bMagicPaper§a] §e载入import魔咒完成");
         onLoadSpell();
@@ -136,18 +138,19 @@ public final class MagicPaper extends JavaPlugin {
         // 启动计时器
         sender.sendToLogger("§a[§bMagicPaper§a] §e启动计时器...");
         TimerDataManager.initConfigTimer();
-        sender.sendOnEnableMsgToLogger("MagicPaper","Yeqi",getVersion(),"Public");
+        sender.sendOnEnableMsgToLogger("MagicPaper", "Yeqi", getVersion(), "Public");
 
     }
-    public static void initMagicManager(){
+
+    public static void initMagicManager() {
         // 初始化魔法管理器
         magicManager = new MagicManager();
         // 注册魔法函数
-        if (enableExtendedSyntax("system")){
+        if (enableExtendedSyntax("system")) {
             FunctionRegister.regDefault(getMagicManager());
             sender.sendToLogger("§a[§bMagicPaper§a] §eMagic系统语义注册完成");
         }
-        if (enableExtendedSyntax("paper")){
+        if (enableExtendedSyntax("paper")) {
             cn.originmc.plugins.magicpaper.magic.FunctionRegister.register(getMagicManager());
             sender.sendToLogger("§a[§bMagicPaper§a] §eMagicPaper语义注册完成");
         }
@@ -158,94 +161,104 @@ public final class MagicPaper extends JavaPlugin {
          */
         sender.sendToLogger("§a[§bMagicPaper§a] §eMagic管理器初始化完成");
     }
+
     @Override
     public void onDisable() {
-        MagicPaperTriggerManager.trigger("ServerOnDisable",new NormalContext());
-        sender.sendOnDisableMsgToLogger("MagicPaper","Yeqi",getVersion(),"Public");
+        MagicPaperTriggerManager.trigger("ServerOnDisable", new NormalContext());
+        sender.sendOnDisableMsgToLogger("MagicPaper", "Yeqi", getVersion(), "Public");
     }
-    public void loadContext(){
-        context=new NormalContext();
+
+    public void loadContext() {
+        context = new NormalContext();
     }
-    public static String getVersion(){
+
+    public static String getVersion() {
         return "1.4.0";
     }
-    public static String getLang(){
+
+    public static String getLang() {
         return getInstance().getConfig().getString("lang");
     }
 
-    public void registerCommand(){
+    public void registerCommand() {
         getCommand("MagicPaper").setExecutor(new MagicPaperCommand());
         getCommand("MagicPaper").setTabCompleter(new MagicPaperTabCompleter());
         sender.sendToLogger("§a[§bMagicPaper§a] §e命令注册完成");
     }
-    public void registerListener(){
-        if (getConfig().getBoolean("buff-system-enable")){
-            getServer().getPluginManager().registerEvents(new BuffListener(),this);
+
+    public void registerListener() {
+        if (getConfig().getBoolean("buff-system-enable")) {
+            getServer().getPluginManager().registerEvents(new BuffListener(), this);
         }
-        if (getConfig().getBoolean("coding",false)){
-            getServer().getPluginManager().registerEvents(new CodingListener(),this);
+        if (getConfig().getBoolean("coding", false)) {
+            getServer().getPluginManager().registerEvents(new CodingListener(), this);
         }
-        if (getConfig().getBoolean("gui-listener",false)){
-            getServer().getPluginManager().registerEvents(new MagicGuiListener(),this);
+        if (getConfig().getBoolean("gui-listener", false)) {
+            getServer().getPluginManager().registerEvents(new MagicGuiListener(), this);
         }
-        if (PlaceholderAPIHook.status){
+        if (RemoteKeyboardBukkitHook.status) {
+            getServer().getPluginManager().registerEvents(new RemoteKeyboardBukkitListener(),this);
+        }
+        if (PlaceholderAPIHook.status) {
             new SpellExpansion().register();
         }
-        if (EpicCraftingsPlusHook.status){
+        if (EpicCraftingsPlusHook.status) {
             getServer().getPluginManager().registerEvents(new EpicCraftingPlusListener(), this);
         }
         // protocolLib修改物品发包解析监听器
-        if (ProtocolLibHook.status){
+        if (ProtocolLibHook.status) {
             ProtocolLibHook.pm.addPacketListener(new ItemVariableRefreshListener(this));
         }
-        if (getConfig().getBoolean("bore-listener",false)){
+        if (getConfig().getBoolean("bore-listener", false)) {
             getServer().getPluginManager().registerEvents(new AdditionalItemListener(), this);
         }
-        if (getConfig().getBoolean("item-trigger-listener",false)){
+        if (getConfig().getBoolean("item-trigger-listener", false)) {
             getServer().getPluginManager().registerEvents(new ItemTriggerListener(), this);
         }
         sender.sendToLogger("§a[§bMagicPaper§a] §e监听器注册完成");
     }
-    public void saveRes(){
+
+    public void saveRes() {
         getInstance().saveDefaultConfig();
-        if (getConfig().getBoolean("default-file",true)){
-            getInstance().saveResource("lang/Chinese.yml",false);
-            getInstance().saveResource("lang/English.yml",false);
-            getInstance().saveResource("magic/HelloWorld.yml",false);
-            getInstance().saveResource("magic/nothing.yml",false);
-            getInstance().saveResource("onload/register.m",false);
-            getInstance().saveResource("import/HelloWorld.m",false);
-            getInstance().saveResource("import/aitem.m",false);
-            getInstance().saveResource("import/nbt.m",false);
-            getInstance().saveResource("item-format/default.yml",false);
-            getInstance().saveResource("trigger/PlayerJoinTrigger.yml",false);
-            getInstance().saveResource("trigger/ServerOnDisableTrigger.yml",false);
-            getInstance().saveResource("trigger/ServerOnEnableTrigger.yml",false);
-            getInstance().saveResource("trigger/ServerOnLoadTrigger.yml",false);
-            getInstance().saveResource("trigger/PlayerInteractTrigger.yml",false);
-            getInstance().saveResource("trigger/PlayerDropTrigger.yml",false);
-            getInstance().saveResource("trigger/TimerTrigger.yml",false);
-            getInstance().saveResource("trigger/PlayerBreakTrigger.yml",false);
-            getInstance().saveResource("trigger/PlayerPlaceTrigger.yml",false);
-            getInstance().saveResource("trigger/EntityDamageTrigger.yml",false);
-            getInstance().saveResource("trigger/ItemDropTrigger.yml",false);
-            getInstance().saveResource("trigger/PlayerTeleportTrigger.yml",false);
-            getInstance().saveResource("trigger/AsyncPlayerChatTrigger.yml",false);
-            getInstance().saveResource("trigger/PlayerRespawnTrigger.yml",false);
-            getInstance().saveResource("gui/example.yml",false);
-            if (RemoteKeyboardBukkitHook.status){
-                getInstance().saveResource("trigger/PlayerKeyboardTrigger.yml",false);
+        if (getConfig().getBoolean("default-file", true)) {
+            getInstance().saveResource("lang/Chinese.yml", false);
+            getInstance().saveResource("lang/English.yml", false);
+            getInstance().saveResource("magic/HelloWorld.yml", false);
+            getInstance().saveResource("magic/nothing.yml", false);
+            getInstance().saveResource("onload/register.m", false);
+            getInstance().saveResource("import/HelloWorld.m", false);
+            getInstance().saveResource("import/aitem.m", false);
+            getInstance().saveResource("import/nbt.m", false);
+            getInstance().saveResource("item-format/default.yml", false);
+            getInstance().saveResource("trigger/PlayerJoinTrigger.yml", false);
+            getInstance().saveResource("trigger/ServerOnDisableTrigger.yml", false);
+            getInstance().saveResource("trigger/ServerOnEnableTrigger.yml", false);
+            getInstance().saveResource("trigger/ServerOnLoadTrigger.yml", false);
+            getInstance().saveResource("trigger/PlayerInteractTrigger.yml", false);
+            getInstance().saveResource("trigger/PlayerDropTrigger.yml", false);
+            getInstance().saveResource("trigger/TimerTrigger.yml", false);
+            getInstance().saveResource("trigger/PlayerBreakTrigger.yml", false);
+            getInstance().saveResource("trigger/PlayerPlaceTrigger.yml", false);
+            getInstance().saveResource("trigger/EntityDamageTrigger.yml", false);
+            getInstance().saveResource("trigger/ItemDropTrigger.yml", false);
+            getInstance().saveResource("trigger/PlayerTeleportTrigger.yml", false);
+            getInstance().saveResource("trigger/AsyncPlayerChatTrigger.yml", false);
+            getInstance().saveResource("trigger/PlayerRespawnTrigger.yml", false);
+            getInstance().saveResource("gui/example.yml", false);
+            if (RemoteKeyboardBukkitHook.status) {
+                getInstance().saveResource("trigger/PlayerKeyboardTrigger.yml", false);
             }
-            if (EpicCraftingsPlusHook.status){
-                getInstance().saveResource("trigger/EpicCraftingsPreCraftTrigger.yml",false);
-                getInstance().saveResource("trigger/EpicCraftingsCraftTrigger.yml",false);
-                getInstance().saveResource("trigger/EpicCraftingsPlaceClickTrigger.yml",false);
+            if (EpicCraftingsPlusHook.status) {
+                getInstance().saveResource("trigger/EpicCraftingsPreCraftTrigger.yml", false);
+                getInstance().saveResource("trigger/EpicCraftingsCraftTrigger.yml", false);
+                getInstance().saveResource("trigger/EpicCraftingsPlaceClickTrigger.yml", false);
             }
-            getInstance().saveResource("timer/default.yml",false);
+            getInstance().saveResource("timer/default.yml", false);
         }
         sender.sendToLogger("§a[§bMagicPaper§a] §e默认配置保存完成");
     }
-    public void hook(){
+
+    public void hook() {
         sender.sendToLogger("§a[§bMagicPaper§a] §e正在挂钩插件");
         sender.sendToLogger("§8挂钩仅用于提供更多功能,不挂钩不影响插件正常使用");
         ProtocolLibHook.hook();
@@ -260,7 +273,8 @@ public final class MagicPaper extends JavaPlugin {
         EpicCraftingsPlusHook.hook();
         sender.sendToLogger("§a[§bMagicPaper§a] §e插件挂钩完成");
     }
-    public static void loadData(){
+
+    public static void loadData() {
         // 加载魔咒数据
         MagicData.load();
         // 加载语言文件数据
@@ -275,24 +289,27 @@ public final class MagicPaper extends JavaPlugin {
         GuiData.load();
         sender.sendToLogger("§a[§bMagicPaper§a] §e数据加载完成");
     }
-    public static boolean enableExtendedSyntax(String id){
-        return getInstance().getConfig().getBoolean("extended-syntax."+id,false);
-    }
-    public static boolean isDebug(){
-        return getInstance().getConfig().getBoolean("debug",false);
+
+    public static boolean enableExtendedSyntax(String id) {
+        return getInstance().getConfig().getBoolean("extended-syntax." + id, false);
     }
 
-    public static void onLoadSpell(){
-        MagicPackage magicPackage=new MagicPackage("paper.onload");
-        magicPackage.loadFiles(getInstance().getDataFolder()+"/onload");
+    public static boolean isDebug() {
+        return getInstance().getConfig().getBoolean("debug", false);
+    }
+
+    public static void onLoadSpell() {
+        MagicPackage magicPackage = new MagicPackage("paper.onload");
+        magicPackage.loadFiles(getInstance().getDataFolder() + "/onload");
         for (MagicInstance value : magicPackage.getMagicInstances().values()) {
             value.getSpell(getMagicManager()).execute(getContext());
         }
     }
-    public static void importSpell(ContextMap contextMap){
-        magicPackage=new MagicPackage("paper.import");
-        magicPackage.loadFiles(getInstance().getDataFolder()+"/import");
-        magicPackage.importPackage(contextMap,getMagicManager());
+
+    public static void importSpell(ContextMap contextMap) {
+        magicPackage = new MagicPackage("paper.import");
+        magicPackage.loadFiles(getInstance().getDataFolder() + "/import");
+        magicPackage.importPackage(contextMap, getMagicManager());
     }
 
 }
