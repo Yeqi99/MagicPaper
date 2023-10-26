@@ -7,6 +7,8 @@ import cn.originmc.tools.minecraft.yamlcore.object.YamlManager;
 import org.bukkit.Material;
 import org.bukkit.configuration.Configuration;
 import org.bukkit.configuration.ConfigurationSection;
+import org.bukkit.event.inventory.InventoryType;
+import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
@@ -23,65 +25,77 @@ public class MagicGuiSetting {
     private Map<Character, List<Spell>> spellMap = new HashMap<>();
     private Map<Character, ItemStack> buttonItemMap = new HashMap<>();
     private Map<Integer, MagicGuiFormat> formatMap = new HashMap<>();
+    private InventoryType inventoryType = null;
 
     public MagicGuiSetting(YamlManager yamlManager, String id) {
-        YamlElement yamlElement=yamlManager.getElement(id);
-        Configuration yaml=yamlElement.getYml();
+        YamlElement yamlElement = yamlManager.getElement(id);
+        Configuration yaml = yamlElement.getYml();
         this.id = id;
         for (String key : yaml.getKeys(false)) {
-            if (key.equalsIgnoreCase("title")){
-                title=yaml.getString(key);
+            if (key.contains("type")) {
+                inventoryType = InventoryType.valueOf(yaml.getString("type"));
+            }
+            if (key.equalsIgnoreCase("title")) {
+                title = yaml.getString(key);
                 continue;
             }
-            if (key.equalsIgnoreCase("size")){
-                size=yaml.getInt(key);
+            if (key.equalsIgnoreCase("size")) {
+                size = yaml.getInt(key);
                 continue;
             }
-            if (key.equalsIgnoreCase("unLimitSlots")){
-                unLimitSlots=yaml.getIntegerList(key);
+            if (key.equalsIgnoreCase("unLimitSlots")) {
+                unLimitSlots = yaml.getIntegerList(key);
                 continue;
             }
-            if(key.equalsIgnoreCase("format")){
+            if (key.equalsIgnoreCase("format")) {
                 List<?> formatList = yaml.getList(key);
-                for(int i=0;i<formatList.size();i++){
+                for (int i = 0; i < formatList.size(); i++) {
                     List<String> format = (List<String>) formatList.get(i);
-                    formatMap.put(i,new MagicGuiFormat(format,buttonItemMap));
+                    formatMap.put(i, new MagicGuiFormat(format, buttonItemMap));
                 }
                 continue;
             }
 
-            ConfigurationSection section= yaml.getConfigurationSection(key);
+            ConfigurationSection section = yaml.getConfigurationSection(key);
             ItemStack itemStack = new ItemStack(Material.valueOf(section.getString("material")));
 
-            if (section.contains("amount")){
+            if (section.contains("amount")) {
                 itemStack.setAmount(section.getInt("amount"));
             }
-            ItemMeta itemMeta=itemStack.getItemMeta();
-            if (section.contains("display")){
+            ItemMeta itemMeta = itemStack.getItemMeta();
+            if (section.contains("display")) {
                 itemMeta.setDisplayName(section.getString("display"));
             }
-            if (section.contains("lore")){
+            if (section.contains("lore")) {
                 itemMeta.setLore(section.getStringList("lore"));
             }
-            if (section.contains("customModelData")){
+            if (section.contains("customModelData")) {
                 itemMeta.setCustomModelData(section.getInt("customModelData"));
             }
-            if (section.contains("spell")){
+            if (section.contains("spell")) {
                 List<String> spellList = section.getStringList("spell");
-                Spell spell=new Spell(spellList, MagicPaper.getMagicManager());
-                List<Spell> spells=spellMap.get(key.charAt(0));
-                if (spells==null){
-                    spells=new ArrayList<>();
+                Spell spell = new Spell(spellList, MagicPaper.getMagicManager());
+                List<Spell> spells = spellMap.get(key.charAt(0));
+                if (spells == null) {
+                    spells = new ArrayList<>();
                 }
                 spells.add(spell);
-                spellMap.put(key.charAt(0),spells);
+                spellMap.put(key.charAt(0), spells);
             }
             itemStack.setItemMeta(itemMeta);
-            buttonItemMap.put(key.charAt(0),itemStack);
+            buttonItemMap.put(key.charAt(0), itemStack);
         }
 
     }
+
     public MagicGui generate() {
+        if (inventoryType != null) {
+            if (inventoryType == InventoryType.CHEST) {
+                return new MagicGui(size, title, unLimitSlots);
+            } else {
+                return new MagicGui(title, inventoryType);
+            }
+        }
         MagicGui magicGui = new MagicGui(size, title, unLimitSlots);
         magicGui.setId(id);
         magicGui.setSpellMap(spellMap);
@@ -89,6 +103,7 @@ public class MagicGuiSetting {
         magicGui.setFormatMap(formatMap);
         return magicGui;
     }
+
     public String getId() {
         return id;
     }
@@ -143,5 +158,13 @@ public class MagicGuiSetting {
 
     public void setFormatMap(Map<Integer, MagicGuiFormat> formatMap) {
         this.formatMap = formatMap;
+    }
+
+    public InventoryType getInventoryType() {
+        return inventoryType;
+    }
+
+    public void setInventoryType(InventoryType inventoryType) {
+        this.inventoryType = inventoryType;
     }
 }
