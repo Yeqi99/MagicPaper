@@ -7,6 +7,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+//TODO 完善方法并封装为语义
 public class MagicGuiManager {
     private Map<String, List<MagicGui>> playerGuiMap = new HashMap<>();
     private List<MagicGuiSetting> magicGuiSettings = new ArrayList<>();

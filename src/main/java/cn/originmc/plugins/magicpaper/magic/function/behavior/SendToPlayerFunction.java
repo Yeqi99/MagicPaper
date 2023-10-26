@@ -17,34 +17,35 @@ import java.util.List;
 public class SendToPlayerFunction extends NormalFunction {
     @Override
     public FunctionResult whenFunctionCalled(SpellContext spellContext, List<FunctionResult> args) {
-        if (args.size()<2){
+        if (args.size() < 2) {
             return new ErrorResult("INSUFFICIENT_ARGUMENTS", "SenderToPlayer function requires at least two arguments.");
         }
 
-        if (args.get(0) instanceof PlayerResult){
-            PlayerResult playerResult=(PlayerResult) args.get(0);
-            Player player=playerResult.getPlayer();
-            if (args.get(1) instanceof StringResult){
-                StringResult message=(StringResult) args.get(1);
+        if (args.get(0) instanceof PlayerResult) {
+            PlayerResult playerResult = (PlayerResult) args.get(0);
+            Player player = playerResult.getPlayer();
+            if (args.get(1) instanceof StringResult) {
+                StringResult message = (StringResult) args.get(1);
                 MagicPaper.getSender().sendToPlayer(player, message.getString());
                 return new NullResult();
-            }else if (args.get(1) instanceof ListResult){
-                ListResult listResult=(ListResult) args.get(1);
-                List<Object> list=listResult.getList();
+            } else if (args.get(1) instanceof ListResult) {
+                ListResult listResult = (ListResult) args.get(1);
+                List<?> list = listResult.getList();
 
-                List<String> messageList= new ArrayList<>();
-                for (Object object:list){
+                List<String> messageList = new ArrayList<>();
+                for (Object object : list) {
                     if (object instanceof String) {
                         messageList.add((String) object);
-                        MagicPaper.getSender().sendToAllPlayer((String) object);
+                    } else {
+                        messageList.add(object.toString());
                     }
                 }
                 MagicPaper.getSender().sendToPlayer(player, messageList);
                 return new NullResult();
-            }else {
+            } else {
                 return new ErrorResult("UNKNOWN_ARGUMENT_TYPE", "Unsupported argument type.");
             }
-        }else {
+        } else {
             return new ErrorResult("UNKNOWN_ARGUMENT_TYPE", "Unsupported argument type.");
         }
     }

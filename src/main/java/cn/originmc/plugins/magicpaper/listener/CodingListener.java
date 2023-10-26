@@ -41,6 +41,7 @@ public class CodingListener implements Listener {
                             .sendToPlayer(
                                     event.getPlayer(),
                                     "&c"+spellContext.getExecuteError().getErrorId()+":"+spellContext.getExecuteError().getInfo());
+                    MagicPaper.getSender().sendToPlayer(event.getPlayer(), spellContext.getExecuteErrorLocation());
                 }
                 event.setCancelled(true);
                 return;
@@ -77,6 +78,7 @@ public class CodingListener implements Listener {
                                 .sendToPlayer(
                                         event.getPlayer(),
                                         "&c"+spellContext.getExecuteError().getErrorId()+":"+spellContext.getExecuteError().getInfo());
+                        MagicPaper.getSender().sendToPlayer(event.getPlayer(), spellContext.getExecuteErrorLocation());
                     }
                 }
                 event.setCancelled(true);

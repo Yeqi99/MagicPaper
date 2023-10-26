@@ -22,12 +22,14 @@ public class SendToAllPlayerFunction extends NormalFunction {
             MagicPaper.getSender().sendToAllPlayer(((StringResult) message).getString());
         }else if (message instanceof ListResult){
             ListResult listResult=(ListResult) message;
-            List<Object> list=listResult.getList();
+            List<?> list=listResult.getList();
 
             List<String> messageList= new java.util.ArrayList<>();
             for (Object object:list){
                 if (object instanceof String) {
                     messageList.add((String) object);
+                }else {
+                    messageList.add(object.toString());
                 }
             }
             MagicPaper.getSender().sendToAllPlayer(messageList);

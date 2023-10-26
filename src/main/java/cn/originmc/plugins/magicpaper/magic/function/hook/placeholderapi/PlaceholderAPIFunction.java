@@ -32,7 +32,7 @@ public class PlaceholderAPIFunction extends NormalFunction {
             }else  if (message instanceof ListResult){
                 Player player=((PlayerResult) p).getPlayer();
                 ListResult listResult=(ListResult) message;
-                List<Object> list=listResult.getList();
+                List<?> list=listResult.getList();
 
                 List<Object> messageList= new ArrayList<>();
                 for (Object object:list){
