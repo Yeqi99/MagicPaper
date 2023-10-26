@@ -16,6 +16,10 @@ import cn.originmc.plugins.magicpaper.magic.function.cooldown.AddCoolDownFunctio
 import cn.originmc.plugins.magicpaper.magic.function.cooldown.CheckCoolDownFunction;
 import cn.originmc.plugins.magicpaper.magic.function.cooldown.GETCDFunction;
 import cn.originmc.plugins.magicpaper.magic.function.cooldown.GOCDFunction;
+import cn.originmc.plugins.magicpaper.magic.function.gui.GuiDataClearFunction;
+import cn.originmc.plugins.magicpaper.magic.function.gui.GuiNextPageFunction;
+import cn.originmc.plugins.magicpaper.magic.function.gui.GuiOpenFunction;
+import cn.originmc.plugins.magicpaper.magic.function.gui.GuiPreviousPageFunction;
 import cn.originmc.plugins.magicpaper.magic.function.hook.abolethplus.*;
 import cn.originmc.plugins.magicpaper.magic.function.hook.itemsadder.IAItemFunction;
 import cn.originmc.plugins.magicpaper.magic.function.hook.itemsadder.PlaceIABlockFunction;
@@ -203,6 +207,11 @@ public class FunctionRegister {
         fm.register(new CheckCoolDownFunction(), "checkcd");
         fm.register(new GOCDFunction());
         fm.register(new GETCDFunction());
+        // gui
+        fm.register(new GuiOpenFunction(), "opengui");
+        fm.register(new GuiDataClearFunction(), "cleargui");
+        fm.register(new GuiNextPageFunction(),"npage");
+        fm.register(new GuiPreviousPageFunction(), "ppage");
     }
 
     public static void registerInfo() {

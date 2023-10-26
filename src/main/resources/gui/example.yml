@@ -1,7 +1,7 @@
 title: "测试菜单"
 size: 54
 # type: CHEST https://hub.spigotmc.org/javadocs/spigot/org/bukkit/event/inventory/InventoryType.html
-format:
+format: # TODO 数据源按钮展示
   - - "AAA"
     - "BBB"
     - "CCC"
@@ -10,6 +10,7 @@ format:
 unLimitSlots:
   - 0
   - 1
+
 A:
   display: "测试按钮"
   material: PAPER
@@ -39,3 +40,7 @@ C:
     - "测试按钮"
   spell:
     - "stap(CCC)"
+
+#A_data: # TODO 数据源按钮展示
+#  spell:
+#    - "returnb(items)"

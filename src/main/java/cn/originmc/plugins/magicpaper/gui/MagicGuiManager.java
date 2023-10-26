@@ -41,6 +41,18 @@ public class MagicGuiManager {
         return magicGui;
     }
 
+    public void removeGui(Player player, String id) {
+        List<MagicGui> magicGuis = playerGuiMap.get(player.getUniqueId().toString());
+        if (magicGuis == null) {
+            return;
+        }
+        for (MagicGui magicGui : magicGuis) {
+            if (magicGui.getId().equalsIgnoreCase(id)){
+                magicGuis.remove(magicGui);
+                return;
+            }
+        }
+    }
 
     public MagicGuiSetting getGuiSetting(String id) {
         for (MagicGuiSetting magicGuiSetting : magicGuiSettings) {
