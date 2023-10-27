@@ -3,6 +3,8 @@ package cn.originmc.plugins.magicpaper.magic.function.buff;
 import cn.origincraft.magic.function.NormalFunction;
 import cn.origincraft.magic.function.results.ErrorResult;
 import cn.origincraft.magic.function.results.NullResult;
+import cn.origincraft.magic.function.results.SpellResult;
+import cn.origincraft.magic.object.Spell;
 import cn.origincraft.magic.object.SpellContext;
 import cn.originmc.plugins.magicpaper.MagicPaper;
 import cn.originmc.plugins.magicpaper.buff.MagicBuff;
@@ -42,6 +44,17 @@ public class BuffAddFunction extends NormalFunction {
             setting=((StringResult) arg4).getString();
         }
         MagicBuff magicBuff=new MagicBuff(buffId,Integer.parseInt(time));
+        if (args.size()>4){
+            List<FunctionResult> spells = args.subList(4, args.size());
+            for (FunctionResult spell : spells) {
+                if (!(spell instanceof SpellResult)){
+                    return new ErrorResult("TYPE_ERROR", "The fifth arg must be spell.");
+                }
+                Spell spell1 = ((SpellResult) spell).getSpell();
+                magicBuff.addSpell(spell1);
+            }
+
+        }
         magicBuff.setBuffSetting(setting);
         MagicPaper.getMagicBuffManager().addMagicBuff(targetId,magicBuff);
         return new StringResult(magicBuff.getNowToEnd()+"");
