@@ -6,7 +6,7 @@
 
     <groupId>cn.originmc.plugins</groupId>
     <artifactId>MagicPaper</artifactId>
-    <version>1.4.2-SNAPSHOT</version>
+    <version>1.4.3-SNAPSHOT</version>
     <packaging>jar</packaging>
 
     <name>MagicPaper</name>
@@ -114,7 +114,7 @@
         <dependency>
             <groupId>cn.origincraft.magic</groupId>
             <artifactId>Magic</artifactId>
-            <version>1.0.26</version>
+            <version>1.0.27b2</version>
         </dependency>
         <!-- MagicRedis
         <dependency>

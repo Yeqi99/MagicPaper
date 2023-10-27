@@ -4,6 +4,7 @@ import cn.origincraft.magic.object.ContextMap;
 import cn.origincraft.magic.object.NormalContext;
 import cn.origincraft.magic.object.Spell;
 import cn.origincraft.magic.object.SpellContext;
+import cn.originmc.plugins.magicpaper.MagicPaper;
 import cn.originmc.plugins.magicpaper.magic.result.PlayerResult;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -25,29 +26,33 @@ public class MagicGui implements InventoryHolder {
     private ContextMap context = new NormalContext();
     private Map<Character, List<Spell>> spellMap = new HashMap<>();
     private Map<Character, ItemStack> buttonItemMap = new HashMap<>();
+    private List<DataButton> dataButtons = new ArrayList<>();
     private boolean isOpen=false;
     private int page = 0;
     private Map<Integer, MagicGuiFormat> formatMap = new HashMap<>();
     private int size = 54;
     private String title="";
+    private InventoryType inventoryType = null;
+    private Player player;
 
-    public MagicGui(int size, String title) {
+    public MagicGui(int size, String title,Player player) {
         this.size=size;
         this.title=title;
+        this.player=player;
     }
 
-    public MagicGui(int size, String title, List<Integer> unLimitSlots) {
+    public MagicGui(int size, String title, List<Integer> unLimitSlots,Player player) {
         this.size=size;
         this.title=title;
+        this.player=player;
         this.unLimitSlots = unLimitSlots;
     }
 
-    public MagicGui(Inventory inv) {
-        this.inv.put(0,inv);
-    }
 
-    public MagicGui(String title, InventoryType inventoryType) {
+    public MagicGui(String title, InventoryType inventoryType,Player player) {
         this.title=title;
+        this.inventoryType = inventoryType;
+        this.player=player;
     }
 
     @Override
@@ -55,9 +60,26 @@ public class MagicGui implements InventoryHolder {
         return inv.get(page);
     }
 
+    public void update(Player player) {
+        context.putVariable("self", new PlayerResult(player));
+        if (inventoryType!=null && inventoryType!=InventoryType.CHEST){
+            for (int i = 0;i<getPageSize();i++){
+                inv.put(i, Bukkit.createInventory(this, inventoryType, title));
+            }
+            return;
+        }
+        dataButtonApply();
+        for (Map.Entry<Integer, MagicGuiFormat> entry : formatMap.entrySet()) {
+            if (!inv.containsKey(entry.getKey())) {
+                inv.put(entry.getKey(), Bukkit.createInventory(this, size, title));
+            }
+            entry.getValue().apply(inv.get(entry.getKey()));
+        }
+    }
     public void open(Player player) {
-        page = page % formatMap.size();
+        page = getPage();
         MagicGuiFormat format = formatMap.get(page);
+
         if(!inv.containsKey(page)){
             inv.put(page, Bukkit.createInventory(this, size, title));
             format.apply(inv.get(page));
@@ -71,9 +93,6 @@ public class MagicGui implements InventoryHolder {
     }
 
     public void previousPage(Player player) {
-        if (page == 0) {
-            open(player);
-        }
         page--;
         open(player);
     }
@@ -135,7 +154,8 @@ public class MagicGui implements InventoryHolder {
         for (Spell spell : spellMap.get(buttonId)) {
             SpellContext spellContext = spell.execute(context);
             if (spellContext.hasExecuteError()) {
-                player.sendMessage("§c执行时错误: " + spellContext.getExecuteError());
+                MagicPaper.getSender().sendToPlayer(player, "§c执行时错误: " + spellContext.getExecuteError().getErrorId()+"-"+spellContext.getExecuteError().getInfo());
+                MagicPaper.getSender().sendToPlayer(player, "§c错误位置: " + spellContext.getExecuteErrorLocation());
             }
         }
     }
@@ -179,6 +199,12 @@ public class MagicGui implements InventoryHolder {
     }
 
     public int getPage() {
+        if (page<0){
+            page=0;
+        }
+        if (page>=getPageSize()){
+            page=0;
+        }
         return page;
     }
 
@@ -232,5 +258,80 @@ public class MagicGui implements InventoryHolder {
 
     public void setOpen(boolean open) {
         isOpen = open;
+    }
+
+    public int getPageSize(){
+        return formatMap.size();
+    }
+    public Map<Integer, Inventory> getInv() {
+        return inv;
+    }
+
+    public List<DataButton> getDataButtons() {
+        return dataButtons;
+    }
+
+    public void setDataButtons(List<DataButton> dataButtons) {
+        this.dataButtons = dataButtons;
+    }
+
+    public InventoryType getInventoryType() {
+        return inventoryType;
+    }
+
+    public void setInventoryType(InventoryType inventoryType) {
+        this.inventoryType = inventoryType;
+    }
+
+    public Player getPlayer() {
+        return player;
+    }
+
+    public void setPlayer(Player player) {
+        this.player = player;
+    }
+    public void putVariable(String key,Object value){
+        context.putVariable(key,value);
+    }
+    public void putInv(int index,Inventory inventory){
+        inv.put(index,inventory);
+    }
+
+    public void dataButtonApply(){
+        for (DataButton dataButton : dataButtons) {
+            List<ItemStack> buttons = dataButton.getButtons(context);
+            int pageSize = getSize();
+            int index = 0;
+            format:for (int i = 0; i < pageSize; i++) {
+                MagicGuiFormat magicGuiFormat = getFormatMap().get(i);
+                if (magicGuiFormat == null) {
+                    break;
+                }
+                if (!inv.containsKey(i)){
+                    getInv().put(i, Bukkit.createInventory(this, getSize(), getTitle()));
+                }
+                Inventory inventory = inv.get(i);
+                char[][] format = magicGuiFormat.getFormat();
+                for (int j = 0; j < format.length; j++) {
+                    for (int k = 0; k < format[j].length; k++) {
+                        int slot=j * format[j].length + k;
+                        if (slot >= getSize()) {
+                            continue format;
+                        }
+                        NormalDataButton normalDataButton= (NormalDataButton) dataButton;
+                        if (format[j][k] == normalDataButton.getButtonId().charAt(0)) {
+                            if (index >= buttons.size()) {
+                                inv.put(i, inventory);
+                                break format;
+                            }
+                            inventory.setItem(slot, buttons.get(index));
+                            index++;
+                        }
+                        inv.put(i,inventory);
+                    }
+                }
+            }
+        }
+
     }
 }

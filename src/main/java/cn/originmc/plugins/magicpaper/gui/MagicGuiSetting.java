@@ -7,6 +7,7 @@ import cn.originmc.tools.minecraft.yamlcore.object.YamlManager;
 import org.bukkit.Material;
 import org.bukkit.configuration.Configuration;
 import org.bukkit.configuration.ConfigurationSection;
+import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
@@ -25,6 +26,7 @@ public class MagicGuiSetting {
     private Map<Character, List<Spell>> spellMap = new HashMap<>();
     private Map<Character, ItemStack> buttonItemMap = new HashMap<>();
     private Map<Integer, MagicGuiFormat> formatMap = new HashMap<>();
+    private List<DataButton> dataButtons=new ArrayList<>();
     private InventoryType inventoryType = null;
 
     public MagicGuiSetting(YamlManager yamlManager, String id) {
@@ -34,6 +36,7 @@ public class MagicGuiSetting {
         for (String key : yaml.getKeys(false)) {
             if (key.contains("type")) {
                 inventoryType = InventoryType.valueOf(yaml.getString("type"));
+                continue;
             }
             if (key.equalsIgnoreCase("title")) {
                 title = yaml.getString(key);
@@ -55,7 +58,22 @@ public class MagicGuiSetting {
                 }
                 continue;
             }
+            if (key.endsWith("_data")){
+                List<String> dataList=yaml.getStringList(key+".dataFrom");
+                List<String> spellList=yaml.getStringList(key+".spell");
+                Spell data=new Spell(dataList, MagicPaper.getMagicManager());
+                Spell spell=new Spell(spellList, MagicPaper.getMagicManager());
+                DataButton dataButton=new NormalDataButton(data,key);
+                dataButtons.add(dataButton);
 
+                List<Spell> spells = spellMap.get(key.charAt(0));
+                if (spells == null) {
+                    spells = new ArrayList<>();
+                }
+                spells.add(spell);
+                spellMap.put(key.charAt(0), spells);
+                continue;
+            }
             ConfigurationSection section = yaml.getConfigurationSection(key);
             ItemStack itemStack = new ItemStack(Material.valueOf(section.getString("material")));
 
@@ -88,19 +106,32 @@ public class MagicGuiSetting {
 
     }
 
-    public MagicGui generate() {
+    public MagicGui generate(Player player) {
         if (inventoryType != null) {
             if (inventoryType == InventoryType.CHEST) {
-                return new MagicGui(size, title, unLimitSlots);
+                MagicGui magicGui = new MagicGui(size, title, unLimitSlots,player);
+                magicGui.setId(id);
+                magicGui.setSpellMap(spellMap);
+                magicGui.setButtonItemMap(buttonItemMap);
+                magicGui.setFormatMap(formatMap);
+                magicGui.setDataButtons(dataButtons);
+                return magicGui;
             } else {
-                return new MagicGui(title, inventoryType);
+                MagicGui magicGui = new MagicGui(title, inventoryType,player);
+                magicGui.setId(id);
+                magicGui.setSpellMap(spellMap);
+                magicGui.setButtonItemMap(buttonItemMap);
+                magicGui.setFormatMap(formatMap);
+                magicGui.setDataButtons(dataButtons);
+                return magicGui;
             }
         }
-        MagicGui magicGui = new MagicGui(size, title, unLimitSlots);
+        MagicGui magicGui = new MagicGui(size, title, unLimitSlots,player);
         magicGui.setId(id);
         magicGui.setSpellMap(spellMap);
         magicGui.setButtonItemMap(buttonItemMap);
         magicGui.setFormatMap(formatMap);
+        magicGui.setDataButtons(dataButtons);
         return magicGui;
     }
 
@@ -166,5 +197,13 @@ public class MagicGuiSetting {
 
     public void setInventoryType(InventoryType inventoryType) {
         this.inventoryType = inventoryType;
+    }
+
+    public List<DataButton> getDataButtons() {
+        return dataButtons;
+    }
+
+    public void setDataButtons(List<DataButton> dataButtons) {
+        this.dataButtons = dataButtons;
     }
 }

@@ -29,10 +29,10 @@ public class ItemGivePlayerFunction extends NormalFunction {
                 p.getInventory().addItem(i);
                 return new NullResult();
             } else {
-                return new ErrorResult("UNKNOWN_ARGUMENT_TYPE", "Unsupported argument type.");
+                return new ErrorResult("UNKNOWN_ARGUMENT_TYPE", "ItemGivePlayer function requires itemstack as second argument.");
             }
         }else {
-            return new ErrorResult("UNKNOWN_ARGUMENT_TYPE", "Unsupported argument type.");
+            return new ErrorResult("UNKNOWN_ARGUMENT_TYPE", "ItemGivePlayer function requires player as first argument.");
         }
     }
 

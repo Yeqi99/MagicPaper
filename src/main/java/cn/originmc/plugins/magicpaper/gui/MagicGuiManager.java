@@ -7,7 +7,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-//TODO 完善方法并封装为语义
+
 public class MagicGuiManager {
     private Map<String, List<MagicGui>> playerGuiMap = new HashMap<>();
     private List<MagicGuiSetting> magicGuiSettings = new ArrayList<>();
@@ -35,7 +35,8 @@ public class MagicGuiManager {
         if (magicGuiSetting == null) {
             return null;
         }
-        MagicGui magicGui = magicGuiSetting.generate();
+        MagicGui magicGui = magicGuiSetting.generate(player);
+        magicGui.update(player);
         magicGuis.add(magicGui);
         playerGuiMap.put(player.getUniqueId().toString(), magicGuis);
         return magicGui;
@@ -48,6 +49,7 @@ public class MagicGuiManager {
         }
         for (MagicGui magicGui : magicGuis) {
             if (magicGui.getId().equalsIgnoreCase(id)){
+                magicGui.getInv().clear();
                 magicGuis.remove(magicGui);
                 return;
             }

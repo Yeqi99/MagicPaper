@@ -6,6 +6,7 @@ import de.tr7zw.nbtapi.NBT;
 import de.tr7zw.nbtapi.NBTCompound;
 import de.tr7zw.nbtapi.NBTType;
 import de.tr7zw.nbtapi.iface.ReadWriteNBT;
+import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.attribute.AttributeModifier;
@@ -14,6 +15,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.inventory.meta.SkullMeta;
 
 import java.text.DecimalFormat;
 import java.util.*;
@@ -802,5 +804,23 @@ public class NBTItem {
                 }
             }
         }
+    }
+    public ItemStack getPlayerHead(Player player,int amount) {
+        ItemStack playerHead = getItemStack().clone();
+        playerHead.setType(Material.PLAYER_HEAD);
+        playerHead.setAmount(amount);
+        // 设置头颅的皮肤，将玩家名字设置为头颅的皮肤
+        playerHead = setPlayerHeadTexture(playerHead, player.getName());
+        return playerHead;
+    }
+
+    // 设置头颅的皮肤
+    public ItemStack setPlayerHeadTexture(ItemStack itemStack, String playerName) {
+        if (itemStack.getItemMeta() instanceof SkullMeta) {
+            SkullMeta skullMeta = (SkullMeta) itemStack.getItemMeta();
+            skullMeta.setOwningPlayer(Bukkit.getOfflinePlayer(playerName));
+            itemStack.setItemMeta(skullMeta);
+        }
+        return itemStack;
     }
 }

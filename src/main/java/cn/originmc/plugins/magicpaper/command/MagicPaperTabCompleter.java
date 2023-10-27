@@ -32,6 +32,7 @@ public class MagicPaperTabCompleter implements TabCompleter {
             completions.add("restart");
             completions.add("coding");
             completions.add("gui");
+            completions.add("clearguidata");
         } else if (args.length == 2) {
             if (args[0].equalsIgnoreCase("gui")){
                 MagicPaper.getMagicGuiManager().getMagicGuiSettings().forEach(magicGuiSetting -> {
@@ -61,6 +62,11 @@ public class MagicPaperTabCompleter implements TabCompleter {
             }
             if (args[0].equalsIgnoreCase("boreremove")) {
                 completions.add("address");
+            }
+            if (args[0].equalsIgnoreCase("clearguidata")){
+                MagicPaper.getMagicGuiManager().getMagicGuiSettings().forEach(magicGuiSetting -> {
+                    completions.add(magicGuiSetting.getId());
+                });
             }
         } else if (args.length == 3){
             if (args[0].equalsIgnoreCase("boreremove")) {

@@ -19,7 +19,7 @@ public class MagicGuiListener implements Listener {
             }
             MagicGui gui = (MagicGui) e.getInventory().getHolder();
             int slot = e.getSlot();
-            if (e.getClickedInventory().getHolder() instanceof MagicGui){
+            if (e.getClickedInventory()!=null && e.getClickedInventory().getHolder() instanceof MagicGui){
                 if (!gui.getUnLimitSlots().contains(slot)) {
                     e.setCancelled(true);
                 }
@@ -28,6 +28,8 @@ public class MagicGuiListener implements Listener {
             gui.getContext().putVariable("item", new ItemStackResult(e.getCurrentItem()));
             gui.getContext().putVariable("click", e.getClick().name());
             gui.getContext().putVariable("action", e.getAction().name());
+            boolean isAirItem = e.getCurrentItem() == null || e.getCurrentItem().getType().isAir();
+            gui.getContext().putVariable("isAirItem", isAirItem);
             gui.executeSpell(slot, (Player) e.getWhoClicked());
         }
     }

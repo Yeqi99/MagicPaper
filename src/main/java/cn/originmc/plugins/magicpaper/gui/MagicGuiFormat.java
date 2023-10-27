@@ -31,8 +31,6 @@ public class MagicGuiFormat {
                 char c = format[i][j];
                 if (buttonItemMap.containsKey(c)) {
                     inventory.setItem(i * format[i].length + j, buttonItemMap.get(c));
-                }else {
-                    inventory.setItem(i * format[i].length + j, new ItemStack(Material.AIR));
                 }
             }
         }
@@ -55,5 +53,28 @@ public class MagicGuiFormat {
 
     public void setButtonItemMap(Map<Character, ItemStack> buttonItemMap) {
         this.buttonItemMap = buttonItemMap;
+    }
+    public int getButtonAmount(char c){
+        int amount=0;
+        for (char[] chars : format) {
+            for (char aChar : chars) {
+                if (aChar==c){
+                    amount++;
+                }
+            }
+        }
+        return amount;
+    }
+    public int setButton(char c,ItemStack itemStack,Inventory inventory){
+        int amount=0;
+        for (int i = 0; i < format.length; i++) {
+            for (int j = 0; j < format[i].length; j++) {
+                if (format[i][j]==c){
+                    inventory.setItem(i*format[i].length+j,itemStack);
+                    amount++;
+                }
+            }
+        }
+        return amount;
     }
 }
