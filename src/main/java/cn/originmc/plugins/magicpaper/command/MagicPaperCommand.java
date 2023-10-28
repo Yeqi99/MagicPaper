@@ -4,6 +4,7 @@ package cn.originmc.plugins.magicpaper.command;
 import cn.origincraft.magic.object.NormalContext;
 import cn.origincraft.magic.object.Spell;
 import cn.origincraft.magic.object.SpellContext;
+import cn.origincraft.magic.utils.ErrorUtils;
 import cn.originmc.plugins.magicpaper.MagicPaper;
 import cn.originmc.plugins.magicpaper.data.config.LangData;
 import cn.originmc.plugins.magicpaper.data.manager.MagicDataManager;
@@ -50,6 +51,8 @@ public class MagicPaperCommand implements CommandExecutor {
                 helpMessage.add("&a/magicpaper restart &7- &fRestart plugin");
                 helpMessage.add("&a/magicpaper coding &7- &fOpen coding mode");
                 helpMessage.add("&a/magicpaper gui <id> [player] &7- &fOpen gui");
+                helpMessage.add("&a/magicpaper clearguidata <id> [player] &7- &fClear gui data");
+                helpMessage.add("&a/magicpaper updateguidata <id> [player] &7- &fUpdate gui data");
             } else {
                 helpMessage.add("&aMagicPaper &7v" + MagicPaper.getVersion());
                 helpMessage.add("&a/magicpaper reload &7- &f重载配置");
@@ -67,6 +70,8 @@ public class MagicPaperCommand implements CommandExecutor {
                 helpMessage.add("&a/magicpaper restart &7- &f重启插件");
                 helpMessage.add("&a/magicpaper coding &7- &f切换编码模式");
                 helpMessage.add("&a/magicpaper gui <id> [player] &7- &f打开gui");
+                helpMessage.add("&a/magicpaper clearguidata <id> [player] &7- &f清除gui数据");
+                helpMessage.add("&a/magicpaper updateguidata <id> [player] &7- &f更新gui数据");
             }
             MagicPaper.getSender().sendToSender(commandSender, helpMessage);
             return true;
@@ -100,8 +105,8 @@ public class MagicPaperCommand implements CommandExecutor {
             normalContext.putVariable("self", new PlayerResult((Player) commandSender));
             SpellContext spellContext = spell.execute(normalContext);
 
-            if (spellContext.hasExecuteError()) {
-                MagicPaper.getSender().sendToSender(commandSender, "&c" + spellContext.getExecuteError().getErrorId() + ":" + spellContext.getExecuteError().getInfo());
+            if (MagicPaper.isDebug() && spellContext.hasExecuteError()) {
+                MagicPaper.getSender().sendToSender(commandSender, ErrorUtils.normalError(spellContext));
             }
         } else if (args[0].equalsIgnoreCase("spell")) {
             String spellID = args[1];
@@ -115,7 +120,7 @@ public class MagicPaperCommand implements CommandExecutor {
             normalContext.putVariable("self", new PlayerResult((Player) commandSender));
             SpellContext spellContext = Objects.requireNonNull(spell).execute(normalContext);
             if (MagicPaper.isDebug() && spellContext.hasExecuteError()) {
-                MagicPaper.getSender().sendToSender(commandSender, "&c" + spellContext.getExecuteError().getErrorId() + ":" + spellContext.getExecuteError().getInfo());
+                MagicPaper.getSender().sendToSender(commandSender, ErrorUtils.normalError(spellContext));
             }
         } else if (args[0].equalsIgnoreCase("publicspell")) {
             String spellID = args[1];
@@ -127,7 +132,7 @@ public class MagicPaperCommand implements CommandExecutor {
             SpellContext spellContext = Objects.requireNonNull(spell).execute(MagicPaper.getContext());
             spellContext.putVariable("self", new PlayerResult((Player) commandSender));
             if (MagicPaper.isDebug() && spellContext.hasExecuteError()) {
-                MagicPaper.getSender().sendToSender(commandSender, "&c" + spellContext.getExecuteError().getErrorId() + ":" + spellContext.getExecuteError().getInfo());
+                MagicPaper.getSender().sendToSender(commandSender, ErrorUtils.normalError(spellContext));
             }
         } else if (args[0].equalsIgnoreCase("publicwords")) {
             String words = args[1];
@@ -138,7 +143,7 @@ public class MagicPaperCommand implements CommandExecutor {
             SpellContext spellContext = spell.execute(MagicPaper.getContext());
             spellContext.putVariable("self", new PlayerResult((Player) commandSender));
             if (MagicPaper.isDebug() && spellContext.hasExecuteError()) {
-                MagicPaper.getSender().sendToSender(commandSender, "&c" + spellContext.getExecuteError().getErrorId() + ":" + spellContext.getExecuteError().getInfo());
+                MagicPaper.getSender().sendToSender(commandSender, ErrorUtils.normalError(spellContext));
             }
         } else if (args[0].equalsIgnoreCase("functions")) {
             List<String> message = new ArrayList<>(MagicPaper.getMagicManager().getFunctionsRealNames());
@@ -197,31 +202,31 @@ public class MagicPaperCommand implements CommandExecutor {
             MagicPaper.getSender().sendToSender(commandSender, LangData.get(MagicPaper.getLang(), "reload", "&aReloaded!"));
             TriggerDataManager.reInit();
             TimerDataManager.reInit();
-        }else if(args[0].equalsIgnoreCase("coding")){
-            if (commandSender instanceof Player){
-                Player player= (Player) commandSender;
+        } else if (args[0].equalsIgnoreCase("coding")) {
+            if (commandSender instanceof Player) {
+                Player player = (Player) commandSender;
                 if (CodingListener.codingPlayers.contains(player.getName())) {
                     CodingListener.codingPlayers.remove(player.getName());
                     return true;
-                }else {
+                } else {
                     CodingListener.codingPlayers.add(player.getName());
                     return true;
                 }
             }
-        }else if (args[0].equalsIgnoreCase("gui")){
-            if (args.length<2){
+        } else if (args[0].equalsIgnoreCase("gui")) {
+            if (args.length < 2) {
                 return true;
             }
-            String id=args[1];
-            Player player= (Player) commandSender;
-            if (args.length>3){
-                player= Bukkit.getPlayer(args[2]);
-                if (player==null){
+            String id = args[1];
+            Player player = (Player) commandSender;
+            if (args.length > 3) {
+                player = Bukkit.getPlayer(args[2]);
+                if (player == null) {
                     return true;
                 }
             }
-            MagicPaper.getMagicGuiManager().getGui(player,id).open(player);
-        }else if (args[0].equalsIgnoreCase("clearguidata")) {
+            MagicPaper.getMagicGuiManager().getGui(player, id).open(player);
+        } else if (args[0].equalsIgnoreCase("clearguidata")) {
             if (args.length < 2) {
                 return true;
             }
@@ -234,6 +239,19 @@ public class MagicPaperCommand implements CommandExecutor {
                 }
             }
             MagicPaper.getMagicGuiManager().removeGui(player, id);
+        } else if (args[0].equalsIgnoreCase("updateguidata")) {
+            if (args.length < 2) {
+                return true;
+            }
+            String id = args[1];
+            Player player = (Player) commandSender;
+            if (args.length > 3) {
+                player = Bukkit.getPlayer(args[2]);
+                if (player == null) {
+                    return true;
+                }
+            }
+            MagicPaper.getMagicGuiManager().getGui(player, id).update(player);
         }
         return true;
     }

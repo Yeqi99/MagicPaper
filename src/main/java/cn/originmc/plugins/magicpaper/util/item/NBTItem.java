@@ -100,6 +100,7 @@ public class NBTItem {
     /**
      * 将NBTItem转换为格式化字符串
      *
+     * @return
      */
     public String getString() {
         return toString(getItemStack());
@@ -367,7 +368,18 @@ public class NBTItem {
         }
 
         de.tr7zw.nbtapi.NBTItem nbtItem = new de.tr7zw.nbtapi.NBTItem(getItemStack());
-        NBTCompound compound = getNbtCompound(address, nbtItem);
+        NBTCompound compound = nbtItem;
+
+        String[] addressParts = address.startsWith("/") ? address.substring(1).split("/") : address.split("/");
+        for (String addressPart : addressParts) {
+            if (!addressPart.isEmpty()) {
+                NBTCompound nextCompound = compound.getCompound(addressPart);
+                if (nextCompound == null) {
+                    nextCompound = compound.addCompound(addressPart);
+                }
+                compound = nextCompound;
+            }
+        }
 
         switch (DataType.getType(value)) {
             case INT: {
@@ -440,22 +452,6 @@ public class NBTItem {
                 return false;
             }
         }
-    }
-
-    private static NBTCompound getNbtCompound(String address, de.tr7zw.nbtapi.NBTItem nbtItem) {
-        NBTCompound compound = nbtItem;
-
-        String[] addressParts = address.startsWith("/") ? address.substring(1).split("/") : address.split("/");
-        for (String addressPart : addressParts) {
-            if (!addressPart.isEmpty()) {
-                NBTCompound nextCompound = compound.getCompound(addressPart);
-                if (nextCompound == null) {
-                    nextCompound = compound.addCompound(addressPart);
-                }
-                compound = nextCompound;
-            }
-        }
-        return compound;
     }
 
     public Object get(String key, DataType dataType, String address) {

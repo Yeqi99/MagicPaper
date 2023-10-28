@@ -15,17 +15,12 @@ public class LuckPermsHook {
         return "LuckPerms";
     }
 
-    public static boolean hook() {
-        if (Bukkit.getPluginManager().getPlugin(getName()) != null) {
-            MagicPaper.getSender().sendToLogger("&a成功挂钩"+getName()+"插件");
+    public static void hook() {
+        status=Hook.hook(getName());
+        MagicPaper.getSender().sendToLogger(Hook.getLog(getName(),status));
+        if (status){
             RegisteredServiceProvider<LuckPerms> provider = Bukkit.getServicesManager().getRegistration(LuckPerms.class);
             api = Objects.requireNonNull(provider).getProvider();
-            status=true;
-            return true;
-        } else {
-            MagicPaper.getSender().sendToLogger("&c未找到"+getName()+"插件");
-            status=false;
-            return false;
         }
     }
     public static LuckPerms getApi() {

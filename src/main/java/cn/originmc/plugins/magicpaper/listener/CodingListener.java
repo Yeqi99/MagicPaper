@@ -5,7 +5,9 @@ import cn.origincraft.magic.object.ContextMap;
 import cn.origincraft.magic.object.NormalContext;
 import cn.origincraft.magic.object.Spell;
 import cn.origincraft.magic.object.SpellContext;
+import cn.origincraft.magic.utils.ErrorUtils;
 import cn.originmc.plugins.magicpaper.MagicPaper;
+import cn.originmc.plugins.magicpaper.data.config.LangData;
 import cn.originmc.plugins.magicpaper.data.manager.MagicDataManager;
 import cn.originmc.plugins.magicpaper.magic.result.PlayerResult;
 import org.bukkit.Bukkit;
@@ -36,12 +38,7 @@ public class CodingListener implements Listener {
                 Spell spell=new Spell(wordsList, MagicPaper.getMagicManager());
                 SpellContext spellContext = spell.execute(context);
                 if (spellContext.hasExecuteError()){
-                    MagicPaper
-                            .getSender()
-                            .sendToPlayer(
-                                    event.getPlayer(),
-                                    "&c"+spellContext.getExecuteError().getErrorId()+":"+spellContext.getExecuteError().getInfo());
-                    MagicPaper.getSender().sendToPlayer(event.getPlayer(), spellContext.getExecuteErrorLocation());
+                    MagicPaper.getSender().sendToPlayer(event.getPlayer(), ErrorUtils.normalError(spellContext));
                 }
                 event.setCancelled(true);
                 return;
@@ -73,13 +70,7 @@ public class CodingListener implements Listener {
                 for (Spell spell : spells) {
                     SpellContext spellContext = spell.execute(context);
                     if (spellContext.hasExecuteError()){
-                        MagicPaper
-                                .getSender()
-                                .sendToPlayer(
-                                        event.getPlayer(),
-                                        "&c"+spellContext.getExecuteError().getErrorId()+":"+spellContext.getExecuteError().getInfo());
-                        MagicPaper.getSender().sendToPlayer(event.getPlayer(), spellContext.getExecuteErrorLocation());
-                    }
+                        MagicPaper.getSender().sendToPlayer(event.getPlayer(), ErrorUtils.normalError(spellContext));                    }
                 }
                 event.setCancelled(true);
                 return;
@@ -105,11 +96,7 @@ public class CodingListener implements Listener {
             SpellContext spellContext = spell.execute(context);
 
             if (spellContext.hasExecuteError()){
-                MagicPaper
-                        .getSender()
-                        .sendToPlayer(
-                                event.getPlayer(),
-                                "&c"+spellContext.getExecuteError().getErrorId()+":"+spellContext.getExecuteError().getInfo());
+                MagicPaper.getSender().sendToPlayer(event.getPlayer(), ErrorUtils.normalError(spellContext));
             }
             event.setCancelled(true);
         }else if(event.getMessage().startsWith("!pm")){
@@ -123,17 +110,14 @@ public class CodingListener implements Listener {
             MagicPaper.getSender().sendToPlayer(event.getPlayer(), "&d"+words);
             SpellContext spellContext = spell.execute(context);
             if (spellContext.hasExecuteError()){
-                MagicPaper
-                        .getSender()
-                        .sendToPlayer(
-                                event.getPlayer(),
-                                "&c"+spellContext.getExecuteError().getErrorId()+":"+spellContext.getExecuteError().getInfo());
+                MagicPaper.getSender().sendToPlayer(event.getPlayer(), ErrorUtils.normalError(spellContext));
             }
             event.setCancelled(true);
         }else if(event.getMessage().startsWith("!clear")){
             contextMap=new NormalContext();
             MagicPaper.importSpell(contextMap);
-            MagicPaper.getSender().sendToPlayer(event.getPlayer(), "&dCoding数据已清空");
+            MagicPaper.getSender().sendToLogger( LangData.get(MagicPaper.getLang(),
+                    "coding-clear","§a[§bMagicPaper§a] §eCoding数据已清空"));
             event.setCancelled(true);
         }
 
