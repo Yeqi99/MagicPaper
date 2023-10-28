@@ -3,6 +3,7 @@ package cn.originmc.plugins.magicpaper.data.manager;
 import cn.origincraft.magic.object.NormalContext;
 import cn.origincraft.magic.object.Spell;
 import cn.originmc.plugins.magicpaper.MagicPaper;
+import cn.originmc.plugins.magicpaper.data.config.LangData;
 import cn.originmc.plugins.magicpaper.data.timer.TimerData;
 import cn.originmc.plugins.magicpaper.timer.MagicTimer;
 import cn.originmc.plugins.magicpaper.timer.MagicTimerManager;
@@ -43,7 +44,8 @@ public class TimerDataManager {
                 foliaTimer.start();
                 result.add(foliaTimer);
             }
-            MagicPaper.getSender().sendToLogger("§a[§bMagicPaper§a] §e计时器 §a" + s + " §e已注册");
+            MagicPaper.getSender().sendToLogger( LangData.get(MagicPaper.getLang(),
+                            "timer-register","§a[§bMagicPaper§a] §e计时器 §a" + s + " §e已注册").replace("~",s));
         }
         return result;
     }

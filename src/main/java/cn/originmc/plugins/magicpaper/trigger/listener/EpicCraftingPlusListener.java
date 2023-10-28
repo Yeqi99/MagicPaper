@@ -7,8 +7,13 @@ import ecp.ajneb97.api.EpicCraftingsPlaceClickEvent;
 import ecp.ajneb97.api.EpicCraftingsPreCraftEvent;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.plugin.java.JavaPlugin;
 
 public class EpicCraftingPlusListener implements Listener {
+    public EpicCraftingPlusListener(JavaPlugin plugin){
+        // bukkit 注册监听器
+        plugin.getServer().getPluginManager().registerEvents(this,plugin);
+    }
     @EventHandler
     public void onEpicCraftingPlusPreCraft(EpicCraftingsPreCraftEvent event) {
         NormalContext normalContext=new NormalContext();

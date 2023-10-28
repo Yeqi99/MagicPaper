@@ -15,12 +15,8 @@ load-data: "&a数据加载成功！"
 hook-start: "&a挂钩开始！"
 hook-info: "§8挂钩仅用于提供更多功能,不挂钩不影响插件正常使用！"
 hook-finish: "&a挂钩完成！"
-save-default-config: "&a默认配置保存成功！"
 register-listener: "&a注册监听器成功！"
 register-command: "&a注册指令成功！"
-magic-manager-init: "&a魔法管理器初始化成功！"
-magic-paper-init-fun: "&a魔法纸语义注册成功！"
-magic-system-init-fun: "&a魔法系统语义注册成功！"
 timer-init-start: "&a计时器初始化开始！"
 trigger-init-start: "&a触发器初始化开始！"
 onload-spell-init-start: "&aonload魔咒开始！"
@@ -33,3 +29,4 @@ trigger-register: "&a触发器 ~ 注册成功！" # ~是触发器名的变量
 coding-clear: "&a清除编码数据上下文成功！"
 hook-success: "&a~ Hook成功！" # ~是触发器名的变量
 hook-fail: "&c~ Hook失败！" # ~是触发器名的变量
+timer-register: "&a计时器 ~ 注册成功！" # ~是计时器名的变量

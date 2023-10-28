@@ -1,6 +1,5 @@
 package cn.originmc.plugins.magicpaper.hook;
 
-import cn.originmc.plugins.magicpaper.MagicPaper;
 import me.clip.placeholderapi.PlaceholderAPI;
 import org.bukkit.entity.Player;
 
@@ -16,7 +15,6 @@ public class PlaceholderAPIHook{
 
     public static void hook() {
         status=Hook.hook(getName());
-        MagicPaper.getSender().sendToLogger(Hook.getLog(getName(),status));
     }
 
 

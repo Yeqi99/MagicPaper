@@ -15,12 +15,8 @@ load-data: "&aData loaded successfully!"
 hook-start: "&aHook started!"
 hook-info: "§8Hooks are only used to provide more functions, and not hooking does not affect the normal use of the plugin!"
 hook-finish: "&aHook finished!"
-save-default-config: "&aDefault configuration saved successfully!"
 register-listener: "&aListener registered successfully!"
 register-command: "&aCommand registered successfully!"
-magic-manager-init: "&aMagic manager initialized successfully!"
-magic-paper-init-fun: "&aMagic paper semantics registered successfully!"
-magic-system-init-fun: "&aMagic system semantics registered successfully!"
 timer-init-start: "&aTimer initialization started!"
 trigger-init-start: "&aTrigger initialization started!"
 onload-spell-init-start: "&aOnload spell started!"
@@ -33,4 +29,5 @@ trigger-register: "&aTrigger ~ registered successfully!" # ~ is the trigger name
 coding-clear: "&aClear coding data context successfully!"
 hook-success: "&a~ Hook succeeded!" # ~ is the trigger name variable
 hook-fail: "&c~ Hook failed!" # ~ is the trigger name variable
+timer-register: "&aTimer ~ registered successfully!" # ~ is the timer name variable
 

@@ -4,12 +4,15 @@ import cn.origincraft.magic.object.ContextMap;
 import cn.origincraft.magic.object.Spell;
 import cn.originmc.plugins.magicpaper.MagicPaper;
 import cn.originmc.plugins.magicpaper.hook.EpicCraftingsPlusHook;
+import cn.originmc.plugins.magicpaper.hook.RemoteKeyboardBukkitHook;
 import cn.originmc.plugins.magicpaper.trigger.abs.MagicPaperTrigger;
 import cn.originmc.plugins.magicpaper.trigger.impl.*;
 import cn.originmc.plugins.magicpaper.trigger.impl.hook.epiccraftingsplus.EpicCraftingsCraftTrigger;
 import cn.originmc.plugins.magicpaper.trigger.impl.hook.epiccraftingsplus.EpicCraftingsPlaceClickTrigger;
 import cn.originmc.plugins.magicpaper.trigger.impl.hook.epiccraftingsplus.EpicCraftingsPreCraftTrigger;
+import cn.originmc.plugins.magicpaper.trigger.listener.EpicCraftingPlusListener;
 import cn.originmc.plugins.magicpaper.trigger.listener.PlayerListener;
+import cn.originmc.plugins.magicpaper.trigger.listener.RemoteKeyboardBukkitListener;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.ArrayList;
@@ -51,6 +54,12 @@ public class MagicPaperTriggerManager {
     }
     public static void registerListener(JavaPlugin plugin){
         new PlayerListener(plugin);
+        if (RemoteKeyboardBukkitHook.status) {
+            new RemoteKeyboardBukkitListener(plugin);
+        }
+        if (EpicCraftingsPlusHook.status) {
+            new EpicCraftingPlusListener(plugin);
+        }
     }
     public static void trigger(String name, ContextMap contextMap){
         for(MagicPaperTrigger trigger:magicPaperTriggers){

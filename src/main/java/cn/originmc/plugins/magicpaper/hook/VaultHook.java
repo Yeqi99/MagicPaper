@@ -12,7 +12,6 @@ public class VaultHook {
 
     public static void hook() {
         status=Hook.hook(getName());
-        MagicPaper.getSender().sendToLogger(Hook.getLog(getName(),status));
     }
     public static Economy getEconomy(){
         RegisteredServiceProvider<Economy> rsp = MagicPaper.getInstance().getServer().getServicesManager().getRegistration(Economy.class);

@@ -11,8 +11,13 @@ import org.bukkit.Bukkit;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
+import org.bukkit.plugin.java.JavaPlugin;
 
 public class RemoteKeyboardBukkitListener implements Listener {
+    public RemoteKeyboardBukkitListener(JavaPlugin plugin){
+        // bukkit 注册监听器
+        plugin.getServer().getPluginManager().registerEvents(this,plugin);
+    }
     @EventHandler(priority = EventPriority.HIGHEST)
     public void onPlayerKeyboard(KeyInputEvent e){
         NormalContext normalContext=new NormalContext();
