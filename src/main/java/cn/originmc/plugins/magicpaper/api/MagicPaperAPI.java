@@ -168,7 +168,7 @@ public class MagicPaperAPI {
      * @return 魔法buff
      */
     public static MagicBuff getMagicBuff(String targetId,String buffId){
-        return MagicPaper.getMagicBuffManager().getMagicBuff(targetId,buffId).;
+        return MagicPaper.getMagicBuffManager().getMagicBuff(targetId,buffId);
     }
 
     /**
