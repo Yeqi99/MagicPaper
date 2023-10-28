@@ -5,6 +5,8 @@ import net.luckperms.api.LuckPerms;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.RegisteredServiceProvider;
 
+import java.util.Objects;
+
 public class LuckPermsHook {
     public static boolean status = false;
     private static LuckPerms api;
@@ -17,7 +19,7 @@ public class LuckPermsHook {
         if (Bukkit.getPluginManager().getPlugin(getName()) != null) {
             MagicPaper.getSender().sendToLogger("&a成功挂钩"+getName()+"插件");
             RegisteredServiceProvider<LuckPerms> provider = Bukkit.getServicesManager().getRegistration(LuckPerms.class);
-            api = provider.getProvider();
+            api = Objects.requireNonNull(provider).getProvider();
             status=true;
             return true;
         } else {

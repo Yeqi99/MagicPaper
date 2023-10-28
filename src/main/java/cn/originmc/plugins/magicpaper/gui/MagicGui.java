@@ -21,7 +21,7 @@ import java.util.Map;
 
 public class MagicGui implements InventoryHolder {
     private String id;
-    private Map<Integer, Inventory> inv = new HashMap<>();
+    private final Map<Integer, Inventory> inv = new HashMap<>();
     private List<Integer> unLimitSlots = new ArrayList<>();
     private ContextMap context = new NormalContext();
     private Map<Character, List<Spell>> spellMap = new HashMap<>();
@@ -31,7 +31,7 @@ public class MagicGui implements InventoryHolder {
     private int page = 0;
     private Map<Integer, MagicGuiFormat> formatMap = new HashMap<>();
     private int size = 54;
-    private String title="";
+    private String title;
     private InventoryType inventoryType = null;
     private Player player;
 
@@ -128,14 +128,14 @@ public class MagicGui implements InventoryHolder {
         spellMap.get(id).add(spell);
     }
 
-    public void removeSpellFromIndex(int index, Spell spell) {
+    public void removeSpellFromIndex(char index, Spell spell) {
         if (!spellMap.containsKey(index)) {
             return;
         }
         spellMap.get(index).remove(spell);
     }
 
-    public void clearSpellFromIndex(int index) {
+    public void clearSpellFromIndex(char index) {
         if (!spellMap.containsKey(index)) {
             return;
         }

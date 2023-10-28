@@ -18,8 +18,8 @@ import java.util.List;
 
 public class CodingListener implements Listener {
     public static ContextMap contextMap=new NormalContext();
-    public static List<String> codingPlayers=new ArrayList<>();
-    public static List<String> wordsList=new ArrayList<>();
+    public static final List<String> codingPlayers=new ArrayList<>();
+    public static final List<String> wordsList=new ArrayList<>();
     @EventHandler
     public void onAdminCoding(AsyncPlayerChatEvent event) {
         if (!event.getPlayer().isOp() && !event.getPlayer().hasPermission("magicpaper.coding")) {

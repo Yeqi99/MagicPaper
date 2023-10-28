@@ -7,8 +7,7 @@ public class ListUtil {
     public static List<String> formatStringGrid(List<String> inputList, int columns, int charactersPerColumn) {
         List<String> resultList = new ArrayList<>();
 
-        for (int i = 0; i < inputList.size(); i++) {
-            String currentStr = inputList.get(i);
+        for (String currentStr : inputList) {
             int startIndex = 0;
             while (startIndex < currentStr.length()) {
                 int endIndex = Math.min(startIndex + charactersPerColumn, currentStr.length());

@@ -16,16 +16,10 @@ public class TimeUtil {
             String startTime = parts[0].trim();
             String endTime = parts[1].trim();
 
-            if (currentTimeStr.compareTo(startTime) >= 0 && currentTimeStr.compareTo(endTime) <= 0) {
-                return true;
-            }
+            return currentTimeStr.compareTo(startTime) >= 0 && currentTimeStr.compareTo(endTime) <= 0;
         } else {
             // 如果时间段没有 "-", 则表示是一个时间点
-            if (currentTimeStr.equals(timeRange)) {
-                return true;
-            }
+            return currentTimeStr.equals(timeRange);
         }
-
-        return false;
     }
 }

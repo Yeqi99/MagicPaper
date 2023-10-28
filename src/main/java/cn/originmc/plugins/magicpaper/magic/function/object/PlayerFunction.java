@@ -69,7 +69,7 @@ public class PlayerFunction extends NormalFunction {
                 return new ErrorResult("UNKNOWN_ARGUMENT_TYPE", "Unsupported argument type.");
             }
         }if (firstArg instanceof ObjectResult){
-            Object o = ((ObjectResult) firstArg).getObject();
+            Object o = firstArg.getObject();
             if (o instanceof Player) {
                 return new PlayerResult((Player) o);
             }else {

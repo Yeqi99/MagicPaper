@@ -24,7 +24,7 @@ public class YamlSetFunction extends NormalFunction {
         if (!(yamlManagerResult instanceof ObjectResult)){
             return new ErrorResult("TYPE_ERROR", "The first arg of YamlManager must be a object.");
         }
-        Object yamlManager = ((ObjectResult) yamlManagerResult).getObject();
+        Object yamlManager = yamlManagerResult.getObject();
         if (!(yamlManager instanceof YamlManager)){
             return new ErrorResult("TYPE_ERROR", "The first arg of YamlManager must be a yamlManager.");
         }
@@ -40,7 +40,7 @@ public class YamlSetFunction extends NormalFunction {
         YamlManager newYamlManager = (YamlManager) yamlManager;
         String name = ((StringResult) nameResult).getString();
         String key = ((StringResult) keyResult).getString();
-        Object value = ((ObjectResult) valueResult).getObject();
+        Object value = valueResult.getObject();
         newYamlManager.set(name,key,value);
         return new NullResult();
     }

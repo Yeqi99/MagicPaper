@@ -51,8 +51,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class FunctionRegister {
-    public static Map<String, String> funInfo = new HashMap<>();
-    public static Map<String, String> argsInfo = new HashMap<>();
+    public static final Map<String, String> funInfo = new HashMap<>();
+    public static final Map<String, String> argsInfo = new HashMap<>();
 
     public static void register(MagicManager magicManager) {
         FunctionManager fm = magicManager.getFastExpression().getFunctionManager();

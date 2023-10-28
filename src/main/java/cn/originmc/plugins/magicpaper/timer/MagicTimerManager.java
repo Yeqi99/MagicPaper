@@ -8,9 +8,10 @@ import cn.originmc.plugins.magicpaper.timer.impl.PaperTimer;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 public class MagicTimerManager {
-    public static Map<String,MagicTimer> magicTimerMap=new HashMap<>();
+    public static final Map<String,MagicTimer> magicTimerMap=new HashMap<>();
     public static void registerPaperTimer(String id, int delay, int period, ContextMap contextMap){
         PaperTimer paperTimer=new PaperTimer(id,delay,period,contextMap);
         magicTimerMap.put(id,paperTimer);
@@ -47,7 +48,7 @@ public class MagicTimerManager {
         List<String> list=null;
         for (MagicTimer magicTimer : magicTimerMap.values()) {
             if (magicTimer.isRunning()){
-                list.add(magicTimer.getId());
+                Objects.requireNonNull(list).add(magicTimer.getId());
             }
         }
         return list;

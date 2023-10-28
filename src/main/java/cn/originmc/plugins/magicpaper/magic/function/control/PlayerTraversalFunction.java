@@ -38,11 +38,10 @@ public class PlayerTraversalFunction extends HasVariableFunction {
             spellContext.getContextMap().putVariable(valueString, new PlayerResult(o));
             spellContext.getContextMap().putVariable(indexString, oi+1);
             spellContext.putExecuteNext(spellContext.getExecuteIndex());
-            return new StringResult(valueString);
         }else {
             spellContext.putExecuteIndexAllow(spellContext.getExecuteIndex(),false);
-            return new StringResult(valueString);
         }
+        return new StringResult(valueString);
     }
 
     @Override

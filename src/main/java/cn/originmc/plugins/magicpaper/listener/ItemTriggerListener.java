@@ -17,6 +17,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 
+import java.util.Objects;
 
 
 public class ItemTriggerListener implements Listener{
@@ -41,7 +42,7 @@ public class ItemTriggerListener implements Listener{
                 CoolDown coolDown = MagicPaper.getCoolDownManager().getCoolDown(player.getUniqueId()+"."+id+".leftClick");
                 String message = LangData.get(MagicPaper.getLang(),"item-left-click-cool-down","&c@冷却中...&7(~s)");
                 message = message.replace("~",(coolDown.getResultDuration()/1000)+"");
-                message = message.replace("@",MagicDataManager.getSpellDisplayName(magicItem.getLeftSpell()));
+                message = message.replace("@", Objects.requireNonNull(MagicDataManager.getSpellDisplayName(magicItem.getLeftSpell())));
                 MagicPaper.getSender().sendToPlayer(player, message);
                 return;
             }
@@ -62,7 +63,7 @@ public class ItemTriggerListener implements Listener{
             context.putVariable("self",new PlayerResult(player));
             context.putVariable("item",new ItemStackResult(player.getInventory().getItemInMainHand()));
             context.putVariable("action",new StringResult("left"));
-            spell.execute(context);
+            Objects.requireNonNull(spell).execute(context);
             CoolDown coolDown=new CoolDown(player.getUniqueId()+"."+id+".leftClick",coolDownTime);
             MagicPaper.getCoolDownManager().addCoolDown(coolDown);
             event.setCancelled(true);
@@ -80,7 +81,7 @@ public class ItemTriggerListener implements Listener{
                 CoolDown coolDown = MagicPaper.getCoolDownManager().getCoolDown(player.getUniqueId()+"."+id+".rightClick");
                 String message = LangData.get(MagicPaper.getLang(),"item-right-click-cool-down","&c@冷却中...&7(~s)");
                 message = message.replace("~",(coolDown.getResultDuration()/1000)+"");
-                message = message.replace("@",MagicDataManager.getSpellDisplayName(magicItem.getRightSpell()));
+                message = message.replace("@", Objects.requireNonNull(MagicDataManager.getSpellDisplayName(magicItem.getRightSpell())));
                 MagicPaper.getSender().sendToPlayer(player, message);
                 return;
             }
@@ -101,11 +102,10 @@ public class ItemTriggerListener implements Listener{
             context.putVariable("self",new PlayerResult(player));
             context.putVariable("item",new ItemStackResult(player.getInventory().getItemInMainHand()));
             context.putVariable("action",new StringResult("right"));
-            spell.execute(context);
+            Objects.requireNonNull(spell).execute(context);
             CoolDown coolDown=new CoolDown(player.getUniqueId()+"."+id+".rightClick",coolDownTime);
             MagicPaper.getCoolDownManager().addCoolDown(coolDown);
             event.setCancelled(true);
-            return;
         }
     }
     @EventHandler
@@ -130,7 +130,7 @@ public class ItemTriggerListener implements Listener{
                 CoolDown coolDown = MagicPaper.getCoolDownManager().getCoolDown(player.getUniqueId()+"."+id+".shiftLeftClick");
                 String message = LangData.get(MagicPaper.getLang(),"item-shift-left-click-cool-down","&c@冷却中...&7(~s)");
                 message = message.replace("~",(coolDown.getResultDuration()/1000)+"");
-                message = message.replace("@",MagicDataManager.getSpellDisplayName(magicItem.getShiftLeftSpell()));
+                message = message.replace("@", Objects.requireNonNull(MagicDataManager.getSpellDisplayName(magicItem.getShiftLeftSpell())));
                 MagicPaper.getSender().sendToPlayer(player, message);
                 return;
             }
@@ -151,7 +151,7 @@ public class ItemTriggerListener implements Listener{
             context.putVariable("self",new PlayerResult(player));
             context.putVariable("item",new ItemStackResult(player.getInventory().getItemInMainHand()));
             context.putVariable("action",new StringResult("shiftLeft"));
-            spell.execute(context);
+            Objects.requireNonNull(spell).execute(context);
             CoolDown coolDown=new CoolDown(player.getUniqueId()+"."+id+".shiftLeftClick",coolDownTime);
             MagicPaper.getCoolDownManager().addCoolDown(coolDown);
             event.setCancelled(true);
@@ -169,7 +169,7 @@ public class ItemTriggerListener implements Listener{
                 CoolDown coolDown = MagicPaper.getCoolDownManager().getCoolDown(player.getUniqueId()+"."+id+".shiftRightClick");
                 String message = LangData.get(MagicPaper.getLang(),"item-shift-right-click-cool-down","&c@冷却中...&7(~s)");
                 message = message.replace("~",(coolDown.getResultDuration()/1000)+"");
-                message = message.replace("@",MagicDataManager.getSpellDisplayName(magicItem.getShiftRightSpell()));
+                message = message.replace("@", Objects.requireNonNull(MagicDataManager.getSpellDisplayName(magicItem.getShiftRightSpell())));
                 MagicPaper.getSender().sendToPlayer(player, message);
                 return;
             }
@@ -190,11 +190,10 @@ public class ItemTriggerListener implements Listener{
             context.putVariable("self",new PlayerResult(player));
             context.putVariable("item",new ItemStackResult(player.getInventory().getItemInMainHand()));
             context.putVariable("action",new StringResult("shiftRight"));
-            spell.execute(context);
+            Objects.requireNonNull(spell).execute(context);
             CoolDown coolDown=new CoolDown(player.getUniqueId()+"."+id+".shiftRightClick",coolDownTime);
             MagicPaper.getCoolDownManager().addCoolDown(coolDown);
             event.setCancelled(true);
-            return;
         }
     }
 }

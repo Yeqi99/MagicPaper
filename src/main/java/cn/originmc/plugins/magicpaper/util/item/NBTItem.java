@@ -100,7 +100,6 @@ public class NBTItem {
     /**
      * 将NBTItem转换为格式化字符串
      *
-     * @return
      */
     public String getString() {
         return toString(getItemStack());
@@ -135,9 +134,7 @@ public class NBTItem {
 
     public boolean hasDisplay() {
         if (hasItemMeta()) {
-            if (Objects.requireNonNull(getItemStack().getItemMeta()).hasDisplayName()) {
-                return true;
-            }
+            return Objects.requireNonNull(getItemStack().getItemMeta()).hasDisplayName();
         }
         return false;
     }
@@ -221,7 +218,7 @@ public class NBTItem {
         if (!itemMeta.hasAttributeModifiers()) {
             return null;
         }
-        for (AttributeModifier mod : itemMeta.getAttributeModifiers(attribute)) {
+        for (AttributeModifier mod : Objects.requireNonNull(itemMeta.getAttributeModifiers(attribute))) {
             if (mod.getName().equalsIgnoreCase(id)) {
                 return mod.getUniqueId();
             }
@@ -322,8 +319,7 @@ public class NBTItem {
     }
 
     public boolean hasSpace(String spaceName) {
-        de.tr7zw.nbtapi.NBTItem nbtItem = new de.tr7zw.nbtapi.NBTItem(getItemStack());
-        NBTCompound compound = nbtItem;
+        NBTCompound compound = new de.tr7zw.nbtapi.NBTItem(getItemStack());
 
         String[] addressParts = spaceName.split("/");
         for (String addressPart : addressParts) {
@@ -371,18 +367,7 @@ public class NBTItem {
         }
 
         de.tr7zw.nbtapi.NBTItem nbtItem = new de.tr7zw.nbtapi.NBTItem(getItemStack());
-        NBTCompound compound = nbtItem;
-
-        String[] addressParts = address.startsWith("/") ? address.substring(1).split("/") : address.split("/");
-        for (String addressPart : addressParts) {
-            if (!addressPart.isEmpty()) {
-                NBTCompound nextCompound = compound.getCompound(addressPart);
-                if (nextCompound == null) {
-                    nextCompound = compound.addCompound(addressPart);
-                }
-                compound = nextCompound;
-            }
-        }
+        NBTCompound compound = getNbtCompound(address, nbtItem);
 
         switch (DataType.getType(value)) {
             case INT: {
@@ -457,13 +442,28 @@ public class NBTItem {
         }
     }
 
+    private static NBTCompound getNbtCompound(String address, de.tr7zw.nbtapi.NBTItem nbtItem) {
+        NBTCompound compound = nbtItem;
+
+        String[] addressParts = address.startsWith("/") ? address.substring(1).split("/") : address.split("/");
+        for (String addressPart : addressParts) {
+            if (!addressPart.isEmpty()) {
+                NBTCompound nextCompound = compound.getCompound(addressPart);
+                if (nextCompound == null) {
+                    nextCompound = compound.addCompound(addressPart);
+                }
+                compound = nextCompound;
+            }
+        }
+        return compound;
+    }
+
     public Object get(String key, DataType dataType, String address) {
         if (isNull() || isAir()) {
             return null;
         }
 
-        de.tr7zw.nbtapi.NBTItem nbtItem = new de.tr7zw.nbtapi.NBTItem(getItemStack());
-        NBTCompound compound = nbtItem;
+        NBTCompound compound = new de.tr7zw.nbtapi.NBTItem(getItemStack());
 
         String[] addressParts = address.split("/");
         for (String addressPart : addressParts) {
@@ -526,11 +526,8 @@ public class NBTItem {
             return Collections.emptyList();
         }
 
-        de.tr7zw.nbtapi.NBTItem nbtItem = new de.tr7zw.nbtapi.NBTItem(getItemStack());
-        NBTCompound compound = nbtItem;
-
         List<String> keys = new ArrayList<>();
-        collectKeys(compound, "", keys);
+        collectKeys(new de.tr7zw.nbtapi.NBTItem(getItemStack()), "", keys);
 
         return keys;
     }
@@ -541,7 +538,7 @@ public class NBTItem {
         }
         NBTCompound nbtCompound = getCompound(getItemStack(), address);
 
-        return nbtCompound.getKeys();
+        return Objects.requireNonNull(nbtCompound).getKeys();
     }
 
     private void collectKeys(NBTCompound compound, String currentAddress, List<String> keys) {
@@ -562,8 +559,7 @@ public class NBTItem {
             return false;
         }
 
-        de.tr7zw.nbtapi.NBTItem nbtItem = new de.tr7zw.nbtapi.NBTItem(getItemStack());
-        NBTCompound compound = nbtItem;
+        NBTCompound compound = new de.tr7zw.nbtapi.NBTItem(getItemStack());
 
         String[] addressParts = address.split("/");
         for (String addressPart : addressParts) {
@@ -632,12 +628,11 @@ public class NBTItem {
 
     public static AttributeModifier.Operation getOperation(String sign) {
         switch (sign) {
-            case "+":
-                return AttributeModifier.Operation.ADD_NUMBER;
             case "+%":
                 return AttributeModifier.Operation.ADD_SCALAR;
             case "+*":
                 return AttributeModifier.Operation.MULTIPLY_SCALAR_1;
+            case "+":
             default:
                 return AttributeModifier.Operation.ADD_NUMBER;
         }
@@ -645,8 +640,6 @@ public class NBTItem {
 
     public static EquipmentSlot getSlot(String sign) {
         switch (sign) {
-            case "mh":
-                return EquipmentSlot.HAND;
             case "oh":
                 return EquipmentSlot.OFF_HAND;
             case "s":
@@ -657,14 +650,14 @@ public class NBTItem {
                 return EquipmentSlot.CHEST;
             case "h":
                 return EquipmentSlot.HEAD;
+            case "mh":
             default:
                 return EquipmentSlot.HAND;
         }
     }
 
     public static NBTCompound getCompound(ItemStack itemStack, String address) {
-        de.tr7zw.nbtapi.NBTItem nbtItem = new de.tr7zw.nbtapi.NBTItem(itemStack);
-        NBTCompound compound = nbtItem;
+        NBTCompound compound = new de.tr7zw.nbtapi.NBTItem(itemStack);
         String[] addressParts = address.split("/");
         for (String addressPart : addressParts) {
             if (!addressPart.isEmpty()) {
@@ -687,12 +680,12 @@ public class NBTItem {
     public void addItem(ItemStack addItem, String targetAddress, String originAddress) {
         NBTCompound targetCompound = getCompound(getItemStack(), targetAddress);
         NBTCompound originCompound = getCompound(addItem, originAddress);
-        Set<String> keys = originCompound.getKeys();
+        Set<String> keys = Objects.requireNonNull(originCompound).getKeys();
         for (String key : keys) {
             NBTType nbtType = originCompound.getType(key);
             if (nbtType == NBTType.NBTTagDouble) {
                 double value = originCompound.getDouble(key);
-                if (targetCompound.hasKey(key)) {
+                if (Objects.requireNonNull(targetCompound).hasKey(key)) {
                     value = value + targetCompound.getDouble(key);
                 }
                 DecimalFormat decimalFormat = new DecimalFormat("#.#");
@@ -700,7 +693,7 @@ public class NBTItem {
                 set(key, value, targetAddress);
             } else if (nbtType == NBTType.NBTTagFloat) {
                 float value = originCompound.getFloat(key);
-                if (targetCompound.hasKey(key)) {
+                if (Objects.requireNonNull(targetCompound).hasKey(key)) {
                     value = value + targetCompound.getFloat(key);
                 }
                 DecimalFormat decimalFormat = new DecimalFormat("#.#");
@@ -708,19 +701,19 @@ public class NBTItem {
                 set(key, value, targetAddress);
             } else if (nbtType == NBTType.NBTTagInt) {
                 int value = originCompound.getInteger(key);
-                if (targetCompound.hasKey(key)) {
+                if (Objects.requireNonNull(targetCompound).hasKey(key)) {
                     value = value + targetCompound.getInteger(key);
                 }
                 set(key, value, targetAddress);
             } else if (nbtType == NBTType.NBTTagLong) {
                 long value = originCompound.getLong(key);
-                if (targetCompound.hasKey(key)) {
+                if (Objects.requireNonNull(targetCompound).hasKey(key)) {
                     value = value + targetCompound.getLong(key);
                 }
                 set(key, value, targetAddress);
             } else if (nbtType == NBTType.NBTTagShort) {
                 short value = originCompound.getShort(key);
-                if (targetCompound.hasKey(key)) {
+                if (Objects.requireNonNull(targetCompound).hasKey(key)) {
                     value = (short) (value + targetCompound.getShort(key));
                 }
                 set(key, value, targetAddress);
@@ -740,12 +733,12 @@ public class NBTItem {
     public void removeItem(ItemStack addItem, String targetAddress, String originAddress) {
         NBTCompound targetCompound = getCompound(getItemStack(), targetAddress);
         NBTCompound originCompound = getCompound(addItem, originAddress);
-        Set<String> keys = originCompound.getKeys();
+        Set<String> keys = Objects.requireNonNull(originCompound).getKeys();
         for (String key : keys) {
             NBTType nbtType = originCompound.getType(key);
             if (nbtType == NBTType.NBTTagDouble) {
                 double value = originCompound.getDouble(key);
-                if (targetCompound.hasKey(key)) {
+                if (Objects.requireNonNull(targetCompound).hasKey(key)) {
                     value = targetCompound.getDouble(key) - value;
                 }
                 DecimalFormat decimalFormat = new DecimalFormat("#.#");
@@ -758,7 +751,7 @@ public class NBTItem {
                 }
             } else if (nbtType == NBTType.NBTTagFloat) {
                 float value = originCompound.getFloat(key);
-                if (targetCompound.hasKey(key)) {
+                if (Objects.requireNonNull(targetCompound).hasKey(key)) {
                     value = targetCompound.getFloat(key) - value;
                 }
                 DecimalFormat decimalFormat = new DecimalFormat("#.#");
@@ -770,7 +763,7 @@ public class NBTItem {
                 }
             } else if (nbtType == NBTType.NBTTagInt) {
                 int value = originCompound.getInteger(key);
-                if (targetCompound.hasKey(key)) {
+                if (Objects.requireNonNull(targetCompound).hasKey(key)) {
                     value = targetCompound.getInteger(key) - value;
                 }
                 if (value <= 0) {
@@ -780,7 +773,7 @@ public class NBTItem {
                 }
             } else if (nbtType == NBTType.NBTTagLong) {
                 long value = originCompound.getLong(key);
-                if (targetCompound.hasKey(key)) {
+                if (Objects.requireNonNull(targetCompound).hasKey(key)) {
                     value =targetCompound.getLong(key)- value;
                 }
                 if (value <= 0) {
@@ -790,7 +783,7 @@ public class NBTItem {
                 }
             } else if (nbtType == NBTType.NBTTagShort) {
                 short value = originCompound.getShort(key);
-                if (targetCompound.hasKey(key)) {
+                if (Objects.requireNonNull(targetCompound).hasKey(key)) {
                     value = (short) (targetCompound.getShort(key)-value);
                 }
                 if (value <= 0) {
@@ -799,7 +792,7 @@ public class NBTItem {
                     set(key, value, targetAddress);
                 }
             } else {
-                if (targetCompound.hasKey(key)) {
+                if (Objects.requireNonNull(targetCompound).hasKey(key)) {
                     removeKey(key, targetAddress);
                 }
             }

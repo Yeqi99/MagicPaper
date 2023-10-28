@@ -16,7 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MagicPaperTriggerManager {
-    public static List<MagicPaperTrigger> magicPaperTriggers=new ArrayList<>();
+    public static final List<MagicPaperTrigger> magicPaperTriggers=new ArrayList<>();
     public static void init(){
         // 将需要的触发器加入到触发器列表
         registerDefaultTrigger();

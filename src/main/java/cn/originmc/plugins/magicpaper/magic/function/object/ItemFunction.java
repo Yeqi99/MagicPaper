@@ -47,10 +47,8 @@ public class ItemFunction extends NormalFunction {
                 if(VariableUtil.tryInt(s)){
                     return new ItemStackResult(p.getInventory().getItem(Integer.parseInt(s)));
                 }
-                return new ErrorResult("ERROR", "Item don't have enough args.");
-            }else {
-                return new ErrorResult("ERROR", "Item don't have enough args.");
             }
+            return new ErrorResult("ERROR", "Item don't have enough args.");
         }else {
             return new ErrorResult("ERROR", "Item don't have enough args.");
         }

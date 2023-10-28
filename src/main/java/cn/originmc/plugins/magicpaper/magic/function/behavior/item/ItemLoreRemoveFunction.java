@@ -11,6 +11,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.List;
+import java.util.Objects;
 
 public class ItemLoreRemoveFunction extends NormalFunction {
     @Override
@@ -36,7 +37,7 @@ public class ItemLoreRemoveFunction extends NormalFunction {
                     return new ErrorResult("TYPE_ERROR", "ItemLoreRemove item don't have lore.");
                 }
                 List<String> lore = itemMeta.getLore();
-                if (lore.size()<=indexInt){
+                if (Objects.requireNonNull(lore).size()<=indexInt){
                     return new ErrorResult("TYPE_ERROR", "ItemLoreRemove index out of range.");
                 }
                 lore.remove(indexInt);

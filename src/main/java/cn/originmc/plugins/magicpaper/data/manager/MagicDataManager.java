@@ -12,9 +12,7 @@ import java.util.List;
 public class MagicDataManager {
     public static List<String> getSpellsID(){
         List<String> result=new ArrayList<>();
-        MagicData.yamlManager.forEach(yamlElement -> {
-            result.add(yamlElement.getId());
-        });
+        MagicData.yamlManager.forEach(yamlElement -> result.add(yamlElement.getId()));
         return result;
     }
     public static Spell getSpell(String id){

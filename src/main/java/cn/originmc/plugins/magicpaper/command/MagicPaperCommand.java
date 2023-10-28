@@ -22,13 +22,15 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class MagicPaperCommand implements CommandExecutor {
     @Override
-    public boolean onCommand(CommandSender commandSender, Command command, String s, String[] args) {
+    public boolean onCommand(@NotNull CommandSender commandSender, @NotNull Command command, @NotNull String s, String[] args) {
         if (args.length == 0) {
             List<String> helpMessage = new ArrayList<>();
             if (!MagicPaper.getLang().contains("Chinese")) {
@@ -111,7 +113,7 @@ public class MagicPaperCommand implements CommandExecutor {
             NormalContext normalContext = new NormalContext();
             MagicPaper.importSpell(normalContext);
             normalContext.putVariable("self", new PlayerResult((Player) commandSender));
-            SpellContext spellContext = spell.execute(normalContext);
+            SpellContext spellContext = Objects.requireNonNull(spell).execute(normalContext);
             if (MagicPaper.isDebug() && spellContext.hasExecuteError()) {
                 MagicPaper.getSender().sendToSender(commandSender, "&c" + spellContext.getExecuteError().getErrorId() + ":" + spellContext.getExecuteError().getInfo());
             }
@@ -122,7 +124,7 @@ public class MagicPaperCommand implements CommandExecutor {
                 return true;
             }
             Spell spell = MagicDataManager.getSpell(spellID);
-            SpellContext spellContext = spell.execute(MagicPaper.getContext());
+            SpellContext spellContext = Objects.requireNonNull(spell).execute(MagicPaper.getContext());
             spellContext.putVariable("self", new PlayerResult((Player) commandSender));
             if (MagicPaper.isDebug() && spellContext.hasExecuteError()) {
                 MagicPaper.getSender().sendToSender(commandSender, "&c" + spellContext.getExecuteError().getErrorId() + ":" + spellContext.getExecuteError().getInfo());

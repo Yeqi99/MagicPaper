@@ -22,7 +22,7 @@ public class YamlGetFunction extends NormalFunction {
         if (!(yamlManagerResult instanceof ObjectResult)){
             return new ErrorResult("TYPE_ERROR", "The first arg of YamlManager must be a object.");
         }
-        Object yamlManager = ((ObjectResult) yamlManagerResult).getObject();
+        Object yamlManager = yamlManagerResult.getObject();
         if (!(yamlManager instanceof YamlManager)){
             return new ErrorResult("TYPE_ERROR", "The first arg of YamlManager must be a yamlManager.");
         }

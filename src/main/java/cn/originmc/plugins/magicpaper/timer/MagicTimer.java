@@ -13,9 +13,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public abstract class MagicTimer {
-    private String id;
-    private int delay;
-    private int period;
+    private final String id;
+    private final int delay;
+    private final int period;
     private boolean isRunning;
     private ContextMap contextMap;
     private Runnable runnable;

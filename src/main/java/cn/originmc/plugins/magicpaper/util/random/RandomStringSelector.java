@@ -4,8 +4,8 @@ import java.util.List;
 import java.util.Random;
 
 public class RandomStringSelector {
-    private List<String> dataList; // 存储字符串列表
-    private Random random; // 用于生成随机数
+    private final List<String> dataList; // 存储字符串列表
+    private final Random random; // 用于生成随机数
 
     public RandomStringSelector(List<String> dataList) {
         this.dataList = dataList;

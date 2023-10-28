@@ -11,6 +11,7 @@ import cn.originmc.plugins.magicpaper.magic.result.PlayerResult;
 import org.bukkit.entity.Player;
 
 import java.util.List;
+import java.util.Objects;
 
 public class CloneItemFunction extends NormalFunction {
     @Override
@@ -33,24 +34,22 @@ public class CloneItemFunction extends NormalFunction {
                     return new ItemStackResult(p.getInventory().getItemInOffHand().clone());
                 }
                 if (s.equalsIgnoreCase("h")){
-                    return new ItemStackResult(p.getInventory().getHelmet().clone());
+                    return new ItemStackResult(Objects.requireNonNull(p.getInventory().getHelmet()).clone());
                 }
                 if (s.equalsIgnoreCase("c")){
-                    return new ItemStackResult(p.getInventory().getChestplate().clone());
+                    return new ItemStackResult(Objects.requireNonNull(p.getInventory().getChestplate()).clone());
                 }
                 if (s.equalsIgnoreCase("l")){
-                    return new ItemStackResult(p.getInventory().getLeggings().clone());
+                    return new ItemStackResult(Objects.requireNonNull(p.getInventory().getLeggings()).clone());
                 }
                 if (s.equalsIgnoreCase("b")){
-                    return new ItemStackResult(p.getInventory().getBoots().clone());
+                    return new ItemStackResult(Objects.requireNonNull(p.getInventory().getBoots()).clone());
                 }
                 if(VariableUtil.tryInt(s)){
-                    return new ItemStackResult(p.getInventory().getItem(Integer.parseInt(s)).clone());
+                    return new ItemStackResult(Objects.requireNonNull(p.getInventory().getItem(Integer.parseInt(s))).clone());
                 }
-                return new ErrorResult("ERROR", "Item don't have enough args.");
-            }else {
-                return new ErrorResult("ERROR", "Item don't have enough args.");
             }
+            return new ErrorResult("ERROR", "Item don't have enough args.");
         }else {
             return new ErrorResult("ERROR", "Item don't have enough args.");
         }

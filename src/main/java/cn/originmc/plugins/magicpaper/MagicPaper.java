@@ -33,6 +33,8 @@ import cn.originmc.plugins.magicpaper.trigger.listener.RemoteKeyboardBukkitListe
 import cn.originmc.plugins.magicpaper.util.text.Sender;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import java.util.Objects;
+
 public final class MagicPaper extends JavaPlugin {
     private static JavaPlugin instance;
     private static Sender sender;
@@ -181,8 +183,8 @@ public final class MagicPaper extends JavaPlugin {
     }
 
     public void registerCommand() {
-        getCommand("MagicPaper").setExecutor(new MagicPaperCommand());
-        getCommand("MagicPaper").setTabCompleter(new MagicPaperTabCompleter());
+        Objects.requireNonNull(getCommand("MagicPaper")).setExecutor(new MagicPaperCommand());
+        Objects.requireNonNull(getCommand("MagicPaper")).setTabCompleter(new MagicPaperTabCompleter());
         sender.sendToLogger("§a[§bMagicPaper§a] §e命令注册完成");
     }
 

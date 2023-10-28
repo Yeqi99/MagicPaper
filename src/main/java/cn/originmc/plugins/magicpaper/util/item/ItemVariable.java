@@ -101,11 +101,10 @@ public class ItemVariable {
                 String value = MagicPaper.getInstance().getConfig().getString("constants."+str,"");
                 if (!value.isEmpty()){
                     variableString.setVariable(s,value);
-                    continue;
                 }else {
                     variableString.setVariable(s, "");
-                    continue;
                 }
+                continue;
             }
             if (s.contains("!")) {
                 String str = s.replace("!", "");

@@ -11,6 +11,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.List;
+import java.util.Objects;
 
 public class ItemLoreHasLineFunction extends NormalFunction {
     @Override
@@ -32,7 +33,7 @@ public class ItemLoreHasLineFunction extends NormalFunction {
                 String lineString = ((StringResult) line).getString();
                 ItemMeta itemMeta = itemStack.getItemMeta();
                 List<String> lore = itemMeta.getLore();
-                if (lore.contains(lineString)){
+                if (Objects.requireNonNull(lore).contains(lineString)){
                     return new BooleanResult(true);
                 }else {
                     return new BooleanResult(false);

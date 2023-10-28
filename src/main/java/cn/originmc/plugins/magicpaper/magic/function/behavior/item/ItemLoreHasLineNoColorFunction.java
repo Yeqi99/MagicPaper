@@ -12,6 +12,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.List;
+import java.util.Objects;
 
 public class ItemLoreHasLineNoColorFunction extends NormalFunction {
     @Override
@@ -32,7 +33,7 @@ public class ItemLoreHasLineNoColorFunction extends NormalFunction {
                 }
                 String lineString = ((StringResult) line).getString();
                 ItemMeta itemMeta = itemStack.getItemMeta();
-                List<String> lore = Color.removeColor(itemMeta.getLore());
+                List<String> lore = Color.removeColor(Objects.requireNonNull(itemMeta.getLore()));
                 if (lore.contains(lineString)){
                     return new BooleanResult(true);
                 }else {

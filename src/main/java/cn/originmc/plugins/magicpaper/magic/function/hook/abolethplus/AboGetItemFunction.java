@@ -11,6 +11,7 @@ import ray.maplex.top.abolethplusadder.AbolethDtoAdp;
 import ray.maplex.top.abolethplusadder.AbolethPlusAdder;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.UUID;
 
 public class AboGetItemFunction extends NormalFunction {
@@ -34,7 +35,7 @@ public class AboGetItemFunction extends NormalFunction {
             }else{
                 abolethDtoAdp=AbolethPlusAdder.get(UUID.fromString(uuidString),keyString);
             }
-            spellContext.getContextMap().putVariable(uuidString+"."+keyString,abolethDtoAdp.getValue());
+            spellContext.getContextMap().putVariable(uuidString+"."+keyString, Objects.requireNonNull(abolethDtoAdp).getValue());
             spellContext.getContextMap().putVariable(uuidString+"."+keyString+".default",abolethDtoAdp.getDefaultValue());
             spellContext.getContextMap().putVariable(uuidString+"."+keyString+".over",abolethDtoAdp.getOverTime());
             spellContext.getContextMap().putVariable(uuidString+"."+keyString+".value-data",abolethDtoAdp.getValueData());

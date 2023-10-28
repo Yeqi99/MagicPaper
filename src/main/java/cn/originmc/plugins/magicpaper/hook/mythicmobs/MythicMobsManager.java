@@ -25,20 +25,17 @@ import java.util.function.Consumer;
 public class MythicMobsManager {
     public static ActiveMob spawnMob(String mobName, Location spawnLoc){
         MythicMob mob = MythicBukkit.inst().getMobManager().getMythicMob(mobName).orElse(null);
-        Location spawnLocation = spawnLoc;
         if(mob != null){
             // spawns mob
-            ActiveMob someMob = mob.spawn(BukkitAdapter.adapt(spawnLocation),1);
-            return someMob;
+            return mob.spawn(BukkitAdapter.adapt(spawnLoc),1);
         }
         return null;
     }
     public static Entity spawnMobGetEntity(String mobName, Location spawnLoc){
         MythicMob mob = MythicBukkit.inst().getMobManager().getMythicMob(mobName).orElse(null);
-        Location spawnLocation = spawnLoc;
         if(mob != null){
             // spawns mob
-            ActiveMob someMob = mob.spawn(BukkitAdapter.adapt(spawnLocation),1);
+            ActiveMob someMob = mob.spawn(BukkitAdapter.adapt(spawnLoc),1);
             return someMob.getEntity().getBukkitEntity();
         }
         return null;
@@ -51,10 +48,7 @@ public class MythicMobsManager {
     }
     public static boolean isMythicMob(Entity entity){
         ActiveMob mythicMob=getActiveMob(entity);
-        if(mythicMob==null){
-            return false;
-        }
-        return true;
+        return mythicMob != null;
     }
     public static boolean isNamedMythicMob(Entity entity,String mobName){
         if(isMythicMob(entity)){
@@ -68,7 +62,7 @@ public class MythicMobsManager {
     }
     public static boolean castSkill(Entity e, String skillName, Entity trigger, Location origin, Collection<Entity> eTargets, Collection<Location> lTargets, float power, Consumer<SkillMetadata> transformer){
         Optional<Skill> maybeSkill = MythicBukkit.inst().getSkillManager().getSkill(skillName);
-        if (!maybeSkill.isPresent()) {
+        if (maybeSkill.isEmpty()) {
             return false;
         } else {
             Object caster;
@@ -113,7 +107,7 @@ public class MythicMobsManager {
         if (livingEntity==null){
             return MythicMobsManager.castSkill(player,skill,player,player.getLocation(),null,null,power,null);
         }
-        List<Entity> targets = new ArrayList();
+        List<Entity> targets = new ArrayList<>();
         targets.add(livingEntity);
         List<Location> targetL=new ArrayList<>();
         for (Entity target : targets) {

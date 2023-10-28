@@ -7,13 +7,14 @@ import cn.originmc.plugins.magicpaper.trigger.MagicPaperTriggerManager;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class MagicPaperTabCompleter implements TabCompleter {
     @Override
-    public List<String> onTabComplete(CommandSender sender, Command command, String alias, String[] args) {
+    public List<String> onTabComplete(@NotNull CommandSender sender, @NotNull Command command, @NotNull String alias, String[] args) {
         List<String> completions = new ArrayList<>();
 
         if (args.length == 1) {
@@ -35,9 +36,7 @@ public class MagicPaperTabCompleter implements TabCompleter {
             completions.add("clearguidata");
         } else if (args.length == 2) {
             if (args[0].equalsIgnoreCase("gui")){
-                MagicPaper.getMagicGuiManager().getMagicGuiSettings().forEach(magicGuiSetting -> {
-                    completions.add(magicGuiSetting.getId());
-                });
+                MagicPaper.getMagicGuiManager().getMagicGuiSettings().forEach(magicGuiSetting -> completions.add(magicGuiSetting.getId()));
             }
             if (args[0].equalsIgnoreCase("spell")) {
                 // 提示第二个参数的补全，可能是法术ID
@@ -64,9 +63,7 @@ public class MagicPaperTabCompleter implements TabCompleter {
                 completions.add("address");
             }
             if (args[0].equalsIgnoreCase("clearguidata")){
-                MagicPaper.getMagicGuiManager().getMagicGuiSettings().forEach(magicGuiSetting -> {
-                    completions.add(magicGuiSetting.getId());
-                });
+                MagicPaper.getMagicGuiManager().getMagicGuiSettings().forEach(magicGuiSetting -> completions.add(magicGuiSetting.getId()));
             }
         } else if (args.length == 3){
             if (args[0].equalsIgnoreCase("boreremove")) {

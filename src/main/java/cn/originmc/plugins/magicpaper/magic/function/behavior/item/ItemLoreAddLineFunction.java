@@ -12,6 +12,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class ItemLoreAddLineFunction extends NormalFunction {
     @Override
@@ -30,13 +31,13 @@ public class ItemLoreAddLineFunction extends NormalFunction {
                 ItemMeta itemMeta=itemStack.getItemMeta();
                 String string=((StringResult) line).getString();
                 string= Color.toColor(string);
-                List<String> lore=null;
+                List<String> lore;
                 if (!itemStack.getItemMeta().hasLore()){
                     lore=new ArrayList<>();
                     lore.add(string);
                 }else {
                     lore=itemStack.getItemMeta().getLore();
-                    lore.add(string);
+                    Objects.requireNonNull(lore).add(string);
                 }
                 itemMeta.setLore(lore);
                 itemStack.setItemMeta(itemMeta);

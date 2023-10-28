@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Map;
 
 public class MagicGuiFormat {
-    private char[][] format;
+    private final char[][] format;
 
     private Map<Character, ItemStack> buttonItemMap;
 

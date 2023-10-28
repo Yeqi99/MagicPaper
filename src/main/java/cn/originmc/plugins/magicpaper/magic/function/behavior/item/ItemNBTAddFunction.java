@@ -27,7 +27,7 @@ public class ItemNBTAddFunction extends NormalFunction {
                 ItemStack itemStack = ((ItemStackResult) item).getItemStack();
                 String pathString = ((StringResult) path).getString();
                 String keyString = ((StringResult) key).getString();
-                Object valueObject = ((ObjectResult) value).getObject();
+                Object valueObject = value.getObject();
                 NBTItem nbtItem = new NBTItem(itemStack);
                 nbtItem.set(keyString,valueObject,pathString);
                 return new ItemStackResult(nbtItem.getItemStack());

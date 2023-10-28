@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public abstract class MagicPaperTrigger {
-    private List<Spell> spells=new ArrayList<>();
+    private final List<Spell> spells=new ArrayList<>();
     public void register(Spell spell){
         spells.add(spell);
     }

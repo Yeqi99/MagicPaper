@@ -12,10 +12,7 @@ import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class MagicGuiSetting {
     private String id;
@@ -51,7 +48,7 @@ public class MagicGuiSetting {
             }
             if (key.equalsIgnoreCase("format")) {
                 List<?> formatList = yaml.getList(key);
-                for (int i = 0; i < formatList.size(); i++) {
+                for (int i = 0; i < Objects.requireNonNull(formatList).size(); i++) {
                     List<String> format = (List<String>) formatList.get(i);
                     formatMap.put(i, new MagicGuiFormat(format, buttonItemMap));
                 }
@@ -74,7 +71,7 @@ public class MagicGuiSetting {
                 continue;
             }
             ConfigurationSection section = yaml.getConfigurationSection(key);
-            ItemStack itemStack = new ItemStack(Material.valueOf(section.getString("material")));
+            ItemStack itemStack = new ItemStack(Material.valueOf(Objects.requireNonNull(section).getString("material")));
 
             if (section.contains("amount")) {
                 itemStack.setAmount(section.getInt("amount"));
