@@ -5,13 +5,17 @@ import cn.origincraft.magic.object.NormalContext;
 import cn.origincraft.magic.object.Spell;
 import cn.origincraft.magic.object.SpellContext;
 import cn.originmc.plugins.magicpaper.MagicPaper;
+import cn.originmc.plugins.magicpaper.buff.MagicBuff;
+import cn.originmc.plugins.magicpaper.cooldown.CoolDown;
 import cn.originmc.plugins.magicpaper.cooldown.CoolDownManager;
 import cn.originmc.plugins.magicpaper.data.manager.MagicDataManager;
+import cn.originmc.plugins.magicpaper.gui.MagicGuiSetting;
 import cn.originmc.plugins.magicpaper.timer.MagicTimer;
 import cn.originmc.plugins.magicpaper.timer.MagicTimerManager;
 import cn.originmc.plugins.magicpaper.trigger.MagicPaperTriggerManager;
 import cn.originmc.plugins.magicpaper.trigger.abs.MagicPaperTrigger;
 import cn.originmc.plugins.magicpaper.util.item.MagicItem;
+import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.List;
@@ -127,5 +131,102 @@ public class MagicPaperAPI {
     public static MagicItem getMagicItem(ItemStack itemStack){
         return new MagicItem(itemStack);
     }
+
+    /**
+     * 判断是否存在魔法buff
+     * @param targetId 目标id
+     * @param buffId buff id
+     * @return 是否存在
+     */
+    public static boolean hasMagicBuff(String targetId,String buffId){
+        return MagicPaper.getMagicBuffManager().isBuffActive(targetId,buffId);
+    }
+
+    /**
+     * 添加魔法buff
+     * @param targetId 目标id
+     * @return 魔法buff
+     */
+    public static List<MagicBuff> getMagicBuffs(String targetId){
+        return MagicPaper.getMagicBuffManager().getMagicBuffs(targetId);
+    }
+
+    /**
+     * 获取魔法buff剩余时间
+     * @param targetId 目标id
+     * @param buffId buff id
+     * @return 剩余时间
+     */
+    public static long getMagicBuffTime(String targetId,String buffId){
+        return MagicPaper.getMagicBuffManager().getNowToEnd(targetId,buffId);
+    }
+
+    /**
+     * 获取魔法buff
+     * @param targetId 目标id
+     * @param buffId buff id
+     * @return 魔法buff
+     */
+    public static MagicBuff getMagicBuff(String targetId,String buffId){
+        return MagicPaper.getMagicBuffManager().getMagicBuff(targetId,buffId).;
+    }
+
+    /**
+     * 打开魔法纸gui
+     * @param player 玩家
+     * @param id gui id
+     */
+    public static void openGui(Player player,String id){
+        MagicPaper.getMagicGuiManager().getGui(player,id).open(player);
+    }
+
+    /**
+     * 添加gui设置
+     * @param magicGuiSetting gui设置
+     */
+    public static void addGuiSetting(MagicGuiSetting magicGuiSetting){
+        MagicPaper.getMagicGuiManager().register(magicGuiSetting);
+    }
+
+    /**
+     * 判断冷却是否存在
+     * @param id 冷却id
+     * @return 是否存在
+     */
+    public static boolean isCoolDownActive(String id){
+        return MagicPaper.getCoolDownManager().isCoolDownActive(id);
+    }
+
+    /**
+     * 添加冷却
+     * @param id 冷却id
+     * @param time 冷却时间
+     * @param reduction 冷却缩减
+     * @param fixedReduction 冷却固定缩减
+     */
+    public static void addCoolDown(String id,long time,float reduction,long fixedReduction){
+        CoolDown coolDown=new CoolDown(id,time,reduction,fixedReduction);
+        MagicPaper.getCoolDownManager().addCoolDown(coolDown);
+    }
+
+    /**
+     * 添加冷却
+     * @param id 冷却id
+     * @param time 冷却时间
+     */
+    public static void addCoolDown(String id,long time){
+        CoolDown coolDown=new CoolDown(id,time);
+        MagicPaper.getCoolDownManager().addCoolDown(coolDown);
+    }
+
+    /**
+     * 添加冷却
+     * @param id 冷却id
+     * @return 冷却
+     */
+    public static CoolDown getCoolDown(String id){
+        return MagicPaper.getCoolDownManager().getCoolDown(id);
+    }
+
 
 }
