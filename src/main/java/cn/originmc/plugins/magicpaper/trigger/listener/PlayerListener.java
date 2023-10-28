@@ -1,7 +1,6 @@
 package cn.originmc.plugins.magicpaper.trigger.listener;
 
 import cn.origincraft.magic.function.results.BooleanResult;
-import cn.origincraft.magic.function.results.IntegerResult;
 import cn.origincraft.magic.function.results.StringResult;
 import cn.origincraft.magic.object.NormalContext;
 import cn.originmc.plugins.magicpaper.magic.result.EntityResult;
@@ -9,8 +8,6 @@ import cn.originmc.plugins.magicpaper.magic.result.ItemStackResult;
 import cn.originmc.plugins.magicpaper.magic.result.LocationResult;
 import cn.originmc.plugins.magicpaper.magic.result.PlayerResult;
 import cn.originmc.plugins.magicpaper.trigger.MagicPaperTriggerManager;
-import dev.rgbmc.remotekeyboard.events.KeyInputEvent;
-import org.bukkit.Bukkit;
 import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
