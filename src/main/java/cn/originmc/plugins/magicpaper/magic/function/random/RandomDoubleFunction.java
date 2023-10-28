@@ -1,12 +1,12 @@
 package cn.originmc.plugins.magicpaper.magic.function.random;
 
+import cn.origincraft.magic.expression.functions.FunctionResult;
 import cn.origincraft.magic.function.NormalFunction;
+import cn.origincraft.magic.function.results.DoubleResult;
 import cn.origincraft.magic.function.results.ErrorResult;
+import cn.origincraft.magic.function.results.StringResult;
 import cn.origincraft.magic.object.SpellContext;
 import cn.origincraft.magic.utils.VariableUtil;
-import dev.rgbmc.expression.functions.FunctionResult;
-import dev.rgbmc.expression.results.DoubleResult;
-import dev.rgbmc.expression.results.StringResult;
 
 import java.text.DecimalFormat;
 import java.util.List;

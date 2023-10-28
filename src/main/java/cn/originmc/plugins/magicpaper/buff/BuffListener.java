@@ -1,9 +1,7 @@
 package cn.originmc.plugins.magicpaper.buff;
 
-import cn.origincraft.magic.object.SpellContext;
 import cn.origincraft.magic.utils.VariableUtil;
 import cn.originmc.plugins.magicpaper.MagicPaper;
-import io.papermc.paper.event.player.AsyncChatEvent;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;

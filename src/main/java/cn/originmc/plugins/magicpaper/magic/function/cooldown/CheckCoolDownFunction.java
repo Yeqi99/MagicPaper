@@ -1,13 +1,12 @@
 package cn.originmc.plugins.magicpaper.magic.function.cooldown;
 
+import cn.origincraft.magic.expression.functions.FunctionResult;
 import cn.origincraft.magic.function.NormalFunction;
+import cn.origincraft.magic.function.results.BooleanResult;
 import cn.origincraft.magic.function.results.ErrorResult;
-import cn.origincraft.magic.function.results.NullResult;
+import cn.origincraft.magic.function.results.StringResult;
 import cn.origincraft.magic.object.SpellContext;
 import cn.originmc.plugins.magicpaper.MagicPaper;
-import dev.rgbmc.expression.functions.FunctionResult;
-import dev.rgbmc.expression.results.BooleanResult;
-import dev.rgbmc.expression.results.StringResult;
 
 import java.util.List;
 

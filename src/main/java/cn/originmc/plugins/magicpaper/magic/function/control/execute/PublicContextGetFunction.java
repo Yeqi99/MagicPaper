@@ -1,10 +1,10 @@
 package cn.originmc.plugins.magicpaper.magic.function.control.execute;
 
+import cn.origincraft.magic.expression.functions.FunctionResult;
 import cn.origincraft.magic.function.NormalFunction;
 import cn.origincraft.magic.function.results.ContextMapResult;
 import cn.origincraft.magic.object.SpellContext;
 import cn.originmc.plugins.magicpaper.MagicPaper;
-import dev.rgbmc.expression.functions.FunctionResult;
 
 import java.util.List;
 

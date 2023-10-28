@@ -1,12 +1,12 @@
 package cn.originmc.plugins.magicpaper.magic.function.hook.abolethplus;
 
+import cn.origincraft.magic.expression.functions.FunctionResult;
 import cn.origincraft.magic.function.NormalFunction;
 import cn.origincraft.magic.function.results.ErrorResult;
 import cn.origincraft.magic.function.results.LongResult;
 import cn.origincraft.magic.function.results.NullResult;
+import cn.origincraft.magic.function.results.StringResult;
 import cn.origincraft.magic.object.SpellContext;
-import dev.rgbmc.expression.functions.FunctionResult;
-import dev.rgbmc.expression.results.StringResult;
 import ray.maplex.top.abolethplusadder.AbolethPlusAdder;
 
 import java.util.List;

@@ -1,19 +1,17 @@
 package cn.originmc.plugins.magicpaper.magic.function.hook.vault;
 
+import cn.origincraft.magic.expression.functions.FunctionResult;
 import cn.origincraft.magic.function.NormalFunction;
+import cn.origincraft.magic.function.results.BooleanResult;
 import cn.origincraft.magic.function.results.ErrorResult;
+import cn.origincraft.magic.function.results.StringResult;
 import cn.origincraft.magic.object.SpellContext;
 import cn.origincraft.magic.utils.VariableUtil;
 import cn.originmc.plugins.magicpaper.hook.vault.VaultManager;
 import cn.originmc.plugins.magicpaper.magic.result.PlayerResult;
-import dev.rgbmc.expression.functions.FunctionResult;
-import dev.rgbmc.expression.results.BooleanResult;
-import dev.rgbmc.expression.results.StringResult;
 import org.bukkit.entity.Player;
 
 import java.util.List;
-
-import static io.lumine.mythic.bukkit.utils.text.Text.DefaultFontInfo.V;
 
 public class VaultTakeFunction extends NormalFunction {
     @Override

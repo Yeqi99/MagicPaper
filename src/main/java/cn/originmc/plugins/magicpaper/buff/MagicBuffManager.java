@@ -1,8 +1,6 @@
 package cn.originmc.plugins.magicpaper.buff;
 
 
-import cn.originmc.plugins.magicpaper.cooldown.CoolDown;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;

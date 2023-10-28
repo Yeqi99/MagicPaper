@@ -1,12 +1,12 @@
 package cn.originmc.plugins.magicpaper.magic.function.behavior.item;
 
+import cn.origincraft.magic.expression.functions.FunctionResult;
 import cn.origincraft.magic.function.NormalFunction;
 import cn.origincraft.magic.function.results.ErrorResult;
+import cn.origincraft.magic.function.results.StringResult;
 import cn.origincraft.magic.object.SpellContext;
 import cn.origincraft.magic.utils.VariableUtil;
 import cn.originmc.plugins.magicpaper.magic.result.ItemStackResult;
-import dev.rgbmc.expression.functions.FunctionResult;
-import dev.rgbmc.expression.results.StringResult;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.Damageable;
 import org.bukkit.inventory.meta.ItemMeta;

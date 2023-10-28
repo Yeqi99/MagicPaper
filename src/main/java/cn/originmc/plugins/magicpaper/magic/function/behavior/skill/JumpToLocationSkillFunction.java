@@ -1,13 +1,13 @@
 package cn.originmc.plugins.magicpaper.magic.function.behavior.skill;
 
+import cn.origincraft.magic.expression.functions.FunctionResult;
 import cn.origincraft.magic.function.NormalFunction;
 import cn.origincraft.magic.function.results.ErrorResult;
 import cn.origincraft.magic.function.results.NullResult;
+import cn.origincraft.magic.function.results.StringResult;
 import cn.origincraft.magic.object.SpellContext;
 import cn.originmc.plugins.magicpaper.magic.result.LocationResult;
 import cn.originmc.plugins.magicpaper.magic.result.PlayerResult;
-import dev.rgbmc.expression.functions.FunctionResult;
-import dev.rgbmc.expression.results.StringResult;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.util.Vector;

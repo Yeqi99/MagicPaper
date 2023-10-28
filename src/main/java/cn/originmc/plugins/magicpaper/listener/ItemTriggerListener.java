@@ -1,5 +1,6 @@
 package cn.originmc.plugins.magicpaper.listener;
 
+import cn.origincraft.magic.function.results.StringResult;
 import cn.origincraft.magic.object.NormalContext;
 import cn.origincraft.magic.object.Spell;
 import cn.originmc.plugins.magicpaper.MagicPaper;
@@ -9,7 +10,6 @@ import cn.originmc.plugins.magicpaper.data.manager.MagicDataManager;
 import cn.originmc.plugins.magicpaper.magic.result.ItemStackResult;
 import cn.originmc.plugins.magicpaper.magic.result.PlayerResult;
 import cn.originmc.plugins.magicpaper.util.item.MagicItem;
-import dev.rgbmc.expression.results.StringResult;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;

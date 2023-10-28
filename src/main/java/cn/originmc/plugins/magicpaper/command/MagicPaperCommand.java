@@ -219,19 +219,19 @@ public class MagicPaperCommand implements CommandExecutor {
                 }
             }
             MagicPaper.getMagicGuiManager().getGui(player,id).open(player);
-        }else if (args[0].equalsIgnoreCase("clearguidata")){
-            if (args.length<2){
+        }else if (args[0].equalsIgnoreCase("clearguidata")) {
+            if (args.length < 2) {
                 return true;
             }
-            String id=args[1];
-            Player player= (Player) commandSender;
-            if (args.length>3){
-                player= Bukkit.getPlayer(args[2]);
-                if (player==null){
+            String id = args[1];
+            Player player = (Player) commandSender;
+            if (args.length > 3) {
+                player = Bukkit.getPlayer(args[2]);
+                if (player == null) {
                     return true;
                 }
             }
-            MagicPaper.getMagicGuiManager().removeGui(player,id);
+            MagicPaper.getMagicGuiManager().removeGui(player, id);
         }
         return true;
     }

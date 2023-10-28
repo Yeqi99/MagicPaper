@@ -1,12 +1,12 @@
 package cn.originmc.plugins.magicpaper.magic.function.yaml;
 
+import cn.origincraft.magic.expression.functions.FunctionResult;
 import cn.origincraft.magic.function.NormalFunction;
 import cn.origincraft.magic.function.results.ErrorResult;
 import cn.origincraft.magic.function.results.NullResult;
+import cn.origincraft.magic.function.results.ObjectResult;
 import cn.origincraft.magic.object.SpellContext;
 import cn.originmc.tools.minecraft.yamlcore.object.YamlManager;
-import dev.rgbmc.expression.functions.FunctionResult;
-import dev.rgbmc.expression.results.ObjectResult;
 
 import java.util.List;
 
@@ -20,7 +20,7 @@ public class YamlSaveAllFunction extends NormalFunction {
         if (!(yamlManagerResult instanceof ObjectResult)){
             return new ErrorResult("TYPE_ERROR", "The first arg of YamlManager must be a object.");
         }
-        Object yamlManager = ((ObjectResult) yamlManagerResult).getObject();
+        Object yamlManager = (yamlManagerResult).getObject();
         if (!(yamlManager instanceof YamlManager)){
             return new ErrorResult("TYPE_ERROR", "The first arg of YamlManager must be a yamlManager.");
         }

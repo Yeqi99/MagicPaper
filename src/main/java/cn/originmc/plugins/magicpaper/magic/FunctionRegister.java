@@ -1,6 +1,7 @@
 package cn.originmc.plugins.magicpaper.magic;
 
 import cn.origincraft.magic.MagicManager;
+import cn.origincraft.magic.expression.managers.FunctionManager;
 import cn.originmc.plugins.magicpaper.magic.function.behavior.*;
 import cn.originmc.plugins.magicpaper.magic.function.behavior.bossbar.*;
 import cn.originmc.plugins.magicpaper.magic.function.behavior.entity.NewEntityFunction;
@@ -45,7 +46,6 @@ import cn.originmc.plugins.magicpaper.magic.function.random.WeightRandomFunction
 import cn.originmc.plugins.magicpaper.magic.function.trigger.AddSpellToTriggerFunction;
 import cn.originmc.plugins.magicpaper.magic.function.trigger.TriggerClearSpellFunction;
 import cn.originmc.plugins.magicpaper.magic.function.yaml.*;
-import dev.rgbmc.expression.managers.FunctionManager;
 
 import java.util.HashMap;
 import java.util.Map;

@@ -1,11 +1,11 @@
 package cn.originmc.plugins.magicpaper.magic.function.behavior.item;
 
+import cn.origincraft.magic.expression.functions.FunctionResult;
 import cn.origincraft.magic.function.NormalFunction;
 import cn.origincraft.magic.function.results.ErrorResult;
+import cn.origincraft.magic.function.results.IntegerResult;
 import cn.origincraft.magic.object.SpellContext;
 import cn.originmc.plugins.magicpaper.magic.result.ItemStackResult;
-import dev.rgbmc.expression.functions.FunctionResult;
-import dev.rgbmc.expression.results.IntegerResult;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.List;

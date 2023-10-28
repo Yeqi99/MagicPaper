@@ -1,15 +1,15 @@
 package cn.originmc.plugins.magicpaper.magic.function.gui.databuttons;
 
+import cn.origincraft.magic.expression.functions.FunctionResult;
 import cn.origincraft.magic.function.NormalFunction;
 import cn.origincraft.magic.function.results.ErrorResult;
 import cn.origincraft.magic.function.results.ListResult;
+import cn.origincraft.magic.function.results.StringResult;
 import cn.origincraft.magic.object.SpellContext;
 import cn.originmc.plugins.magicpaper.hook.PlaceholderAPIHook;
 import cn.originmc.plugins.magicpaper.magic.result.ItemStackResult;
 import cn.originmc.plugins.magicpaper.util.item.NBTItem;
 import cn.originmc.plugins.magicpaper.util.text.Color;
-import dev.rgbmc.expression.functions.FunctionResult;
-import dev.rgbmc.expression.results.StringResult;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -68,6 +68,6 @@ public class OnlinePlayerButtonsFunction extends NormalFunction {
 
     @Override
     public String getName() {
-        return "playerButtons";
+        return "onlinePlayerButtons";
     }
 }

@@ -1,6 +1,9 @@
 package cn.originmc.plugins.magicpaper.database.mysql;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
 //TODO 完善方法并封装为语义
 public class MySQLManager {

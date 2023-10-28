@@ -1,12 +1,12 @@
 package cn.originmc.plugins.magicpaper.magic.function.behavior.item;
 
+import cn.origincraft.magic.expression.functions.FunctionResult;
 import cn.origincraft.magic.function.NormalFunction;
 import cn.origincraft.magic.function.results.ErrorResult;
 import cn.origincraft.magic.function.results.NullResult;
 import cn.origincraft.magic.object.SpellContext;
 import cn.originmc.plugins.magicpaper.magic.result.ItemStackResult;
 import cn.originmc.plugins.magicpaper.magic.result.PlayerResult;
-import dev.rgbmc.expression.functions.FunctionResult;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 

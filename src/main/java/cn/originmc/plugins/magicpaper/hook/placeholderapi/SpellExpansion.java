@@ -1,17 +1,15 @@
 package cn.originmc.plugins.magicpaper.hook.placeholderapi;
 
+import cn.origincraft.magic.expression.functions.FunctionResult;
+import cn.origincraft.magic.function.results.StringResult;
 import cn.origincraft.magic.object.NormalContext;
 import cn.origincraft.magic.object.Spell;
 import cn.origincraft.magic.object.SpellContext;
 import cn.originmc.plugins.magicpaper.MagicPaper;
 import cn.originmc.plugins.magicpaper.data.manager.MagicDataManager;
-import dev.rgbmc.expression.functions.FunctionResult;
-import dev.rgbmc.expression.results.StringResult;
 import me.clip.placeholderapi.expansion.PlaceholderExpansion;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
-
-import java.io.StringReader;
 
 public class SpellExpansion extends PlaceholderExpansion {
     @Override

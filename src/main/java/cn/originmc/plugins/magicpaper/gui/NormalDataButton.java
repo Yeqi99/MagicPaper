@@ -1,13 +1,12 @@
 package cn.originmc.plugins.magicpaper.gui;
 
+import cn.origincraft.magic.expression.functions.FunctionResult;
 import cn.origincraft.magic.function.results.ListResult;
 import cn.origincraft.magic.object.ContextMap;
 import cn.origincraft.magic.object.Spell;
 import cn.origincraft.magic.object.SpellContext;
 import cn.originmc.plugins.magicpaper.magic.result.ItemStackResult;
-import dev.rgbmc.expression.functions.FunctionResult;
 import org.bukkit.inventory.ItemStack;
-
 
 import java.util.ArrayList;
 import java.util.List;

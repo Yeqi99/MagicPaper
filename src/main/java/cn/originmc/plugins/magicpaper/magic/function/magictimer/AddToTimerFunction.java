@@ -1,14 +1,14 @@
 package cn.originmc.plugins.magicpaper.magic.function.magictimer;
 
+import cn.origincraft.magic.expression.functions.FunctionResult;
 import cn.origincraft.magic.function.NormalFunction;
 import cn.origincraft.magic.function.results.ErrorResult;
 import cn.origincraft.magic.function.results.NullResult;
 import cn.origincraft.magic.function.results.SpellResult;
+import cn.origincraft.magic.function.results.StringResult;
 import cn.origincraft.magic.object.Spell;
 import cn.origincraft.magic.object.SpellContext;
 import cn.originmc.plugins.magicpaper.timer.MagicTimerManager;
-import dev.rgbmc.expression.functions.FunctionResult;
-import dev.rgbmc.expression.results.StringResult;
 
 import java.util.List;
 
@@ -20,7 +20,7 @@ public class AddToTimerFunction extends NormalFunction {
         }
         FunctionResult arg1 = args.get(0);
         FunctionResult arg2 = args.get(1);
-        if (arg1 instanceof StringResult&&arg2 instanceof SpellResult){
+        if (arg1 instanceof StringResult &&arg2 instanceof SpellResult){
             StringResult stringResult = (StringResult) arg1;
             SpellResult spellResult = (SpellResult) arg2;
             String id = stringResult.getString();

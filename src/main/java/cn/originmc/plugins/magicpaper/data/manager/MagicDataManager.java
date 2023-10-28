@@ -1,6 +1,5 @@
 package cn.originmc.plugins.magicpaper.data.manager;
 
-import cn.origincraft.magic.MagicManager;
 import cn.origincraft.magic.manager.MagicInstance;
 import cn.origincraft.magic.object.Spell;
 import cn.originmc.plugins.magicpaper.MagicPaper;

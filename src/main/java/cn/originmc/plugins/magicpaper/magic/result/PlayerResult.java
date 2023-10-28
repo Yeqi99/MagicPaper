@@ -1,6 +1,6 @@
 package cn.originmc.plugins.magicpaper.magic.result;
 
-import dev.rgbmc.expression.functions.FunctionResult;
+import cn.origincraft.magic.expression.functions.FunctionResult;
 import org.bukkit.entity.Player;
 
 public class PlayerResult extends FunctionResult {

@@ -1,12 +1,12 @@
 package cn.originmc.plugins.magicpaper.magic.function.hook.vault;
 
+import cn.origincraft.magic.expression.functions.FunctionResult;
 import cn.origincraft.magic.function.NormalFunction;
+import cn.origincraft.magic.function.results.DoubleResult;
 import cn.origincraft.magic.function.results.ErrorResult;
 import cn.origincraft.magic.object.SpellContext;
 import cn.originmc.plugins.magicpaper.hook.vault.VaultManager;
 import cn.originmc.plugins.magicpaper.magic.result.PlayerResult;
-import dev.rgbmc.expression.functions.FunctionResult;
-import dev.rgbmc.expression.results.DoubleResult;
 import org.bukkit.entity.Player;
 
 import java.util.List;

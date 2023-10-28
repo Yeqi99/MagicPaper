@@ -6,7 +6,6 @@ import cn.origincraft.magic.object.NormalContext;
 import cn.origincraft.magic.object.Spell;
 import cn.origincraft.magic.object.SpellContext;
 import cn.originmc.plugins.magicpaper.MagicPaper;
-import com.comphenix.protocol.error.ErrorReporter;
 import org.bukkit.entity.Player;
 
 import java.util.ArrayList;

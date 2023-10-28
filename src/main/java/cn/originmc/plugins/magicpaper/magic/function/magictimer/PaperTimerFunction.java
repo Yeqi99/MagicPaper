@@ -1,14 +1,14 @@
 package cn.originmc.plugins.magicpaper.magic.function.magictimer;
 
+import cn.origincraft.magic.expression.functions.FunctionResult;
 import cn.origincraft.magic.function.NormalFunction;
 import cn.origincraft.magic.function.results.ContextMapResult;
 import cn.origincraft.magic.function.results.ErrorResult;
 import cn.origincraft.magic.function.results.NullResult;
+import cn.origincraft.magic.function.results.StringResult;
 import cn.origincraft.magic.object.ContextMap;
 import cn.origincraft.magic.object.SpellContext;
 import cn.originmc.plugins.magicpaper.timer.MagicTimerManager;
-import dev.rgbmc.expression.functions.FunctionResult;
-import dev.rgbmc.expression.results.StringResult;
 
 import java.util.List;
 

@@ -1,12 +1,11 @@
 package cn.originmc.plugins.magicpaper.timer;
 
+import cn.origincraft.magic.function.results.IntegerResult;
+import cn.origincraft.magic.function.results.StringResult;
 import cn.origincraft.magic.object.ContextMap;
 import cn.origincraft.magic.object.Spell;
 import cn.originmc.plugins.magicpaper.magic.result.PlayerResult;
 import cn.originmc.plugins.magicpaper.trigger.MagicPaperTriggerManager;
-import dev.rgbmc.expression.results.IntegerResult;
-import dev.rgbmc.expression.results.ObjectResult;
-import dev.rgbmc.expression.results.StringResult;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 

@@ -1,13 +1,12 @@
 package cn.originmc.plugins.magicpaper.magic.function.hook.playerpoints;
 
+import cn.origincraft.magic.expression.functions.FunctionResult;
 import cn.origincraft.magic.function.NormalFunction;
 import cn.origincraft.magic.function.results.ErrorResult;
+import cn.origincraft.magic.function.results.IntegerResult;
 import cn.origincraft.magic.object.SpellContext;
 import cn.originmc.plugins.magicpaper.hook.playerpoints.PlayerPointsManager;
 import cn.originmc.plugins.magicpaper.magic.result.PlayerResult;
-import dev.rgbmc.expression.functions.FunctionResult;
-import dev.rgbmc.expression.results.BooleanResult;
-import dev.rgbmc.expression.results.IntegerResult;
 import org.bukkit.entity.Player;
 
 import java.util.List;

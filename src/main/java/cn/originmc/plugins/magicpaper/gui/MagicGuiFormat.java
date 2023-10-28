@@ -1,7 +1,6 @@
 package cn.originmc.plugins.magicpaper.gui;
 
 import cn.originmc.plugins.magicpaper.util.list.ListUtil;
-import org.bukkit.Material;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 

@@ -1,19 +1,13 @@
 package cn.originmc.plugins.magicpaper.trigger.listener;
 
+import cn.origincraft.magic.function.results.BooleanResult;
+import cn.origincraft.magic.function.results.StringResult;
 import cn.origincraft.magic.object.NormalContext;
-import cn.originmc.plugins.magicpaper.MagicPaper;
 import cn.originmc.plugins.magicpaper.magic.result.EntityResult;
 import cn.originmc.plugins.magicpaper.magic.result.ItemStackResult;
 import cn.originmc.plugins.magicpaper.magic.result.LocationResult;
 import cn.originmc.plugins.magicpaper.magic.result.PlayerResult;
 import cn.originmc.plugins.magicpaper.trigger.MagicPaperTriggerManager;
-import cn.originmc.plugins.magicpaper.util.text.Color;
-import dev.rgbmc.expression.results.BooleanResult;
-import dev.rgbmc.expression.results.DoubleResult;
-import dev.rgbmc.expression.results.IntegerResult;
-import dev.rgbmc.expression.results.StringResult;
-import dev.rgbmc.remotekeyboard.events.KeyInputEvent;
-import org.bukkit.Bukkit;
 import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
@@ -26,7 +20,6 @@ import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.player.*;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.spigotmc.event.player.PlayerSpawnLocationEvent;
 
 public class PlayerListener implements Listener {
     public PlayerListener(JavaPlugin plugin){
