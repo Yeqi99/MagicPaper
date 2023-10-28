@@ -152,15 +152,5 @@ public class PlayerListener implements Listener {
         MagicPaperTriggerManager.trigger("PlayerRespawnTrigger", normalContext);
         event.setRespawnLocation(((LocationResult) normalContext.getVariable("location")).getLocation());
     }
-    @EventHandler(priority = EventPriority.HIGHEST)
-    public void onPlayerKeyboard(KeyInputEvent e){
-        NormalContext normalContext=new NormalContext();
-        normalContext.putVariable("event_name",new StringResult(e.getEventName()));
-        normalContext.putVariable("self",new PlayerResult(Bukkit.getPlayer(e.getPlayer())));
-        normalContext.putVariable("key",new IntegerResult(e.getKeycode()));
-        normalContext.putVariable("mod",new IntegerResult(e.getMods()));
-        normalContext.putVariable("isPressed",new BooleanResult(e.isPressed()));
-        normalContext.putVariable("isRelease",new BooleanResult(e.isRelease()));
-        MagicPaperTriggerManager.trigger("PlayerKeyboardTrigger", normalContext);
-    }
+
 }
