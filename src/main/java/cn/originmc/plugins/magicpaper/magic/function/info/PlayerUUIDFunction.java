@@ -22,7 +22,6 @@ public class PlayerUUIDFunction extends ArgsFunction {
     public List<ArgsSetting> getArgsSetting() {
         List<ArgsSetting> argsSettings=new ArrayList<>();
         ArgsSetting argsSetting= FunctionUtils.createArgsSetting(
-                1,
                 "Player ",
                 "Get the player's UUID.",
                 "String");

@@ -39,19 +39,19 @@ public class FacingOffsetFunction extends ArgsFunction {
     public List<ArgsSetting> getArgsSetting() {
         List<ArgsSetting> argsSettings=new ArrayList<>();
         ArgsSetting argsSetting1= FunctionUtils.createArgsSetting(
-                4,
                 "Location String String String",
                 "location horizontalAngle verticalAngle distance" +
                         "\nGet the location's facing offset location.",
                 "Location");
         argsSetting1.setId("A");
         ArgsSetting argsSetting2= FunctionUtils.createArgsSetting(
-                4,
                 "Location Location String",
                 "location targetLocation distance" +
                         "\nGet the location's facing offset location.",
                 "Location");
         argsSetting2.setId("B");
+        argsSettings.add(argsSetting1);
+        argsSettings.add(argsSetting2);
         return argsSettings;
     }
 

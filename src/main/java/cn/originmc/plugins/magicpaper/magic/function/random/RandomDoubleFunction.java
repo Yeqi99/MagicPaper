@@ -1,44 +1,57 @@
 package cn.originmc.plugins.magicpaper.magic.function.random;
 
 import cn.origincraft.magic.expression.functions.FunctionResult;
-import cn.origincraft.magic.function.NormalFunction;
-import cn.origincraft.magic.function.results.DoubleResult;
+import cn.origincraft.magic.function.ArgsFunction;
+import cn.origincraft.magic.function.ArgsSetting;
 import cn.origincraft.magic.function.results.ErrorResult;
+import cn.origincraft.magic.function.results.NullResult;
 import cn.origincraft.magic.function.results.StringResult;
 import cn.origincraft.magic.object.SpellContext;
+import cn.origincraft.magic.utils.FunctionUtils;
 import cn.origincraft.magic.utils.VariableUtil;
 
 import java.text.DecimalFormat;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-public class RandomDoubleFunction extends NormalFunction {
+public class RandomDoubleFunction extends ArgsFunction {
+
     @Override
-    public FunctionResult whenFunctionCalled(SpellContext spellContext, List<FunctionResult> args) {
-        if (args.size() < 3) {
-            return new ErrorResult("ARGS_NOT_ENOUGH","Dont have enough args");
+    public FunctionResult whenFunctionCalled(SpellContext spellContext, List<FunctionResult> args, ArgsSetting argsSetting) {
+        if (argsSetting.getId().equalsIgnoreCase("A")){
+            String start= (String) args.get(0).getObject();
+            String end= (String) args.get(1).getObject();
+            String decimalPlaces= (String) args.get(2).getObject();
+            if (!VariableUtil.tryDouble(start)){
+                return new ErrorResult("ARGS_ERROR","The first arg must be double str");
+            }
+            if (!VariableUtil.tryDouble(end)){
+                return new ErrorResult("ARGS_ERROR","The second arg must be double str");
+            }
+            if (!VariableUtil.tryInt(decimalPlaces)){
+                return new ErrorResult("ARGS_ERROR","The third arg must be int str");
+            }
+            double randomValue = generateRandomNumber(Double.parseDouble(start),Double.parseDouble(end),Integer.parseInt(decimalPlaces));
+            if (decimalPlaces.equals("0")){
+                return new StringResult(String.valueOf((int)randomValue).replace(".0",""));
+            }
+            return new StringResult(String.valueOf(randomValue));
         }
-        FunctionResult arg0 = args.get(0);
-        FunctionResult arg1 = args.get(1);
-        FunctionResult arg2 = args.get(2);
-        if (!(arg0 instanceof DoubleResult)) {
-            return new ErrorResult("ARGS_ERROR","The first arg must be double");
-        }
-        if (!(arg1 instanceof DoubleResult)) {
-            return new ErrorResult("ARGS_ERROR","The second arg must be double");
-        }
-        if (!(arg2 instanceof StringResult)) {
-            return new ErrorResult("ARGS_ERROR","The third arg must be string");
-        }
-        String str=((StringResult) arg2).getString();
-        if (!VariableUtil.tryInt(str)){
-            return new ErrorResult("ARGS_ERROR","The third arg must be int str");
-        }
-        int decimalPlaces=Integer.parseInt(str);
-        double minValue = ((DoubleResult) arg0).getDouble();
-        double maxValue = ((DoubleResult) arg1).getDouble();
-        double randomValue = generateRandomNumber(minValue, maxValue, decimalPlaces);
-        return new DoubleResult(randomValue);
+        return new NullResult();
+    }
+
+    @Override
+    public List<ArgsSetting> getArgsSetting() {
+        List<ArgsSetting> argsSettings=new ArrayList<>();
+        ArgsSetting argsSetting1= FunctionUtils.createArgsSetting(
+                "String String String",
+                "start end decimalPlaces" +
+                        "\nGet a random double number.",
+                "String");
+        argsSetting1.setId("A");
+        argsSettings.add(argsSetting1);
+        return argsSettings;
     }
 
     @Override

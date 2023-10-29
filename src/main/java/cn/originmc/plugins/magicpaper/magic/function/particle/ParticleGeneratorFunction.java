@@ -94,40 +94,34 @@ public class ParticleGeneratorFunction extends ArgsFunction {
     public List<ArgsSetting> getArgsSetting() {
         List<ArgsSetting> argsSettings=new ArrayList<>();
         ArgsSetting argsSetting1= FunctionUtils.createArgsSetting(
-                5,
                 "String String String String String",
                 "count offsetX offsetY offsetZ extra" +
                         "\ncreate a particle generator.",
                 "ParticleGenerator");
         argsSetting1.setId("A");
         ArgsSetting argsSetting2= FunctionUtils.createArgsSetting(
-                6,
                 "String String String String String String",
                 "count offsetX offsetY offsetZ extra particleName" +
                         "\ncreate a particle generator.",
                 "ParticleGenerator");
         argsSetting2.setId("B");
         ArgsSetting argsSetting3= FunctionUtils.createArgsSetting(
-                2,
                 "ParticleGenerator Location",
                 "generate particles.",
                 "Null");
         argsSetting3.setId("C");
         ArgsSetting argsSetting4= FunctionUtils.createArgsSetting(
-                3,
                 "ParticleGenerator Location String",
                 "generate particles.",
                 "Null");
         argsSetting4.setId("D");
         ArgsSetting argsSetting5= FunctionUtils.createArgsSetting(
-                4,
                 "ParticleGenerator String String String String",
                 "ParticleGenerator red green blue size" +
                         "\nset rgb.",
                 "Null");
         argsSetting5.setId("E");
         ArgsSetting argsSetting6= FunctionUtils.createArgsSetting(
-                7,
                 "ParticleGenerator String String String String String String String",
                 "ParticleGenerator fromRed fromGreen fromBlue toRed toGreen toBlue size" +
                         "\nset rgb gradient.",
