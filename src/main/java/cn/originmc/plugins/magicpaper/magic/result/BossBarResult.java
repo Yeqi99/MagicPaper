@@ -1,17 +1,17 @@
 package cn.originmc.plugins.magicpaper.magic.result;
 
-
-
-import cn.origincraft.magic.expression.functions.FunctionResult;
+import cn.origincraft.magic.function.results.ObjectResult;
 import org.bukkit.boss.BossBar;
 
-public class BossBarResult extends FunctionResult {
-    private final BossBar bossBar;
+public class BossBarResult extends ObjectResult {
     public BossBarResult(BossBar bossBar) {
-        this.bossBar = bossBar;
+        super(bossBar);
     }
 
     public BossBar getBossBar() {
-        return bossBar;
+        return (BossBar) getObject();
+    }
+    public String getName() {
+        return "BossBar";
     }
 }

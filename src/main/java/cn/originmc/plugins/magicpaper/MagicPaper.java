@@ -30,8 +30,6 @@ import cn.originmc.plugins.magicpaper.listener.CodingListener;
 import cn.originmc.plugins.magicpaper.listener.ItemTriggerListener;
 import cn.originmc.plugins.magicpaper.listener.ItemVariableRefreshListener;
 import cn.originmc.plugins.magicpaper.trigger.MagicPaperTriggerManager;
-import cn.originmc.plugins.magicpaper.trigger.listener.EpicCraftingPlusListener;
-import cn.originmc.plugins.magicpaper.trigger.listener.RemoteKeyboardBukkitListener;
 import cn.originmc.plugins.magicpaper.util.text.Sender;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -172,7 +170,7 @@ public final class MagicPaper extends JavaPlugin {
     }
 
     public static String getVersion() {
-        return "1.5.2";
+        return "1.5.3";
     }
 
     public static String getLang() {

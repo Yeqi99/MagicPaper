@@ -1,15 +1,17 @@
 package cn.originmc.plugins.magicpaper.magic.result;
 
-import cn.origincraft.magic.expression.functions.FunctionResult;
+import cn.origincraft.magic.function.results.ObjectResult;
 import org.bukkit.entity.Entity;
 
-public class EntityResult extends FunctionResult {
-    private final Entity entity;
+public class EntityResult extends ObjectResult {
     public EntityResult(Entity entity) {
-        this.entity = entity;
+        super(entity);
     }
 
     public Entity getEntity() {
-        return entity;
+        return (Entity) getObject();
+    }
+    public String getName() {
+        return "Entity";
     }
 }

@@ -40,6 +40,7 @@ import cn.originmc.plugins.magicpaper.magic.function.magictimer.AddToTimerFuncti
 import cn.originmc.plugins.magicpaper.magic.function.magictimer.FoliaTimerFunction;
 import cn.originmc.plugins.magicpaper.magic.function.magictimer.PaperTimerFunction;
 import cn.originmc.plugins.magicpaper.magic.function.object.*;
+import cn.originmc.plugins.magicpaper.magic.function.particle.ParticleGeneratorFunction;
 import cn.originmc.plugins.magicpaper.magic.function.random.RandomDoubleFunction;
 import cn.originmc.plugins.magicpaper.magic.function.random.RandomUUIDFunction;
 import cn.originmc.plugins.magicpaper.magic.function.random.WeightRandomFunction;
@@ -187,6 +188,8 @@ public class FunctionRegister {
         fm.register(new ColorFunction());
         fm.register(new IsTimeRangeFunction(),"istime");
         fm.register(new InLocationRangeFunction(),"inlrange");
+        fm.register(new PlayerUUIDFunction(),"puuid");
+        fm.register(new FacingOffsetFunction(),"locoffset");
         // yaml
         fm.register(new YamlManagerFunction(), "yamlm");
         fm.register(new YamlSaveAllFunction(), "yalmsa");
@@ -213,6 +216,8 @@ public class FunctionRegister {
         fm.register(new GuiUpdateFunction(), "upgui");
         // gui.databuttons
         fm.register(new OnlinePlayerButtonsFunction(), "pbuttons");
+        // particle
+        fm.register(new ParticleGeneratorFunction(), "particle");
     }
 
     public static void registerInfo() {
@@ -248,7 +253,6 @@ public class FunctionRegister {
         funInfo.put("addSpellToTrigger", "添加魔咒到触发器");
         funInfo.put("triggerClearSpell", "清除触发器的魔咒");
         funInfo.put("playerName", "获取玩家名");
-
     }
 
     public static void registerArgsInfo() {

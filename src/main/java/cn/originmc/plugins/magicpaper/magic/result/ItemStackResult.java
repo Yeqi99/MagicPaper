@@ -1,16 +1,18 @@
 package cn.originmc.plugins.magicpaper.magic.result;
 
-import cn.origincraft.magic.expression.functions.FunctionResult;
+import cn.origincraft.magic.function.results.ObjectResult;
 import org.bukkit.inventory.ItemStack;
 
-public class ItemStackResult extends FunctionResult {
-    private final ItemStack itemStack;
+public class ItemStackResult extends ObjectResult {
 
     public ItemStackResult(ItemStack itemStack) {
-        this.itemStack = itemStack;
+        super(itemStack);
     }
 
     public ItemStack getItemStack() {
-        return itemStack;
+        return (ItemStack) getObject();
+    }
+    public String getName() {
+        return "ItemStack";
     }
 }

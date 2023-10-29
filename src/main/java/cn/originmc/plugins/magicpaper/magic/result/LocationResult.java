@@ -1,18 +1,19 @@
 package cn.originmc.plugins.magicpaper.magic.result;
 
-import cn.origincraft.magic.expression.functions.FunctionResult;
+import cn.origincraft.magic.function.results.ObjectResult;
 import org.bukkit.Location;
 
-public class LocationResult extends FunctionResult {
-    private final Location location;
+public class LocationResult extends ObjectResult {
 
     public LocationResult(Location location) {
-        this.location = location;
+        super(location);
     }
 
 
     public Location getLocation() {
-        return location;
+        return (Location) getObject();
     }
-
+    public String getName() {
+        return "Location";
+    }
 }

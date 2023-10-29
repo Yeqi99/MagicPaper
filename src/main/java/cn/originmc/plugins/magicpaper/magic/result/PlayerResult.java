@@ -1,15 +1,16 @@
 package cn.originmc.plugins.magicpaper.magic.result;
 
-import cn.origincraft.magic.expression.functions.FunctionResult;
 import org.bukkit.entity.Player;
 
-public class PlayerResult extends FunctionResult {
-    private final Player player;
+public class PlayerResult extends EntityResult {
     public PlayerResult(Player player) {
-        this.player = player;
+        super(player);
     }
 
     public Player getPlayer() {
-        return player;
+        return (Player) getObject();
+    }
+    public String getName() {
+        return "Player";
     }
 }
