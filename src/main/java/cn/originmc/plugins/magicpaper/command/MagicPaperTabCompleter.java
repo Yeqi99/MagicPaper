@@ -77,6 +77,9 @@ public class MagicPaperTabCompleter implements TabCompleter {
             if (args[0].equalsIgnoreCase("updateguidata")){
                 MagicPaper.getMagicGuiManager().getMagicGuiSettings().forEach(magicGuiSetting -> completions.add(magicGuiSetting.getId()));
             }
+            if (args[0].equalsIgnoreCase("lookailas")){
+                completions.addAll(MagicPaper.getMagicManager().getFunctionsRealNames());
+            }
         } else if (args.length == 3){
             if (args[0].equalsIgnoreCase("boreremove")) {
                 if (args[1].equalsIgnoreCase("address")) {
