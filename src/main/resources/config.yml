@@ -39,4 +39,3 @@ item-trigger-listener: true
 buff-system-enable: true
 # gui系统开关
 gui-listener: true
-
