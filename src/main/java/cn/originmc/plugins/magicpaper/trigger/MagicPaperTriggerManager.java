@@ -33,7 +33,6 @@ public class MagicPaperTriggerManager {
         magicPaperTriggers.add(new PlayerJoinTrigger());
         magicPaperTriggers.add(new ServerOnDisableTrigger());
         magicPaperTriggers.add(new PlayerInteractTrigger());
-        magicPaperTriggers.add(new PlayerKeyboardTrigger());
         magicPaperTriggers.add(new PlayerDropTrigger());
         magicPaperTriggers.add(new TimerTrigger());
         magicPaperTriggers.add(new PlayerBreakTrigger());
@@ -47,6 +46,12 @@ public class MagicPaperTriggerManager {
             magicPaperTriggers.add(new EpicCraftingsCraftTrigger());
             magicPaperTriggers.add(new EpicCraftingsPreCraftTrigger());
             magicPaperTriggers.add(new EpicCraftingsPlaceClickTrigger());
+        }
+        if (RemoteKeyboardBukkitHook.status){
+            magicPaperTriggers.add(new PlayerKeyboardTrigger());
+        }
+        if (MagicPaper.getInstance().getConfig().getBoolean("bungee-cord-mode",false)){
+            magicPaperTriggers.add(new BungeeCordMessageTrigger());
         }
     }
     public static void registerTrigger(MagicPaperTrigger trigger){

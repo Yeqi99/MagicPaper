@@ -5,11 +5,11 @@ import cn.origincraft.magic.object.ContextMap;
 import cn.origincraft.magic.object.NormalContext;
 import cn.origincraft.magic.object.Spell;
 import cn.origincraft.magic.object.SpellContext;
-import cn.origincraft.magic.utils.ErrorUtils;
 import cn.originmc.plugins.magicpaper.MagicPaper;
 import cn.originmc.plugins.magicpaper.data.config.LangData;
 import cn.originmc.plugins.magicpaper.data.manager.MagicDataManager;
 import cn.originmc.plugins.magicpaper.magic.result.PlayerResult;
+import cn.originmc.plugins.magicpaper.util.error.PaperErrorUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -37,8 +37,9 @@ public class CodingListener implements Listener {
                 context.putVariable("self",new PlayerResult(event.getPlayer()));
                 Spell spell=new Spell(wordsList, MagicPaper.getMagicManager());
                 SpellContext spellContext = spell.execute(context);
-                if (spellContext.hasExecuteError()){
-                    MagicPaper.getSender().sendToPlayer(event.getPlayer(), ErrorUtils.normalError(spellContext));
+                if (spellContext.hasExecuteError()) {
+                    List<String> log= PaperErrorUtils.getErrorAllLog(spellContext, "&c");
+                    MagicPaper.getSender().sendToPlayer(event.getPlayer(), log);
                 }
                 event.setCancelled(true);
                 return;
@@ -69,8 +70,10 @@ public class CodingListener implements Listener {
                 context.putVariable("self",new PlayerResult(event.getPlayer()));
                 for (Spell spell : spells) {
                     SpellContext spellContext = spell.execute(context);
-                    if (spellContext.hasExecuteError()){
-                        MagicPaper.getSender().sendToPlayer(event.getPlayer(), ErrorUtils.normalError(spellContext));                    }
+                    if (spellContext.hasExecuteError()) {
+                        List<String> log= PaperErrorUtils.getErrorAllLog(spellContext, "&c");
+                        MagicPaper.getSender().sendToPlayer(event.getPlayer(), log);
+                    }
                 }
                 event.setCancelled(true);
                 return;
@@ -95,8 +98,9 @@ public class CodingListener implements Listener {
             MagicPaper.getSender().sendToPlayer(event.getPlayer(), "&d"+words);
             SpellContext spellContext = spell.execute(context);
 
-            if (spellContext.hasExecuteError()){
-                MagicPaper.getSender().sendToPlayer(event.getPlayer(), ErrorUtils.normalError(spellContext));
+            if (spellContext.hasExecuteError()) {
+                List<String> log= PaperErrorUtils.getErrorAllLog(spellContext, "&c");
+                MagicPaper.getSender().sendToPlayer(event.getPlayer(), log);
             }
             event.setCancelled(true);
         }else if(event.getMessage().startsWith("!pm")){
@@ -109,8 +113,9 @@ public class CodingListener implements Listener {
             context.putVariable("players", new ListResult(new ArrayList<>(Bukkit.getOnlinePlayers())));
             MagicPaper.getSender().sendToPlayer(event.getPlayer(), "&d"+words);
             SpellContext spellContext = spell.execute(context);
-            if (spellContext.hasExecuteError()){
-                MagicPaper.getSender().sendToPlayer(event.getPlayer(), ErrorUtils.normalError(spellContext));
+            if (spellContext.hasExecuteError()) {
+                List<String> log= PaperErrorUtils.getErrorAllLog(spellContext, "&c");
+                MagicPaper.getSender().sendToPlayer(event.getPlayer(), log);
             }
             event.setCancelled(true);
         }else if(event.getMessage().startsWith("!clear")){

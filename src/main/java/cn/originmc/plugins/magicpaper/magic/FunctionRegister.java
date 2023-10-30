@@ -11,7 +11,8 @@ import cn.originmc.plugins.magicpaper.magic.function.behavior.skill.JumpSkillFun
 import cn.originmc.plugins.magicpaper.magic.function.behavior.skill.JumpToLocationSkillFunction;
 import cn.originmc.plugins.magicpaper.magic.function.buff.BuffAddFunction;
 import cn.originmc.plugins.magicpaper.magic.function.buff.BuffTimeGetFunction;
-import cn.originmc.plugins.magicpaper.magic.function.control.PlayerTraversalFunction;
+import cn.originmc.plugins.magicpaper.magic.function.bungeecord.BCSendDataFunction;
+import cn.originmc.plugins.magicpaper.magic.function.bungeecord.ServerTPFunction;
 import cn.originmc.plugins.magicpaper.magic.function.control.execute.*;
 import cn.originmc.plugins.magicpaper.magic.function.cooldown.AddCoolDownFunction;
 import cn.originmc.plugins.magicpaper.magic.function.cooldown.CheckCoolDownFunction;
@@ -98,7 +99,6 @@ public class FunctionRegister {
         fm.register(new CloneItemFunction(), "citem");
         fm.register(new EntityFunction());
         fm.register(new BossBarFunction());
-        fm.register(new MagicLocationFunction(),"mloc");
         // behavior
         fm.register(new ConsoleCommandFunction(), "ccommand");
         fm.register(new PlayerCommandFunction(), "pcommand");
@@ -165,8 +165,6 @@ public class FunctionRegister {
         // buff
         fm.register(new BuffAddFunction());
         fm.register(new BuffTimeGetFunction());
-        // control
-        fm.register(new PlayerTraversalFunction(), "playerT");
         // control.execute
         fm.register(new PaperSpellExecuteFunction(), "paperse");
         fm.register(new PaperSpellAsyncExecuteFunction(), "papersae");
@@ -218,63 +216,8 @@ public class FunctionRegister {
         fm.register(new OnlinePlayerButtonsFunction(), "pbuttons");
         // particle
         fm.register(new ParticleGeneratorFunction(), "particle");
-    }
-
-    public static void registerInfo() {
-        funInfo.put("playerLPMetaGet", "获取玩家的LuckPerms的meta");
-        funInfo.put("playerLPMetaSet", "设置玩家的LuckPerms的meta");
-        funInfo.put("playerLPTempMetaSet", "设置玩家的LuckPerms的临时meta");
-        funInfo.put("placeholderAPI", "获取PlaceholderAPI的变量");
-        funInfo.put("player", "获取玩家");
-        funInfo.put("location", "获取位置");
-        funInfo.put("consoleCommand", "控制台执行命令");
-        funInfo.put("playerCommand", "玩家执行命令");
-        funInfo.put("senderToPlayer", "向玩家发送消息");
-        funInfo.put("senderToAllPlayer", "向所有玩家发送消息");
-        funInfo.put("playerTeleport", "玩家传送");
-        funInfo.put("paperSpellExecute", "Paper执行魔咒");
-        funInfo.put("paperSpellAsyncExecute", "Paper异步执行魔咒");
-        funInfo.put("foliaSpellExecute", "Folia执行魔咒");
-        funInfo.put("foliaSpellAsyncExecute", "Folia异步执行魔咒");
-        funInfo.put("paperSpellTimer", "Paper计时器");
-        funInfo.put("paperSpellAsyncTimer", "Paper异步计时器");
-        funInfo.put("paperTimer", "创建Paper计时器");
-        funInfo.put("foliaTimer", "创建Folia计时器");
-        funInfo.put("addToTimer", "添加魔咒到计时器");
-        funInfo.put("itemLoreAddLine", "添加物品lore");
-        funInfo.put("itemSetPlayer", "设置物品所有者");
-        funInfo.put("itemGivePlayer", "给予玩家物品");
-        funInfo.put("itemNBTRemove", "移除物品NBT");
-        funInfo.put("itemNBTAdd", "添加物品NBT");
-        funInfo.put("itemNBTGet", "获取物品NBT");
-        funInfo.put("itemToString", "物品转字符串");
-        funInfo.put("stringToItem", "字符串转物品");
-        funInfo.put("publicContextGet", "获取公共数据");
-        funInfo.put("addSpellToTrigger", "添加魔咒到触发器");
-        funInfo.put("triggerClearSpell", "清除触发器的魔咒");
-        funInfo.put("playerName", "获取玩家名");
-    }
-
-    public static void registerArgsInfo() {
-        argsInfo.put("playerLPMetaGet", "玩家(player) meta名(str)");
-        argsInfo.put("playerLPMetaSet", "玩家(player) meta名(str) meta值(str)");
-        argsInfo.put("playerLPTempMetaSet", "玩家(player) meta名(str) meta值(str) 持续时间(int)");
-        argsInfo.put("placeholderAPI", "变量名(str)");
-        argsInfo.put("player", "玩家名(player)");
-        argsInfo.put("location", "玩家(player)|x(double) y(double) z(double) world(str)");
-        argsInfo.put("consoleCommand", "命令(str)");
-        argsInfo.put("playerCommand", "玩家名(player) 命令(str)");
-        argsInfo.put("senderToPlayer", "玩家名(player) 消息(str)");
-        argsInfo.put("senderToAllPlayer", "消息(str)");
-        argsInfo.put("playerTeleport", "玩家名(player) 坐标(location)");
-        argsInfo.put("paperSpellExecute", "魔咒(spell)...");
-        argsInfo.put("paperSpellAsyncExecute", "魔咒(spell)...");
-        argsInfo.put("foliaSpellExecute", "魔咒(spell)...");
-        argsInfo.put("foliaSpellAsyncExecute", "魔咒(spell)...");
-        argsInfo.put("paperSpellTimer", "魔咒名(str) 延迟开始(int) 间隔(int)");
-        argsInfo.put("paperSpellAsyncTimer", "魔咒名(str) 延迟开始(int) 间隔(int)");
-        argsInfo.put("paperTimer", "计时器名(str) 延迟开始(int) 间隔(int) 数据语境(ContextMap)");
-        argsInfo.put("foliaTimer", "计时器名(str) 延迟开始(int) 间隔(int) 数据语境(ContextMap)");
-        argsInfo.put("addToTimer", "计时器名(str) 魔咒(spell)");
+        // bungeecord
+        fm.register(new ServerTPFunction(), "servertp");
+        fm.register(new BCSendDataFunction(), "bcmsg");
     }
 }

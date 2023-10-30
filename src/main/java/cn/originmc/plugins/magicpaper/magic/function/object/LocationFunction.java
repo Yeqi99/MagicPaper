@@ -1,161 +1,162 @@
 package cn.originmc.plugins.magicpaper.magic.function.object;
 
 import cn.origincraft.magic.expression.functions.FunctionResult;
-import cn.origincraft.magic.function.NormalFunction;
-import cn.origincraft.magic.function.results.DoubleResult;
+import cn.origincraft.magic.function.ArgsFunction;
+import cn.origincraft.magic.function.ArgsSetting;
 import cn.origincraft.magic.function.results.ErrorResult;
-import cn.origincraft.magic.function.results.ObjectResult;
-import cn.origincraft.magic.function.results.StringResult;
+import cn.origincraft.magic.function.results.NullResult;
 import cn.origincraft.magic.object.SpellContext;
+import cn.origincraft.magic.utils.FunctionUtils;
+import cn.origincraft.magic.utils.VariableUtil;
 import cn.originmc.plugins.magicpaper.magic.result.LocationResult;
-import cn.originmc.plugins.magicpaper.magic.result.PlayerResult;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
+import org.bukkit.World;
 import org.bukkit.entity.Player;
 
+import java.util.ArrayList;
 import java.util.List;
 
-public class LocationFunction extends NormalFunction {
+public class LocationFunction extends ArgsFunction {
     @Override
-    public FunctionResult whenFunctionCalled(SpellContext spellContext, List<FunctionResult> args) {
-        if (args.isEmpty()){
-            if (spellContext.getContextMap().hasObject("self")) {
-                if (spellContext.getContextMap().getObject("self") instanceof Player){
-                    Player player=(Player) spellContext.getContextMap().getObject("self");
+    public FunctionResult whenFunctionCalled(SpellContext spellContext, List<FunctionResult> args, ArgsSetting argsSetting) {
+        String id=argsSetting.getId();
+
+        switch (id) {
+            case "A":{
+                Player player= (Player) args.get(0).getObject();
+                return new LocationResult(player.getLocation());
+            }
+            case "B":{
+                String x= (String) args.get(0).getObject();
+                String y= (String) args.get(1).getObject();
+                String z= (String) args.get(2).getObject();
+                if (!VariableUtil.tryDouble(x)){
+                    return new ErrorResult("ARGS_ERROR","The first arg must be double str");
+                }
+                if (!VariableUtil.tryDouble(y)){
+                    return new ErrorResult("ARGS_ERROR","The second arg must be double str");
+                }
+                if (!VariableUtil.tryDouble(z)){
+                    return new ErrorResult("ARGS_ERROR","The third arg must be double str");
+                }
+                double x1=Double.parseDouble(x);
+                double y1=Double.parseDouble(y);
+                double z1=Double.parseDouble(z);
+                return new LocationResult(new Location(null,x1,y1,z1));
+            }
+            case "C":{
+                String x= (String) args.get(0).getObject();
+                String y= (String) args.get(1).getObject();
+                String z= (String) args.get(2).getObject();
+                String world= (String) args.get(3).getObject();
+                if (!VariableUtil.tryDouble(x)){
+                    return new ErrorResult("ARGS_ERROR","The first arg must be double str");
+                }
+                if (!VariableUtil.tryDouble(y)){
+                    return new ErrorResult("ARGS_ERROR","The second arg must be double str");
+                }
+                if (!VariableUtil.tryDouble(z)){
+                    return new ErrorResult("ARGS_ERROR","The third arg must be double str");
+                }
+                double x1=Double.parseDouble(x);
+                double y1=Double.parseDouble(y);
+                double z1=Double.parseDouble(z);
+                World world1= Bukkit.getWorld(world);
+                if (world1==null){
+                    return new ErrorResult("ARGS_ERROR","The world is not exist.");
+                }
+                return new LocationResult(new Location(world1,x1,y1,z1));
+            }
+            case "D":{
+                String x= (String) args.get(0).getObject();
+                String y= (String) args.get(1).getObject();
+                String z= (String) args.get(2).getObject();
+                String yaw= (String) args.get(3).getObject();
+                String pitch= (String) args.get(4).getObject();
+                String world= (String) args.get(5).getObject();
+                if (!VariableUtil.tryDouble(x)){
+                    return new ErrorResult("ARGS_ERROR","The first arg must be double str");
+                }
+                if (!VariableUtil.tryDouble(y)){
+                    return new ErrorResult("ARGS_ERROR","The second arg must be double str");
+                }
+                if (!VariableUtil.tryDouble(z)){
+                    return new ErrorResult("ARGS_ERROR","The third arg must be double str");
+                }
+                if (!VariableUtil.tryDouble(yaw)){
+                    return new ErrorResult("ARGS_ERROR","The fourth arg must be double str");
+                }
+                if (!VariableUtil.tryDouble(pitch)){
+                    return new ErrorResult("ARGS_ERROR","The fifth arg must be double str");
+                }
+                double x1=Double.parseDouble(x);
+                double y1=Double.parseDouble(y);
+                double z1=Double.parseDouble(z);
+                double yaw1=Double.parseDouble(yaw);
+                double pitch1=Double.parseDouble(pitch);
+                World world1= Bukkit.getWorld(world);
+                if (world1==null){
+                    return new ErrorResult("ARGS_ERROR","The world is not exist.");
+                }
+                return new LocationResult(new Location(world1,x1,y1,z1,(float)yaw1,(float)pitch1));
+            }
+            case "E":{
+                Object object=args.get(0).getObject();
+                if (object instanceof Player){
+                    Player player= (Player) object;
                     return new LocationResult(player.getLocation());
+                }else if(object instanceof Location){
+                    return new LocationResult((Location) object);
                 }else {
-                    return new ErrorResult("ERROR", "self is not a player.");
+                    return new ErrorResult("ERROR", "object is not a player or location.");
                 }
             }
         }
-        if (args.size()==1){
-            if (args.get(0) instanceof PlayerResult){
-                PlayerResult playerResult=(PlayerResult) args.get(0);
-                return new LocationResult(playerResult.getPlayer().getLocation());
-            }if (args.get(0) instanceof ObjectResult){
-                ObjectResult objectResult=(ObjectResult) args.get(0);
-                if (objectResult.getObject() instanceof Location) {
-                    return new LocationResult((Location) objectResult.getObject());
-                }else {
-                    return new ErrorResult("UNKNOWN_ARGUMENT_TYPE", "Unsupported argument type.");
-                }
-            } else {
-                return new ErrorResult("UNKNOWN_ARGUMENT_TYPE", "Unsupported argument type.");
-            }
-        }
-        if (args.size()==3) {
-            FunctionResult x = args.get(0);
-            FunctionResult y = args.get(1);
-            FunctionResult z = args.get(2);
-            if (x instanceof DoubleResult) {
-                if (y instanceof DoubleResult) {
-                    if (z instanceof DoubleResult) {
-                        Location location = new Location(null, ((DoubleResult) x).getDouble(), ((DoubleResult) y).getDouble(), ((DoubleResult) z).getDouble());
-                        return new LocationResult(location);
-                    } else {
-                        return new ErrorResult("UNKNOWN_ARGUMENT_TYPE", "Unsupported argument type.");
-                    }
-                } else {
-                    return new ErrorResult("UNKNOWN_ARGUMENT_TYPE", "Unsupported argument type.");
-                }
-            } else {
-                return new ErrorResult("UNKNOWN_ARGUMENT_TYPE", "Unsupported argument type.");
-            }
-        }
-        if (args.size()==4) {
-            FunctionResult x = args.get(0);
-            FunctionResult y = args.get(1);
-            FunctionResult z = args.get(2);
-            FunctionResult world = args.get(3);
-            if (x instanceof DoubleResult) {
-                if (y instanceof DoubleResult) {
-                    if (z instanceof DoubleResult) {
-                        if (world instanceof StringResult) {
-                            Location location = new Location(null, ((DoubleResult) x).getDouble(), ((DoubleResult) y).getDouble(), ((DoubleResult) z).getDouble());
-                            location.setWorld(Bukkit.getWorld(((StringResult) world).getString()));
-                            return new LocationResult(location);
-                        } else {
-                            return new ErrorResult("UNKNOWN_ARGUMENT_TYPE", "Unsupported argument type.");
-                        }
-                    } else {
-                        return new ErrorResult("UNKNOWN_ARGUMENT_TYPE", "Unsupported argument type.");
-                    }
-                } else {
-                    return new ErrorResult("UNKNOWN_ARGUMENT_TYPE", "Unsupported argument type.");
-                }
-            } else {
-                return new ErrorResult("UNKNOWN_ARGUMENT_TYPE", "Unsupported argument type.");
-            }
-        }
-        if (args.size()==5){
-            FunctionResult x = args.get(0);
-            FunctionResult y = args.get(1);
-            FunctionResult z = args.get(2);
-            FunctionResult yaw = args.get(3);
-            FunctionResult pitch = args.get(4);
-            if (x instanceof DoubleResult) {
-                if (y instanceof DoubleResult) {
-                    if (z instanceof DoubleResult) {
-                        if (yaw instanceof DoubleResult) {
-                            if (pitch instanceof DoubleResult) {
-                                Location location = new Location(null, ((DoubleResult) x).getDouble(), ((DoubleResult) y).getDouble(), ((DoubleResult) z).getDouble());
-                                location.setYaw((float) ((DoubleResult) yaw).getDouble());
-                                location.setPitch((float) ((DoubleResult) pitch).getDouble());
-                                return new LocationResult(location);
-                            } else {
-                                return new ErrorResult("UNKNOWN_ARGUMENT_TYPE", "Unsupported argument type.");
-                            }
-                        } else {
-                            return new ErrorResult("UNKNOWN_ARGUMENT_TYPE", "Unsupported argument type.");
-                        }
-                    } else {
-                        return new ErrorResult("UNKNOWN_ARGUMENT_TYPE", "Unsupported argument type.");
-                    }
-                } else {
-                    return new ErrorResult("UNKNOWN_ARGUMENT_TYPE", "Unsupported argument type.");
-                }
-            } else {
-                return new ErrorResult("UNKNOWN_ARGUMENT_TYPE", "Unsupported argument type.");
-            }
-        }
-        if (args.size()==6){
-            FunctionResult x = args.get(0);
-            FunctionResult y = args.get(1);
-            FunctionResult z = args.get(2);
-            FunctionResult yaw = args.get(3);
-            FunctionResult pitch = args.get(4);
-            FunctionResult world = args.get(5);
-            if (x instanceof DoubleResult) {
-                if (y instanceof DoubleResult) {
-                    if (z instanceof DoubleResult) {
-                        if (yaw instanceof DoubleResult) {
-                            if (pitch instanceof DoubleResult) {
-                                if (world instanceof StringResult) {
-                                    Location location = new Location(null, ((DoubleResult) x).getDouble(), ((DoubleResult) y).getDouble(), ((DoubleResult) z).getDouble());
-                                    location.setYaw((float) ((DoubleResult) yaw).getDouble());
-                                    location.setPitch((float) ((DoubleResult) pitch).getDouble());
-                                    location.setWorld(Bukkit.getWorld(((StringResult) world).getString()));
-                                    return new LocationResult(location);
-                                } else {
-                                    return new ErrorResult("UNKNOWN_ARGUMENT_TYPE", "Unsupported argument type.");
-                                }
-                            } else {
-                                return new ErrorResult("UNKNOWN_ARGUMENT_TYPE", "Unsupported argument type.");
-                            }
-                        } else {
-                            return new ErrorResult("UNKNOWN_ARGUMENT_TYPE", "Unsupported argument type.");
-                        }
-                    } else {
-                        return new ErrorResult("UNKNOWN_ARGUMENT_TYPE", "Unsupported argument type.");
-                    }
-                } else {
-                    return new ErrorResult("UNKNOWN_ARGUMENT_TYPE", "Unsupported argument type.");
-                }
-            } else {
-                return new ErrorResult("UNKNOWN_ARGUMENT_TYPE", "Unsupported argument type.");
-            }
-        }
-        return new ErrorResult("UNKNOWN_ARGUMENT_TYPE", "Unsupported argument type.");
+        return new NullResult();
+    }
+
+    @Override
+    public List<ArgsSetting> getArgsSetting() {
+        List<ArgsSetting> argsSettings=new ArrayList<>();
+        ArgsSetting argsSetting1= FunctionUtils.createArgsSetting(
+                "Player",
+                "player" +
+                        "\nGet the location of the player.",
+                "Location");
+        argsSetting1.setId("A");
+        ArgsSetting argsSetting2= FunctionUtils.createArgsSetting(
+                "String String String",
+                "x y z" +
+                        "\nGet the location",
+                "Location");
+        argsSetting2.setId("B");
+        ArgsSetting argsSetting3= FunctionUtils.createArgsSetting(
+                "String String String String",
+                "x y z world" +
+                        "\nGet the location",
+                "Location");
+        argsSetting3.setId("C");
+        ArgsSetting argsSetting4= FunctionUtils.createArgsSetting(
+                "String String String String String String",
+                "x y z yaw pitch world" +
+                        "\nGet the location",
+                "Location");
+        argsSetting4.setId("D");
+
+        ArgsSetting argsSetting5= FunctionUtils.createArgsSetting(
+                "Object",
+                "object" +
+                        "\nGet the location of the object.",
+                "Location");
+        argsSetting5.setId("E");
+
+        argsSettings.add(argsSetting1);
+        argsSettings.add(argsSetting2);
+        argsSettings.add(argsSetting3);
+        argsSettings.add(argsSetting4);
+        argsSettings.add(argsSetting5);
+        return argsSettings;
     }
 
     @Override

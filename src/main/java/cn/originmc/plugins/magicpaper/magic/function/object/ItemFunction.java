@@ -1,57 +1,151 @@
 package cn.originmc.plugins.magicpaper.magic.function.object;
 
 import cn.origincraft.magic.expression.functions.FunctionResult;
-import cn.origincraft.magic.function.NormalFunction;
+import cn.origincraft.magic.function.ArgsFunction;
+import cn.origincraft.magic.function.ArgsSetting;
 import cn.origincraft.magic.function.results.ErrorResult;
-import cn.origincraft.magic.function.results.StringResult;
+import cn.origincraft.magic.function.results.NullResult;
 import cn.origincraft.magic.object.SpellContext;
+import cn.origincraft.magic.utils.FunctionUtils;
 import cn.origincraft.magic.utils.VariableUtil;
 import cn.originmc.plugins.magicpaper.magic.result.ItemStackResult;
-import cn.originmc.plugins.magicpaper.magic.result.PlayerResult;
+import org.bukkit.Material;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
-public class ItemFunction extends NormalFunction {
+public class ItemFunction extends ArgsFunction {
+
     @Override
-    public FunctionResult whenFunctionCalled(SpellContext spellContext, List<FunctionResult> args) {
-        if (args.size()<2) {
-            return new ErrorResult("ERROR", "Item don't have enough args.");
-        }
-        FunctionResult player=args.get(0);
-        FunctionResult index=args.get(1);
-        if(player instanceof PlayerResult){
-            if (index instanceof StringResult){
-                PlayerResult playerResult=(PlayerResult) player;
-                StringResult stringResult=(StringResult) index;
-                Player p = playerResult.getPlayer();
-                String s = stringResult.getString();
-                if (s.equalsIgnoreCase("mh")){
-                    return new ItemStackResult(p.getInventory().getItemInMainHand());
-                }
-                if (s.equalsIgnoreCase("oh")){
-                    return new ItemStackResult(p.getInventory().getItemInOffHand());
-                }
-                if (s.equalsIgnoreCase("h")){
-                    return new ItemStackResult(p.getInventory().getHelmet());
-                }
-                if (s.equalsIgnoreCase("c")){
-                    return new ItemStackResult(p.getInventory().getChestplate());
-                }
-                if (s.equalsIgnoreCase("l")){
-                    return new ItemStackResult(p.getInventory().getLeggings());
-                }
-                if (s.equalsIgnoreCase("b")){
-                    return new ItemStackResult(p.getInventory().getBoots());
-                }
-                if(VariableUtil.tryInt(s)){
-                    return new ItemStackResult(p.getInventory().getItem(Integer.parseInt(s)));
+    public FunctionResult whenFunctionCalled(SpellContext spellContext, List<FunctionResult> args, ArgsSetting argsSetting) {
+        String id = argsSetting.getId();
+        switch (id) {
+            case "A": {
+                Player player = (Player) args.get(0).getObject();
+                String s = (String) args.get(1).getObject();
+                if (s.equalsIgnoreCase("mh")) {
+                    return new ItemStackResult(player.getInventory().getItemInMainHand());
+                } else if (s.equalsIgnoreCase("oh")) {
+                    return new ItemStackResult(player.getInventory().getItemInOffHand());
+                } else if (s.equalsIgnoreCase("h")) {
+                    return new ItemStackResult(player.getInventory().getHelmet());
+                } else if (s.equalsIgnoreCase("c")) {
+                    return new ItemStackResult(player.getInventory().getChestplate());
+                } else if (s.equalsIgnoreCase("l")) {
+                    return new ItemStackResult(player.getInventory().getLeggings());
+                } else if (s.equalsIgnoreCase("b")) {
+                    return new ItemStackResult(player.getInventory().getBoots());
+                } else if (VariableUtil.tryInt(s)) {
+                    return new ItemStackResult(player.getInventory().getItem(Integer.parseInt(s)));
                 }
             }
-            return new ErrorResult("ERROR", "Item don't have enough args.");
-        }else {
-            return new ErrorResult("ERROR", "Item don't have enough args.");
+            case "B":{
+                String s = (String) args.get(0).getObject();
+                Material material = Material.getMaterial(s);
+                return new ItemStackResult(new ItemStack(Objects.requireNonNullElse(material, Material.AIR)));
+            }
+            case "C":{
+                String s = (String) args.get(0).getObject();
+                String s1 = (String) args.get(1).getObject();
+                Material material = Material.getMaterial(s);
+                ItemStack itemStack = new ItemStack(Objects.requireNonNullElse(material, Material.AIR));
+                ItemMeta itemMeta = itemStack.getItemMeta();
+                itemMeta.setDisplayName(s1);
+                itemStack.setItemMeta(itemMeta);
+                return new ItemStackResult(itemStack);
+            }
+            case "D":{
+                String s = (String) args.get(0).getObject();
+                String s1 = (String) args.get(1).getObject();
+                String s2 = (String) args.get(2).getObject();
+                Material material = Material.getMaterial(s);
+                ItemStack itemStack = new ItemStack(Objects.requireNonNullElse(material, Material.AIR),Integer.parseInt(s2));
+                ItemMeta itemMeta = itemStack.getItemMeta();
+                itemMeta.setDisplayName(s1);
+                itemStack.setItemMeta(itemMeta);
+                return new ItemStackResult(itemStack);
+            }
+            case "E":{
+                String s = (String) args.get(0).getObject();
+                String s1 = (String) args.get(1).getObject();
+                String s2 = (String) args.get(2).getObject();
+                List<?> s3 = (List<?>) args.get(3).getObject();
+                Material material = Material.getMaterial(s);
+                ItemStack itemStack = new ItemStack(Objects.requireNonNullElse(material, Material.AIR),Integer.parseInt(s2));
+                ItemMeta itemMeta = itemStack.getItemMeta();
+                itemMeta.setDisplayName(s1);
+                List<String> s4=new ArrayList<>();
+                for (Object o : s3) {
+                    s4.add((String) o);
+                }
+                itemMeta.setLore(s4);
+                itemStack.setItemMeta(itemMeta);
+                return new ItemStackResult(itemStack);
+            }
+            case "F":{
+                Object object = args.get(0).getObject();
+                if (object instanceof ItemStack) {
+                    return new ItemStackResult((ItemStack) object);
+                }else {
+                    return new ErrorResult("UNKNOWN_ARGUMENT_TYPE", "Object is not a item.");
+                }
+            }
         }
+        return new NullResult();
+    }
+
+    @Override
+    public List<ArgsSetting> getArgsSetting() {
+        List<ArgsSetting> argsSettings = new ArrayList<>();
+        ArgsSetting argsSetting1 = FunctionUtils.createArgsSetting(
+                "Player String",
+                "player index" +
+                        "\nGet a item from player." +
+                        "\nindex: mh,oh,h,c,l,b,0-35",
+                "Item");
+        argsSetting1.setId("A");
+        ArgsSetting argsSetting2 = FunctionUtils.createArgsSetting(
+                "String",
+                "material" +
+                        "\nGet a item from material.",
+                "Item");
+        argsSetting2.setId("B");
+        ArgsSetting argsSetting3 = FunctionUtils.createArgsSetting(
+                "String String",
+                "display material" +
+                        "\nGet a item from material and set display name.",
+                "Item");
+        argsSetting3.setId("C");
+        ArgsSetting argsSetting4 = FunctionUtils.createArgsSetting(
+                "String String String",
+                "display material amount" +
+                        "\nGet a item from material and set display name and amount.",
+                "Item");
+        argsSetting4.setId("D");
+        ArgsSetting argsSetting5 = FunctionUtils.createArgsSetting(
+                "String String String List",
+                "display material amount lore" +
+                        "\nGet a item from material and set display name and amount and lore.",
+                "Item");
+        argsSetting5.setId("E");
+        ArgsSetting argsSetting6 = FunctionUtils.createArgsSetting(
+                "Object",
+                "object" +
+                        "\nGet a item from object.",
+                "ItemStack");
+        argsSetting6.setId("F");
+
+        argsSettings.add(argsSetting1);
+        argsSettings.add(argsSetting2);
+        argsSettings.add(argsSetting3);
+        argsSettings.add(argsSetting4);
+        argsSettings.add(argsSetting5);
+        argsSettings.add(argsSetting6);
+        return argsSettings;
     }
 
     @Override

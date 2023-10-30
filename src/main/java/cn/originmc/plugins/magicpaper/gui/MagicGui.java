@@ -6,6 +6,7 @@ import cn.origincraft.magic.object.Spell;
 import cn.origincraft.magic.object.SpellContext;
 import cn.originmc.plugins.magicpaper.MagicPaper;
 import cn.originmc.plugins.magicpaper.magic.result.PlayerResult;
+import cn.originmc.plugins.magicpaper.util.error.PaperErrorUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryType;
@@ -153,9 +154,9 @@ public class MagicGui implements InventoryHolder {
         context.putVariable("self", new PlayerResult(player));
         for (Spell spell : spellMap.get(buttonId)) {
             SpellContext spellContext = spell.execute(context);
-            if (spellContext.hasExecuteError()) {
-                MagicPaper.getSender().sendToPlayer(player, "§c执行时错误: " + spellContext.getExecuteError().getErrorId()+"-"+spellContext.getExecuteError().getInfo());
-                MagicPaper.getSender().sendToPlayer(player, "§c错误位置: " + spellContext.getExecuteErrorLocation());
+            if (MagicPaper.isDebug() && spellContext.hasExecuteError()) {
+                List<String> log= PaperErrorUtils.getErrorAllLog(spellContext, "&c");
+                MagicPaper.getSender().sendToPlayer(player, log);
             }
         }
     }

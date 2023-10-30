@@ -6,7 +6,9 @@ import cn.origincraft.magic.function.results.ErrorResult;
 import cn.origincraft.magic.function.results.NullResult;
 import cn.origincraft.magic.function.results.StringResult;
 import cn.origincraft.magic.object.SpellContext;
+import cn.originmc.plugins.magicpaper.MagicPaper;
 import cn.originmc.plugins.magicpaper.magic.result.PlayerResult;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
 import java.util.List;
@@ -22,7 +24,7 @@ public class PlayerCommandFunction extends NormalFunction {
             Player player=playerResult.getPlayer();
             if (args.get(1) instanceof StringResult) {
                 StringResult command=(StringResult) args.get(1);
-                player.performCommand(command.getString());
+                Bukkit.getScheduler().runTask(MagicPaper.getInstance(),() ->  player.performCommand(command.getString()));
                 return new NullResult();
             }else {
                 return new ErrorResult("UNKNOWN_ARGUMENT_TYPE", "Unsupported argument type.");

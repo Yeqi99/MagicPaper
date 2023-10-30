@@ -2,6 +2,7 @@ package cn.originmc.plugins.magicpaper.buff;
 
 import cn.origincraft.magic.utils.VariableUtil;
 import cn.originmc.plugins.magicpaper.MagicPaper;
+import cn.originmc.plugins.magicpaper.magic.result.PlayerResult;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -47,10 +48,29 @@ public class BuffListener implements Listener {
     @EventHandler
     public void onPlayerChatOracle(AsyncPlayerChatEvent event) {
         String id = event.getPlayer().getUniqueId().toString();
+        if (MagicPaper.getMagicBuffManager().isBuffActive(id, "mute")){
+            return;
+        }
         if (MagicPaper.getMagicBuffManager().isBuffActive(id, "oracle")) {
             MagicBuff magicBuff = MagicPaper.getMagicBuffManager().getMagicBuff(id, "oracle");
-            magicBuff.getContextMap().putVariable("message", event.getMessage());
-            magicBuff.execute(event.getPlayer());
+            String setting = magicBuff.getBuffSetting();
+            if (VariableUtil.tryInt(setting)) {
+                int times = Integer.parseInt(setting);
+                if (times > 0) {
+                    magicBuff.getContextMap().putVariable("message", event.getMessage());
+                    magicBuff.getContextMap().putVariable("self",new PlayerResult(event.getPlayer()));
+                    magicBuff.execute(event.getPlayer());
+                    event.setCancelled(true);
+                    times--;
+                    magicBuff.setBuffSetting(times + "");
+                } else {
+                    MagicPaper.getMagicBuffManager().removeBuff(id, "oracle");
+                }
+            } else {
+                magicBuff.getContextMap().putVariable("message", event.getMessage());
+                magicBuff.execute(event.getPlayer());
+                event.setCancelled(true);
+            }
         }
     }
 }

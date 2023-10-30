@@ -7,9 +7,9 @@ import cn.origincraft.magic.manager.MagicPackage;
 import cn.origincraft.magic.object.ContextMap;
 import cn.origincraft.magic.object.NormalContext;
 import cn.origincraft.magic.object.SpellContext;
-import cn.origincraft.magic.utils.ErrorUtils;
 import cn.originmc.plugins.magicpaper.buff.BuffListener;
 import cn.originmc.plugins.magicpaper.buff.MagicBuffManager;
+import cn.originmc.plugins.magicpaper.bungeecord.BungeeCordListener;
 import cn.originmc.plugins.magicpaper.command.MagicPaperCommand;
 import cn.originmc.plugins.magicpaper.command.MagicPaperTabCompleter;
 import cn.originmc.plugins.magicpaper.cooldown.CoolDownManager;
@@ -30,9 +30,11 @@ import cn.originmc.plugins.magicpaper.listener.CodingListener;
 import cn.originmc.plugins.magicpaper.listener.ItemTriggerListener;
 import cn.originmc.plugins.magicpaper.listener.ItemVariableRefreshListener;
 import cn.originmc.plugins.magicpaper.trigger.MagicPaperTriggerManager;
+import cn.originmc.plugins.magicpaper.util.error.PaperErrorUtils;
 import cn.originmc.plugins.magicpaper.util.text.Sender;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import java.util.List;
 import java.util.Objects;
 
 public final class MagicPaper extends JavaPlugin {
@@ -44,6 +46,7 @@ public final class MagicPaper extends JavaPlugin {
     private static MagicBuffManager magicBuffManager;
     private static MagicGuiManager magicGuiManager;
     public static MagicPackage magicPackage;
+    public static BungeeCordListener bungeeCordListener;
 
     public static JavaPlugin getInstance() {
         return instance;
@@ -98,6 +101,9 @@ public final class MagicPaper extends JavaPlugin {
     public void onEnable() {
         int pluginId = 19713;
         Metrics metrics = new Metrics(this, pluginId);
+        if (getConfig().getBoolean("bungee-cord-mode", false)) {
+            bungeeCordListener = new BungeeCordListener(this);
+        }
         // 初始化插件实例
         instance = this;
         // 初始化发送器
@@ -114,37 +120,33 @@ public final class MagicPaper extends JavaPlugin {
         initMagicManager();
         // 加载全局上下文
         loadContext();
-        MagicPaper.getSender().sendToLogger( LangData.get(MagicPaper.getLang(), "context-init", "§a[§bMagicPaper§a] §e全局上下文初始化完成"));
+        MagicPaper.getSender().sendToLogger(LangData.get(MagicPaper.getLang(), "context-init", "§a[§bMagicPaper§a] §e全局上下文初始化完成"));
         importSpell(getContext());
-        MagicPaper.getSender().sendToLogger( LangData.get(MagicPaper.getLang(), "import-spell-init-start", "§a[§bMagicPaper§a] §e执行import魔咒..."));
+        MagicPaper.getSender().sendToLogger(LangData.get(MagicPaper.getLang(), "import-spell-init-start", "§a[§bMagicPaper§a] §e执行import魔咒..."));
         onLoadSpell();
-        MagicPaper.getSender().sendToLogger( LangData.get(MagicPaper.getLang(), "onload-spell-init-start", "§a[§bMagicPaper§a] §e执行onload魔咒..."));
+        MagicPaper.getSender().sendToLogger(LangData.get(MagicPaper.getLang(), "onload-spell-init-start", "§a[§bMagicPaper§a] §e执行onload魔咒..."));
         // 初始化冷却管理器
         coolDownManager = new CoolDownManager();
         // 初始化Buff管理器
         magicBuffManager = new MagicBuffManager();
         hook();
-        MagicPaper.getSender().sendToLogger( LangData.get(MagicPaper.getLang(), "cooldown-init", "§a[§bMagicPaper§a] §e冷却管理器初始化完成"));
-        MagicPaper.getSender().sendToLogger( LangData.get(MagicPaper.getLang(), "buff-init", "§a[§bMagicPaper§a] §eBuff管理器初始化完成"));
+        MagicPaper.getSender().sendToLogger(LangData.get(MagicPaper.getLang(), "cooldown-init", "§a[§bMagicPaper§a] §e冷却管理器初始化完成"));
+        MagicPaper.getSender().sendToLogger(LangData.get(MagicPaper.getLang(), "buff-init", "§a[§bMagicPaper§a] §eBuff管理器初始化完成"));
         // 注册命令
         registerCommand();
         // 注册监听器
         registerListener();
-        // 注册魔法函数信息
-        cn.originmc.plugins.magicpaper.magic.FunctionRegister.registerInfo();
-        cn.originmc.plugins.magicpaper.magic.FunctionRegister.registerArgsInfo();
         MagicPaperTriggerManager.trigger("ServerOnEnable", new NormalContext());
         // 初始化触发器管理器
         MagicPaperTriggerManager.init();
         // 载入触发器魔咒
-        MagicPaper.getSender().sendToLogger( LangData.get(MagicPaper.getLang(), "trigger-init-start", "§a[§bMagicPaper§a] §e载入触发器魔咒..."));
+        MagicPaper.getSender().sendToLogger(LangData.get(MagicPaper.getLang(), "trigger-init-start", "§a[§bMagicPaper§a] §e载入触发器魔咒..."));
         TriggerDataManager.initDefaultTrigger();
 
         // 启动计时器
-        MagicPaper.getSender().sendToLogger( LangData.get(MagicPaper.getLang(), "timer-init-start", "§a[§bMagicPaper§a] §e启动计时器..."));
+        MagicPaper.getSender().sendToLogger(LangData.get(MagicPaper.getLang(), "timer-init-start", "§a[§bMagicPaper§a] §e启动计时器..."));
         TimerDataManager.initConfigTimer();
         sender.sendOnEnableMsgToLogger("MagicPaper", "Yeqi", getVersion(), "Public");
-
     }
 
     public static void initMagicManager() {
@@ -161,6 +163,9 @@ public final class MagicPaper extends JavaPlugin {
 
     @Override
     public void onDisable() {
+        if (bungeeCordListener != null) {
+            bungeeCordListener.unRegister();
+        }
         MagicPaperTriggerManager.trigger("ServerOnDisable", new NormalContext());
         sender.sendOnDisableMsgToLogger("MagicPaper", "Yeqi", getVersion(), "Public");
     }
@@ -170,7 +175,7 @@ public final class MagicPaper extends JavaPlugin {
     }
 
     public static String getVersion() {
-        return "1.5.3";
+        return "1.5.4";
     }
 
     public static String getLang() {
@@ -180,7 +185,7 @@ public final class MagicPaper extends JavaPlugin {
     public void registerCommand() {
         Objects.requireNonNull(getCommand("MagicPaper")).setExecutor(new MagicPaperCommand());
         Objects.requireNonNull(getCommand("MagicPaper")).setTabCompleter(new MagicPaperTabCompleter());
-        MagicPaper.getSender().sendToLogger( LangData.get(MagicPaper.getLang(), "register-command", "§a[§bMagicPaper§a] §e命令注册完成"));
+        MagicPaper.getSender().sendToLogger(LangData.get(MagicPaper.getLang(), "register-command", "§a[§bMagicPaper§a] §e命令注册完成"));
     }
 
     public void registerListener() {
@@ -207,7 +212,7 @@ public final class MagicPaper extends JavaPlugin {
         if (getConfig().getBoolean("item-trigger-listener", false)) {
             getServer().getPluginManager().registerEvents(new ItemTriggerListener(), this);
         }
-        MagicPaper.getSender().sendToLogger( LangData.get(MagicPaper.getLang(), "register-listener", "§a[§bMagicPaper§a] §e监听器注册完成"));
+        MagicPaper.getSender().sendToLogger(LangData.get(MagicPaper.getLang(), "register-listener", "§a[§bMagicPaper§a] §e监听器注册完成"));
     }
 
     public void saveRes() {
@@ -237,6 +242,9 @@ public final class MagicPaper extends JavaPlugin {
             getInstance().saveResource("trigger/AsyncPlayerChatTrigger.yml", false);
             getInstance().saveResource("trigger/PlayerRespawnTrigger.yml", false);
             getInstance().saveResource("gui/example.yml", false);
+            if (getConfig().getBoolean("bungee-cord-mode", false)) {
+                getInstance().saveResource("trigger/BungeeCordMessageTrigger.yml", false);
+            }
             if (RemoteKeyboardBukkitHook.status) {
                 getInstance().saveResource("trigger/PlayerKeyboardTrigger.yml", false);
             }
@@ -250,8 +258,8 @@ public final class MagicPaper extends JavaPlugin {
     }
 
     public void hook() {
-        MagicPaper.getSender().sendToLogger( LangData.get(MagicPaper.getLang(), "hook-start", "§a[§bMagicPaper§a] §e开始挂钩插件"));
-        MagicPaper.getSender().sendToLogger( LangData.get(MagicPaper.getLang(), "hook-info", "§8挂钩仅用于提供更多功能,不挂钩不影响插件正常使用"));
+        MagicPaper.getSender().sendToLogger(LangData.get(MagicPaper.getLang(), "hook-start", "§a[§bMagicPaper§a] §e开始挂钩插件"));
+        MagicPaper.getSender().sendToLogger(LangData.get(MagicPaper.getLang(), "hook-info", "§8挂钩仅用于提供更多功能,不挂钩不影响插件正常使用"));
         ProtocolLibHook.hook();
         PlaceholderAPIHook.hook();
         LuckPermsHook.hook();
@@ -262,7 +270,7 @@ public final class MagicPaper extends JavaPlugin {
         VaultHook.hook();
         RemoteKeyboardBukkitHook.hook();
         EpicCraftingsPlusHook.hook();
-        MagicPaper.getSender().sendToLogger( LangData.get(MagicPaper.getLang(), "hook-finish", "§a[§bMagicPaper§a] §e挂钩完成"));
+        MagicPaper.getSender().sendToLogger(LangData.get(MagicPaper.getLang(), "hook-finish", "§a[§bMagicPaper§a] §e挂钩完成"));
     }
 
     public static void loadData() {
@@ -278,7 +286,7 @@ public final class MagicPaper extends JavaPlugin {
         TimerData.load();
         // 加载GUI数据
         GuiData.load();
-        MagicPaper.getSender().sendToLogger( LangData.get(MagicPaper.getLang(), "load-data", "§a[§bMagicPaper§a] §e数据加载完成"));
+        MagicPaper.getSender().sendToLogger(LangData.get(MagicPaper.getLang(), "load-data", "§a[§bMagicPaper§a] §e数据加载完成"));
     }
 
     public static boolean enableExtendedSyntax(String id) {
@@ -293,9 +301,10 @@ public final class MagicPaper extends JavaPlugin {
         MagicPackage magicPackage = new MagicPackage("paper.onload");
         magicPackage.loadFiles(getInstance().getDataFolder() + "/onload");
         for (MagicInstance value : magicPackage.getMagicInstances().values()) {
-            SpellContext spellContext= value.getSpell(getMagicManager()).execute(getContext());
-            if (spellContext.hasExecuteError()){
-                MagicPaper.getSender().sendToLogger(ErrorUtils.normalError(spellContext));
+            SpellContext spellContext = value.getSpell(getMagicManager()).execute(getContext());
+            if (MagicPaper.isDebug() && spellContext.hasExecuteError()) {
+                List<String> log = PaperErrorUtils.getErrorAllLog(spellContext, "&c");
+                MagicPaper.getSender().sendToLogger(log);
             }
         }
     }

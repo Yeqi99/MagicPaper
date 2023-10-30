@@ -1,8 +1,10 @@
 package cn.originmc.plugins.magicpaper.command;
 
+import cn.origincraft.magic.MagicManager;
+import cn.origincraft.magic.expression.functions.FastFunction;
+import cn.origincraft.magic.function.ArgsFunction;
 import cn.originmc.plugins.magicpaper.MagicPaper;
 import cn.originmc.plugins.magicpaper.data.manager.MagicDataManager;
-import cn.originmc.plugins.magicpaper.magic.FunctionRegister;
 import cn.originmc.plugins.magicpaper.trigger.MagicPaperTriggerManager;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -11,6 +13,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class MagicPaperTabCompleter implements TabCompleter {
     @Override
@@ -35,26 +38,31 @@ public class MagicPaperTabCompleter implements TabCompleter {
             completions.add("gui");
             completions.add("clearguidata");
             completions.add("updateguidata");
+            completions.add("lookailas");
         } else if (args.length == 2) {
             if (args[0].equalsIgnoreCase("gui")){
                 MagicPaper.getMagicGuiManager().getMagicGuiSettings().forEach(magicGuiSetting -> completions.add(magicGuiSetting.getId()));
             }
             if (args[0].equalsIgnoreCase("spell")) {
-                // 提示第二个参数的补全，可能是法术ID
                 List<String> spellIds = MagicDataManager.getSpellsID();
                 completions.addAll(spellIds);
             }
             if (args[0].equalsIgnoreCase("publicspell")) {
-                // 提示第二个参数的补全，可能是法术ID
                 List<String> spellIds = MagicDataManager.getSpellsID();
                 completions.addAll(spellIds);
             }
             if (args[0].equalsIgnoreCase("functioninfo")) {
-                // 提示第二个参数的补全，可能是法术ID
-                completions.addAll(new ArrayList<>(FunctionRegister.funInfo.keySet()));
+                MagicManager magicManager=MagicPaper.getMagicManager();
+                Map<String, FastFunction> fastFunctionMap= magicManager.getFastExpression().getFunctionManager().getRegistry();
+                List<String> functionNames=new ArrayList<>();
+                for (Map.Entry<String, FastFunction> entry : fastFunctionMap.entrySet()) {
+                    if (entry.getValue() instanceof ArgsFunction){
+                        functionNames.add(entry.getKey());
+                    }
+                }
+                completions.addAll(new ArrayList<>(functionNames));
             }
             if (args[0].equalsIgnoreCase("functions")) {
-                // 提示第二个参数的补全，可能是法术ID
                 completions.addAll(MagicPaper.getMagicManager().getFunctionsRealNames());
             }
             if (args[0].equalsIgnoreCase("triggers")) {

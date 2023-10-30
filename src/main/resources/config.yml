@@ -2,6 +2,8 @@
 lang: English
 # debug模式
 debug: true
+# 是否BungeeCord模式
+bungee-cord-mode: true
 # 拓展语义包含
 extended-syntax:
   system: true
@@ -33,7 +35,8 @@ bore-listener: true
 default-file: true
 # 物品触发魔咒监听
 item-trigger-listener: true
-
+# buff系统开关
 buff-system-enable: true
-
+# gui系统开关
 gui-listener: true
+
