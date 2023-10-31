@@ -7,6 +7,7 @@ import cn.origincraft.magic.manager.MagicPackage;
 import cn.origincraft.magic.object.ContextMap;
 import cn.origincraft.magic.object.NormalContext;
 import cn.origincraft.magic.object.SpellContext;
+import cn.originmc.plugins.magicpaper.bossbar.BossBarManager;
 import cn.originmc.plugins.magicpaper.buff.BuffListener;
 import cn.originmc.plugins.magicpaper.buff.MagicBuffManager;
 import cn.originmc.plugins.magicpaper.bungeecord.BungeeCordListener;
@@ -47,6 +48,7 @@ public final class MagicPaper extends JavaPlugin {
     private static MagicGuiManager magicGuiManager;
     public static MagicPackage magicPackage;
     public static BungeeCordListener bungeeCordListener;
+    public static BossBarManager bossBarManager;
 
     public static JavaPlugin getInstance() {
         return instance;
@@ -72,26 +74,19 @@ public final class MagicPaper extends JavaPlugin {
         return coolDownManager;
     }
 
-    public static void setCoolDownManager(CoolDownManager coolDownManager) {
-        MagicPaper.coolDownManager = coolDownManager;
-    }
 
     public static MagicBuffManager getMagicBuffManager() {
         return magicBuffManager;
     }
 
-    public static void setMagicBuffManager(MagicBuffManager magicBuffManager) {
-        MagicPaper.magicBuffManager = magicBuffManager;
-    }
 
     public static MagicGuiManager getMagicGuiManager() {
         return magicGuiManager;
     }
 
-    public static void setMagicGuiManager(MagicGuiManager magicGuiManager) {
-        MagicPaper.magicGuiManager = magicGuiManager;
+    public static BossBarManager getBossBarManager() {
+        return bossBarManager;
     }
-
     @Override
     public void onLoad() {
         MagicPaperTriggerManager.trigger("ServerOnLoad", new NormalContext());
@@ -129,6 +124,8 @@ public final class MagicPaper extends JavaPlugin {
         coolDownManager = new CoolDownManager();
         // 初始化Buff管理器
         magicBuffManager = new MagicBuffManager();
+        // 初始化BossBar管理器
+        bossBarManager = new BossBarManager();
         hook();
         MagicPaper.getSender().sendToLogger(LangData.get(MagicPaper.getLang(), "cooldown-init", "§a[§bMagicPaper§a] §e冷却管理器初始化完成"));
         MagicPaper.getSender().sendToLogger(LangData.get(MagicPaper.getLang(), "buff-init", "§a[§bMagicPaper§a] §eBuff管理器初始化完成"));
@@ -175,7 +172,7 @@ public final class MagicPaper extends JavaPlugin {
     }
 
     public static String getVersion() {
-        return "1.5.5";
+        return "1.5.6";
     }
 
     public static String getLang() {

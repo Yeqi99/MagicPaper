@@ -94,6 +94,10 @@ public class ItemFunction extends ArgsFunction {
                     return new ErrorResult("UNKNOWN_ARGUMENT_TYPE", "Object is not a item.");
                 }
             }
+            case "G":{
+                ItemStack itemStack = (ItemStack) args.get(0).getObject();
+                return new ItemStackResult(itemStack.clone());
+            }
         }
         return new NullResult();
     }
@@ -106,45 +110,51 @@ public class ItemFunction extends ArgsFunction {
                 "player index" +
                         "\nGet a item from player." +
                         "\nindex: mh,oh,h,c,l,b,0-35",
-                "Item");
+                "ItemStack");
         argsSetting1.setId("A");
         ArgsSetting argsSetting2 = FunctionUtils.createArgsSetting(
                 "String",
                 "material" +
                         "\nGet a item from material.",
-                "Item");
+                "ItemStack");
         argsSetting2.setId("B");
         ArgsSetting argsSetting3 = FunctionUtils.createArgsSetting(
                 "String String",
                 "display material" +
-                        "\nGet a item from material and set display name.",
-                "Item");
+                        "\nGet a itemStack from material and set display name.",
+                "ItemStack");
         argsSetting3.setId("C");
         ArgsSetting argsSetting4 = FunctionUtils.createArgsSetting(
                 "String String String",
                 "display material amount" +
-                        "\nGet a item from material and set display name and amount.",
-                "Item");
+                        "\nGet a itemStack from material and set display name and amount.",
+                "ItemStack");
         argsSetting4.setId("D");
         ArgsSetting argsSetting5 = FunctionUtils.createArgsSetting(
                 "String String String List",
                 "display material amount lore" +
-                        "\nGet a item from material and set display name and amount and lore.",
-                "Item");
+                        "\nGet a itemStack from material and set display name and amount and lore.",
+                "ItemStack");
         argsSetting5.setId("E");
         ArgsSetting argsSetting6 = FunctionUtils.createArgsSetting(
                 "Object",
                 "object" +
-                        "\nGet a item from object.",
+                        "\nGet a itemStack from object.",
                 "ItemStack");
         argsSetting6.setId("F");
-
+        ArgsSetting argsSetting7 = FunctionUtils.createArgsSetting(
+                "ItemStack",
+                "itemStack" +
+                        "\nget a itemStack clone from item.",
+                "ItemStack");
+        argsSetting7.setId("G");
         argsSettings.add(argsSetting1);
         argsSettings.add(argsSetting2);
         argsSettings.add(argsSetting3);
         argsSettings.add(argsSetting4);
         argsSettings.add(argsSetting5);
         argsSettings.add(argsSetting6);
+        argsSettings.add(argsSetting7);
         return argsSettings;
     }
 

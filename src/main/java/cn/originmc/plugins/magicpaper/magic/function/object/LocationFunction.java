@@ -112,6 +112,10 @@ public class LocationFunction extends ArgsFunction {
                     return new ErrorResult("ERROR", "object is not a player or location.");
                 }
             }
+            case "F":{
+                Location location= (Location) args.get(0).getObject();
+                return new LocationResult(location.clone());
+            }
         }
         return new NullResult();
     }
@@ -150,7 +154,12 @@ public class LocationFunction extends ArgsFunction {
                         "\nGet the location of the object.",
                 "Location");
         argsSetting5.setId("E");
-
+        ArgsSetting argsSetting6= FunctionUtils.createArgsSetting(
+                "Location",
+                "location" +
+                        "\nGet the location clone from location.",
+                "Location");
+        argsSetting6.setId("F");
         argsSettings.add(argsSetting1);
         argsSettings.add(argsSetting2);
         argsSettings.add(argsSetting3);

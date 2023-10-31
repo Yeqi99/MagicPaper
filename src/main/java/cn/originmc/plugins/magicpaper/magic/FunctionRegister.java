@@ -99,6 +99,7 @@ public class FunctionRegister {
         fm.register(new CloneItemFunction(), "citem");
         fm.register(new EntityFunction());
         fm.register(new BossBarFunction());
+        fm.register(new ComponentFunction(), "minimsg");
         // behavior
         fm.register(new ConsoleCommandFunction(), "ccommand");
         fm.register(new PlayerCommandFunction(), "pcommand");
@@ -188,6 +189,7 @@ public class FunctionRegister {
         fm.register(new InLocationRangeFunction(),"inlrange");
         fm.register(new PlayerUUIDFunction(),"puuid");
         fm.register(new FacingOffsetFunction(),"locoffset");
+        fm.register(new CheckLocationFunction(),"checkloc");
         // yaml
         fm.register(new YamlManagerFunction(), "yamlm");
         fm.register(new YamlSaveAllFunction(), "yalmsa");

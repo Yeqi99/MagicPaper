@@ -1,49 +1,83 @@
 package cn.originmc.plugins.magicpaper.magic.function.object;
 
 import cn.origincraft.magic.expression.functions.FunctionResult;
-import cn.origincraft.magic.function.NormalFunction;
+import cn.origincraft.magic.function.ArgsFunction;
+import cn.origincraft.magic.function.ArgsSetting;
+import cn.origincraft.magic.function.results.BooleanResult;
 import cn.origincraft.magic.function.results.ErrorResult;
-import cn.origincraft.magic.function.results.StringResult;
+import cn.origincraft.magic.function.results.NullResult;
 import cn.origincraft.magic.object.SpellContext;
+import cn.origincraft.magic.utils.VariableUtil;
 import cn.originmc.plugins.magicpaper.MagicPaper;
-import cn.originmc.plugins.magicpaper.magic.result.BossBarResult;
-import org.bukkit.Bukkit;
-import org.bukkit.NamespacedKey;
-import org.bukkit.boss.BarColor;
-import org.bukkit.boss.BarStyle;
-import org.bukkit.boss.BossBar;
+import net.kyori.adventure.bossbar.BossBar;
+import net.kyori.adventure.text.Component;
+import org.bukkit.entity.Player;
 
+import java.util.ArrayList;
 import java.util.List;
 
-public class BossBarFunction extends NormalFunction {
+public class BossBarFunction extends ArgsFunction {
+
+
     @Override
-    public FunctionResult whenFunctionCalled(SpellContext spellContext, List<FunctionResult> args) {
-        if (args.size() < 4) {
-            return new ErrorResult("FUNCTION_ARGS_ERROR", "BossBarFunction need 3 args.");
+    public FunctionResult whenFunctionCalled(SpellContext spellContext, List<FunctionResult> args, ArgsSetting argsSetting) {
+        String id=argsSetting.getId();
+        switch (id){
+            case "A":{
+                String bossbarId= (String) args.get(0).getObject();
+                Component component= (Component) args.get(1).getObject();
+                String progress= (String) args.get(2).getObject();
+                String color= (String) args.get(3).getObject();
+                String overlay= (String) args.get(4).getObject();
+                if (VariableUtil.tryDouble(progress)){
+                    return new ErrorResult("ARGS_ERROR","The third arg must be double str");
+                }
+                boolean flag= MagicPaper.getBossBarManager().createBossBar(
+                        bossbarId,
+                        component,
+                        Float.parseFloat(progress),
+                        BossBar.Color.valueOf(color),
+                        BossBar.Overlay.valueOf(overlay)
+                );
+                return new BooleanResult(flag);
+            }
+            case "B":{
+                Player player= (Player) args.get(0).getObject();
+                String bossbarId= (String) args.get(1).getObject();
+                String action= (String) args.get(2).getObject();
+                if (action.equalsIgnoreCase("show")){
+                    MagicPaper.getBossBarManager().showBossBar(player,bossbarId);
+                }else if (action.equalsIgnoreCase("hide")){
+                    MagicPaper.getBossBarManager().hideBossBar(player,bossbarId);
+                }
+                return new BooleanResult(true);
+            }
         }
-        FunctionResult arg1 = args.get(0);
-        FunctionResult arg2 = args.get(1);
-        FunctionResult arg3 = args.get(2);
-        FunctionResult arg4 = args.get(3);
-        if (!(arg1 instanceof StringResult)) {
-            return new ErrorResult("TYPE_ERROR", "The first arg must be string.");
-        }
-        if (!(arg2 instanceof StringResult)) {
-            return new ErrorResult("TYPE_ERROR", "The second arg must be string.");
-        }
-        if (!(arg3 instanceof StringResult)) {
-            return new ErrorResult("TYPE_ERROR", "The third arg must be string.");
-        }
-        if (!(arg4 instanceof StringResult)) {
-            return new ErrorResult("TYPE_ERROR", "The fourth arg must be string.");
-        }
-        String title = ((StringResult) arg1).getString();
-        String color = ((StringResult) arg2).getString();
-        String style = ((StringResult) arg3).getString();
-        String key = ((StringResult) arg4).getString();
-        NamespacedKey namespacedKey = new NamespacedKey(MagicPaper.getInstance(), key);
-        BossBar bossBar = Bukkit.createBossBar(namespacedKey, title, BarColor.valueOf(color), BarStyle.valueOf(style));
-        return new BossBarResult(bossBar);
+        return new NullResult();
+    }
+
+    @Override
+    public List<ArgsSetting> getArgsSetting() {
+        List<ArgsSetting> argsSettings = new ArrayList<>();
+        argsSettings.add(
+                new ArgsSetting("A")
+                        .addArgType("String Component String String String")
+                        .addInfo("id component progress color overlay")
+                        .addInfo("Create a bossbar")
+                        .addInfo("progress: 0.0-1.0")
+                        .addInfo("color: BLUE, GREEN, PINK, PURPLE, RED, WHITE, YELLOW")
+                        .addInfo("overlay: NOTCHED_6, NOTCHED_10, NOTCHED_12, NOTCHED_20")
+                        .setResultType("Boolean")
+        );
+        argsSettings.add(
+                new ArgsSetting("B")
+                        .addArgType("Player String String")
+                        .addInfo("player id action")
+                        .addInfo("Show or hide a bossbar")
+                        .addInfo("action: show, hide")
+                        .setResultType("Null")
+        );
+        return argsSettings;
     }
 
     @Override
