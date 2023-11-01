@@ -5,6 +5,7 @@ import cn.origincraft.magic.function.ArgsFunction;
 import cn.origincraft.magic.function.ArgsSetting;
 import cn.origincraft.magic.function.results.ErrorResult;
 import cn.origincraft.magic.function.results.NullResult;
+import cn.origincraft.magic.function.results.StringResult;
 import cn.origincraft.magic.object.SpellContext;
 import cn.origincraft.magic.utils.VariableUtil;
 import cn.originmc.plugins.magicpaper.magic.result.ComponentResult;
@@ -161,6 +162,10 @@ public class ComponentFunction extends ArgsFunction {
                 player.showTitle(title);
                 return new ComponentResult(titleComponent);
             }
+            case "G": {
+                Component component = (Component) args.get(0).getObject();
+                return new StringResult(component.toString());
+            }
         }
         return new NullResult();
     }
@@ -211,7 +216,7 @@ public class ComponentFunction extends ArgsFunction {
         );
         argsSettings.add(
                 new ArgsSetting("E")
-                        .addArgType("Component Player String")
+                        .addArgType("Component").addArgType("Player").addArgType("String")
                         .addInfo("component player type")
                         .addInfo("Send component to player by type")
                         .addInfo("type: chat,actionbar")
@@ -219,10 +224,17 @@ public class ComponentFunction extends ArgsFunction {
         );
         argsSettings.add(
                 new ArgsSetting("F")
-                        .addArgType("Component Component Player String String String")
+                        .addArgType("Component").addArgType("Component").addArgType("Player").addArgType("String").addArgType("String").addArgType("String")
                         .addInfo("titleComponent subTitleComponent player fadeIn stay fadeOut")
                         .addInfo("Send title to player")
                         .setResultType("Null")
+        );
+        argsSettings.add(
+                new ArgsSetting("G")
+                        .addArgType("Component")
+                        .addInfo("component")
+                        .addInfo("Get component as string")
+                        .setResultType("String")
         );
         return argsSettings;
     }

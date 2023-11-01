@@ -1,8 +1,11 @@
 package cn.originmc.plugins.magicpaper.bossbar;
 
 
-import net.kyori.adventure.bossbar.BossBar;
-import net.kyori.adventure.text.Component;
+import org.bukkit.Bukkit;
+import org.bukkit.boss.BarColor;
+import org.bukkit.boss.BarFlag;
+import org.bukkit.boss.BarStyle;
+import org.bukkit.boss.BossBar;
 import org.bukkit.entity.Player;
 
 import java.util.HashMap;
@@ -15,13 +18,13 @@ public class BossBarManager {
 
     }
 
-    public boolean createBossBar(String id, Component name, float progress, BossBar.Color color, BossBar.Overlay overlay) {
+    public void createBossBar(String id, String title, BarColor color, BarStyle style, BarFlag... flags) {
         if (bossBars.containsKey(id)) {
-            return false;
+            bossBars.get(id).removeAll();
         }
-        BossBar bossBar = BossBar.bossBar(name, progress, color, overlay);
+        BossBar bossBar = Bukkit.createBossBar(title, color, style, flags);
         bossBars.put(id, bossBar);
-        return true;
+
     }
 
     public Map<String, BossBar> getBossBars() {
@@ -31,22 +34,44 @@ public class BossBarManager {
     public void setBossBars(Map<String, BossBar> bossBars) {
         this.bossBars = bossBars;
     }
+
     public BossBar getBossBar(String id) {
         return bossBars.get(id);
     }
+
     public void showBossBar(Player player, String id) {
-        if (!bossBars.containsKey(id)){
+        if (!bossBars.containsKey(id)) {
             return;
         }
-        bossBars.get(id).addViewer(player);
+        bossBars.get(id).addPlayer(player);
     }
+
     public void hideBossBar(Player player, String id) {
-        if (!bossBars.containsKey(id)){
+        if (!bossBars.containsKey(id)) {
             return;
         }
-        bossBars.get(id).removeViewer(player);
+        bossBars.get(id).removePlayer(player);
+    }
+    public void setBossBarProgress(String id,double progress){
+        if (!bossBars.containsKey(id)) {
+            return;
+        }
+        bossBars.get(id).setProgress(progress);
+    }
+    public void setBossVisibility(String id,boolean flag){
+        if (!bossBars.containsKey(id)) {
+            return;
+        }
+        bossBars.get(id).setVisible(flag);
     }
     public boolean hasBossBar(String id) {
         return bossBars.containsKey(id);
+    }
+    public void removeBossBar(String id){
+        if (!bossBars.containsKey(id)) {
+            return;
+        }
+        bossBars.get(id).removeAll();
+        bossBars.remove(id);
     }
 }

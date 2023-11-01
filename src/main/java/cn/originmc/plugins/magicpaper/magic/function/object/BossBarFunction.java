@@ -9,8 +9,8 @@ import cn.origincraft.magic.function.results.NullResult;
 import cn.origincraft.magic.object.SpellContext;
 import cn.origincraft.magic.utils.VariableUtil;
 import cn.originmc.plugins.magicpaper.MagicPaper;
-import net.kyori.adventure.bossbar.BossBar;
-import net.kyori.adventure.text.Component;
+import org.bukkit.boss.BarColor;
+import org.bukkit.boss.BarStyle;
 import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
@@ -25,21 +25,21 @@ public class BossBarFunction extends ArgsFunction {
         switch (id){
             case "A":{
                 String bossbarId= (String) args.get(0).getObject();
-                Component component= (Component) args.get(1).getObject();
+                String title= (String) args.get(1).getObject();
                 String progress= (String) args.get(2).getObject();
                 String color= (String) args.get(3).getObject();
-                String overlay= (String) args.get(4).getObject();
+                String style= (String) args.get(4).getObject();
                 if (VariableUtil.tryDouble(progress)){
                     return new ErrorResult("ARGS_ERROR","The third arg must be double str");
                 }
-                boolean flag= MagicPaper.getBossBarManager().createBossBar(
+                MagicPaper.getBossBarManager().createBossBar(
                         bossbarId,
-                        component,
-                        Float.parseFloat(progress),
-                        BossBar.Color.valueOf(color),
-                        BossBar.Overlay.valueOf(overlay)
+                        title,
+                        BarColor.valueOf(color),
+                        BarStyle.valueOf(style)
                 );
-                return new BooleanResult(flag);
+                MagicPaper.getBossBarManager().setBossBarProgress(bossbarId,Double.parseDouble(progress));
+                return new NullResult();
             }
             case "B":{
                 Player player= (Player) args.get(0).getObject();
@@ -52,6 +52,11 @@ public class BossBarFunction extends ArgsFunction {
                 }
                 return new BooleanResult(true);
             }
+            case "C":{
+                String bossbarId= (String) args.get(0).getObject();
+                MagicPaper.getBossBarManager().removeBossBar(bossbarId);
+                return new NullResult();
+            }
         }
         return new NullResult();
     }
@@ -61,13 +66,12 @@ public class BossBarFunction extends ArgsFunction {
         List<ArgsSetting> argsSettings = new ArrayList<>();
         argsSettings.add(
                 new ArgsSetting("A")
-                        .addArgType("String Component String String String")
-                        .addInfo("id component progress color overlay")
+                        .addArgType("String String String String String")
+                        .addInfo("id title progress color style")
                         .addInfo("Create a bossbar")
-                        .addInfo("progress: 0.0-1.0")
                         .addInfo("color: BLUE, GREEN, PINK, PURPLE, RED, WHITE, YELLOW")
-                        .addInfo("overlay: NOTCHED_6, NOTCHED_10, NOTCHED_12, NOTCHED_20")
-                        .setResultType("Boolean")
+                        .addInfo("style: SEGMENTED_10, SEGMENTED_12, SEGMENTED_20, SEGMENTED_6, SOLID")
+                        .setResultType("Null")
         );
         argsSettings.add(
                 new ArgsSetting("B")
@@ -75,6 +79,13 @@ public class BossBarFunction extends ArgsFunction {
                         .addInfo("player id action")
                         .addInfo("Show or hide a bossbar")
                         .addInfo("action: show, hide")
+                        .setResultType("Null")
+        );
+        argsSettings.add(
+                new ArgsSetting("C")
+                        .addArgType("String")
+                        .addInfo("id")
+                        .addInfo("Delete a bossbar")
                         .setResultType("Null")
         );
         return argsSettings;
