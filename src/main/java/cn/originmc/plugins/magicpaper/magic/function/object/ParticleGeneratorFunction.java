@@ -1,4 +1,4 @@
-package cn.originmc.plugins.magicpaper.magic.function.particle;
+package cn.originmc.plugins.magicpaper.magic.function.object;
 
 import cn.origincraft.magic.expression.functions.FunctionResult;
 import cn.origincraft.magic.function.ArgsFunction;

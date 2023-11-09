@@ -7,6 +7,7 @@ import cn.origincraft.magic.function.results.BooleanResult;
 import cn.origincraft.magic.function.results.ErrorResult;
 import cn.origincraft.magic.function.results.NullResult;
 import cn.origincraft.magic.object.SpellContext;
+import cn.origincraft.magic.utils.FunctionUtils;
 import cn.origincraft.magic.utils.VariableUtil;
 import cn.originmc.plugins.magicpaper.MagicPaper;
 import org.bukkit.boss.BarColor;
@@ -29,7 +30,7 @@ public class BossBarFunction extends ArgsFunction {
                 String progress= (String) args.get(2).getObject();
                 String color= (String) args.get(3).getObject();
                 String style= (String) args.get(4).getObject();
-                if (VariableUtil.tryDouble(progress)){
+                if (!VariableUtil.tryDouble(progress)){
                     return new ErrorResult("ARGS_ERROR","The third arg must be double str");
                 }
                 MagicPaper.getBossBarManager().createBossBar(
@@ -64,36 +65,44 @@ public class BossBarFunction extends ArgsFunction {
     @Override
     public List<ArgsSetting> getArgsSetting() {
         List<ArgsSetting> argsSettings = new ArrayList<>();
+
         argsSettings.add(
-                new ArgsSetting("A")
-                        .addArgType("String String String String String")
-                        .addInfo("id title progress color style")
+                FunctionUtils
+                        .createArgsSetting(
+                                "A",
+                                "String String String String String",
+                                "id title progress color style",
+                                "Null")
                         .addInfo("Create a bossbar")
                         .addInfo("color: BLUE, GREEN, PINK, PURPLE, RED, WHITE, YELLOW")
                         .addInfo("style: SEGMENTED_10, SEGMENTED_12, SEGMENTED_20, SEGMENTED_6, SOLID")
-                        .setResultType("Null")
         );
         argsSettings.add(
-                new ArgsSetting("B")
-                        .addArgType("Player String String")
-                        .addInfo("player id action")
+                FunctionUtils
+                        .createArgsSetting(
+                                "B",
+                                "Player String String",
+                                "player id action",
+                                "Null")
                         .addInfo("Show or hide a bossbar")
                         .addInfo("action: show, hide")
-                        .setResultType("Null")
         );
+
         argsSettings.add(
-                new ArgsSetting("C")
-                        .addArgType("String")
-                        .addInfo("id")
-                        .addInfo("Delete a bossbar")
-                        .setResultType("Null")
+                FunctionUtils
+                        .createArgsSetting(
+                                "C",
+                                "String",
+                                "id",
+                                "Null")
+                        .addInfo("Remove a bossbar")
         );
         return argsSettings;
     }
 
     @Override
     public String getType() {
-        return "MAGIC_PAPER";
+        return "SUPER_OBJECT";
     }
 
     @Override

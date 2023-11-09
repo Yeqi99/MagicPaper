@@ -3,7 +3,6 @@ package cn.originmc.plugins.magicpaper.magic;
 import cn.origincraft.magic.MagicManager;
 import cn.origincraft.magic.expression.managers.FunctionManager;
 import cn.originmc.plugins.magicpaper.magic.function.behavior.*;
-import cn.originmc.plugins.magicpaper.magic.function.behavior.bossbar.*;
 import cn.originmc.plugins.magicpaper.magic.function.behavior.entity.NewEntityFunction;
 import cn.originmc.plugins.magicpaper.magic.function.behavior.item.*;
 import cn.originmc.plugins.magicpaper.magic.function.behavior.potion.PotionAddFunction;
@@ -41,7 +40,7 @@ import cn.originmc.plugins.magicpaper.magic.function.magictimer.AddToTimerFuncti
 import cn.originmc.plugins.magicpaper.magic.function.magictimer.FoliaTimerFunction;
 import cn.originmc.plugins.magicpaper.magic.function.magictimer.PaperTimerFunction;
 import cn.originmc.plugins.magicpaper.magic.function.object.*;
-import cn.originmc.plugins.magicpaper.magic.function.particle.ParticleGeneratorFunction;
+import cn.originmc.plugins.magicpaper.magic.function.object.ParticleGeneratorFunction;
 import cn.originmc.plugins.magicpaper.magic.function.random.RandomDoubleFunction;
 import cn.originmc.plugins.magicpaper.magic.function.random.RandomUUIDFunction;
 import cn.originmc.plugins.magicpaper.magic.function.random.WeightRandomFunction;
@@ -96,10 +95,10 @@ public class FunctionRegister {
         fm.register(new PlayerFunction(), "p");
         fm.register(new LocationFunction(), "loc");
         fm.register(new ItemFunction());
-        fm.register(new CloneItemFunction(), "citem");
         fm.register(new EntityFunction());
         fm.register(new BossBarFunction());
         fm.register(new ComponentFunction(), "minimsg");
+        fm.register(new PotionFunction());
         // behavior
         fm.register(new ConsoleCommandFunction(), "ccommand");
         fm.register(new PlayerCommandFunction(), "pcommand");
@@ -152,12 +151,6 @@ public class FunctionRegister {
         fm.register(new MergeNBTFunction());
         // behavior.entity
         fm.register(new NewEntityFunction(), "newe");
-        // behavior.bossbar
-        fm.register(new AddFlagFunction());
-        fm.register(new BossBarGetFunction());
-        fm.register(new BossBarVisibleFunction());
-        fm.register(new HideBossBarFunction());
-        fm.register(new ShowBossBarFunction());
         // behavior.skill
         fm.register(new JumpSkillFunction(),"pjump");
         fm.register(new JumpToLocationSkillFunction(),"pjumpto");

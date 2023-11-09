@@ -246,6 +246,6 @@ public class ComponentFunction extends ArgsFunction {
 
     @Override
     public String getType() {
-        return "MAGIC_PAPER";
+        return "SUPER_OBJECT";
     }
 }

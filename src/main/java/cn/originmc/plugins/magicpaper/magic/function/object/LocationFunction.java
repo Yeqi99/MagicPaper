@@ -114,7 +114,13 @@ public class LocationFunction extends ArgsFunction {
             }
             case "F":{
                 Location location= (Location) args.get(0).getObject();
-                return new LocationResult(location.clone());
+                Location location1=
+                        new Location(
+                                location.getWorld()
+                                ,location.getX(),location.getY()
+                                ,location.getZ(),location.getYaw()
+                                ,location.getPitch());
+                return new LocationResult(location1);
             }
         }
         return new NullResult();
@@ -165,12 +171,13 @@ public class LocationFunction extends ArgsFunction {
         argsSettings.add(argsSetting3);
         argsSettings.add(argsSetting4);
         argsSettings.add(argsSetting5);
+        argsSettings.add(argsSetting6);
         return argsSettings;
     }
 
     @Override
     public String getType() {
-        return "MAGIC_PAPER";
+        return "SUPER_OBJECT";
     }
 
     @Override

@@ -111,7 +111,7 @@ public class PlayerFunction extends ArgsFunction {
 
     @Override
     public String getType() {
-        return "MAGIC_PAPER";
+        return "SUPER_OBJECT";
     }
 
     @Override
