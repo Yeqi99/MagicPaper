@@ -7,7 +7,7 @@ import cn.origincraft.magic.function.results.ErrorResult;
 import cn.origincraft.magic.function.results.NullResult;
 import cn.origincraft.magic.object.SpellContext;
 import cn.origincraft.magic.utils.FunctionUtils;
-import cn.origincraft.magic.utils.VariableUtil;
+import cn.origincraft.magic.utils.VariableUtils;
 import cn.originmc.plugins.magicpaper.magic.result.LocationResult;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -31,13 +31,13 @@ public class LocationFunction extends ArgsFunction {
                 String x= (String) args.get(0).getObject();
                 String y= (String) args.get(1).getObject();
                 String z= (String) args.get(2).getObject();
-                if (!VariableUtil.tryDouble(x)){
+                if (!VariableUtils.tryDouble(x)){
                     return new ErrorResult("ARGS_ERROR","The first arg must be double str");
                 }
-                if (!VariableUtil.tryDouble(y)){
+                if (!VariableUtils.tryDouble(y)){
                     return new ErrorResult("ARGS_ERROR","The second arg must be double str");
                 }
-                if (!VariableUtil.tryDouble(z)){
+                if (!VariableUtils.tryDouble(z)){
                     return new ErrorResult("ARGS_ERROR","The third arg must be double str");
                 }
                 double x1=Double.parseDouble(x);
@@ -50,13 +50,13 @@ public class LocationFunction extends ArgsFunction {
                 String y= (String) args.get(1).getObject();
                 String z= (String) args.get(2).getObject();
                 String world= (String) args.get(3).getObject();
-                if (!VariableUtil.tryDouble(x)){
+                if (!VariableUtils.tryDouble(x)){
                     return new ErrorResult("ARGS_ERROR","The first arg must be double str");
                 }
-                if (!VariableUtil.tryDouble(y)){
+                if (!VariableUtils.tryDouble(y)){
                     return new ErrorResult("ARGS_ERROR","The second arg must be double str");
                 }
-                if (!VariableUtil.tryDouble(z)){
+                if (!VariableUtils.tryDouble(z)){
                     return new ErrorResult("ARGS_ERROR","The third arg must be double str");
                 }
                 double x1=Double.parseDouble(x);
@@ -75,19 +75,19 @@ public class LocationFunction extends ArgsFunction {
                 String yaw= (String) args.get(3).getObject();
                 String pitch= (String) args.get(4).getObject();
                 String world= (String) args.get(5).getObject();
-                if (!VariableUtil.tryDouble(x)){
+                if (!VariableUtils.tryDouble(x)){
                     return new ErrorResult("ARGS_ERROR","The first arg must be double str");
                 }
-                if (!VariableUtil.tryDouble(y)){
+                if (!VariableUtils.tryDouble(y)){
                     return new ErrorResult("ARGS_ERROR","The second arg must be double str");
                 }
-                if (!VariableUtil.tryDouble(z)){
+                if (!VariableUtils.tryDouble(z)){
                     return new ErrorResult("ARGS_ERROR","The third arg must be double str");
                 }
-                if (!VariableUtil.tryDouble(yaw)){
+                if (!VariableUtils.tryDouble(yaw)){
                     return new ErrorResult("ARGS_ERROR","The fourth arg must be double str");
                 }
-                if (!VariableUtil.tryDouble(pitch)){
+                if (!VariableUtils.tryDouble(pitch)){
                     return new ErrorResult("ARGS_ERROR","The fifth arg must be double str");
                 }
                 double x1=Double.parseDouble(x);

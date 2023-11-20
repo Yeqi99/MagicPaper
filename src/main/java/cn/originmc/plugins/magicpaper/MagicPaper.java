@@ -172,7 +172,7 @@ public final class MagicPaper extends JavaPlugin {
     }
 
     public static String getVersion() {
-        return "1.5.7";
+        return "1.5.9";
     }
 
     public static String getLang() {

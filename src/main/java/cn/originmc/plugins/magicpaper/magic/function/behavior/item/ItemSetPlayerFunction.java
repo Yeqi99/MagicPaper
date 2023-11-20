@@ -6,7 +6,7 @@ import cn.origincraft.magic.function.results.ErrorResult;
 import cn.origincraft.magic.function.results.NullResult;
 import cn.origincraft.magic.function.results.StringResult;
 import cn.origincraft.magic.object.SpellContext;
-import cn.origincraft.magic.utils.VariableUtil;
+import cn.origincraft.magic.utils.VariableUtils;
 import cn.originmc.plugins.magicpaper.magic.result.ItemStackResult;
 import cn.originmc.plugins.magicpaper.magic.result.PlayerResult;
 import org.bukkit.entity.Player;
@@ -50,7 +50,7 @@ public class ItemSetPlayerFunction extends NormalFunction {
                     if (s.equalsIgnoreCase("b")){
                         p.getInventory().setBoots(i);
                     }
-                    if(VariableUtil.tryInt(s)){
+                    if(VariableUtils.tryInt(s)){
                         p.getInventory().setItem(Integer.parseInt(s),i);
                     }
                     return new NullResult();

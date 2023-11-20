@@ -5,7 +5,6 @@ import cn.origincraft.magic.function.NormalFunction;
 import cn.origincraft.magic.function.results.ErrorResult;
 import cn.origincraft.magic.function.results.StringResult;
 import cn.origincraft.magic.object.SpellContext;
-import cn.origincraft.magic.utils.VariableUtil;
 import cn.originmc.plugins.magicpaper.magic.result.ItemStackResult;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -28,9 +27,6 @@ public class ItemLoreGetFunction extends NormalFunction {
                     return new ErrorResult("TYPE_ERROR", "ItemLoreRemove item don't have lore.");
                 }
                 String indexString = ((StringResult) index).getString();
-                if (!VariableUtil.isInt(indexString)){
-                    return new ErrorResult("TYPE_ERROR", "ItemLoreRemove index must be a number.");
-                }
                 int indexInt = Integer.parseInt(indexString);
                 ItemMeta itemMeta = itemStack.getItemMeta();
                 if (!itemMeta.hasLore()){

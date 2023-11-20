@@ -1,6 +1,6 @@
 package cn.originmc.plugins.magicpaper.buff;
 
-import cn.origincraft.magic.utils.VariableUtil;
+import cn.origincraft.magic.utils.VariableUtils;
 import cn.originmc.plugins.magicpaper.MagicPaper;
 import cn.originmc.plugins.magicpaper.magic.result.PlayerResult;
 import org.bukkit.entity.Player;
@@ -17,7 +17,7 @@ public class BuffListener implements Listener {
             if (MagicPaper.getMagicBuffManager().isBuffActive(id, "fall_immunity")) {
                 MagicBuff magicBuff = MagicPaper.getMagicBuffManager().getMagicBuff(id, "fall_immunity");
                 String setting = magicBuff.getBuffSetting();
-                if (VariableUtil.tryInt(setting)) {
+                if (VariableUtils.tryInt(setting)) {
                     int times = Integer.parseInt(setting);
                     if (times > 0) {
                         event.setCancelled(true);
@@ -54,7 +54,7 @@ public class BuffListener implements Listener {
         if (MagicPaper.getMagicBuffManager().isBuffActive(id, "oracle")) {
             MagicBuff magicBuff = MagicPaper.getMagicBuffManager().getMagicBuff(id, "oracle");
             String setting = magicBuff.getBuffSetting();
-            if (VariableUtil.tryInt(setting)) {
+            if (VariableUtils.tryInt(setting)) {
                 int times = Integer.parseInt(setting);
                 if (times > 0) {
                     magicBuff.getContextMap().putVariable("message", event.getMessage());

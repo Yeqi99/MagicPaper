@@ -9,7 +9,6 @@ import cn.origincraft.magic.utils.FunctionUtils;
 import cn.originmc.plugins.magicpaper.bungeecord.BungeeCordSender;
 import org.bukkit.entity.Player;
 
-
 import java.util.ArrayList;
 import java.util.List;
 

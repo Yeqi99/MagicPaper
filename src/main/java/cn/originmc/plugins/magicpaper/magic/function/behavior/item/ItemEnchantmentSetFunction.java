@@ -5,7 +5,7 @@ import cn.origincraft.magic.function.NormalFunction;
 import cn.origincraft.magic.function.results.ErrorResult;
 import cn.origincraft.magic.function.results.StringResult;
 import cn.origincraft.magic.object.SpellContext;
-import cn.origincraft.magic.utils.VariableUtil;
+import cn.origincraft.magic.utils.VariableUtils;
 import cn.originmc.plugins.magicpaper.magic.result.ItemStackResult;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemStack;
@@ -33,7 +33,7 @@ public class ItemEnchantmentSetFunction extends NormalFunction {
         ItemStack itemStack = ((ItemStackResult) item).getItemStack();
         String keyString = ((StringResult) key).getString();
         String valueString = ((StringResult) value).getString();
-        if (!VariableUtil.tryInt(valueString)){
+        if (!VariableUtils.tryInt(valueString)){
             return new ErrorResult("TYPE_ERROR", "itemEnchantmentSet need a int str.");
         }
         int valueInt = Integer.parseInt(valueString);

@@ -8,7 +8,7 @@ import cn.origincraft.magic.function.results.NullResult;
 import cn.origincraft.magic.function.results.StringResult;
 import cn.origincraft.magic.object.SpellContext;
 import cn.origincraft.magic.utils.FunctionUtils;
-import cn.origincraft.magic.utils.VariableUtil;
+import cn.origincraft.magic.utils.VariableUtils;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
@@ -23,13 +23,13 @@ public class RandomDoubleFunction extends ArgsFunction {
             String start= (String) args.get(0).getObject();
             String end= (String) args.get(1).getObject();
             String decimalPlaces= (String) args.get(2).getObject();
-            if (!VariableUtil.tryDouble(start)){
+            if (!VariableUtils.tryDouble(start)){
                 return new ErrorResult("ARGS_ERROR","The first arg must be double str");
             }
-            if (!VariableUtil.tryDouble(end)){
+            if (!VariableUtils.tryDouble(end)){
                 return new ErrorResult("ARGS_ERROR","The second arg must be double str");
             }
-            if (!VariableUtil.tryInt(decimalPlaces)){
+            if (!VariableUtils.tryInt(decimalPlaces)){
                 return new ErrorResult("ARGS_ERROR","The third arg must be int str");
             }
             double randomValue = generateRandomNumber(Double.parseDouble(start),Double.parseDouble(end),Integer.parseInt(decimalPlaces));

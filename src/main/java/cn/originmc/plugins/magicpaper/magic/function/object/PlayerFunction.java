@@ -9,7 +9,7 @@ import cn.origincraft.magic.function.results.ListResult;
 import cn.origincraft.magic.function.results.NullResult;
 import cn.origincraft.magic.object.SpellContext;
 import cn.origincraft.magic.utils.FunctionUtils;
-import cn.origincraft.magic.utils.VariableUtil;
+import cn.origincraft.magic.utils.VariableUtils;
 import cn.originmc.plugins.magicpaper.magic.result.EntityResult;
 import cn.originmc.plugins.magicpaper.magic.result.PlayerResult;
 import org.bukkit.Bukkit;
@@ -49,10 +49,10 @@ public class PlayerFunction extends ArgsFunction {
                 Location location= (Location) args.get(0).getObject();
                 String redis= (String) args.get(1).getObject();
                 String amount= (String) args.get(2).getObject();
-                if (!VariableUtil.tryDouble(redis)){
+                if (!VariableUtils.tryDouble(redis)){
                     return new ErrorResult("ARGS_ERROR","The second arg must be double str");
                 }
-                if (!VariableUtil.tryInt(amount)){
+                if (!VariableUtils.tryInt(amount)){
                     return new ErrorResult("ARGS_ERROR","The third arg must be int str");
                 }
                 double r=Double.parseDouble(redis);

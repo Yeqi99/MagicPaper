@@ -5,7 +5,7 @@ import cn.origincraft.magic.function.NormalFunction;
 import cn.origincraft.magic.function.results.ErrorResult;
 import cn.origincraft.magic.function.results.StringResult;
 import cn.origincraft.magic.object.SpellContext;
-import cn.origincraft.magic.utils.VariableUtil;
+import cn.origincraft.magic.utils.VariableUtils;
 import cn.originmc.plugins.magicpaper.magic.result.ItemStackResult;
 import cn.originmc.plugins.magicpaper.util.item.NBTItem;
 import org.bukkit.inventory.ItemStack;
@@ -28,7 +28,7 @@ public class ItemFlagFunction extends NormalFunction {
         }
         ItemStack itemStack = ((ItemStackResult) item).getItemStack();
         String flagString = ((StringResult) flag).getString();
-        if (!VariableUtil.tryInt(flagString)){
+        if (!VariableUtils.tryInt(flagString)){
             return new ErrorResult("TYPE_ERROR", "itemFlag need a string int.");
         }
         int flagInt = Integer.parseInt(flagString);

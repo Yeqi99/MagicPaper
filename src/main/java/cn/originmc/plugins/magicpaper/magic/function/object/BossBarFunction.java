@@ -8,7 +8,7 @@ import cn.origincraft.magic.function.results.ErrorResult;
 import cn.origincraft.magic.function.results.NullResult;
 import cn.origincraft.magic.object.SpellContext;
 import cn.origincraft.magic.utils.FunctionUtils;
-import cn.origincraft.magic.utils.VariableUtil;
+import cn.origincraft.magic.utils.VariableUtils;
 import cn.originmc.plugins.magicpaper.MagicPaper;
 import org.bukkit.boss.BarColor;
 import org.bukkit.boss.BarStyle;
@@ -30,7 +30,7 @@ public class BossBarFunction extends ArgsFunction {
                 String progress= (String) args.get(2).getObject();
                 String color= (String) args.get(3).getObject();
                 String style= (String) args.get(4).getObject();
-                if (!VariableUtil.tryDouble(progress)){
+                if (!VariableUtils.tryDouble(progress)){
                     return new ErrorResult("ARGS_ERROR","The third arg must be double str");
                 }
                 MagicPaper.getBossBarManager().createBossBar(

@@ -7,7 +7,7 @@ import cn.origincraft.magic.function.results.ErrorResult;
 import cn.origincraft.magic.function.results.NullResult;
 import cn.origincraft.magic.object.SpellContext;
 import cn.origincraft.magic.utils.FunctionUtils;
-import cn.origincraft.magic.utils.VariableUtil;
+import cn.origincraft.magic.utils.VariableUtils;
 import cn.originmc.plugins.magicpaper.magic.result.ItemStackResult;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -39,7 +39,7 @@ public class ItemFunction extends ArgsFunction {
                     return new ItemStackResult(player.getInventory().getLeggings());
                 } else if (s.equalsIgnoreCase("b")) {
                     return new ItemStackResult(player.getInventory().getBoots());
-                } else if (VariableUtil.tryInt(s)) {
+                } else if (VariableUtils.tryInt(s)) {
                     return new ItemStackResult(player.getInventory().getItem(Integer.parseInt(s)));
                 }
             }

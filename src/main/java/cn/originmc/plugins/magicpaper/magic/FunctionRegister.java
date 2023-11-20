@@ -40,7 +40,6 @@ import cn.originmc.plugins.magicpaper.magic.function.magictimer.AddToTimerFuncti
 import cn.originmc.plugins.magicpaper.magic.function.magictimer.FoliaTimerFunction;
 import cn.originmc.plugins.magicpaper.magic.function.magictimer.PaperTimerFunction;
 import cn.originmc.plugins.magicpaper.magic.function.object.*;
-import cn.originmc.plugins.magicpaper.magic.function.object.ParticleGeneratorFunction;
 import cn.originmc.plugins.magicpaper.magic.function.random.RandomDoubleFunction;
 import cn.originmc.plugins.magicpaper.magic.function.random.RandomUUIDFunction;
 import cn.originmc.plugins.magicpaper.magic.function.random.WeightRandomFunction;

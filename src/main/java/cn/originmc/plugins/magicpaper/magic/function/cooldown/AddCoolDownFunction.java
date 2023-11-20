@@ -7,7 +7,7 @@ import cn.origincraft.magic.function.results.LongResult;
 import cn.origincraft.magic.function.results.NullResult;
 import cn.origincraft.magic.function.results.StringResult;
 import cn.origincraft.magic.object.SpellContext;
-import cn.origincraft.magic.utils.VariableUtil;
+import cn.origincraft.magic.utils.VariableUtils;
 import cn.originmc.plugins.magicpaper.MagicPaper;
 import cn.originmc.plugins.magicpaper.cooldown.CoolDown;
 
@@ -39,10 +39,10 @@ public class AddCoolDownFunction extends NormalFunction {
         long duration = ((LongResult) arg1).getLong();
         String reduction = ((StringResult) arg2).getString();
         String fixedReduction = ((StringResult) arg3).getString();
-        if (!VariableUtil.tryDouble(reduction)){
+        if (!VariableUtils.tryDouble(reduction)){
             return new ErrorResult("ARGS_TYPE_ERROR","Function addCoolDown need 3 to be Double String");
         }
-        if (!VariableUtil.tryInt(fixedReduction)){
+        if (!VariableUtils.tryInt(fixedReduction)){
             return new ErrorResult("ARGS_TYPE_ERROR","Function addCoolDown need 4 to be Int String");
         }
         double reductionDouble = Double.parseDouble(reduction);

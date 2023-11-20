@@ -5,7 +5,7 @@ import cn.origincraft.magic.function.NormalFunction;
 import cn.origincraft.magic.function.results.ErrorResult;
 import cn.origincraft.magic.function.results.StringResult;
 import cn.origincraft.magic.object.SpellContext;
-import cn.origincraft.magic.utils.VariableUtil;
+import cn.origincraft.magic.utils.VariableUtils;
 import cn.originmc.plugins.magicpaper.magic.result.ItemStackResult;
 import org.bukkit.inventory.ItemStack;
 
@@ -27,7 +27,7 @@ public class ItemAmountSetFunction extends NormalFunction {
         }
         ItemStack itemStack = ((ItemStackResult) item).getItemStack();
         String amountString = ((StringResult) amount).getString();
-        if (!VariableUtil.tryInt(amountString)){
+        if (!VariableUtils.tryInt(amountString)){
             return new ErrorResult("TYPE_ERROR", "itemAmountSet need a int str.");
         }
         int amountInt = Integer.parseInt(amountString);

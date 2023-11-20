@@ -5,7 +5,7 @@ import cn.origincraft.magic.function.NormalFunction;
 import cn.origincraft.magic.function.results.ErrorResult;
 import cn.origincraft.magic.function.results.StringResult;
 import cn.origincraft.magic.object.SpellContext;
-import cn.origincraft.magic.utils.VariableUtil;
+import cn.origincraft.magic.utils.VariableUtils;
 import cn.originmc.plugins.magicpaper.magic.result.ItemStackResult;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -28,7 +28,7 @@ public class ItemModelSetFunction extends NormalFunction {
         }
         ItemStack itemStack = ((ItemStackResult) item).getItemStack();
         String modelString = ((StringResult) model).getString();
-        if (!VariableUtil.tryInt(modelString)){
+        if (!VariableUtils.tryInt(modelString)){
             return new ErrorResult("TYPE_ERROR", "itemModelSet need a int str.");
         }
         int modelInt = Integer.parseInt(modelString);

@@ -6,7 +6,7 @@ import cn.origincraft.magic.function.results.ErrorResult;
 import cn.origincraft.magic.function.results.NullResult;
 import cn.origincraft.magic.function.results.StringResult;
 import cn.origincraft.magic.object.SpellContext;
-import cn.origincraft.magic.utils.VariableUtil;
+import cn.origincraft.magic.utils.VariableUtils;
 import cn.originmc.plugins.magicpaper.hook.mythicmobs.MythicMobsManager;
 import cn.originmc.plugins.magicpaper.magic.result.PlayerResult;
 import org.bukkit.entity.Player;
@@ -34,7 +34,7 @@ public class CastSkillFunction extends NormalFunction {
         Player player = ((PlayerResult) playerResult).getPlayer();
         String skillName = ((StringResult) skillNameResult).getString();
         String power = ((StringResult) powerResult).getString();
-        if (!VariableUtil.tryDouble(power)){
+        if (!VariableUtils.tryDouble(power)){
             return new ErrorResult("UNKNOWN_ARGUMENT_TYPE", "Unsupported argument type.");
         }
         float powerFloat = Float.parseFloat(power);

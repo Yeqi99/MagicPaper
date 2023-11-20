@@ -6,7 +6,7 @@ import cn.origincraft.magic.function.results.BooleanResult;
 import cn.origincraft.magic.function.results.ErrorResult;
 import cn.origincraft.magic.function.results.StringResult;
 import cn.origincraft.magic.object.SpellContext;
-import cn.origincraft.magic.utils.VariableUtil;
+import cn.origincraft.magic.utils.VariableUtils;
 import cn.originmc.plugins.magicpaper.hook.vault.VaultManager;
 import cn.originmc.plugins.magicpaper.magic.result.PlayerResult;
 import org.bukkit.entity.Player;
@@ -29,7 +29,7 @@ public class VaultTakeFunction extends NormalFunction {
         }
         Player player=((PlayerResult) arg1).getPlayer();
         String money = ((StringResult) arg2).getString();
-        if (!VariableUtil.tryDouble(money)) {
+        if (!VariableUtils.tryDouble(money)) {
             return new ErrorResult("TYPE_ERROR", "The second arg must be number.");
         }
         return new BooleanResult(VaultManager.takeMoney(player,Double.parseDouble(money)));

@@ -5,7 +5,7 @@ import cn.origincraft.magic.function.NormalFunction;
 import cn.origincraft.magic.function.results.ErrorResult;
 import cn.origincraft.magic.function.results.StringResult;
 import cn.origincraft.magic.object.SpellContext;
-import cn.origincraft.magic.utils.VariableUtil;
+import cn.origincraft.magic.utils.VariableUtils;
 import cn.originmc.plugins.magicpaper.magic.result.ItemStackResult;
 import cn.originmc.plugins.magicpaper.util.item.MagicItem;
 import org.bukkit.inventory.ItemStack;
@@ -41,7 +41,7 @@ public class ItemBoreSetFunction extends NormalFunction {
         ItemStack itemStack = ((ItemStackResult) itemResult).getItemStack();
         String boreName = ((StringResult) boreNameResult).getString();
         String max = ((StringResult) maxResult).getString();
-        if (!VariableUtil.tryInt(max)){
+        if (!VariableUtils.tryInt(max)){
             return new ErrorResult("ARGUMENTS_ERROR","ItemBoreSetFunction need String int as third argument");
         }
         String targetAddress = ((StringResult) targetAddressResult).getString();

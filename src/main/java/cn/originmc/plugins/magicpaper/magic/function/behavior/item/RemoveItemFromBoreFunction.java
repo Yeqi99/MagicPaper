@@ -5,7 +5,7 @@ import cn.origincraft.magic.function.NormalFunction;
 import cn.origincraft.magic.function.results.ErrorResult;
 import cn.origincraft.magic.function.results.StringResult;
 import cn.origincraft.magic.object.SpellContext;
-import cn.origincraft.magic.utils.VariableUtil;
+import cn.origincraft.magic.utils.VariableUtils;
 import cn.originmc.plugins.magicpaper.magic.result.ItemStackResult;
 import cn.originmc.plugins.magicpaper.util.item.MagicItem;
 import org.bukkit.inventory.ItemStack;
@@ -32,7 +32,7 @@ public class RemoveItemFromBoreFunction extends NormalFunction {
         }
 
         String index = ((StringResult) indexResult).getString();
-        if (!VariableUtil.tryInt(index)){
+        if (!VariableUtils.tryInt(index)){
             return new ErrorResult("ARGUMENTS_ERROR","RemoveItemFromBoreFunction need String int as second argument");
         }
         ItemStack itemStack = ((ItemStackResult) itemResult).getItemStack();

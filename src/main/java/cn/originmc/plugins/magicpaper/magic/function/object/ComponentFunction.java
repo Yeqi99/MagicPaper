@@ -7,7 +7,7 @@ import cn.origincraft.magic.function.results.ErrorResult;
 import cn.origincraft.magic.function.results.NullResult;
 import cn.origincraft.magic.function.results.StringResult;
 import cn.origincraft.magic.object.SpellContext;
-import cn.origincraft.magic.utils.VariableUtil;
+import cn.origincraft.magic.utils.VariableUtils;
 import cn.originmc.plugins.magicpaper.magic.result.ComponentResult;
 import net.kyori.adventure.key.Key;
 import net.kyori.adventure.text.Component;
@@ -95,13 +95,13 @@ public class ComponentFunction extends ArgsFunction {
                         if (split.length!=3){
                             return new ErrorResult("ARGS_ERROR","The rgb arg must be 3 int str");
                         }
-                        if (!VariableUtil.tryInt(split[0])){
+                        if (!VariableUtils.tryInt(split[0])){
                             return new ErrorResult("ARGS_ERROR","The first arg must be int str");
                         }
-                        if (!VariableUtil.tryInt(split[1])){
+                        if (!VariableUtils.tryInt(split[1])){
                             return new ErrorResult("ARGS_ERROR","The second arg must be int str");
                         }
-                        if (!VariableUtil.tryInt(split[2])){
+                        if (!VariableUtils.tryInt(split[2])){
                             return new ErrorResult("ARGS_ERROR","The third arg must be int str");
                         }
                         int r=Integer.parseInt(split[0]);
@@ -142,13 +142,13 @@ public class ComponentFunction extends ArgsFunction {
                 String fadeIn = (String) args.get(3).getObject();
                 String stay = (String) args.get(4).getObject();
                 String fadeOut = (String) args.get(5).getObject();
-                if (!VariableUtil.tryInt(fadeIn)) {
+                if (!VariableUtils.tryInt(fadeIn)) {
                     return new ErrorResult("ARGS_ERROR", "The fadeIn arg must be int str");
                 }
-                if (!VariableUtil.tryInt(stay)) {
+                if (!VariableUtils.tryInt(stay)) {
                     return new ErrorResult("ARGS_ERROR", "The stay arg must be int str");
                 }
-                if (!VariableUtil.tryInt(fadeOut)) {
+                if (!VariableUtils.tryInt(fadeOut)) {
                     return new ErrorResult("ARGS_ERROR", "The fadeOut arg must be int str");
                 }
                 long fadeIn1 = Long.parseLong(fadeIn);
