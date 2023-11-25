@@ -1,6 +1,7 @@
 package cn.originmc.plugins.magicpaper.timer;
 
-import cn.origincraft.magic.function.results.IntegerResult;
+import cn.origincraft.magic.function.results.ListResult;
+import cn.origincraft.magic.function.results.NumberResult;
 import cn.origincraft.magic.function.results.StringResult;
 import cn.origincraft.magic.object.ContextMap;
 import cn.origincraft.magic.object.Spell;
@@ -37,9 +38,10 @@ public abstract class MagicTimer {
         for (Player player : players) {
             getContextMap().putVariable("self", new PlayerResult(player));
             getContextMap().putVariable("timer_id", new StringResult(getId()));
-            getContextMap().putVariable("player_amount", new IntegerResult(players.size()));
+            getContextMap().putVariable("player_amount", new NumberResult(players.size()));
             MagicPaperTriggerManager.trigger("TimerTrigger", getContextMap());
         }
+        getContextMap().putVariable("players",new ListResult(players));
         for (Spell task : tasks) {
             SpellContext spellContext = task.execute(contextMap);
             if (MagicPaper.isDebug() && spellContext.hasExecuteError()) {

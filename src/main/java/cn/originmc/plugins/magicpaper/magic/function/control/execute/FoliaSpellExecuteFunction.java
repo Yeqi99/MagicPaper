@@ -47,6 +47,6 @@ public class FoliaSpellExecuteFunction extends NormalFunction {
 
     @Override
     public String getName() {
-        return "foliaSpellExecute";
+        return "foliaSpeTllExecute";
     }
 }
