@@ -19,6 +19,11 @@ public class PaperErrorUtils {
             for (String s : spellContext.getExecuteErrorLocation()) {
                 log.add(color+s);
             }
+            log.add(color+"用法提示：");
+            for (String s : spellContext.getExecuteError().getLog()) {
+                log.add(color+s);
+            }
+
             return log;
         }else {
             log.add(color+"Error, the following is the error message");
@@ -27,6 +32,10 @@ public class PaperErrorUtils {
             log.add(color+"Error Info："+errorResult.getInfo());
             log.add(color+"Error Location：");
             for (String s : spellContext.getExecuteErrorLocation()) {
+                log.add(color+s);
+            }
+            log.add(color+"Usage：");
+            for (String s : spellContext.getExecuteError().getLog()) {
                 log.add(color+s);
             }
             return log;
