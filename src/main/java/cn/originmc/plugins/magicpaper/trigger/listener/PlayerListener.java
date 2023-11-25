@@ -1,6 +1,7 @@
 package cn.originmc.plugins.magicpaper.trigger.listener;
 
 import cn.origincraft.magic.function.results.BooleanResult;
+import cn.origincraft.magic.function.results.NumberResult;
 import cn.origincraft.magic.function.results.StringResult;
 import cn.origincraft.magic.object.NormalContext;
 import cn.originmc.plugins.magicpaper.magic.result.EntityResult;
@@ -31,9 +32,9 @@ public class PlayerListener implements Listener {
         NormalContext normalContext=new NormalContext();
         normalContext.putVariable("event_name",new StringResult(e.getEventName()));
         normalContext.putVariable("self",new PlayerResult(e.getPlayer()));
-        normalContext.putVariable("join_message",e.getJoinMessage());
+        normalContext.putVariable("join_message",new StringResult(e.getJoinMessage()));
         MagicPaperTriggerManager.trigger("PlayerJoinTrigger", normalContext);
-        String message= (String) normalContext.getVariable("join_message");
+        String message= normalContext.getVariable("join_message").toString();
         e.setJoinMessage(message);
     }
     @EventHandler(priority = EventPriority.HIGHEST)
@@ -43,19 +44,19 @@ public class PlayerListener implements Listener {
         normalContext.putVariable("self",new PlayerResult(e.getPlayer()));
         normalContext.putVariable("action",new StringResult(e.getAction().name()));
         normalContext.putVariable("interaction_point",new LocationResult(e.getInteractionPoint()));
-        normalContext.putVariable("block_face",e.getBlockFace());
+        normalContext.putVariable("block_face",new StringResult(e.getBlockFace().name()));
         normalContext.putVariable("item", new ItemStackResult(e.getItem()));
         normalContext.putVariable("name",new StringResult(e.getMaterial().name()));
-        normalContext.putVariable("cancelled",e.isCancelled());
+        normalContext.putVariable("cancelled",new BooleanResult(e.isCancelled()));
         normalContext.putVariable("is_block_in_hand",new BooleanResult(e.isBlockInHand()));
         normalContext.putVariable("has_block",new BooleanResult(e.hasBlock()));
         normalContext.putVariable("has_item",new BooleanResult(e.hasItem()));
-        normalContext.putVariable("interacted_block",e.useInteractedBlock().name());
-        normalContext.putVariable("use_item_in_hand",e.useItemInHand().name());
+        normalContext.putVariable("interacted_block",new StringResult(e.useInteractedBlock().name()));
+        normalContext.putVariable("use_item_in_hand",new StringResult(e.useItemInHand().name()));
         MagicPaperTriggerManager.trigger("PlayerInteractTrigger", normalContext);
-        e.setCancelled((Boolean) normalContext.getVariable("cancelled"));
-        e.setUseItemInHand(Event.Result.valueOf((String) normalContext.getVariable("use_item_in_hand")));
-        e.setUseInteractedBlock(Event.Result.valueOf((String) normalContext.getVariable("interacted_block")));
+        e.setCancelled(((BooleanResult) normalContext.getVariable("cancelled")).toBoolean(false));
+        e.setUseItemInHand(Event.Result.valueOf(normalContext.getVariable("use_item_in_hand").toString()));
+        e.setUseInteractedBlock(Event.Result.valueOf(normalContext.getVariable("interacted_block").toString()));
     }
 
     @EventHandler(priority = EventPriority.HIGHEST)
@@ -64,9 +65,9 @@ public class PlayerListener implements Listener {
         normalContext.putVariable("event_name",new StringResult(event.getEventName()));
         normalContext.putVariable("self",new PlayerResult(event.getPlayer()));
         normalContext.putVariable("item",new ItemStackResult(event.getItemDrop().getItemStack()));
-        normalContext.putVariable("cancelled",event.isCancelled());
+        normalContext.putVariable("cancelled",new BooleanResult(event.isCancelled()));
         MagicPaperTriggerManager.trigger("PlayerDropTrigger", normalContext);
-        event.setCancelled((Boolean) normalContext.getVariable("cancelled"));
+        event.setCancelled(((BooleanResult) normalContext.getVariable("cancelled")).toBoolean(false));
     }
     @EventHandler(priority = EventPriority.HIGHEST)
     public void onPlayerBreak(BlockBreakEvent e){
@@ -74,9 +75,10 @@ public class PlayerListener implements Listener {
         normalContext.putVariable("event_name",new StringResult(e.getEventName()));
         normalContext.putVariable("self",new PlayerResult(e.getPlayer()));
         normalContext.putVariable("btype",new StringResult(e.getBlock().getType().name()));
-        normalContext.putVariable("cancelled",e.isCancelled());
+        normalContext.putVariable("cancelled",new BooleanResult(e.isCancelled()));
         MagicPaperTriggerManager.trigger("PlayerBreakTrigger", normalContext);
-        e.setCancelled((Boolean) normalContext.getVariable("cancelled"));
+        e.setCancelled(((BooleanResult) normalContext.getVariable("cancelled")).toBoolean(false));
+
     }
     @EventHandler(priority = EventPriority.HIGHEST)
     public void onPlayerPlace(BlockPlaceEvent e){
@@ -84,16 +86,16 @@ public class PlayerListener implements Listener {
         normalContext.putVariable("event_name",new StringResult(e.getEventName()));
         normalContext.putVariable("self",new PlayerResult(e.getPlayer()));
         normalContext.putVariable("btype",new StringResult(e.getBlock().getType().name()));
-        normalContext.putVariable("cancelled",e.isCancelled());
+        normalContext.putVariable("cancelled",new BooleanResult(e.isCancelled()));
         MagicPaperTriggerManager.trigger("PlayerPlaceTrigger", normalContext);
-        e.setCancelled((Boolean) normalContext.getVariable("cancelled"));
+        e.setCancelled(((BooleanResult) normalContext.getVariable("cancelled")).toBoolean(false));
     }
     @EventHandler(priority = EventPriority.HIGHEST)
     public void onBlockDrop(BlockDropItemEvent event){
         NormalContext normalContext=new NormalContext();
         normalContext.putVariable("self",new PlayerResult(event.getPlayer()));
         for (Item item : event.getItems()) {
-            normalContext.putVariable("item",item.getItemStack());
+            normalContext.putVariable("item",new ItemStackResult(item.getItemStack()));
             MagicPaperTriggerManager.trigger("ItemDropTrigger", normalContext);
         }
     }
@@ -104,13 +106,13 @@ public class PlayerListener implements Listener {
             normalContext.putVariable("event_name",new StringResult(event.getEventName()));
             normalContext.putVariable("self",new EntityResult(event.getDamager()));
             normalContext.putVariable("entity",new EntityResult(event.getEntity()));
-            normalContext.putVariable("damage",event.getDamage());
+            normalContext.putVariable("damage",new NumberResult(event.getDamage()));
             normalContext.putVariable("cause",new StringResult(event.getCause().name()));
-            normalContext.putVariable("cancelled",event.isCancelled());
+            normalContext.putVariable("cancelled",new BooleanResult(event.isCancelled()));
             normalContext.putVariable("is_critical",new BooleanResult(event.isCritical()));
             MagicPaperTriggerManager.trigger("EntityDamageTrigger", normalContext);
-            event.setCancelled((Boolean) normalContext.getVariable("cancelled"));
-            event.setDamage((Double) normalContext.getVariable("damage"));
+            event.setCancelled(((BooleanResult) normalContext.getVariable("cancelled")).toBoolean(false));
+            event.setDamage(((NumberResult) normalContext.getVariable("damage")).toDouble());
         }
     }
     @EventHandler(priority = EventPriority.HIGHEST)
@@ -120,25 +122,25 @@ public class PlayerListener implements Listener {
         normalContext.putVariable("self",new PlayerResult(event.getPlayer()));
         normalContext.putVariable("from",new LocationResult(event.getFrom()));
         normalContext.putVariable("to",new LocationResult(event.getTo()));
-        normalContext.putVariable("to_world_str",event.getTo().getWorld().getName());
-        normalContext.putVariable("from_world_str",event.getFrom().getWorld().getName());
-        normalContext.putVariable("cause",event.getCause());
-        normalContext.putVariable("cancelled",event.isCancelled());
+        normalContext.putVariable("to_world_str",new StringResult(event.getTo().getWorld().getName()));
+        normalContext.putVariable("from_world_str",new StringResult(event.getFrom().getWorld().getName()));
+        normalContext.putVariable("cause",new StringResult(event.getCause().name()));
+        normalContext.putVariable("cancelled",new BooleanResult(event.isCancelled()));
         MagicPaperTriggerManager.trigger("PlayerTeleportTrigger", normalContext);
-        event.setCancelled((Boolean) normalContext.getVariable("cancelled"));
+        event.setCancelled(((BooleanResult) normalContext.getVariable("cancelled")).toBoolean(false));
     }
     @EventHandler(priority = EventPriority.HIGHEST)
     public void onAsyncPlayerChat(AsyncPlayerChatEvent event){
         NormalContext normalContext=new NormalContext();
         normalContext.putVariable("event_name",new StringResult(event.getEventName()));
         normalContext.putVariable("self",new PlayerResult(event.getPlayer()));
-        normalContext.putVariable("message",event.getMessage());
-        normalContext.putVariable("format",event.getFormat());
-        normalContext.putVariable("cancelled",event.isCancelled());
+        normalContext.putVariable("message",new StringResult(event.getMessage()));
+        normalContext.putVariable("format",new StringResult(event.getFormat()));
+        normalContext.putVariable("cancelled",new BooleanResult(event.isCancelled()));
         MagicPaperTriggerManager.trigger("AsyncPlayerChatTrigger", normalContext);
-        event.setCancelled((Boolean) normalContext.getVariable("cancelled"));
-        event.setFormat((String) normalContext.getVariable("format"));
-        event.setMessage((String) normalContext.getVariable("message"));
+        event.setCancelled(((BooleanResult) normalContext.getVariable("cancelled")).toBoolean(false));
+        event.setFormat(normalContext.getVariable("format").toString());
+        event.setMessage(normalContext.getVariable("message").toString());
     }
     @EventHandler(priority = EventPriority.HIGHEST)
     public void onPlayerRespawn(PlayerRespawnEvent event){
