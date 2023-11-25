@@ -22,7 +22,8 @@ public class FoliaTimer extends MagicTimer {
                 if (!isRunning()){
                     cancel();
                 }
-                execute();
+                //TODO 等待修复
+                Bukkit.getGlobalRegionScheduler().run(MagicPaper.getInstance(), scheduledTask -> execute());
             }
         };
         Bukkit.getAsyncScheduler().runAtFixedRate(MagicPaper.getInstance(),scheduledTask -> runnable.run(),getDelay(),getPeriod(), TimeUnit.DAYS);
