@@ -22,11 +22,10 @@ public class FoliaTimer extends MagicTimer {
                 if (!isRunning()){
                     cancel();
                 }
-                //TODO 等待修复
-                Bukkit.getGlobalRegionScheduler().run(MagicPaper.getInstance(), scheduledTask -> execute());
+                execute();
             }
         };
-        Bukkit.getAsyncScheduler().runAtFixedRate(MagicPaper.getInstance(),scheduledTask -> runnable.run(),getDelay(),getPeriod(), TimeUnit.DAYS);
+        Bukkit.getAsyncScheduler().runAtFixedRate(MagicPaper.getInstance(),scheduledTask -> runnable.run(),getDelay(),getPeriod(), TimeUnit.SECONDS);
         setRunnable(runnable);
     }
 

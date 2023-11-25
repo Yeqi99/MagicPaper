@@ -24,7 +24,6 @@ public class PlayerAsyncTeleportFunction extends NormalFunction {
             if (location instanceof LocationResult){
                 PlayerResult playerResult=(PlayerResult) player;
                 LocationResult locationResult=(LocationResult) location;
-                playerResult.getPlayer().teleport(locationResult.getLocation());
                 Player p=playerResult.getPlayer();
                 p.teleportAsync(locationResult.getLocation(), PlayerTeleportEvent.TeleportCause.PLUGIN);
                 return new NullResult();
