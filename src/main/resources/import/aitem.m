@@ -1,5 +1,5 @@
 将传入的参数解包为arg1 arg2 ...的格式
-upargs(args)
+unpack(args)
 
 arg1:玩家
 arg2:材质名
