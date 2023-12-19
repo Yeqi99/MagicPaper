@@ -92,7 +92,7 @@ public class EntityFunction extends ArgsFunction {
                 "Entity");
         argsSetting2.setId("B");
         ArgsSetting argsSetting3 = FunctionUtils.createArgsSetting(
-                "Object",
+                ".",
                 "object" +
                         "\nGet the entity by object.",
                 "Entity");

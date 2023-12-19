@@ -122,6 +122,44 @@ public class LocationFunction extends ArgsFunction {
                                 ,location.getPitch());
                 return new LocationResult(location1);
             }
+            case "G":{
+                String format= (String) args.get(0).getObject();
+                String[] strings=format.split(",");
+                if (strings.length!=6){
+                    return new ErrorResult("ARGS_ERROR","The format is not correct.");
+                }
+                String x=strings[0];
+                String y=strings[1];
+                String z=strings[2];
+                String yaw=strings[3];
+                String pitch=strings[4];
+                String world=strings[5];
+                if (!VariableUtils.tryDouble(x)){
+                    return new ErrorResult("ARGS_ERROR","The first arg must be double str");
+                }
+                if (!VariableUtils.tryDouble(y)){
+                    return new ErrorResult("ARGS_ERROR","The second arg must be double str");
+                }
+                if (!VariableUtils.tryDouble(z)){
+                    return new ErrorResult("ARGS_ERROR","The third arg must be double str");
+                }
+                if (!VariableUtils.tryDouble(yaw)){
+                    return new ErrorResult("ARGS_ERROR","The fourth arg must be double str");
+                }
+                if (!VariableUtils.tryDouble(pitch)){
+                    return new ErrorResult("ARGS_ERROR","The fifth arg must be double str");
+                }
+                double x1=Double.parseDouble(x);
+                double y1=Double.parseDouble(y);
+                double z1=Double.parseDouble(z);
+                double yaw1=Double.parseDouble(yaw);
+                double pitch1=Double.parseDouble(pitch);
+                World world1= Bukkit.getWorld(world);
+                if (world1==null){
+                    return new ErrorResult("ARGS_ERROR","The world is not exist.");
+                }
+                return new LocationResult(new Location(world1,x1,y1,z1,(float)yaw1,(float)pitch1));
+            }
         }
         return new NullResult();
     }
@@ -155,7 +193,7 @@ public class LocationFunction extends ArgsFunction {
         argsSetting4.setId("D");
 
         ArgsSetting argsSetting5= FunctionUtils.createArgsSetting(
-                "Object",
+                ".",
                 "object" +
                         "\nGet the location of the object.",
                 "Location");
@@ -172,6 +210,11 @@ public class LocationFunction extends ArgsFunction {
         argsSettings.add(argsSetting4);
         argsSettings.add(argsSetting5);
         argsSettings.add(argsSetting6);
+        argsSettings.add(new ArgsSetting("G")
+                .addArgType("String")
+                .addInfo("format:x,y,z,yaw,pitch,world")
+                .setResultType("Location")
+        );
         return argsSettings;
     }
 

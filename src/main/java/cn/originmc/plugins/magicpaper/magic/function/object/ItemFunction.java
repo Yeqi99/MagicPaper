@@ -137,7 +137,7 @@ public class ItemFunction extends ArgsFunction {
                 "ItemStack");
         argsSetting5.setId("E");
         ArgsSetting argsSetting6 = FunctionUtils.createArgsSetting(
-                "Object",
+                ".",
                 "object" +
                         "\nGet a itemStack from object.",
                 "ItemStack");
