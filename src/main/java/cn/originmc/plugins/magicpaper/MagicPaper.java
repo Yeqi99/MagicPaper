@@ -218,6 +218,7 @@ public final class MagicPaper extends JavaPlugin {
             getInstance().saveResource("lang/Chinese.yml", false);
             getInstance().saveResource("lang/English.yml", false);
             getInstance().saveResource("magic/HelloWorld.yml", false);
+            getInstance().saveResource("magic/keyjump.yml", false);
             getInstance().saveResource("magic/nothing.yml", false);
             getInstance().saveResource("onload/HelloWorld.m", false);
             getInstance().saveResource("import/HelloWorld.m", false);
