@@ -20,6 +20,7 @@ import cn.originmc.plugins.magicpaper.magic.function.cooldown.GOCDFunction;
 import cn.originmc.plugins.magicpaper.magic.function.gui.*;
 import cn.originmc.plugins.magicpaper.magic.function.gui.databuttons.OnlinePlayerButtonsFunction;
 import cn.originmc.plugins.magicpaper.magic.function.hook.abolethplus.*;
+import cn.originmc.plugins.magicpaper.magic.function.hook.authme.IsLoggedFunction;
 import cn.originmc.plugins.magicpaper.magic.function.hook.itemsadder.IAItemFunction;
 import cn.originmc.plugins.magicpaper.magic.function.hook.itemsadder.PlaceIABlockFunction;
 import cn.originmc.plugins.magicpaper.magic.function.hook.luckperms.PlayerHasPermissionFunction;
@@ -56,11 +57,13 @@ public class FunctionRegister {
 
     public static void register(MagicManager magicManager) {
         FunctionManager fm = magicManager.getFastExpression().getFunctionManager();
+        // hook.authme
+        fm.register(new IsLoggedFunction(), "logged");
         // hook.luckperms
         fm.register(new PlayerLPMetaGetFunction(), "getlpmeta");
         fm.register(new PlayerLPMetaSetFunction(), "lpmeta");
         fm.register(new PlayerLPTempMetaSetFunction(), "lptmeta");
-        fm.register(new PlayerHasPermissionFunction(),"lphasp");
+        fm.register(new PlayerHasPermissionFunction(), "lphasp");
         // hook.placeholderapi
         fm.register(new PlaceholderAPIFunction(), "papi");
         fm.register(new PapiStrFunction());
@@ -104,7 +107,7 @@ public class FunctionRegister {
         fm.register(new SendToPlayerFunction(), "stp");
         fm.register(new SendToAllPlayerFunction(), "stap");
         fm.register(new PlayerTeleportFunction(), "ptp");
-        fm.register(new PlayerAsyncTeleportFunction(),"patp");
+        fm.register(new PlayerAsyncTeleportFunction(), "patp");
         fm.register(new UpdateInventoryFunction(), "upinv");
         fm.register(new SendActionMsgFunction());
         fm.register(new PlayerCloseInvFunction(), "closeinv");
@@ -151,8 +154,8 @@ public class FunctionRegister {
         // behavior.entity
         fm.register(new NewEntityFunction(), "newe");
         // behavior.skill
-        fm.register(new JumpSkillFunction(),"pjump");
-        fm.register(new JumpToLocationSkillFunction(),"pjumpto");
+        fm.register(new JumpSkillFunction(), "pjump");
+        fm.register(new JumpToLocationSkillFunction(), "pjumpto");
         // behavior.potion
         fm.register(new PotionAddFunction());
         // buff
@@ -177,11 +180,11 @@ public class FunctionRegister {
         fm.register(new IgnoreCaseStringComparisonFunction(), "stric");
         fm.register(new StringComparisonFunction(), "strc");
         fm.register(new ColorFunction());
-        fm.register(new IsTimeRangeFunction(),"istime");
-        fm.register(new InLocationRangeFunction(),"inlrange");
-        fm.register(new PlayerUUIDFunction(),"puuid");
-        fm.register(new FacingOffsetFunction(),"locoffset");
-        fm.register(new CheckLocationFunction(),"checkloc");
+        fm.register(new IsTimeRangeFunction(), "istime");
+        fm.register(new InLocationRangeFunction(), "inlrange");
+        fm.register(new PlayerUUIDFunction(), "puuid");
+        fm.register(new FacingOffsetFunction(), "locoffset");
+        fm.register(new CheckLocationFunction(), "checkloc");
         // yaml
         fm.register(new YamlManagerFunction(), "yamlm");
         fm.register(new YamlSaveAllFunction(), "yalmsa");
@@ -203,7 +206,7 @@ public class FunctionRegister {
         // gui
         fm.register(new GuiOpenFunction(), "opengui");
         fm.register(new GuiDataClearFunction(), "cleargui");
-        fm.register(new GuiNextPageFunction(),"npage");
+        fm.register(new GuiNextPageFunction(), "npage");
         fm.register(new GuiPreviousPageFunction(), "ppage");
         fm.register(new GuiUpdateFunction(), "upgui");
         // gui.databuttons
