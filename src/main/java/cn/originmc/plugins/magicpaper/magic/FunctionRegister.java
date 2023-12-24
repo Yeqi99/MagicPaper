@@ -27,6 +27,7 @@ import cn.originmc.plugins.magicpaper.magic.function.hook.luckperms.PlayerHasPer
 import cn.originmc.plugins.magicpaper.magic.function.hook.luckperms.PlayerLPMetaGetFunction;
 import cn.originmc.plugins.magicpaper.magic.function.hook.luckperms.PlayerLPMetaSetFunction;
 import cn.originmc.plugins.magicpaper.magic.function.hook.luckperms.PlayerLPTempMetaSetFunction;
+import cn.originmc.plugins.magicpaper.magic.function.hook.mcborder.RTPFunction;
 import cn.originmc.plugins.magicpaper.magic.function.hook.mythicmobs.CastSkillFunction;
 import cn.originmc.plugins.magicpaper.magic.function.hook.mythicmobs.SpawnMobFunction;
 import cn.originmc.plugins.magicpaper.magic.function.hook.placeholderapi.PapiStrFunction;
@@ -48,17 +49,14 @@ import cn.originmc.plugins.magicpaper.magic.function.trigger.AddSpellToTriggerFu
 import cn.originmc.plugins.magicpaper.magic.function.trigger.TriggerClearSpellFunction;
 import cn.originmc.plugins.magicpaper.magic.function.yaml.*;
 
-import java.util.HashMap;
-import java.util.Map;
-
 public class FunctionRegister {
-    public static final Map<String, String> funInfo = new HashMap<>();
-    public static final Map<String, String> argsInfo = new HashMap<>();
 
     public static void register(MagicManager magicManager) {
         FunctionManager fm = magicManager.getFastExpression().getFunctionManager();
         // hook.authme
         fm.register(new IsLoggedFunction(), "logged");
+        // hook.mcborder
+        fm.register(new RTPFunction());
         // hook.luckperms
         fm.register(new PlayerLPMetaGetFunction(), "getlpmeta");
         fm.register(new PlayerLPMetaSetFunction(), "lpmeta");
