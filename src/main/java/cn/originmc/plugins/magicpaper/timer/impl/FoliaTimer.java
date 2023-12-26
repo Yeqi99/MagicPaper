@@ -19,14 +19,10 @@ public class FoliaTimer extends MagicTimer {
         Runnable runnable= new BukkitRunnable() {
             @Override
             public void run() {
-                if (!isRunning()){
-                    cancel();
-                }
                 execute();
             }
         };
         Bukkit.getAsyncScheduler().runAtFixedRate(MagicPaper.getInstance(),scheduledTask -> runnable.run(),getDelay(),getPeriod(), TimeUnit.SECONDS);
-        setRunnable(runnable);
     }
 
 }

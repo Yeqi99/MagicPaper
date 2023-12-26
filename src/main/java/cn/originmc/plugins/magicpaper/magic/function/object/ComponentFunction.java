@@ -241,7 +241,7 @@ public class ComponentFunction extends ArgsFunction {
 
     @Override
     public String getName() {
-        return "Component";
+        return "component";
     }
 
     @Override
