@@ -108,20 +108,20 @@ public class ItemFunction extends ArgsFunction {
         ArgsSetting argsSetting1 = FunctionUtils.createArgsSetting(
                 "Player String",
                 "player index" +
-                        "\nGet a item from player." +
+                        "\nGet a ItemStack from player." +
                         "\nindex: mh,oh,h,c,l,b,0-35",
                 "ItemStack");
         argsSetting1.setId("A");
         ArgsSetting argsSetting2 = FunctionUtils.createArgsSetting(
                 "String",
                 "material" +
-                        "\nGet a item from material.",
+                        "\nGet a ItemStack from material.",
                 "ItemStack");
         argsSetting2.setId("B");
         ArgsSetting argsSetting3 = FunctionUtils.createArgsSetting(
                 "String String",
                 "display material" +
-                        "\nGet a itemStack from material and set display name.",
+                        "\nGet a ItemStack from material and set display name.",
                 "ItemStack");
         argsSetting3.setId("C");
         ArgsSetting argsSetting4 = FunctionUtils.createArgsSetting(
@@ -145,7 +145,7 @@ public class ItemFunction extends ArgsFunction {
         ArgsSetting argsSetting7 = FunctionUtils.createArgsSetting(
                 "ItemStack",
                 "itemStack" +
-                        "\nget a itemStack clone from item.",
+                        "\nget a ItemStack clone from ItemStack.",
                 "ItemStack");
         argsSetting7.setId("G");
         argsSettings.add(argsSetting1);

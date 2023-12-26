@@ -8,7 +8,9 @@ import cn.origincraft.magic.function.results.ErrorResult;
 import cn.origincraft.magic.function.results.NullResult;
 import cn.origincraft.magic.object.SpellContext;
 import cn.origincraft.magic.utils.FunctionUtils;
+import cn.originmc.plugins.magicpaper.MagicPaper;
 import cn.originmc.plugins.magicpaper.magic.result.PotionResult;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
@@ -35,7 +37,9 @@ public class PotionFunction extends ArgsFunction {
             case "B": {
                 Player player = (Player) args.get(0).getObject();
                 PotionEffect potionEffect = (PotionEffect) args.get(1).getObject();
-                player.addPotionEffect(potionEffect);
+                Bukkit.getScheduler().runTask(MagicPaper.getInstance(), () -> {
+                    player.addPotionEffect(potionEffect);
+                });
                 return new NullResult();
             }
             case "C": {
@@ -50,7 +54,9 @@ public class PotionFunction extends ArgsFunction {
                 if (potionEffectType == null) {
                     return new ErrorResult("TYPE_ERROR", "The potion type is not exist.");
                 }
-                player.removePotionEffect(potionEffectType);
+                Bukkit.getScheduler().runTask(MagicPaper.getInstance(), () -> {
+                    player.removePotionEffect(potionEffectType);
+                });
                 return new NullResult();
             }
         }

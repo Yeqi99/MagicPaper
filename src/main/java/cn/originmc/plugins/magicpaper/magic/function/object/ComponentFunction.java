@@ -122,7 +122,7 @@ public class ComponentFunction extends ArgsFunction {
             case "E": {
                 Component component = (Component) args.get(0).getObject();
                 Player player = (Player) args.get(1).getObject();
-                String type = (String) args.get(1).getObject();
+                String type = (String) args.get(2).getObject();
                 switch (type) {
                     case "chat": {
                         player.sendMessage(component);

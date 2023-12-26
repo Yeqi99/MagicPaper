@@ -33,6 +33,8 @@ public class SendToAllPlayerFunction extends NormalFunction {
                 }
             }
             MagicPaper.getSender().sendToAllPlayer(messageList);
+        }else {
+            return new StringResult(message.toString());
         }
         return new NullResult();
     }

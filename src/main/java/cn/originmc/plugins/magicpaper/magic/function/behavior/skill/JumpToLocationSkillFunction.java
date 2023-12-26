@@ -1,10 +1,10 @@
 package cn.originmc.plugins.magicpaper.magic.function.behavior.skill;
 
 import cn.origincraft.magic.expression.functions.FunctionResult;
-import cn.origincraft.magic.function.NormalFunction;
-import cn.origincraft.magic.function.results.ErrorResult;
+import cn.origincraft.magic.function.ArgsFunction;
+import cn.origincraft.magic.function.ArgsSetting;
 import cn.origincraft.magic.function.results.NullResult;
-import cn.origincraft.magic.function.results.StringResult;
+import cn.origincraft.magic.function.results.NumberResult;
 import cn.origincraft.magic.object.SpellContext;
 import cn.originmc.plugins.magicpaper.magic.result.LocationResult;
 import cn.originmc.plugins.magicpaper.magic.result.PlayerResult;
@@ -12,38 +12,65 @@ import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.util.Vector;
 
+import java.util.ArrayList;
 import java.util.List;
 
-public class JumpToLocationSkillFunction extends NormalFunction {
+public class JumpToLocationSkillFunction extends ArgsFunction {
+
     @Override
-    public FunctionResult whenFunctionCalled(SpellContext spellContext, List<FunctionResult> args) {
-        if (args.size()<4){
-            return new ErrorResult("INSUFFICIENT_ARGUMENTS","JumpSkill function requires at least two arguments.");
+    public FunctionResult whenFunctionCalled(SpellContext spellContext, List<FunctionResult> args, ArgsSetting argsSetting) {
+        String id = argsSetting.getId();
+        switch (id) {
+            case "A": {
+                Player player = (Player) args.get(0).getObject();
+                Location jumpTarget = (Location) args.get(1).getObject();
+                String jumpPower = args.get(2).toString();
+                String jumpHeight = args.get(3).toString();
+                Vector jumpVector = jumpTarget.toVector()
+                        .subtract(player.getLocation()
+                                .toVector())
+                        .normalize()
+                        .multiply(new NumberResult(jumpPower).toDouble());
+                jumpVector.setY(new NumberResult(jumpHeight).toDouble());
+                player.setVelocity(jumpVector);
+                return new NullResult();
+            }
+            case "B": {
+                Player player = ((PlayerResult) args.get(0)).getPlayer();
+                Location jumpTarget = ((LocationResult) args.get(1)).getLocation();
+                NumberResult jumpPower = (NumberResult) args.get(2);
+                NumberResult jumpHeight = (NumberResult) args.get(3);
+                Vector jumpVector = jumpTarget.toVector()
+                        .subtract(player.getLocation()
+                                .toVector())
+                        .normalize()
+                        .multiply(jumpPower.toDouble());
+                jumpVector.setY(jumpHeight.toDouble());
+                player.setVelocity(jumpVector);
+                return new NullResult();
+            }
         }
-        FunctionResult arg0=args.get(0);
-        FunctionResult arg1=args.get(1);
-        FunctionResult arg2=args.get(2);
-        FunctionResult arg3=args.get(3);
-        if (!(arg0 instanceof PlayerResult)){
-            return new ErrorResult("UNKNOWN_ARGUMENT_TYPE","First argument must be a player.");
-        }
-        if (!(arg1 instanceof LocationResult)){
-            return new ErrorResult("UNKNOWN_ARGUMENT_TYPE","Second argument must be a location.");
-        }
-        if (!(arg2 instanceof StringResult)){
-            return new ErrorResult("UNKNOWN_ARGUMENT_TYPE","Third argument must be a string.");
-        }
-        if (!(arg3 instanceof StringResult)){
-            return new ErrorResult("UNKNOWN_ARGUMENT_TYPE","Fourth argument must be a string.");
-        }
-        Player player=((PlayerResult) arg0).getPlayer();
-        Location jumpTarget=((LocationResult) arg1).getLocation();
-        String jumpPower=((StringResult) arg2).getString();
-        String jumpHeight=((StringResult) arg3).getString();
-        Vector jumpVector = jumpTarget.toVector().subtract(player.getLocation().toVector()).normalize().multiply(Double.parseDouble(jumpPower));
-        jumpVector.setY(Double.parseDouble(jumpHeight));
-        player.setVelocity(jumpVector);
         return new NullResult();
+    }
+
+    @Override
+    public List<ArgsSetting> getArgsSetting() {
+        List<ArgsSetting> argsSettings = new ArrayList<>();
+        argsSettings.add(new ArgsSetting("A")
+                .addArgType("Player").addArgType("Location").addArgType("String").addArgType("String")
+                .addInfo("player targetLocation power height")
+                .addInfo("example: jumpSkill(self location(1 1 1) 1 1)")
+                .addInfo("means: Player self jump to location(1 1 1) with power 1 and height 1")
+                .setResultType("Null")
+        );
+        argsSettings.add(new ArgsSetting("B")
+                .addArgType("Player").addArgType("Location").addArgType("Number").addArgType("Number")
+                .addInfo("player power height")
+                .addInfo("example: jumpSkill(self location(1 1 1) num(1) num(1))")
+                .addInfo("means: Player self jump to location(1 1 1) with power 1 and height 1")
+                .setResultType("Null")
+        );
+        return argsSettings;
     }
 
     @Override
