@@ -108,7 +108,14 @@ public class MagicPaperCommand implements CommandExecutor {
             Spell spell = new Spell(spellList, MagicPaper.getMagicManager());
             NormalContext normalContext = new NormalContext();
             MagicPaper.importSpell(normalContext);
-            normalContext.putVariable("self", new PlayerResult((Player) commandSender));
+            if (args.length > 2) {
+                Player player = Bukkit.getPlayer(args[2]);
+                if (player != null) {
+                    normalContext.putVariable("self", new PlayerResult(player));
+                }
+            } else {
+                normalContext.putVariable("self", new PlayerResult((Player) commandSender));
+            }
             SpellContext spellContext = spell.execute(normalContext);
 
             if (MagicPaper.isDebug() && spellContext.hasExecuteError()) {
@@ -123,7 +130,14 @@ public class MagicPaperCommand implements CommandExecutor {
             Spell spell = MagicDataManager.getSpell(spellID);
             NormalContext normalContext = new NormalContext();
             MagicPaper.importSpell(normalContext);
-            normalContext.putVariable("self", new PlayerResult((Player) commandSender));
+            if (args.length > 2) {
+                Player player = Bukkit.getPlayer(args[2]);
+                if (player != null) {
+                    normalContext.putVariable("self", new PlayerResult(player));
+                }
+            } else {
+                normalContext.putVariable("self", new PlayerResult((Player) commandSender));
+            }
             SpellContext spellContext = Objects.requireNonNull(spell).execute(normalContext);
             if (MagicPaper.isDebug() && spellContext.hasExecuteError()) {
                 List<String> log = PaperErrorUtils.getErrorAllLog(spellContext, "&c");

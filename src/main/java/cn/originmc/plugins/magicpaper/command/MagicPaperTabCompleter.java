@@ -86,6 +86,9 @@ public class MagicPaperTabCompleter implements TabCompleter {
                     completions.add("index");
                 }
             }
+            if (args[0].equalsIgnoreCase("spell")) {
+                completions.add("[player]");
+            }
         }
 
         // 对补全进行排序，可以自行根据需要更改
