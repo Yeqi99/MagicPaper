@@ -37,6 +37,7 @@ N:
     - "playerCloseInv(self)"
     - "guiNextPage(self example)"
 
+<<<<<<< HEAD
 #A:
 #  display: "更新数据"
 #  material: PAPER
@@ -66,3 +67,34 @@ N:
 #  spell:
 #    - if(isAirItem) spellBreak()
 #    - "stap(6666)"
+=======
+A:
+  display: "更新数据"
+  material: PAPER
+  amount: 1
+  customModelData: 1000
+  lore:
+    - "更新数据"
+  spell:
+    - "guiUpdate(self example)"
+    - "playerCloseInv(self)"
+
+B:
+  display: "清除数据"
+  material: PAPER
+  amount: 1
+  customModelData: 1000
+  lore:
+    - "清除数据"
+  spell:
+    - "guiDataClear(self example)"
+    - "playerCloseInv(self)"
+
+D_data:
+  dataFrom:
+    - "vdef(items pbuttons(str(&c~) list(super player))) "
+    - "returnb(items)"
+  spell:
+    - if(isAirItem) spellBreak()
+    - "stap(6666)"
+>>>>>>> c7332d9b58bef5c8725eaaa76d2c292191fa7017

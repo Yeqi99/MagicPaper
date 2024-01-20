@@ -22,7 +22,6 @@ import cn.originmc.plugins.magicpaper.data.manager.TimerDataManager;
 import cn.originmc.plugins.magicpaper.data.manager.TriggerDataManager;
 import cn.originmc.plugins.magicpaper.data.timer.TimerData;
 import cn.originmc.plugins.magicpaper.data.trigger.TriggerData;
-import cn.originmc.plugins.magicpaper.dataentity.DataEntity;
 import cn.originmc.plugins.magicpaper.dataentity.DataEntityManager;
 import cn.originmc.plugins.magicpaper.gui.MagicGuiListener;
 import cn.originmc.plugins.magicpaper.gui.MagicGuiManager;
@@ -51,7 +50,9 @@ public final class MagicPaper extends JavaPlugin {
     public static MagicPackage magicPackage;
     public static BungeeCordListener bungeeCordListener;
     public static BossBarManager bossBarManager;
+
     public static DataEntityManager dataEntityManager;
+
 
     public static JavaPlugin getInstance() {
         return instance;
@@ -107,10 +108,12 @@ public final class MagicPaper extends JavaPlugin {
         instance = this;
         // 初始化发送器
         sender = new Sender(this);
+
         // 初始化数据管理器
         dataEntityManager = new DataEntityManager();
         // 加载数据实体数据
         dataEntityManager.load();
+
         // 保存默认配置
         saveRes();
         // 初始化魔法管理器
@@ -151,11 +154,13 @@ public final class MagicPaper extends JavaPlugin {
         // 启动计时器
         MagicPaper.getSender().sendToLogger(LangData.get(MagicPaper.getLang(), "timer-init-start", "§a[§bMagicPaper§a] §e启动计时器..."));
         TimerDataManager.initConfigTimer();
+
         // 开启异步定时器，定时存储数据实体
         if (getConfig().getBoolean("data-entity-auto-save.enable",true)){
             dataEntityManager.setSaveInterval(getConfig().getInt("data-entity-auto-save.interval",600));
             dataEntityManager.startAsyncSaveTask();
         }
+
 
         sender.sendOnEnableMsgToLogger("MagicPaper", "Yeqi", getVersion(), "Public");
     }
@@ -178,7 +183,9 @@ public final class MagicPaper extends JavaPlugin {
             bungeeCordListener.unRegister();
         }
         MagicPaperTriggerManager.trigger("ServerOnDisable", new NormalContext());
+
         dataEntityManager.saveAll();
+
         sender.sendOnDisableMsgToLogger("MagicPaper", "Yeqi", getVersion(), "Public");
     }
 
@@ -187,6 +194,7 @@ public final class MagicPaper extends JavaPlugin {
     }
 
     public static String getVersion() {
+
         return "1.5.14";
     }
 

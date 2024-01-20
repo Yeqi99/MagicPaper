@@ -39,7 +39,10 @@ item-trigger-listener: true
 buff-system-enable: true
 # gui系统开关
 gui-listener: true
+<<<<<<< HEAD
 
 data-entity-auto-save:
   enable: true
   interval: 600
+=======
+>>>>>>> c7332d9b58bef5c8725eaaa76d2c292191fa7017

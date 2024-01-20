@@ -77,7 +77,9 @@ public class MagicPaperCommand implements CommandExecutor {
                 helpMessage.add("&a/magicpaper gui <id> [player] &7- &f打开gui");
                 helpMessage.add("&a/magicpaper clearguidata <id> [player] &7- &f清除gui数据");
                 helpMessage.add("&a/magicpaper updateguidata <id> [player] &7- &f更新gui数据");
-                helpMessage.add("&a/magicpaper lookailas <function> &7- &f查看语义别名");}
+
+                helpMessage.add("&a/magicpaper lookailas <function> &7- &f查看语义别名");
+            }
             MagicPaper.getSender().sendToSender(commandSender, helpMessage);
             return true;
         }
