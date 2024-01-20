@@ -1,0 +1,27 @@
+name: MagicPaper
+version: '${project.version}'
+main: cn.originmc.plugins.magicpaper.MagicPaper
+api-version: '1.13'
+softdepend:
+  - PlaceholderAPI
+  - LuckPerms
+  - Abolethplus
+  - ProtocolLib
+  - Vault
+  - MythicMobs
+  - AdvancedEnchantments
+  - PlayerPoints
+  - ItemsAdder
+  - RemoteKeyboardBukkit
+  - EpicCraftingsPlus
+  - AuthMe
+  - McBorder
+folia-supported: true
+commands:
+    MagicPaper:
+        description: MagicPaper command
+        usage: /<command> [reload]
+        permission: magicpaper.command
+        aliases: [mp]
+        permission-message: You do not have permission to use this command.
+        executor: cn.originmc.plugins.magicpaper.commands.MagicPaperCommand

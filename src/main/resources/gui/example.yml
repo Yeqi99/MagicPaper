@@ -1,0 +1,68 @@
+title: "测试菜单"
+size: 54
+#type: SMITHING # https://hub.spigotmc.org/javadocs/spigot/org/bukkit/event/inventory/InventoryType.html
+format: # TODO 数据源按钮展示
+  - - "XXXXTXXXX"
+    - "PXXDADXXN"
+    - "XXXXXXXXX"
+  - - "XXXXXXXXX"
+    - "PXXXBXXXN"
+    - "XXXXXXXXX"
+unLimitSlots: []
+
+X:
+  material: AIR
+  spell:
+    - "stap(AAA)"
+
+P:
+  display: "上一页"
+  material: PAPER
+  amount: 1
+  customModelData: 1000
+  lore:
+    - "测试按钮"
+  spell:
+    - "playerCloseInv(self)"
+    - "guiPreviousPage(self example)"
+
+N:
+  display: "下一页"
+  material: PAPER
+  amount: 1
+  customModelData: 1000
+  lore:
+    - "测试按钮"
+  spell:
+    - "playerCloseInv(self)"
+    - "guiNextPage(self example)"
+
+#A:
+#  display: "更新数据"
+#  material: PAPER
+#  amount: 1
+#  customModelData: 1000
+#  lore:
+#    - "更新数据"
+#  spell:
+#    - "guiUpdate(self example)"
+#    - "playerCloseInv(self)"
+#
+#B:
+#  display: "清除数据"
+#  material: PAPER
+#  amount: 1
+#  customModelData: 1000
+#  lore:
+#    - "清除数据"
+#  spell:
+#    - "guiDataClear(self example)"
+#    - "playerCloseInv(self)"
+#
+#D_data:
+#  dataFrom:
+#    - "vdef(items pbuttons(str(&c~) list(super player))) "
+#    - "returnb(items)"
+#  spell:
+#    - if(isAirItem) spellBreak()
+#    - "stap(6666)"

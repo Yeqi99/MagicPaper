@@ -1,0 +1,12 @@
+spell:
+  - vdef(isX comp(num(key) == num(67)))
+  - ifnot(isX) spellBreak()
+  - vdef(cdmsg str(&c大跳冷却中))
+  - vdef(cdkey str(pname(self) X))
+  - gocd(cdkey 5000 color(cdmsg))
+  - buffAdd(puuid(self) fall_immunity 3000 1)
+  - pjump(self 2 1)
+
+display: "大跳"
+description:
+  - "大跳"

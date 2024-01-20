@@ -1,0 +1,45 @@
+# 使用的语言
+lang: English
+# debug模式
+debug: true
+# 是否BungeeCord模式
+bungee-cord-mode: true
+# 拓展语义包含
+extended-syntax:
+  system: true
+  paper: true
+# 魔语快捷执行
+coding: true
+
+# ProtocolLib支持
+ProtocolLib:
+  # 物品nbt变量到lore解析
+  item-variable-refresh: true
+  # 物品papi变量到lore解析
+  item-papi-refresh: true
+
+# 自定义全局常量
+constants:
+  plugin-name: "MagicPaper"
+
+# 冷却管理
+cool-down:
+  # 镶嵌冷却设置
+  bore-add:
+    time: 1000
+    message: "&c你的操作过于频繁，请稍后再试"
+
+# 镶嵌监听器
+bore-listener: true
+# 默认资源生成
+default-file: true
+# 物品触发魔咒监听
+item-trigger-listener: true
+# buff系统开关
+buff-system-enable: true
+# gui系统开关
+gui-listener: true
+
+data-entity-auto-save:
+  enable: true
+  interval: 600

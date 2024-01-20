@@ -1,0 +1,6 @@
+#type: paper # 计时器类型，支持 paper/folia
+#later: 20 # 延迟执行时间, 单位tick 20tick= 1s
+#interval: 20 # 间隔执行时间, 单位tick 20tick= 1s
+#
+#execute-spell:
+#  - HelloWorld

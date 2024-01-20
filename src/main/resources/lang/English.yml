@@ -1,0 +1,33 @@
+reload: "&aPlugin reloaded successfully!"
+spell-not-found: "&cThe spell you entered does not exist!"
+functions-none: "&cNo registered semantics found!"
+function-info-not-found: "&cNo specified semantic information found!"
+functions-alias-none: "&cNo registered semantic aliases found!"
+onload: "onload executed successfully!"
+dont-have-item-bore: "&cNo item in the socket!"
+item-not-found: "&cThe specified item was not found!"
+args-error: "&cParameter error!"
+item-left-click-cool-down: "&cCooldown in progress for left-click on this item!" # ~ is the current cooldown variable @ is the spell name variable"
+item-right-click-cool-down: "&cCooldown in progress for right-click on this item!"
+item-shift-left-click-cool-down: "&cCooldown in progress for Shift+left-click on this item!"
+item-shift-right-click-cool-down: "&cCooldown in progress for Shift+right-click on this item!"
+load-data: "&aData loaded successfully!"
+hook-start: "&aHook started!"
+hook-info: "§8Hooks are only used to provide more functions, and not hooking does not affect the normal use of the plugin!"
+hook-finish: "&aHook finished!"
+register-listener: "&aListener registered successfully!"
+register-command: "&aCommand registered successfully!"
+timer-init-start: "&aTimer initialization started!"
+trigger-init-start: "&aTrigger initialization started!"
+onload-spell-init-start: "&aOnload spell started!"
+import-spell-init-start: "&aImport spell started!"
+context-init: "&aContext initialized successfully!"
+buff-init: "&aBuff initialized successfully!"
+cooldown-init: "&aCooldown initialized successfully!"
+trigger-not-exist: "&cTrigger does not exist!"
+trigger-register: "&aTrigger ~ registered successfully!" # ~ is the trigger name variable
+coding-clear: "&aClear coding data context successfully!"
+hook-success: "&a~ Hook succeeded!" # ~ is the trigger name variable
+hook-fail: "&c~ Hook failed!" # ~ is the trigger name variable
+timer-register: "&aTimer ~ registered successfully!" # ~ is the timer name variable
+

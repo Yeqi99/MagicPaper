@@ -1,0 +1,32 @@
+reload: "&a插件重载成功！"
+spell-not-found: "&c你输入的咒语不存在！"
+functions-none: "&c没有已注册的语义!"
+function-info-not-found: "&c没有找到指定的语义信息!"
+functions-alias-none: "&c没有已注册的语义别名!"
+onload: "onload执行成功！"
+dont-have-item-bore: "&c镶嵌孔没有物品！"
+item-not-found: "&c没有找到指定的物品！"
+args-error: "&c参数错误！"
+item-left-click-cool-down: "&c这个物品的左键释放冷却中！" # ~是当前冷却的变量 @是魔咒名的变量
+item-right-click-cool-down: "&c这个物品的右键释放冷却中！"
+item-shift-left-click-cool-down: "&c这个物品的Shift+左键释放冷却中！"
+item-shift-right-click-cool-down: "&c这个物品的Shift+右键释放冷却中！"
+load-data: "&a数据加载成功！"
+hook-start: "&a挂钩开始！"
+hook-info: "§8挂钩仅用于提供更多功能,不挂钩不影响插件正常使用！"
+hook-finish: "&a挂钩完成！"
+register-listener: "&a注册监听器成功！"
+register-command: "&a注册指令成功！"
+timer-init-start: "&a计时器初始化开始！"
+trigger-init-start: "&a触发器初始化开始！"
+onload-spell-init-start: "&aonload魔咒开始！"
+import-spell-init-start: "&a导入魔咒开始！"
+context-init: "&a上下文初始化完成！"
+buff-init: "&aBuff初始化完成！"
+cooldown-init: "&a冷却初始化完成！"
+trigger-not-exist: "&c触发器不存在！"
+trigger-register: "&a触发器 ~ 注册成功！" # ~是触发器名的变量
+coding-clear: "&a清除编码数据上下文成功！"
+hook-success: "&a~ Hook成功！" # ~是触发器名的变量
+hook-fail: "&c~ Hook失败！" # ~是触发器名的变量
+timer-register: "&a计时器 ~ 注册成功！" # ~是计时器名的变量
