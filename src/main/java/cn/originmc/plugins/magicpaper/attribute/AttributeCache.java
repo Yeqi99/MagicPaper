@@ -1,11 +1,14 @@
 package cn.originmc.plugins.magicpaper.attribute;
 
+import cn.origincraft.magic.function.results.NumberResult;
+import cn.origincraft.magic.utils.ResultUtils;
 import cn.originmc.plugins.magicpaper.MagicPaper;
 import cn.originmc.plugins.magicpaper.data.attribute.MagicAttribute;
 import cn.originmc.plugins.magicpaper.data.manager.AttributeManager;
 import cn.originmc.plugins.magicpaper.util.item.MagicItem;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.Map;
@@ -79,59 +82,66 @@ public class AttributeCache {
         for (String slot : slots.split(" ")) {
             switch (slot) {
                 case "mh": {
-                    MagicItem magicItem = new MagicItem(player.getInventory().getItemInMainHand());
-                    if (magicItem.isNull() || magicItem.isAir()){
+                    ItemStack itemStack = player.getInventory().getItemInMainHand();
+                    if (itemStack.isEmpty()) {
                         continue;
                     }
+                    MagicItem magicItem = new MagicItem(itemStack);
                     value += magicItem.getAttributeValueBySlot(attributeName, slot);
                     break;
                 }
                 case "oh": {
-                    MagicItem magicItem = new MagicItem(player.getInventory().getItemInOffHand());
-                    if (magicItem.isNull() || magicItem.isAir()){
+                    ItemStack itemStack = player.getInventory().getItemInOffHand();
+                    if (itemStack.isEmpty()) {
                         continue;
                     }
+                    MagicItem magicItem = new MagicItem(itemStack);
                     value += magicItem.getAttributeValueBySlot(attributeName, slot);
                     break;
                 }
                 case "h": {
-                    MagicItem magicItem = new MagicItem(player.getInventory().getHelmet());
-                    if (magicItem.isNull() || magicItem.isAir()){
+                    ItemStack itemStack = player.getInventory().getHelmet();
+                    if (itemStack == null || itemStack.isEmpty()) {
                         continue;
                     }
+                    MagicItem magicItem = new MagicItem(itemStack);
                     value += magicItem.getAttributeValueBySlot(attributeName, slot);
                     break;
                 }
                 case "c": {
-                    MagicItem magicItem = new MagicItem(player.getInventory().getChestplate());
-                    if (magicItem.isNull() || magicItem.isAir()){
+                    ItemStack itemStack = player.getInventory().getChestplate();
+                    if (itemStack == null || itemStack.isEmpty()) {
                         continue;
                     }
+                    MagicItem magicItem = new MagicItem(itemStack);
                     value += magicItem.getAttributeValueBySlot(attributeName, slot);
                     break;
                 }
                 case "l": {
-                    MagicItem magicItem = new MagicItem(player.getInventory().getLeggings());
-                    if (magicItem.isNull() || magicItem.isAir()){
+                    ItemStack itemStack = player.getInventory().getLeggings();
+                    if (itemStack == null || itemStack.isEmpty()) {
                         continue;
                     }
+                    MagicItem magicItem = new MagicItem(itemStack);
                     value += magicItem.getAttributeValueBySlot(attributeName, slot);
                     break;
                 }
                 case "b": {
-                    MagicItem magicItem = new MagicItem(player.getInventory().getBoots());
-                    if (magicItem.isNull() || magicItem.isAir()){
+                    ItemStack itemStack = player.getInventory().getBoots();
+                    if (itemStack == null || itemStack.isEmpty()) {
                         continue;
                     }
+                    MagicItem magicItem = new MagicItem(itemStack);
                     value += magicItem.getAttributeValueBySlot(attributeName, slot);
                     break;
                 }
                 default: {
                     int index = Integer.parseInt(slot);
-                    MagicItem magicItem = new MagicItem(player.getInventory().getItem(index));
-                    if (magicItem.isNull() || magicItem.isAir()){
+                    ItemStack itemStack = player.getInventory().getItem(index);
+                    if (itemStack == null || itemStack.isEmpty()) {
                         continue;
                     }
+                    MagicItem magicItem = new MagicItem(itemStack);
                     value += magicItem.getAttributeValueBySlot(attributeName, slot);
                     break;
                 }
@@ -139,7 +149,12 @@ public class AttributeCache {
         }
 
         if (addDataEntity) {
-            value += (double) MagicPaper.dataEntityManager.getData(player.getUniqueId().toString(), attributeName);
+            Object object= MagicPaper.dataEntityManager.getData(player.getUniqueId().toString(), attributeName);
+            if (object instanceof Double){
+                value+=(double) object;
+            }else if (object instanceof String){
+                value+=Double.parseDouble((String) object);
+            }
         }
         return value;
     }
@@ -148,65 +163,77 @@ public class AttributeCache {
         double value = 0;
         switch (slot) {
             case "mh": {
-                MagicItem magicItem = new MagicItem(player.getInventory().getItemInMainHand());
-                if (magicItem.isNull() || magicItem.isAir()){
+                ItemStack itemStack = player.getInventory().getItemInMainHand();
+                if (itemStack.isEmpty()) {
                     return 0;
                 }
-                value = magicItem.getAttributeValueBySlot(attributeName, slot);
+                MagicItem magicItem = new MagicItem(itemStack);
+                value += magicItem.getAttributeValueBySlot(attributeName, slot);
                 break;
             }
             case "oh": {
-                MagicItem magicItem = new MagicItem(player.getInventory().getItemInOffHand());
-                if (magicItem.isNull() || magicItem.isAir()){
+                ItemStack itemStack = player.getInventory().getItemInOffHand();
+                if (itemStack.isEmpty()) {
                     return 0;
                 }
-                value = magicItem.getAttributeValueBySlot(attributeName, slot);
+                MagicItem magicItem = new MagicItem(itemStack);
+                value += magicItem.getAttributeValueBySlot(attributeName, slot);
                 break;
             }
             case "h": {
-                MagicItem magicItem = new MagicItem(player.getInventory().getHelmet());
-                if (magicItem.isNull() || magicItem.isAir()){
+                ItemStack itemStack = player.getInventory().getHelmet();
+                if (itemStack == null || itemStack.isEmpty()) {
                     return 0;
                 }
-                value = magicItem.getAttributeValueBySlot(attributeName, slot);
+                MagicItem magicItem = new MagicItem(itemStack);
+                value += magicItem.getAttributeValueBySlot(attributeName, slot);
                 break;
             }
             case "c": {
-                MagicItem magicItem = new MagicItem(player.getInventory().getChestplate());
-                if (magicItem.isNull() || magicItem.isAir()){
+                ItemStack itemStack = player.getInventory().getChestplate();
+                if (itemStack == null || itemStack.isEmpty()) {
                     return 0;
                 }
-                value = magicItem.getAttributeValueBySlot(attributeName, slot);
+                MagicItem magicItem = new MagicItem(itemStack);
+                value += magicItem.getAttributeValueBySlot(attributeName, slot);
                 break;
             }
             case "l": {
-                MagicItem magicItem = new MagicItem(player.getInventory().getLeggings());
-                if (magicItem.isNull() || magicItem.isAir()){
+                ItemStack itemStack = player.getInventory().getLeggings();
+                if (itemStack == null || itemStack.isEmpty()) {
                     return 0;
                 }
-                value = magicItem.getAttributeValueBySlot(attributeName, slot);
+                MagicItem magicItem = new MagicItem(itemStack);
+                value += magicItem.getAttributeValueBySlot(attributeName, slot);
                 break;
             }
             case "b": {
-                MagicItem magicItem = new MagicItem(player.getInventory().getBoots());
-                if (magicItem.isNull() || magicItem.isAir()){
+                ItemStack itemStack = player.getInventory().getBoots();
+                if (itemStack == null || itemStack.isEmpty()) {
                     return 0;
                 }
-                value = magicItem.getAttributeValueBySlot(attributeName, slot);
+                MagicItem magicItem = new MagicItem(itemStack);
+                value += magicItem.getAttributeValueBySlot(attributeName, slot);
                 break;
             }
             default: {
                 int index = Integer.parseInt(slot);
-                MagicItem magicItem = new MagicItem(player.getInventory().getItem(index));
-                if (magicItem.isNull() || magicItem.isAir()){
+                ItemStack itemStack = player.getInventory().getItem(index);
+                if (itemStack == null || itemStack.isEmpty()) {
                     return 0;
                 }
-                value = magicItem.getAttributeValueBySlot(attributeName, slot);
+                MagicItem magicItem = new MagicItem(itemStack);
+                value += magicItem.getAttributeValueBySlot(attributeName, slot);
                 break;
             }
         }
         if (addDataEntity) {
-            value += (double) MagicPaper.dataEntityManager.getData(player.getUniqueId().toString(), attributeName);
+            Object object= MagicPaper.dataEntityManager.getData(player.getUniqueId().toString(), attributeName);
+            if (object instanceof Double){
+                value+=(double) object;
+            }else if (object instanceof String){
+                value+=Double.parseDouble((String) object);
+            }
         }
         return value;
     }

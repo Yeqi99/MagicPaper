@@ -98,6 +98,10 @@ public final class MagicPaper extends JavaPlugin {
         return magicGuiManager;
     }
 
+    public static void setMagicGuiManager(MagicGuiManager magicGuiManager) {
+        MagicPaper.magicGuiManager = magicGuiManager;
+    }
+
     public static BossBarManager getBossBarManager() {
         return bossBarManager;
     }
@@ -109,37 +113,49 @@ public final class MagicPaper extends JavaPlugin {
 
     @Override
     public void onEnable() {
+        // 初始化插件实例
+        instance = this;
         int pluginId = 19713;
 
         // 序列化类注册
         serializationReg();
-
+        getInstance().saveDefaultConfig();
         Metrics metrics = new Metrics(this, pluginId);
         if (getConfig().getBoolean("bungee-cord-mode", false)) {
             bungeeCordListener = new BungeeCordListener(this);
         }
-        // 初始化插件实例
-        instance = this;
+        magicGuiManager = new MagicGuiManager();
+        // 加载数据
+        loadData();
         // 初始化发送器
         sender = new Sender(this);
-
+        // 初始化魔法管理器
+        initMagicManager();
+        MagicPaper.getSender().sendToLogger(LangData.get(MagicPaper.getLang(), "hook-start", "§a[§bMagicPaper§a] §e开始挂钩插件"));
+        MagicPaper.getSender().sendToLogger(LangData.get(MagicPaper.getLang(), "hook-info", "§8挂钩仅用于提供更多功能,不挂钩不影响插件正常使用"));
+        ProtocolLibHook.hook();
+        PlaceholderAPIHook.hook();
+        LuckPermsHook.hook();
+        AbolethplusHook.hook();
+        MythicMobsHook.hook();
+        ItemsAdderHook.hook();
+        PlayerPointsHook.hook();
+        VaultHook.hook();
+        RemoteKeyboardBukkitHook.hook();
+        EpicCraftingsPlusHook.hook();
+        AuthMeHook.hook();
+        McBorderHook.hook();
+        AdyeshachHook.hook();
+        MagicPaper.getSender().sendToLogger(LangData.get(MagicPaper.getLang(), "hook-finish", "§a[§bMagicPaper§a] §e挂钩完成"));
+        // 保存默认配置
+        saveRes();
         // 初始化数据管理器
         dataEntityManager = new DataEntityManager();
         // 加载数据实体数据
         dataEntityManager.load();
 
-        // 保存默认配置
-        saveRes();
-        // 初始化魔法管理器
-        initMagicManager();
-        // 初始化Gui管理器
-        magicGuiManager = new MagicGuiManager();
-        // 初始化属性缓存
-        attributeCache = new AttributeCache();
-        // 加载数据
-        loadData();
-        // 初始化魔法管理器
-        initMagicManager();
+
+
         // 加载全局上下文
         loadContext();
         MagicPaper.getSender().sendToLogger(LangData.get(MagicPaper.getLang(), "context-init", "§a[§bMagicPaper§a] §e全局上下文初始化完成"));
@@ -149,13 +165,12 @@ public final class MagicPaper extends JavaPlugin {
         MagicPaper.getSender().sendToLogger(LangData.get(MagicPaper.getLang(), "onload-spell-init-start", "§a[§bMagicPaper§a] §e执行onload魔咒..."));
         // 初始化冷却管理器
         coolDownManager = new CoolDownManager();
+        MagicPaper.getSender().sendToLogger(LangData.get(MagicPaper.getLang(), "cooldown-init", "§a[§bMagicPaper§a] §e冷却管理器初始化完成"));
         // 初始化Buff管理器
         magicBuffManager = new MagicBuffManager();
+        MagicPaper.getSender().sendToLogger(LangData.get(MagicPaper.getLang(), "buff-init", "§a[§bMagicPaper§a] §eBuff管理器初始化完成"));
         // 初始化BossBar管理器
         bossBarManager = new BossBarManager();
-        hook();
-        MagicPaper.getSender().sendToLogger(LangData.get(MagicPaper.getLang(), "cooldown-init", "§a[§bMagicPaper§a] §e冷却管理器初始化完成"));
-        MagicPaper.getSender().sendToLogger(LangData.get(MagicPaper.getLang(), "buff-init", "§a[§bMagicPaper§a] §eBuff管理器初始化完成"));
         // 注册命令
         registerCommand();
         // 注册监听器
@@ -192,10 +207,10 @@ public final class MagicPaper extends JavaPlugin {
         magicManager = new MagicManager();
         // 注册魔法函数
         if (enableExtendedSyntax("system")) {
-            FunctionRegister.regDefault(getMagicManager());
+            FunctionRegister.regDefault(magicManager);
         }
         if (enableExtendedSyntax("paper")) {
-            cn.originmc.plugins.magicpaper.magic.FunctionRegister.register(getMagicManager());
+            cn.originmc.plugins.magicpaper.magic.FunctionRegister.register(magicManager);
         }
     }
 
@@ -220,7 +235,7 @@ public final class MagicPaper extends JavaPlugin {
     }
 
     public static String getLang() {
-        return getInstance().getConfig().getString("lang");
+        return getInstance().getConfig().getString("lang", "English");
     }
 
     public void registerCommand() {
@@ -259,7 +274,6 @@ public final class MagicPaper extends JavaPlugin {
     }
 
     public void saveRes() {
-        getInstance().saveDefaultConfig();
         if (getConfig().getBoolean("default-file", true)) {
             getInstance().saveResource("lang/Chinese.yml", false);
             getInstance().saveResource("lang/English.yml", false);
@@ -300,25 +314,6 @@ public final class MagicPaper extends JavaPlugin {
         }
     }
 
-    public void hook() {
-        MagicPaper.getSender().sendToLogger(LangData.get(MagicPaper.getLang(), "hook-start", "§a[§bMagicPaper§a] §e开始挂钩插件"));
-        MagicPaper.getSender().sendToLogger(LangData.get(MagicPaper.getLang(), "hook-info", "§8挂钩仅用于提供更多功能,不挂钩不影响插件正常使用"));
-        ProtocolLibHook.hook();
-        PlaceholderAPIHook.hook();
-        LuckPermsHook.hook();
-        AbolethplusHook.hook();
-        MythicMobsHook.hook();
-        ItemsAdderHook.hook();
-        PlayerPointsHook.hook();
-        VaultHook.hook();
-        RemoteKeyboardBukkitHook.hook();
-        EpicCraftingsPlusHook.hook();
-        AuthMeHook.hook();
-        McBorderHook.hook();
-        AdyeshachHook.hook();
-        MagicPaper.getSender().sendToLogger(LangData.get(MagicPaper.getLang(), "hook-finish", "§a[§bMagicPaper§a] §e挂钩完成"));
-    }
-
     public static void loadData() {
         // 加载魔咒数据
         MagicData.load();
@@ -333,8 +328,9 @@ public final class MagicPaper extends JavaPlugin {
         // 加载GUI数据
         GuiData.load();
         // 初始化属性缓存
+        attributeCache = new AttributeCache();
+        // 初始化属性缓存
         attributeCache.load();
-        MagicPaper.getSender().sendToLogger(LangData.get(MagicPaper.getLang(), "load-data", "§a[§bMagicPaper§a] §e数据加载完成"));
     }
 
     public static boolean enableExtendedSyntax(String id) {

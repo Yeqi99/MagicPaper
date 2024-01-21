@@ -51,7 +51,7 @@ data-entity:
 #    user: "username"
 #    password: "password"
 
-attribute-check-slots: "mh oh h c l b";
+attribute-check-slots: "mh oh h c l b"
 
 attribute-cache-auto-update:
   enable: true
