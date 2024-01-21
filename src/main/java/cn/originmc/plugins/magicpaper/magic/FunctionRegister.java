@@ -17,6 +17,8 @@ import cn.originmc.plugins.magicpaper.magic.function.cooldown.AddCoolDownFunctio
 import cn.originmc.plugins.magicpaper.magic.function.cooldown.CheckCoolDownFunction;
 import cn.originmc.plugins.magicpaper.magic.function.cooldown.GETCDFunction;
 import cn.originmc.plugins.magicpaper.magic.function.cooldown.GOCDFunction;
+import cn.originmc.plugins.magicpaper.magic.function.dataentity.DataEntityFunction;
+import cn.originmc.plugins.magicpaper.magic.function.dataentity.DataEntityRemoverFunction;
 import cn.originmc.plugins.magicpaper.magic.function.gui.*;
 import cn.originmc.plugins.magicpaper.magic.function.gui.databuttons.OnlinePlayerButtonsFunction;
 import cn.originmc.plugins.magicpaper.magic.function.hook.abolethplus.*;
@@ -53,6 +55,9 @@ public class FunctionRegister {
 
     public static void register(MagicManager magicManager) {
         FunctionManager fm = magicManager.getFastExpression().getFunctionManager();
+        // dataentity
+        fm.register(new DataEntityFunction(),"data");
+        fm.register(new DataEntityRemoverFunction(),"dataremover");
         // hook.authme
         fm.register(new IsLoggedFunction(), "logged");
         // hook.mcborder

@@ -35,7 +35,9 @@ public class DataEntity implements ConfigurationSerializable {
     public void setId(String id) {
         this.id = id;
     }
-
+    public boolean hasData(String id){
+        return data.containsKey(id);
+    }
     @Override
     public @NotNull Map<String, Object> serialize() {
         Map<String, Object> result = new HashMap<>(data);

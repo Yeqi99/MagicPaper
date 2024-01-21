@@ -7,6 +7,7 @@ import cn.origincraft.magic.manager.MagicPackage;
 import cn.origincraft.magic.object.ContextMap;
 import cn.origincraft.magic.object.NormalContext;
 import cn.origincraft.magic.object.SpellContext;
+import cn.originmc.plugins.magicpaper.attribute.AttributeCache;
 import cn.originmc.plugins.magicpaper.bossbar.BossBarManager;
 import cn.originmc.plugins.magicpaper.buff.BuffListener;
 import cn.originmc.plugins.magicpaper.buff.MagicBuffManager;
@@ -18,10 +19,12 @@ import cn.originmc.plugins.magicpaper.data.config.LangData;
 import cn.originmc.plugins.magicpaper.data.config.MagicData;
 import cn.originmc.plugins.magicpaper.data.gui.GuiData;
 import cn.originmc.plugins.magicpaper.data.item.format.ItemFormatData;
+import cn.originmc.plugins.magicpaper.data.manager.AttributeManager;
 import cn.originmc.plugins.magicpaper.data.manager.TimerDataManager;
 import cn.originmc.plugins.magicpaper.data.manager.TriggerDataManager;
 import cn.originmc.plugins.magicpaper.data.timer.TimerData;
 import cn.originmc.plugins.magicpaper.data.trigger.TriggerData;
+import cn.originmc.plugins.magicpaper.dataentity.DataEntity;
 import cn.originmc.plugins.magicpaper.dataentity.DataEntityManager;
 import cn.originmc.plugins.magicpaper.gui.MagicGuiListener;
 import cn.originmc.plugins.magicpaper.gui.MagicGuiManager;
@@ -34,8 +37,12 @@ import cn.originmc.plugins.magicpaper.listener.ItemVariableRefreshListener;
 import cn.originmc.plugins.magicpaper.trigger.MagicPaperTriggerManager;
 import cn.originmc.plugins.magicpaper.util.error.PaperErrorUtils;
 import cn.originmc.plugins.magicpaper.util.text.Sender;
+import org.bukkit.configuration.serialization.ConfigurationSerialization;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
 import java.util.List;
 import java.util.Objects;
 
@@ -52,6 +59,8 @@ public final class MagicPaper extends JavaPlugin {
     public static BossBarManager bossBarManager;
 
     public static DataEntityManager dataEntityManager;
+
+    public static AttributeCache attributeCache;
 
 
     public static JavaPlugin getInstance() {
@@ -100,6 +109,10 @@ public final class MagicPaper extends JavaPlugin {
     @Override
     public void onEnable() {
         int pluginId = 19713;
+
+        // 序列化类注册
+        serializationReg();
+
         Metrics metrics = new Metrics(this, pluginId);
         if (getConfig().getBoolean("bungee-cord-mode", false)) {
             bungeeCordListener = new BungeeCordListener(this);
@@ -156,11 +169,18 @@ public final class MagicPaper extends JavaPlugin {
         TimerDataManager.initConfigTimer();
 
         // 开启异步定时器，定时存储数据实体
-        if (getConfig().getBoolean("data-entity-auto-save.enable",true)){
-            dataEntityManager.setSaveInterval(getConfig().getInt("data-entity-auto-save.interval",600));
+        if (getConfig().getBoolean("data-entity-auto-save.enable", true)) {
+            dataEntityManager.setSaveInterval(getConfig().getInt("data-entity-auto-save.interval", 600));
             dataEntityManager.startAsyncSaveTask();
         }
-
+        ;
+        // 开启异步定时器，定时统计玩家数据并缓存
+        if (getConfig().getBoolean("attribute-cache-auto-update.enable", true)) {
+            dataEntityManager.setSaveInterval(getConfig().getInt("attribute-cache-auto-update.interval", 600));
+            attributeCache.startAsyncSaveTask();
+        }
+        // 初始化属性缓存
+        attributeCache = new AttributeCache();
 
         sender.sendOnEnableMsgToLogger("MagicPaper", "Yeqi", getVersion(), "Public");
     }
@@ -291,6 +311,7 @@ public final class MagicPaper extends JavaPlugin {
         EpicCraftingsPlusHook.hook();
         AuthMeHook.hook();
         McBorderHook.hook();
+        AdyeshachHook.hook();
         MagicPaper.getSender().sendToLogger(LangData.get(MagicPaper.getLang(), "hook-finish", "§a[§bMagicPaper§a] §e挂钩完成"));
     }
 
@@ -307,6 +328,8 @@ public final class MagicPaper extends JavaPlugin {
         TimerData.load();
         // 加载GUI数据
         GuiData.load();
+        // 初始化属性缓存
+        attributeCache.load();
         MagicPaper.getSender().sendToLogger(LangData.get(MagicPaper.getLang(), "load-data", "§a[§bMagicPaper§a] §e数据加载完成"));
     }
 
@@ -334,6 +357,46 @@ public final class MagicPaper extends JavaPlugin {
         magicPackage = new MagicPackage("paper.import");
         magicPackage.loadFiles(getInstance().getDataFolder() + "/import");
         magicPackage.importPackage(contextMap, getMagicManager());
+    }
+
+    public void serializationReg() {
+        ConfigurationSerialization.registerClass(DataEntity.class);
+    }
+
+
+    public static String getDataEntityType() {
+        return getInstance().getConfig().getString("data-entity.type", "yaml").toLowerCase();
+    }
+
+    public static Connection tryConnectMysql(int tryAmount) {
+        String url = getInstance().getConfig().getString("data-entity.database.url", "");
+        String user = getInstance().getConfig().getString("data-entity.database.user");
+        String password = getInstance().getConfig().getString("data-entity.database.password");
+
+        while (tryAmount > 0) {
+            try {
+                return DriverManager.getConnection(url, user, password);
+            } catch (SQLException e) {
+                tryAmount--;
+                if (tryAmount > 0) {
+                    // 如果还有尝试次数，等待一段时间后再次尝试
+                    try {
+                        Thread.sleep(5000); // 例如，等待5秒
+                    } catch (InterruptedException ie) {
+                        Thread.currentThread().interrupt(); // 保留中断状态
+                    }
+                } else {
+                    getSender().sendToLogger("Trying connect mysql fail");
+                    return null;
+                }
+            }
+        }
+        return null;
+    }
+
+
+    public static String getCheckSlots() {
+        return getInstance().getConfig().getString("attribute-check-slots", "mh oh h c l b");
     }
 
 }

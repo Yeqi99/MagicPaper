@@ -248,5 +248,10 @@
             <version>3.0.3</version>
             <scope>provided</scope>
         </dependency>
+        <dependency>
+            <groupId>cn.originmc.api</groupId>
+            <artifactId>Adyeshach</artifactId>
+            <version>1.0.0</version>
+        </dependency>
     </dependencies>
 </project>

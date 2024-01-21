@@ -39,10 +39,20 @@ item-trigger-listener: true
 buff-system-enable: true
 # gui系统开关
 gui-listener: true
-<<<<<<< HEAD
 
 data-entity-auto-save:
   enable: true
   interval: 600
-=======
->>>>>>> c7332d9b58bef5c8725eaaa76d2c292191fa7017
+
+data-entity:
+  type: yaml # 目前版本只支持yaml
+#  database:
+#    url: "jdbc:mysql://localhost:3306/your_database"
+#    user: "username"
+#    password: "password"
+
+attribute-check-slots: "mh oh h c l b";
+
+attribute-cache-auto-update:
+  enable: true
+  interval: 20

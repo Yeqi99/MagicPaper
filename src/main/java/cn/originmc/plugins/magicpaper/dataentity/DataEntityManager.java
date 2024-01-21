@@ -5,6 +5,7 @@ import cn.originmc.tools.minecraft.yamlcore.object.YamlElement;
 import cn.originmc.tools.minecraft.yamlcore.object.YamlManager;
 import org.bukkit.scheduler.BukkitRunnable;
 
+import java.sql.Connection;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -48,11 +49,18 @@ public class DataEntityManager {
         saveTask.runTaskTimerAsynchronously(MagicPaper.getInstance(), 0L, saveInterval);
     }
 
-
     YamlManager yamlManager;
     Map<String, DataEntity> dataEntityMap = new ConcurrentHashMap<>();
 
     public DataEntityManager() {
+    }
+
+    public boolean hasDataEntity(String id) {
+        return dataEntityMap.containsKey(id);
+    }
+
+    public boolean hasData(String entityId, String dataId) {
+        return dataEntityMap.get(entityId).hasData(dataId);
     }
 
     public void putData(String entityId, String dataId, Object data) {
@@ -99,41 +107,48 @@ public class DataEntityManager {
 
     public void load() {
         dataEntityMap.clear();
-        yamlManager = new YamlManager(MagicPaper.getInstance(), "data", true);
-        for (YamlElement yamlElement : yamlManager.getYamlElements()) {
-            DataEntity dataEntity = (DataEntity) yamlElement.getYml().get("data");
-            if (dataEntity == null) {
-                MagicPaper.getSender().sendToLogger("DataEntity " + yamlElement.getId() + " error！");
-                continue;
+        if (MagicPaper.getDataEntityType().equals("yaml")) {
+            yamlManager = new YamlManager(MagicPaper.getInstance(), "data", true);
+            for (YamlElement yamlElement : yamlManager.getYamlElements()) {
+                DataEntity dataEntity = (DataEntity) yamlElement.getYml().get("data");
+                if (dataEntity == null) {
+                    MagicPaper.getSender().sendToLogger("DataEntity " + yamlElement.getId() + " error！");
+                    continue;
+                }
+                dataEntityMap.put(dataEntity.getId(), dataEntity);
             }
-            dataEntityMap.put(dataEntity.getId(), dataEntity);
         }
+
     }
 
     public void saveAll() {
-        for (Map.Entry<String, DataEntity> entry : dataEntityMap.entrySet()) {
-            if (yamlManager.hasElement(entry.getKey())) {
-                yamlManager.getYaml(entry.getKey()).set("data", entry.getValue());
-            } else {
-                yamlManager.create(entry.getKey());
-                yamlManager.getYaml(entry.getKey()).set("data", entry.getValue());
+        if (MagicPaper.getDataEntityType().equals("yaml")) {
+            for (Map.Entry<String, DataEntity> entry : dataEntityMap.entrySet()) {
+                if (yamlManager.hasElement(entry.getKey())) {
+                    yamlManager.getYaml(entry.getKey()).set("data", entry.getValue());
+                } else {
+                    yamlManager.create(entry.getKey());
+                    yamlManager.getYaml(entry.getKey()).set("data", entry.getValue());
+                }
             }
+            yamlManager.saveAll();
+            MagicPaper.getSender().sendToLogger("&aSave all dataEntity to yaml successful!");
         }
-        yamlManager.saveAll();
-        MagicPaper.getSender().sendToLogger("&aSave all dataEntity successful!");
     }
 
     public void save(String id) {
         if (!dataEntityMap.containsKey(id)) {
             return;
         }
-        DataEntity dataEntity = dataEntityMap.get(id);
-        if (yamlManager.hasElement(id)) {
-            yamlManager.getYaml(id).set("data", dataEntity);
-        } else {
-            yamlManager.create(id);
-            yamlManager.getYaml(id).set("data", dataEntity);
+        if (MagicPaper.getDataEntityType().equals("yaml")) {
+            DataEntity dataEntity = dataEntityMap.get(id);
+            if (yamlManager.hasElement(id)) {
+                yamlManager.getYaml(id).set("data", dataEntity);
+            } else {
+                yamlManager.create(id);
+                yamlManager.getYaml(id).set("data", dataEntity);
+            }
+            yamlManager.save(id);
         }
-        yamlManager.save(id);
     }
 }

@@ -3,15 +3,39 @@ package cn.originmc.plugins.magicpaper.magic.function.dataentity;
 import cn.origincraft.magic.expression.functions.FunctionResult;
 import cn.origincraft.magic.function.ArgsFunction;
 import cn.origincraft.magic.function.ArgsSetting;
+import cn.origincraft.magic.function.results.NullResult;
 import cn.origincraft.magic.object.SpellContext;
+import cn.origincraft.magic.utils.ResultUtils;
+import cn.originmc.plugins.magicpaper.MagicPaper;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class DataEntityRemoverFunction extends ArgsFunction {
     @Override
-    public FunctionResult whenFunctionCalled(SpellContext spellContext, List<FunctionResult> list, ArgsSetting argsSetting) {
-        return null;
+    public FunctionResult whenFunctionCalled(SpellContext spellContext, List<FunctionResult> args, ArgsSetting argsSetting) {
+        String id = argsSetting.getId();
+        switch (id){
+            case "A":{
+                String dataEntityId = args.get(0).toString();
+                String dataId = args.get(1).toString();
+                if(!MagicPaper.dataEntityManager.hasDataEntity(dataEntityId)){
+                    return new NullResult();
+                }
+                if (!MagicPaper.dataEntityManager.hasData(dataEntityId,dataId)){
+                    return new NullResult();
+                }
+                Object o = MagicPaper.dataEntityManager.getData(dataEntityId,dataId);
+                MagicPaper.dataEntityManager.removeData(dataEntityId,dataId);
+                return ResultUtils.reduction(o);
+            }
+            case "B":{
+                String dataEntityId = args.get(0).toString();
+                MagicPaper.dataEntityManager.removeDataEntity(dataEntityId);
+                return new NullResult();
+            }
+        }
+        return new NullResult();
     }
 
     @Override
