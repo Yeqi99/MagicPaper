@@ -7,7 +7,7 @@
     <groupId>cn.originmc.plugins</groupId>
     <artifactId>MagicPaper</artifactId>
 
-    <version>1.5.14-SNAPSHOT</version>
+    <version>1.5.15-SNAPSHOT</version>
 
     <packaging>jar</packaging>
 
@@ -252,6 +252,7 @@
             <groupId>cn.originmc.api</groupId>
             <artifactId>Adyeshach</artifactId>
             <version>1.0.0</version>
+            <scope>provided</scope>
         </dependency>
     </dependencies>
 </project>

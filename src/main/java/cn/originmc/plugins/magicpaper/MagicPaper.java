@@ -19,7 +19,6 @@ import cn.originmc.plugins.magicpaper.data.config.LangData;
 import cn.originmc.plugins.magicpaper.data.config.MagicData;
 import cn.originmc.plugins.magicpaper.data.gui.GuiData;
 import cn.originmc.plugins.magicpaper.data.item.format.ItemFormatData;
-import cn.originmc.plugins.magicpaper.data.manager.AttributeManager;
 import cn.originmc.plugins.magicpaper.data.manager.TimerDataManager;
 import cn.originmc.plugins.magicpaper.data.manager.TriggerDataManager;
 import cn.originmc.plugins.magicpaper.data.timer.TimerData;
@@ -29,6 +28,8 @@ import cn.originmc.plugins.magicpaper.dataentity.DataEntityManager;
 import cn.originmc.plugins.magicpaper.gui.MagicGuiListener;
 import cn.originmc.plugins.magicpaper.gui.MagicGuiManager;
 import cn.originmc.plugins.magicpaper.hook.*;
+import cn.originmc.plugins.magicpaper.hook.placeholderapi.AttributeExpansion;
+import cn.originmc.plugins.magicpaper.hook.placeholderapi.DataEntityExpansion;
 import cn.originmc.plugins.magicpaper.hook.placeholderapi.SpellExpansion;
 import cn.originmc.plugins.magicpaper.listener.AdditionalItemListener;
 import cn.originmc.plugins.magicpaper.listener.CodingListener;
@@ -133,6 +134,8 @@ public final class MagicPaper extends JavaPlugin {
         initMagicManager();
         // 初始化Gui管理器
         magicGuiManager = new MagicGuiManager();
+        // 初始化属性缓存
+        attributeCache = new AttributeCache();
         // 加载数据
         loadData();
         // 初始化魔法管理器
@@ -173,14 +176,13 @@ public final class MagicPaper extends JavaPlugin {
             dataEntityManager.setSaveInterval(getConfig().getInt("data-entity-auto-save.interval", 600));
             dataEntityManager.startAsyncSaveTask();
         }
-        ;
+
         // 开启异步定时器，定时统计玩家数据并缓存
         if (getConfig().getBoolean("attribute-cache-auto-update.enable", true)) {
             dataEntityManager.setSaveInterval(getConfig().getInt("attribute-cache-auto-update.interval", 600));
             attributeCache.startAsyncSaveTask();
         }
-        // 初始化属性缓存
-        attributeCache = new AttributeCache();
+
 
         sender.sendOnEnableMsgToLogger("MagicPaper", "Yeqi", getVersion(), "Public");
     }
@@ -214,8 +216,7 @@ public final class MagicPaper extends JavaPlugin {
     }
 
     public static String getVersion() {
-
-        return "1.5.14";
+        return "1.5.15";
     }
 
     public static String getLang() {
@@ -241,6 +242,8 @@ public final class MagicPaper extends JavaPlugin {
 
         if (PlaceholderAPIHook.status) {
             new SpellExpansion().register();
+            new AttributeExpansion().register();
+            new DataEntityExpansion().register();
         }
         // protocolLib修改物品发包解析监听器
         if (ProtocolLibHook.status) {
@@ -281,6 +284,7 @@ public final class MagicPaper extends JavaPlugin {
             getInstance().saveResource("trigger/AsyncPlayerChatTrigger.yml", false);
             getInstance().saveResource("trigger/PlayerRespawnTrigger.yml", false);
             getInstance().saveResource("gui/example.yml", false);
+            getInstance().saveResource("attribute/attack.yml", false);
             if (getConfig().getBoolean("bungee-cord-mode", false)) {
                 getInstance().saveResource("trigger/BungeeCordMessageTrigger.yml", false);
             }

@@ -17,7 +17,7 @@ import org.bukkit.World;
 import org.bukkit.inventory.ItemStack;
 
 public class AdyeshachManager {
-//
+
 //    public static AdyTextDisplay spawnTextDisplay(World world, Location location, ManagerType managerType) {
 //        // ManagerType.PERSISTENT 是持久化 重启了这个实体也在
 //        // ManagerType.TEMPORARY 不是持久化 重启了这个实体就没了

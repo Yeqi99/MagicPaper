@@ -24,14 +24,11 @@ public class SpellExpansion extends PlaceholderExpansion {
 
     @Override
     public @NotNull String getVersion() {
-        return "1.2.2";
+        return "1.5.14";
     }
 
     @Override
     public String onPlaceholderRequest(Player player, @NotNull String identifier) {
-        if (identifier==null){
-            return "";
-        }
         Spell spell = MagicDataManager.getSpell(identifier);
         if (spell==null){
             return  "";

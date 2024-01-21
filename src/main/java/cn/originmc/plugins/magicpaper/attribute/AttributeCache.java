@@ -80,37 +80,58 @@ public class AttributeCache {
             switch (slot) {
                 case "mh": {
                     MagicItem magicItem = new MagicItem(player.getInventory().getItemInMainHand());
+                    if (magicItem.isNull() || magicItem.isAir()){
+                        continue;
+                    }
                     value += magicItem.getAttributeValueBySlot(attributeName, slot);
                     break;
                 }
                 case "oh": {
                     MagicItem magicItem = new MagicItem(player.getInventory().getItemInOffHand());
+                    if (magicItem.isNull() || magicItem.isAir()){
+                        continue;
+                    }
                     value += magicItem.getAttributeValueBySlot(attributeName, slot);
                     break;
                 }
                 case "h": {
                     MagicItem magicItem = new MagicItem(player.getInventory().getHelmet());
+                    if (magicItem.isNull() || magicItem.isAir()){
+                        continue;
+                    }
                     value += magicItem.getAttributeValueBySlot(attributeName, slot);
                     break;
                 }
                 case "c": {
                     MagicItem magicItem = new MagicItem(player.getInventory().getChestplate());
+                    if (magicItem.isNull() || magicItem.isAir()){
+                        continue;
+                    }
                     value += magicItem.getAttributeValueBySlot(attributeName, slot);
                     break;
                 }
                 case "l": {
                     MagicItem magicItem = new MagicItem(player.getInventory().getLeggings());
+                    if (magicItem.isNull() || magicItem.isAir()){
+                        continue;
+                    }
                     value += magicItem.getAttributeValueBySlot(attributeName, slot);
                     break;
                 }
                 case "b": {
                     MagicItem magicItem = new MagicItem(player.getInventory().getBoots());
+                    if (magicItem.isNull() || magicItem.isAir()){
+                        continue;
+                    }
                     value += magicItem.getAttributeValueBySlot(attributeName, slot);
                     break;
                 }
                 default: {
                     int index = Integer.parseInt(slot);
                     MagicItem magicItem = new MagicItem(player.getInventory().getItem(index));
+                    if (magicItem.isNull() || magicItem.isAir()){
+                        continue;
+                    }
                     value += magicItem.getAttributeValueBySlot(attributeName, slot);
                     break;
                 }
@@ -128,37 +149,58 @@ public class AttributeCache {
         switch (slot) {
             case "mh": {
                 MagicItem magicItem = new MagicItem(player.getInventory().getItemInMainHand());
+                if (magicItem.isNull() || magicItem.isAir()){
+                    return 0;
+                }
                 value = magicItem.getAttributeValueBySlot(attributeName, slot);
                 break;
             }
             case "oh": {
                 MagicItem magicItem = new MagicItem(player.getInventory().getItemInOffHand());
+                if (magicItem.isNull() || magicItem.isAir()){
+                    return 0;
+                }
                 value = magicItem.getAttributeValueBySlot(attributeName, slot);
                 break;
             }
             case "h": {
                 MagicItem magicItem = new MagicItem(player.getInventory().getHelmet());
+                if (magicItem.isNull() || magicItem.isAir()){
+                    return 0;
+                }
                 value = magicItem.getAttributeValueBySlot(attributeName, slot);
                 break;
             }
             case "c": {
                 MagicItem magicItem = new MagicItem(player.getInventory().getChestplate());
+                if (magicItem.isNull() || magicItem.isAir()){
+                    return 0;
+                }
                 value = magicItem.getAttributeValueBySlot(attributeName, slot);
                 break;
             }
             case "l": {
                 MagicItem magicItem = new MagicItem(player.getInventory().getLeggings());
+                if (magicItem.isNull() || magicItem.isAir()){
+                    return 0;
+                }
                 value = magicItem.getAttributeValueBySlot(attributeName, slot);
                 break;
             }
             case "b": {
                 MagicItem magicItem = new MagicItem(player.getInventory().getBoots());
+                if (magicItem.isNull() || magicItem.isAir()){
+                    return 0;
+                }
                 value = magicItem.getAttributeValueBySlot(attributeName, slot);
                 break;
             }
             default: {
                 int index = Integer.parseInt(slot);
                 MagicItem magicItem = new MagicItem(player.getInventory().getItem(index));
+                if (magicItem.isNull() || magicItem.isAir()){
+                    return 0;
+                }
                 value = magicItem.getAttributeValueBySlot(attributeName, slot);
                 break;
             }
