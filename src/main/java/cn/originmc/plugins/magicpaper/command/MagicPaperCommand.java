@@ -84,10 +84,25 @@ public class MagicPaperCommand implements CommandExecutor {
             return true;
         }
         if (args[0].equalsIgnoreCase("reload")) {
+            MagicPaper.dataEntityManager.stopAsyncSaveTask();
+            MagicPaper.attributeCache.stopAsyncSaveTask();
+
             MagicPaper.getInstance().reloadConfig();
             MagicPaper.loadData();
             MagicPaper.importSpell(MagicPaper.getContext());
             MagicPaper.getSender().sendToSender(commandSender, LangData.get(MagicPaper.getLang(), "reload", "&aReloaded!"));
+
+            // 开启异步定时器，定时存储数据实体
+            if (MagicPaper.getInstance().getConfig().getBoolean("data-entity-auto-save.enable", true)) {
+                MagicPaper.dataEntityManager.setSaveInterval(MagicPaper.getInstance().getConfig().getInt("data-entity-auto-save.interval", 600));
+                MagicPaper.dataEntityManager.startAsyncSaveTask();
+            }
+
+            // 开启异步定时器，定时统计玩家数据并缓存
+            if (MagicPaper.getInstance().getConfig().getBoolean("attribute-cache-auto-update.enable", true)) {
+                MagicPaper.dataEntityManager.setSaveInterval(MagicPaper.getInstance().getConfig().getInt("attribute-cache-auto-update.interval", 600));
+                MagicPaper.attributeCache.startAsyncSaveTask();
+            }
             TriggerDataManager.reInit();
             TimerDataManager.reInit();
         } else if (args[0].equalsIgnoreCase("reloadall")) {

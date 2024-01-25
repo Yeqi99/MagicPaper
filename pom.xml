@@ -254,5 +254,17 @@
             <version>1.0.0</version>
             <scope>provided</scope>
         </dependency>
+        <dependency>
+            <groupId>cn.originmc.api</groupId>
+            <artifactId>MMOItems</artifactId>
+            <version>6.9.5</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>cn.originmc.api</groupId>
+            <artifactId>MythicLib</artifactId>
+            <version>1.6.2</version>
+            <scope>provided</scope>
+        </dependency>
     </dependencies>
 </project>

@@ -18,37 +18,45 @@ import org.bukkit.inventory.ItemStack;
 
 public class AdyeshachManager {
 
-//    public static AdyTextDisplay spawnTextDisplay(World world, Location location, ManagerType managerType) {
-//        // ManagerType.PERSISTENT 是持久化 重启了这个实体也在
-//        // ManagerType.TEMPORARY 不是持久化 重启了这个实体就没了
-//        EntityInstance entityInstance = FastAPIKt.spawnEntity(world, location, EntityTypes.TEXT_DISPLAY, managerType);
-//        return (AdyTextDisplay) entityInstance;
-//    }
-//
-//    public static AdyItemDisplay spawnItemDisplay(World world, Location location, ManagerType managerType) {
-//        // ManagerType.PERSISTENT 是持久化 重启了这个实体也在
-//        // ManagerType.TEMPORARY 不是持久化 重启了这个实体就没了
-//        EntityInstance entityInstance = FastAPIKt.spawnEntity(world, location, EntityTypes.ITEM_DISPLAY, managerType);
-//        return (AdyItemDisplay) entityInstance;
-//    }
-//
-//    public static AdyBlockDisplay spawnBlockDisplay(World world, Location location, ManagerType managerType) {
-//        // ManagerType.PERSISTENT 是持久化 重启了这个实体也在
-//        // ManagerType.TEMPORARY 不是持久化 重启了这个实体就没了
-//        EntityInstance entityInstance = FastAPIKt.spawnEntity(world, location, EntityTypes.BLOCK_DISPLAY, managerType);
-//        return (AdyBlockDisplay) entityInstance;
-//    }
-//
-//    public static AdyInteraction spawnInteraction(World world, Location location, ManagerType managerType) {
-//        // ManagerType.PERSISTENT 是持久化 重启了这个实体也在
-//        // ManagerType.TEMPORARY 不是持久化 重启了这个实体就没了
-//        EntityInstance entityInstance = FastAPIKt.spawnEntity(world, location, EntityTypes.INTERACTION, managerType);
-//        return (AdyInteraction) entityInstance;
-//    }
-//
-//    public static void allEntity() {
-//        Adyeshach.INSTANCE.api().getPublicEntityManager(ManagerType.PERSISTENT).getEntities();
-//    }
+    public static AdyTextDisplay spawnTextDisplay(World world, Location location, ManagerType managerType) {
+        // ManagerType.PERSISTENT 是持久化 重启了这个实体也在
+        // ManagerType.TEMPORARY 不是持久化 重启了这个实体就没了
+        EntityInstance entityInstance = FastAPIKt.spawnEntity(world, location, EntityTypes.TEXT_DISPLAY, managerType,(entity) ->{
+
+        });
+        return (AdyTextDisplay) entityInstance;
+    }
+
+    public static AdyItemDisplay spawnItemDisplay(World world, Location location, ManagerType managerType) {
+        // ManagerType.PERSISTENT 是持久化 重启了这个实体也在
+        // ManagerType.TEMPORARY 不是持久化 重启了这个实体就没了
+        EntityInstance entityInstance = FastAPIKt.spawnEntity(world, location, EntityTypes.ITEM_DISPLAY, managerType,(entity) ->{
+
+        });
+        return (AdyItemDisplay) entityInstance;
+    }
+
+    public static AdyBlockDisplay spawnBlockDisplay(World world, Location location, ManagerType managerType) {
+        // ManagerType.PERSISTENT 是持久化 重启了这个实体也在
+        // ManagerType.TEMPORARY 不是持久化 重启了这个实体就没了
+        EntityInstance entityInstance = FastAPIKt.spawnEntity(world, location, EntityTypes.BLOCK_DISPLAY, managerType,(entity) ->{
+
+        });
+        return (AdyBlockDisplay) entityInstance;
+    }
+
+    public static AdyInteraction spawnInteraction(World world, Location location, ManagerType managerType) {
+        // ManagerType.PERSISTENT 是持久化 重启了这个实体也在
+        // ManagerType.TEMPORARY 不是持久化 重启了这个实体就没了
+        EntityInstance entityInstance = FastAPIKt.spawnEntity(world, location, EntityTypes.INTERACTION, managerType,(entity) ->{
+
+        });
+        return (AdyInteraction) entityInstance;
+    }
+
+    public static void allEntity() {
+        Adyeshach.INSTANCE.api().getPublicEntityManager(ManagerType.PERSISTENT).getEntities();
+    }
 
 
 }

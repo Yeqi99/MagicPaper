@@ -1,6 +1,5 @@
 package cn.originmc.plugins.magicpaper.hook.placeholderapi;
 
-import cn.origincraft.magic.Magic;
 import cn.originmc.plugins.magicpaper.MagicPaper;
 import me.clip.placeholderapi.expansion.PlaceholderExpansion;
 import org.bukkit.entity.Player;

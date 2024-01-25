@@ -140,6 +140,7 @@ public final class MagicPaper extends JavaPlugin {
         MythicMobsHook.hook();
         ItemsAdderHook.hook();
         PlayerPointsHook.hook();
+        MMOItemsHook.hook();
         VaultHook.hook();
         RemoteKeyboardBukkitHook.hook();
         EpicCraftingsPlusHook.hook();

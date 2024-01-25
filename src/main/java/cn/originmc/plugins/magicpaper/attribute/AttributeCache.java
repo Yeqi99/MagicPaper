@@ -1,7 +1,5 @@
 package cn.originmc.plugins.magicpaper.attribute;
 
-import cn.origincraft.magic.function.results.NumberResult;
-import cn.origincraft.magic.utils.ResultUtils;
 import cn.originmc.plugins.magicpaper.MagicPaper;
 import cn.originmc.plugins.magicpaper.data.attribute.MagicAttribute;
 import cn.originmc.plugins.magicpaper.data.manager.AttributeManager;
@@ -11,6 +9,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
 
+import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -56,13 +55,14 @@ public class AttributeCache {
         saveTask.runTaskTimerAsynchronously(MagicPaper.getInstance(), 0L, saveInterval);
     }
 
-    public Map<String, Map<String, Double>> attributeMap = new ConcurrentHashMap<>();
+    public Map<String, Map<String, Double>> attributeMap = new HashMap<>();
 
     public AttributeCache() {
 
     }
 
     public void load() {
+        attributeMap = new ConcurrentHashMap<>();
         AttributeManager.load();
     }
 
@@ -70,13 +70,14 @@ public class AttributeCache {
         for (Player onlinePlayer : Bukkit.getOnlinePlayers()) {
             Map<String, Double> playerAttributes = new ConcurrentHashMap<>();
             for (MagicAttribute value : AttributeManager.attributeMap.values()) {
-                playerAttributes.put(value.id, getPlayerAttribute(onlinePlayer, value.id, true));
+                playerAttributes.put(value.id, getPlayerAttribute(onlinePlayer, value.id, false));
             }
             attributeMap.put(onlinePlayer.getUniqueId().toString(), playerAttributes);
         }
     }
 
     public static double getPlayerAttribute(Player player, String attributeName, boolean addDataEntity) {
+        long startTime = System.nanoTime(); // 开始时间
         double value = 0;
         String slots = MagicPaper.getCheckSlots();
         for (String slot : slots.split(" ")) {
@@ -146,16 +147,27 @@ public class AttributeCache {
                     break;
                 }
             }
+            long endTime = System.nanoTime(); // 结束时间
+            long duration = (endTime - startTime); // 计算耗时，单位为纳秒
+            MagicPaper.getSender().sendToLogger("缓存一个玩家的当前属性，未计算数据实体时耗时"+duration+"毫秒");
         }
-
+        long endTime = System.nanoTime(); // 结束时间
+        long duration = (endTime - startTime); // 计算耗时，单位为纳秒
+        MagicPaper.getSender().sendToLogger("缓存全部玩家的当前属性，未计算数据实体时耗时"+duration+"毫秒");
         if (addDataEntity) {
             Object object= MagicPaper.dataEntityManager.getData(player.getUniqueId().toString(), attributeName);
+            if (object==null){
+                return value;
+            }
             if (object instanceof Double){
                 value+=(double) object;
             }else if (object instanceof String){
                 value+=Double.parseDouble((String) object);
             }
         }
+        endTime = System.nanoTime(); // 结束时间
+        duration = (endTime - startTime); // 计算耗时，单位为纳秒
+        MagicPaper.getSender().sendToLogger("缓存全部玩家的当前属性，总体耗时"+duration+"毫秒");
         return value;
     }
 
