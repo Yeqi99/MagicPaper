@@ -29,7 +29,6 @@ import cn.originmc.plugins.magicpaper.magic.function.hook.luckperms.PlayerHasPer
 import cn.originmc.plugins.magicpaper.magic.function.hook.luckperms.PlayerLPMetaGetFunction;
 import cn.originmc.plugins.magicpaper.magic.function.hook.luckperms.PlayerLPMetaSetFunction;
 import cn.originmc.plugins.magicpaper.magic.function.hook.luckperms.PlayerLPTempMetaSetFunction;
-import cn.originmc.plugins.magicpaper.magic.function.hook.mcborder.RTPFunction;
 import cn.originmc.plugins.magicpaper.magic.function.hook.mythicmobs.CastSkillFunction;
 import cn.originmc.plugins.magicpaper.magic.function.hook.mythicmobs.SpawnMobFunction;
 import cn.originmc.plugins.magicpaper.magic.function.hook.placeholderapi.PapiStrFunction;
@@ -60,8 +59,6 @@ public class FunctionRegister {
         fm.register(new DataEntityRemoverFunction(),"dataremover");
         // hook.authme
         fm.register(new IsLoggedFunction(), "logged");
-        // hook.mcborder
-        fm.register(new RTPFunction());
         // hook.luckperms
         fm.register(new PlayerLPMetaGetFunction(), "getlpmeta");
         fm.register(new PlayerLPMetaSetFunction(), "lpmeta");

@@ -145,7 +145,6 @@ public final class MagicPaper extends JavaPlugin {
         RemoteKeyboardBukkitHook.hook();
         EpicCraftingsPlusHook.hook();
         AuthMeHook.hook();
-        McBorderHook.hook();
         AdyeshachHook.hook();
         MagicPaper.getSender().sendToLogger(LangData.get(MagicPaper.getLang(), "hook-finish", "§a[§bMagicPaper§a] §e挂钩完成"));
         // 保存默认配置

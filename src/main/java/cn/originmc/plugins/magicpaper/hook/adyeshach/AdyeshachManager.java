@@ -9,12 +9,8 @@ import ink.ptms.adyeshach.core.entity.type.AdyBlockDisplay;
 import ink.ptms.adyeshach.core.entity.type.AdyInteraction;
 import ink.ptms.adyeshach.core.entity.type.AdyItemDisplay;
 import ink.ptms.adyeshach.core.entity.type.AdyTextDisplay;
-import ink.ptms.adyeshach.taboolib.module.chat.ComponentText;
-import org.bukkit.Bukkit;
 import org.bukkit.Location;
-import org.bukkit.Material;
 import org.bukkit.World;
-import org.bukkit.inventory.ItemStack;
 
 public class AdyeshachManager {
 
