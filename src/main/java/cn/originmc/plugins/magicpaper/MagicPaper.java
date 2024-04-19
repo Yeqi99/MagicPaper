@@ -28,6 +28,7 @@ import cn.originmc.plugins.magicpaper.dataentity.DataEntityManager;
 import cn.originmc.plugins.magicpaper.gui.MagicGuiListener;
 import cn.originmc.plugins.magicpaper.gui.MagicGuiManager;
 import cn.originmc.plugins.magicpaper.hook.*;
+import cn.originmc.plugins.magicpaper.hook.mythicmobs.MythicMobsListener;
 import cn.originmc.plugins.magicpaper.hook.placeholderapi.AttributeExpansion;
 import cn.originmc.plugins.magicpaper.hook.placeholderapi.DataEntityExpansion;
 import cn.originmc.plugins.magicpaper.hook.placeholderapi.SpellExpansion;
@@ -259,6 +260,9 @@ public final class MagicPaper extends JavaPlugin {
             new SpellExpansion().register();
             new AttributeExpansion().register();
             new DataEntityExpansion().register();
+        }
+        if (MythicMobsHook.status){
+            getServer().getPluginManager().registerEvents(new MythicMobsListener(),this);
         }
         // protocolLib修改物品发包解析监听器
         if (ProtocolLibHook.status) {

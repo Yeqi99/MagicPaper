@@ -61,7 +61,7 @@ public class WeightRandomFunction extends ArgsFunction {
                 .addInfo("means: A has a 1/10 chance of being selected, B has a 2/10 chance of being selected, C has a 3/10 chance of being selected, and D has a 4/10 chance of being selected")
                 .setResultType("String")
         );
-        return null;
+        return argsSettings;
     }
 
     @Override

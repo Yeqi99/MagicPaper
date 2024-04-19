@@ -7,6 +7,12 @@ import java.util.List;
 
 public class Color {
     public static String toColor(String instr){
+        if (instr==null){
+            return null;
+        }
+        if (instr.equals("")){
+            return "";
+        }
         return ChatColor.translateAlternateColorCodes('&',instr);
     }
     public static List<String> toColor(List<String> inList){

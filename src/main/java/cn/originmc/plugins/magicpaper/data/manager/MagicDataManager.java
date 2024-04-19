@@ -24,6 +24,9 @@ public class MagicDataManager {
             }
             return magicInstance.getSpell(MagicPaper.getMagicManager());
         }
+        if (!MagicData.yamlManager.hasElement(id)){
+            return null;
+        }
         return new Spell((List<String>) MagicData.yamlManager.get(id,"spell"), MagicPaper.getMagicManager());
     }
     public static boolean isSpell(String id){
