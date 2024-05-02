@@ -7,11 +7,13 @@ import cn.originmc.tools.minecraft.yamlcore.object.YamlManager;
 
 public class GuiData {
     public static YamlManager yamlManager;
-    public static void load(){
-        yamlManager=new YamlManager(MagicPaper.getInstance(),"gui",true);
+
+    public static void load() {
+        yamlManager = new YamlManager(MagicPaper.getInstance(), "gui", true);
         for (String s : yamlManager.getIdList()) {
-            MagicGuiSetting setting=new MagicGuiSetting(yamlManager,s);
+            MagicGuiSetting setting = new MagicGuiSetting(yamlManager, s);
             MagicPaper.getMagicGuiManager().register(setting);
         }
+
     }
 }

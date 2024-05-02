@@ -39,6 +39,8 @@ import cn.originmc.plugins.magicpaper.listener.ItemVariableRefreshListener;
 import cn.originmc.plugins.magicpaper.trigger.MagicPaperTriggerManager;
 import cn.originmc.plugins.magicpaper.util.error.PaperErrorUtils;
 import cn.originmc.plugins.magicpaper.util.text.Sender;
+import cn.originmc.tools.minecraft.yamlcore.object.YamlManager;
+import org.bukkit.configuration.serialization.ConfigurationSerializable;
 import org.bukkit.configuration.serialization.ConfigurationSerialization;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -156,7 +158,6 @@ public final class MagicPaper extends JavaPlugin {
         dataEntityManager.load();
 
 
-
         // 加载全局上下文
         loadContext();
         MagicPaper.getSender().sendToLogger(LangData.get(MagicPaper.getLang(), "context-init", "§a[§bMagicPaper§a] §e全局上下文初始化完成"));
@@ -261,8 +262,8 @@ public final class MagicPaper extends JavaPlugin {
             new AttributeExpansion().register();
             new DataEntityExpansion().register();
         }
-        if (MythicMobsHook.status){
-            getServer().getPluginManager().registerEvents(new MythicMobsListener(),this);
+        if (MythicMobsHook.status) {
+            getServer().getPluginManager().registerEvents(new MythicMobsListener(), this);
         }
         // protocolLib修改物品发包解析监听器
         if (ProtocolLibHook.status) {
@@ -401,6 +402,15 @@ public final class MagicPaper extends JavaPlugin {
 
     public static String getCheckSlots() {
         return getInstance().getConfig().getString("attribute-check-slots", "mh oh h c l b");
+    }
+
+    public void test() {
+        YamlManager yamlManager = new YamlManager(this, "configs", true);
+        yamlManager.create("new_config");
+        yamlManager.set("new_config", "key1", "value1");
+        yamlManager.save("new_config");
+
+        Object value = yamlManager.get("new_config", "key1", "defaultValue");
     }
 
 }

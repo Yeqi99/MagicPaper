@@ -8,6 +8,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
+import org.bukkit.event.player.PlayerInteractEvent;
 
 public class BuffListener implements Listener {
     @EventHandler
@@ -71,6 +72,15 @@ public class BuffListener implements Listener {
                 magicBuff.execute(event.getPlayer());
                 event.setCancelled(true);
             }
+        }
+    }
+
+    @EventHandler
+    public void onPlayerInteract(PlayerInteractEvent event){
+        String id = event.getPlayer().getUniqueId().toString();
+        if (MagicPaper.getMagicBuffManager().hasBuff(id, "charging")){
+            MagicBuff magicBuff=MagicPaper.getMagicBuffManager().getMagicBuff(id,"charging");
+            String setting=magicBuff.getBuffSetting();
         }
     }
 }

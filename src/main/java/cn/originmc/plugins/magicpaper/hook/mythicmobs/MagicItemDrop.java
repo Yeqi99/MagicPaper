@@ -18,23 +18,23 @@ public class MagicItemDrop implements IItemDrop {
     private final String itemSpellName;
 
     public MagicItemDrop(MythicLineConfig config, String argument) {
-        this.itemSpellName = config.getString(new String[]{"id","i"}, argument);
+        this.itemSpellName = config.getString(new String[]{"id", "i"}, argument);
     }
 
     @Override
     public AbstractItemStack getDrop(DropMetadata dropMetadata, double amount) {
         Spell spell = MagicDataManager.getSpell(this.itemSpellName);
         if (spell == null) {
-            MagicPaper.getSender().sendToAllPlayer("66666666");
             return new BukkitItemStack(new ItemStack(Material.AIR));
         } else {
-            MagicPaper.getSender().sendToAllPlayer("777777777");
-            NormalContext normalContext=new NormalContext();
+            NormalContext normalContext = new NormalContext();
             SpellContext spellContext = spell.execute(normalContext);
             Object o = spellContext.getSpellReturn().getObject();
             if (o instanceof ItemStack) {
-                return new BukkitItemStack((ItemStack) o);
-            }else {
+                ItemStack itemStack = (ItemStack) o;
+                itemStack.setAmount((int) amount);
+                return new BukkitItemStack(itemStack);
+            } else {
                 return new BukkitItemStack(new ItemStack(Material.AIR));
             }
         }

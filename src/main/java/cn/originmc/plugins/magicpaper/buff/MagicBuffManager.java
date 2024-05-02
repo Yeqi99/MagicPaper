@@ -11,14 +11,15 @@ public class MagicBuffManager {
     public MagicBuffManager() {
         this.magicBuffs = new ConcurrentHashMap<>();
     }
-    public void addMagicBuff(String playerId,MagicBuff magicBuff) {
+
+    public void addMagicBuff(String playerId, MagicBuff magicBuff) {
         List<MagicBuff> magicBuffList = this.magicBuffs.get(playerId);
         if (magicBuffList == null) {
             magicBuffList = new java.util.ArrayList<>();
             magicBuffList.add(magicBuff);
             this.magicBuffs.put(playerId, magicBuffList);
         } else {
-            List<MagicBuff> clone=new ArrayList<>();
+            List<MagicBuff> clone = new ArrayList<>();
             for (MagicBuff buff : magicBuffList) {
                 if (!buff.getId().equalsIgnoreCase(magicBuff.getId())) {
                     clone.add(buff);
@@ -28,7 +29,21 @@ public class MagicBuffManager {
             this.magicBuffs.put(playerId, clone);
         }
     }
-    public boolean isBuffActive(String player,String id) {
+
+    public boolean hasBuff(String player, String id) {
+        List<MagicBuff> magicBuffList = this.magicBuffs.get(player);
+        if (magicBuffList == null) {
+            return false;
+        }
+        for (MagicBuff buff : magicBuffList) {
+            if (buff.getId().equalsIgnoreCase(id)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public boolean isBuffActive(String player, String id) {
         List<MagicBuff> magicBuffList = this.magicBuffs.get(player);
         if (magicBuffList == null) {
             return false;
@@ -44,7 +59,8 @@ public class MagicBuffManager {
         }
         return false;
     }
-    public void removeBuff(String player,String id) {
+
+    public void removeBuff(String player, String id) {
         List<MagicBuff> magicBuffList = this.magicBuffs.get(player);
         if (magicBuffList == null) {
             return;
@@ -56,24 +72,27 @@ public class MagicBuffManager {
             }
         }
     }
+
     public void removeBuff(String player) {
         this.magicBuffs.remove(player);
     }
+
     public List<MagicBuff> getMagicBuffs(String player) {
         List<MagicBuff> magicBuffList = this.magicBuffs.get(player);
         if (magicBuffList == null) {
             return null;
         }
-        List<MagicBuff> clone=new ArrayList<>();
+        List<MagicBuff> clone = new ArrayList<>();
         for (MagicBuff magicBuff : magicBuffList) {
-            if (magicBuff.isEnd()){
+            if (magicBuff.isEnd()) {
                 continue;
             }
             clone.add(magicBuff);
         }
         return clone;
     }
-    public MagicBuff getMagicBuff(String player,String id) {
+
+    public MagicBuff getMagicBuff(String player, String id) {
         List<MagicBuff> magicBuffList = this.magicBuffs.get(player);
         if (magicBuffList == null) {
             return null;
@@ -85,10 +104,12 @@ public class MagicBuffManager {
         }
         return null;
     }
+
     public void clear() {
         this.magicBuffs.clear();
     }
-    public long getEndTime(String player,String id) {
+
+    public long getEndTime(String player, String id) {
         List<MagicBuff> magicBuffList = this.magicBuffs.get(player);
         if (magicBuffList == null) {
             return 0;
@@ -100,7 +121,8 @@ public class MagicBuffManager {
         }
         return 0;
     }
-    public long getNowToEnd(String player,String id) {
+
+    public long getNowToEnd(String player, String id) {
         List<MagicBuff> magicBuffList = this.magicBuffs.get(player);
         if (magicBuffList == null) {
             return 0;
