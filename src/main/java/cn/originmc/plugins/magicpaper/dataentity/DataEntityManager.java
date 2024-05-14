@@ -3,11 +3,12 @@ package cn.originmc.plugins.magicpaper.dataentity;
 import cn.originmc.plugins.magicpaper.MagicPaper;
 import cn.originmc.tools.minecraft.yamlcore.object.YamlElement;
 import cn.originmc.tools.minecraft.yamlcore.object.YamlManager;
+import org.bukkit.Bukkit;
 import org.bukkit.scheduler.BukkitRunnable;
 
-import java.sql.Connection;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.TimeUnit;
 
 public class DataEntityManager {
     private BukkitRunnable saveTask;
@@ -36,8 +37,7 @@ public class DataEntityManager {
         if (saveTask != null) {
             saveTask.cancel();
         }
-
-        saveTask = new BukkitRunnable() {
+        Runnable runnable= new BukkitRunnable() {
             @Override
             public void run() {
                 if (!isPaused) {
@@ -45,8 +45,17 @@ public class DataEntityManager {
                 }
             }
         };
-
-        saveTask.runTaskTimerAsynchronously(MagicPaper.getInstance(), 0L, saveInterval);
+        Bukkit.getAsyncScheduler().runAtFixedRate(MagicPaper.getInstance(),scheduledTask -> saveTask.run(),0,saveInterval, TimeUnit.SECONDS);
+//        saveTask = new BukkitRunnable() {
+//            @Override
+//            public void run() {
+//                if (!isPaused) {
+//                    saveAll();
+//                }
+//            }
+//        };
+//
+//        saveTask.runTaskTimerAsynchronously(MagicPaper.getInstance(), 0L, saveInterval);
     }
 
     YamlManager yamlManager;

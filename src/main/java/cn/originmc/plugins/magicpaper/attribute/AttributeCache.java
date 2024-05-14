@@ -12,6 +12,7 @@ import org.bukkit.scheduler.BukkitRunnable;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.TimeUnit;
 
 
 public class AttributeCache {
@@ -42,8 +43,7 @@ public class AttributeCache {
         if (saveTask != null) {
             saveTask.cancel();
         }
-
-        saveTask = new BukkitRunnable() {
+        saveTask= new BukkitRunnable() {
             @Override
             public void run() {
                 if (!isPaused) {
@@ -51,8 +51,17 @@ public class AttributeCache {
                 }
             }
         };
-
-        saveTask.runTaskTimerAsynchronously(MagicPaper.getInstance(), 0L, saveInterval);
+        Bukkit.getAsyncScheduler().runAtFixedRate(MagicPaper.getInstance(),scheduledTask -> saveTask.run(),0,saveInterval, TimeUnit.SECONDS);
+//        saveTask = new BukkitRunnable() {
+//            @Override
+//            public void run() {
+//                if (!isPaused) {
+//                    upOnlineCache();
+//                }
+//            }
+//        };
+//
+//        saveTask.runTaskTimerAsynchronously(MagicPaper.getInstance(), 0L, saveInterval);
     }
 
     public Map<String, Map<String, Double>> attributeMap = new HashMap<>();

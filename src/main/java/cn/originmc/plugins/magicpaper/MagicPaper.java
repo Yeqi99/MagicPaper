@@ -129,6 +129,8 @@ public final class MagicPaper extends JavaPlugin {
             bungeeCordListener = new BungeeCordListener(this);
         }
         magicGuiManager = new MagicGuiManager();
+        // 保存默认配置
+        saveRes();
         // 加载数据
         loadData();
         // 初始化发送器
@@ -152,8 +154,6 @@ public final class MagicPaper extends JavaPlugin {
         AuthMeHook.hook();
         AdyeshachHook.hook();
         MagicPaper.getSender().sendToLogger(LangData.get(MagicPaper.getLang(), "hook-finish", "§a[§bMagicPaper§a] §e挂钩完成"));
-        // 保存默认配置
-        saveRes();
         // 初始化数据管理器
         dataEntityManager = new DataEntityManager();
         // 加载数据实体数据
