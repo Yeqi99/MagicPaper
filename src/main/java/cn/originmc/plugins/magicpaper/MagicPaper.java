@@ -135,6 +135,7 @@ public final class MagicPaper extends JavaPlugin {
         sender = new Sender(this);
         // 初始化魔法管理器
         initMagicManager();
+        LangData.load();
         MagicPaper.getSender().sendToLogger(LangData.get(MagicPaper.getLang(), "hook-start", "§a[§bMagicPaper§a] §e开始挂钩插件"));
         MagicPaper.getSender().sendToLogger(LangData.get(MagicPaper.getLang(), "hook-info", "§8挂钩仅用于提供更多功能,不挂钩不影响插件正常使用"));
         ProtocolLibHook.hook();
@@ -324,8 +325,6 @@ public final class MagicPaper extends JavaPlugin {
     public static void loadData() {
         // 加载魔咒数据
         MagicData.load();
-        // 加载语言文件数据
-        LangData.load();
         // 加载物品格式数据
         ItemFormatData.load();
         // 加载触发器数据
