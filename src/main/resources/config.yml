@@ -56,3 +56,14 @@ attribute-check-slots: "mh oh h c l b"
 attribute-cache-auto-update:
   enable: true
   interval: 20
+
+# 玩家重生点控制
+respawn-control:
+  # 重生点中心点
+  center:
+    x: 0
+    z: 0
+    world: world
+  # 重生间隔
+  radius: 10
+  latest: 1

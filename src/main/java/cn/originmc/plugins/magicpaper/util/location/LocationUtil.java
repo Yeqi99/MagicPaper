@@ -1,6 +1,8 @@
 package cn.originmc.plugins.magicpaper.util.location;
 
 import org.bukkit.Location;
+import org.bukkit.Material;
+import org.bukkit.World;
 import org.bukkit.util.Vector;
 
 public class LocationUtil {
@@ -52,5 +54,30 @@ public class LocationUtil {
 
 
         return location.clone().add(offset);
+    }
+
+    public static int findSafeY(World world, int x, int z) {
+        for (int y = world.getMaxHeight() - 1; y > -65; y--) {
+            Material materialBelow = world.getBlockAt(x, y - 1, z).getType();
+            Material materialAt = world.getBlockAt(x, y, z).getType();
+            Material materialAbove = world.getBlockAt(x, y + 1, z).getType();
+
+            // Check if the block below is solid, the block at the location is air, and above is also air.
+            if (materialBelow.isSolid() && materialAt == Material.AIR && materialAbove == Material.AIR) {
+                return y + 1;  // Return the Y coordinate above the solid block
+            }
+        }
+        return -999;  // Return -1 if no safe location is found
+    }
+    public static Location moveToSafeLocation(Location location) {
+        return getSafeLocation(location.getWorld(), location.getBlockX(), location.getBlockZ());
+    }
+
+    public static Location getSafeLocation(World world, int x, int z) {
+        int safeY = findSafeY(world, x, z);
+        if (safeY != -999) {
+            return new Location(world, x + 0.5, safeY, z + 0.5);  // Center the player on the block
+        }
+        return null;  // Return null if no safe location is found
     }
 }

@@ -40,7 +40,8 @@ import cn.originmc.plugins.magicpaper.trigger.MagicPaperTriggerManager;
 import cn.originmc.plugins.magicpaper.util.error.PaperErrorUtils;
 import cn.originmc.plugins.magicpaper.util.text.Sender;
 import cn.originmc.tools.minecraft.yamlcore.object.YamlManager;
-import org.bukkit.configuration.serialization.ConfigurationSerializable;
+import lol.imc.minecraft.respawn.RespawnData;
+import lol.imc.minecraft.respawn.RespawnListener;
 import org.bukkit.configuration.serialization.ConfigurationSerialization;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -275,6 +276,7 @@ public final class MagicPaper extends JavaPlugin {
         if (getConfig().getBoolean("item-trigger-listener", false)) {
             getServer().getPluginManager().registerEvents(new ItemTriggerListener(), this);
         }
+        getServer().getPluginManager().registerEvents(new RespawnListener(), this);
         MagicPaper.getSender().sendToLogger(LangData.get(MagicPaper.getLang(), "register-listener", "§a[§bMagicPaper§a] §e监听器注册完成"));
     }
 
@@ -336,6 +338,7 @@ public final class MagicPaper extends JavaPlugin {
         attributeCache = new AttributeCache();
         // 初始化属性缓存
         attributeCache.load();
+        RespawnData.load();
     }
 
     public static boolean enableExtendedSyntax(String id) {
