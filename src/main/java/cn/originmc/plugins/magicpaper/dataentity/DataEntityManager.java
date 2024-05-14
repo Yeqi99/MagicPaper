@@ -37,7 +37,7 @@ public class DataEntityManager {
         if (saveTask != null) {
             saveTask.cancel();
         }
-        Runnable runnable= new BukkitRunnable() {
+        saveTask= new BukkitRunnable() {
             @Override
             public void run() {
                 if (!isPaused) {
