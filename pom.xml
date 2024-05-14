@@ -65,7 +65,7 @@
         <!-- originmc -->
         <repository>
             <id>originmc-repo</id>
-            <url>https://maven.originmc.cn/repository/maven-public/</url>
+            <url>https://repo.imc.lol/repository/maven-public/</url>
         </repository>
         <!-- fly -->
         <repository>
@@ -260,5 +260,11 @@
             <version>2.0.11</version>
             <scope>provided</scope>
         </dependency>
+        <dependency>
+            <groupId>com.google.code.gson</groupId>
+            <artifactId>gson</artifactId>
+            <version>2.8.9</version>
+        </dependency>
+
     </dependencies>
 </project>
