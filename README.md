@@ -1,1168 +1,379 @@
-MagicPaper
+# MagicPaper
 
-What can it do now?
-(GUI)
-Create custom GUIs in a simple way and achieve complex functionality by executing spells with the click of a button.
-You can even use MagicPaper to create crafting tables, upgrade tables, and more.
-Support dynamic button display, such as turning online player information into buttons displayed in your GUI – there will be as many buttons as there are players.
-You can even execute commands like "tpa" when clicking on a player's button.
+MagicPaper 是 Magic 脚本语言在 Minecraft Paper / Folia 服务器中的实现。它把 Paper 服务器核心能力、常用插件能力和服务器业务逻辑封装成 Magic 语义，让服主或开发者可以用更短的文本编排 GUI、触发器、计时器、物品、Buff、经济、权限、技能等功能。
 
-(Buff)
-Grant players a buff that lasts for a specified duration. You can use MagicPaper's built-in buffs or decide what happens when a buff takes effect.
+MagicPaper 的定位不是单纯的“技能插件”或“GUI 插件”，而是一个基于 Magic 的服务器功能编排层。复杂能力仍然由 Java 和第三方插件提供，MagicPaper 负责把这些能力注册成语义，使同样的文本量能够表达更多逻辑，并让第三方可以快速接入这一套语言。
 
-(Item Mastery)
-Fully customize your items using MagicPaper, allowing you to tailor your item library.
-MagicPaper comes with a set of embedding functions, letting you decide which items to embed into others and specify which attributes are added.
-MagicPaper introduces a new concept for items: item description templates. With these templates, you can define how the items you want are described, supporting variables like PAPI and item NBT variables.
+## 当前状态
 
-(Variable Mapping)
-%magic_spell_name%
-Get any value you want from a spell in MagicPaper.
-You can decide which values should return what content. For example, obtaining a gold variable from PAPI, and if the balance is below 100, return "poor," or if it's below 1000, return "average"...
-For example, you can assign different colors to players' chat formats based on their combat power, making higher-powered players have cooler chat formats. Your only limit is your imagination.
-...
+当前源码版本为 `1.5.15-SNAPSHOT`，插件运行版本号为 `1.5.15`。
 
-(Triggers)
-What are triggers? Regardless of their meaning elsewhere, in MagicPaper, they are a straightforward concept.
-Triggers are tasks you set to execute when something happens. For example, when you enter the server, send a welcome message.
-MagicPaper offers many triggers that continue to grow. Make the most of them, and your server will be unique.
+当前实现包含：
 
-(Timers)
-If we delve deeper, timers are also a special kind of trigger. They transition from executing on a specific event to running at regular intervals.
-What can you do with them? For example, customize a buff called "Sparkling" and check each player in the timer. If a player has the "Sparkling" buff, you can choose to give them a glowing buff or create some attractive particles for a prestigious feel. This is just a simple example; as always, your only limit is your imagination.
+- 基于 Magic 的脚本执行器，可同时启用 Magic 系统语义和 MagicPaper 领域语义。
+- Paper / Folia 任务执行语义，支持同步与异步执行。
+- 配置型魔咒、`.m` 源文件导入、服务器启动执行、事件触发执行、定时执行。
+- GUI 系统，支持分页、按钮脚本、动态数据按钮。
+- 物品系统，支持 NBT、Lore 模板、变量刷新、属性、镶嵌孔、物品触发魔咒。
+- Buff、冷却、BossBar、粒子、实体、坐标、药水、Yaml、随机等基础模块。
+- PlaceholderAPI、LuckPerms、Vault、PlayerPoints、MythicMobs、ItemsAdder、ProtocolLib、AbolethPlus、MMOItems、EpicCraftingsPlus、AuthMe、Adyeshach、RemoteKeyboardBukkit、BungeeCord 等可选接入。
+- 面向第三方插件的 API：注册语义、注册触发器、注册计时器、执行魔咒、访问上下文、GUI、Buff、冷却和魔法物品。
 
-(Skills)
-MagicPaper was not designed for creating skills, but it unexpectedly provides a simple and efficient way to do so.
-With ongoing updates to semantics, the range and richness of what you can do with skills will increase.
-You might be accustomed to using other plugins to create skills, and that's fine. MagicPaper can actively support any skill plugins. They handle skill writing, and MagicPaper determines when and how the effects are triggered.
-Currently, MagicPaper supports releasing skills from MythicMobs. You can use MagicPaper's triggers to decide who should trigger what skills at what times and locations.
+`plugin.yml` 当前声明 `api-version: 1.13`，源码依赖 Paper/Folia `1.20.1-R0.1-SNAPSHOT` API。插件软依赖均为可选挂钩，不安装对应插件时，只影响对应语义能力。
 
-(Unpredictable Extensibility and Inclusiveness)
-Under the Magic language framework, adding any feature is straightforward and lightweight.
-Having more features doesn't make it bulky; all extension features are called through callbacks by spells.
-In some versions, certain features might not be available, but this doesn't affect overall usability. Any plugin feature supported by MagicPaper can be called and reused in the same environment for spell writing.
+## 与 Magic 的关系
 
-(Depth and Breadth of Development)
-MagicPaper can serve as a programming language in its own right, implementing complex logic with its own syntax.
-Most of the time, the purpose of Magic language is to have third parties implement complex logic in code as semantics, allowing users to call it simply with Magic syntax.
-Magic is essentially an operational language, aimed at normalizing different operational methods in different environments, reducing the learning curve for users.
+Magic 是语言核心；MagicPaper 是 Minecraft 环境实现。
 
-(Surprisingly Simple Syntax)
-You might be hesitant when you see the term "programming," but honestly, the only barrier to learning Magic language is the sense of "mystique."
-Install the plugin, imitate the examples, check the documentation, and experience the essence of MagicPaper.
-What to do if you have questions? Ask!
-What if you have requirements? Suggest!
-It's that simple and convenient. What more could you ask for?
+MagicPaper 启动时会创建 `MagicManager`，并根据 `config.yml` 中的开关注册语义：
 
-What can it do in the future?
-When designing the framework, provisions were made for natural language processing.
-At an appropriate stage, I will create deep learning models for translating Magic language into various national languages. This means that in your own Magic environment, you can input Chinese and it will automatically be converted into Magic spells.
-Of course, the quality of the translation depends on the amount of data available. If not many people are using it, then it's a different story.
+```yaml
+extended-syntax:
+  system: true
+  paper: true
+```
 
-Github
-Magic(Paper)
-https://github.com/Yeqi99/MagicPaper
-Magic(Self)
-https://github.com/Yeqi99/Magic
+- `system: true` 注册 Magic 内置语义，如变量、计算、控制流、容器、输入输出。
+- `paper: true` 注册 MagicPaper 语义，如玩家、物品、GUI、触发器、经济、权限、技能等。
 
-Commands
-/magicpaper reload - Reload the configuration.
-/magicpaper spells - List all spells.
-/magicpaper words <words> - Execute specific incantations.
-/magicpaper spell <spell> - Execute a specific spell.
-/magicpaper publicwords <words> - Execute specific incantations in a public environment.
-/magicpaper publicspell <spell> - Execute a specific spell in a public environment.
-/magicpaper functions - List all semantics.
-/magicpaper functioninfo <function> - Get information about a semantic.
-/magicpaper triggers - List available trigger names.
-/magicpaper reloadall - Reset everything, including the Magic interpreter.
-/magicpaper onload - Execute the spells in the onload section once.
-/magicpaper boreremove <address> <index> - Remove an item from a specific inset hole.
-/magicpaper restart - Restart the entire configuration (including the interpreter and onload execution).
-/magicpaper coding - Toggle coding mode (requires admin privileges or specific permissions).
-/magicpaper gui <guiName> - Open a GUI with the specified name.
+这意味着第三方插件也可以把自己的能力注册成 Magic 语义，让 MagicPaper 成为不同插件之间的低成本编排层。
 
-Coding Mode
-You can execute Magic syntax by sending messages directly in the game.
-Format
+## 构建与安装
 
-!m+Syntax
-Execute in a temporary context.
-!pm+Syntax
-Execute in a global context.
-!clear
-Clear the Coding private context.
-magicpaper coding switches coding mode. People in coding mode can input code directly into the chat. Normal messages are for coding, not execution, and require keywords to control. Keywords:
+构建需要 Java 和 Maven：
 
- 
+```bash
+mvn package
+```
 
+构建产物位于 `target/`。将生成的 Jar 放入服务器 `plugins/` 目录后启动服务器即可。
 
-go: Execute the currently written code.
+首次启动时，如果 `config.yml` 中 `default-file: true`，插件会释放默认配置和示例文件。
 
+当前源码 Maven 坐标：
 
-
-clear: Clear the currently written code.
-
-
-
-save id display_name description (can use \n for line breaks): Save the current code to the magic configuration.
-
-
-
-spell spell_name: Execute the spell from the configuration (! executes the .m source file imported).
-
-
-
-look: View the currently written code.
-Configuration File Structure
- 
-
-
-import
-When the plugin starts, it loads all .m files with Magic language sources into all contexts. Variable format: paper.import.source_file_id
- 
-
-
-item-format
-Template for parsing item lores.
- 
-
-
-lang
-Language files.
- 
-
-
-magic
-YAML-formatted Magic language files that can be directly executed by the Minecraft command system.
- 
-
-
-onload
-.m source files stored here will be automatically executed when the server starts. The onload command can also be executed in instructions.
- 
-
-
-timer
-Write timer files in the default.yml format and place them in the timer folder to create timers. The default configuration file executes the HelloWorld spell every second; please remove it as needed.
- 
-
-
-trigger
-Default supported trigger settings; you can directly add spells to triggers.
- 
-
-
-config.yml
-General plugin configuration.
-
-Permissions
-Commands
-magicpaper.command
-
-Coding
-magicpaper.coding
-
-API
-General
-The general API exists in the form of static methods of the MagicPaperAPI class.
-
-Semantic Expansion
-Inherit from the Magic native NormalFunction or inherit from PaperFunction to implement the abstract Li.
-
-Triggers
-Inherit from the APITrigger class.
-
-Timers
-Inherit from the APITimer class.
-
-Modules
-Triggers
-We can register spells into a trigger. When the trigger is activated, the registered spells will be cast. Different triggers have different predefined contexts.
-
-Timers
-We can manually create timers that run at regular intervals. Add the spells you want the timer to cast to the corresponding timer name. The timer will cast the registered spells each time it runs.
-
-Item Embedding
-Use semantics to open slots in an item, set the supported embedding slots, and directly embed items into an item in your backpack. Numeric attributes are added, while other types overwrite. Use the 'boreremove' command to remove embeddings.
-
-Item Parsing Templates
-The item-format folder in the configuration file stores item lore templates. All items can be set to parse templates, and each refresh will display lore according to the template format. You can use PAPI variables and item variables in the templates.
-
-Buff Manager
-MagicPaper comes with a Buff Manager. You can use the built-in buffs and create custom buffs.
-
-GUI Manager
-MagicPaper comes with a GUI Manager. Use the configuration file or semantics to customize your own GUI
-
-PlaceholderAPI
-%magic_spell_name%
-
-Introduction
-
-<!-- originmc -->
-<repository>
-    <id>originmc-repo</id>
-    <url>https://maven.originmc.cn/repository/maven-public/</url>
-</repository>
-
-<!-- MagicPaper -->
+```xml
 <dependency>
   <groupId>cn.originmc.plugins</groupId>
   <artifactId>MagicPaper</artifactId>
-  <version>1.5.0</version>
+  <version>1.5.15-SNAPSHOT</version>
 </dependency>
+```
+
+当前源码依赖的 Magic 坐标为：
+
+```xml
+<dependency>
+  <groupId>cn.origincraft.magic</groupId>
+  <artifactId>Magic</artifactId>
+  <version>1.2.4</version>
+</dependency>
+```
+
+项目 `pom.xml` 中已经包含 Paper、Folia、PlaceholderAPI、NBTAPI、ProtocolLib、MythicMobs、ItemsAdder、Vault、PlayerPoints 等仓库与依赖配置。
+
+## 配置目录
+
+插件数据目录中的主要文件夹：
+
+```text
+MagicPaper/
+  config.yml       插件总配置
+  lang/            语言文件
+  magic/           YAML 格式魔咒，可由命令、触发器、计时器、GUI 调用
+  import/          启动时导入到上下文的 .m 源文件
+  onload/          服务器启动后执行的 .m 源文件
+  trigger/         事件触发器配置
+  timer/           定时器配置
+  gui/             GUI 配置
+  item-format/     物品 Lore 解析模板
+  attribute/       属性配置
+  data/            公共数据
+```
+
+一个最小魔咒文件示例：
+
+```yaml
+spell:
+  - stap(HelloWorld)
+display: "HelloWorld"
+description:
+  - "Send a message to all online players"
+```
+
+一个触发器配置示例：
+
+```yaml
+execute-spell:
+  - HelloWorld
+```
+
+一个计时器配置示例：
+
+```yaml
+type: paper
+later: 20
+interval: 20
+execute-spell:
+  - HelloWorld
+```
+
+## 命令
+
+主命令为 `/magicpaper`，别名为 `/mp`，基础权限为 `magicpaper.command`。
+
+```text
+/magicpaper reload
+/magicpaper reloadall
+/magicpaper spells
+/magicpaper words <words> [player]
+/magicpaper spell <spell> [player]
+/magicpaper publicwords <words>
+/magicpaper publicspell <spell>
+/magicpaper functions
+/magicpaper functioninfo <function>
+/magicpaper triggers
+/magicpaper onload
+/magicpaper boreremove <address> <index>
+/magicpaper restart
+/magicpaper coding
+/magicpaper gui <id> [player]
+/magicpaper clearguidata <id> [player]
+/magicpaper updateguidata <id> [player]
+/magicpaper lookailas <function>
+```
 
-MagicPaper Semantics
-Timer Control
-Implementation
-foliaTimer()
-Create a folia timer
-paperTimer()
-Create a paper timer
-addToTimer()
-Add a magic task to the timer
-Parameter Format
-foliaTimer(timer name delay start interval data context)
-
-paperTimer(timer name delay start interval data context)
-
-addToTimer(timer name magic)
-Return Value
-null
-Skills
-Implementation
-jumpSkill()
-Jump in the direction you are facing
-jumpToLocationSkill()
-Jump in the direction of specified coordinates
-Parameter Format
-jumpSkill(player distance strength height strength)
-
-jumpToLocationSkill(player target coordinates speed height strength)
-Return Value
-jumpSkill()
-null
-jumpToLocationSkill()
-null
-Cooldown
-Implementation
-addCoolDown()
-Create a cooldown
-checkCoolDown()
-Check the cooldown
-gocd()
-Cooldown operation for magic
-getcd()
-Get cooldown time
-Parameter Format
-addCoolDown(id long(duration) cooldown reduction fixed cooldown reduction)
-
-checkCoolDown(id)
-
-gocd(cooldown ID duration cooldown message[optional])
-
-getcd(cooldown ID)
-Return Value
-addCoolDown()
-null
-checkCoolDown()
-bool
-gocd()
-null
-getcd()
-str
-Common Objects
-Implementation
-player()
-Player object
-location()
-Coordinate object
-item()
-Item object
-citem()
-Item clone
-entity()
-Entity
-bossbar()
-Boss bar
-magicLocation()
-Optimized coordinate object creation
-
-All parameters must be strings, no conversion needed
-Parameter Format
-player()
-player()
-Default returns the magic executor with no parameters
-player(player name string)
-Get a player object based on the player name
-player(object player type)
-Restore object to player
-player(coordinates radius quantity)
-Get a specified number of players within a radius based on coordinates
-location()
-location()
-Returns the executor's coordinates with no parameters
-location(player)
-Get player coordinates
-location(object)
-Restore object to location
-location(x y z yaw pitch world)
-Generate coordinates based on specific parameters
-item()
-item(player slot identifier)
-mh
-Main hand
-oh
-Offhand
-h
-Helmet
-c
-Chestplate
-l
-Leggings
-s
-Boots
-item(player slot number)
-cloneItem()
-Same as item()
-entity(player)
-
-bossbar(key title color style)
-Color
-Link to BarColor
-Style
-Link to BarStyle
-magicLocation()
-magicLocation(x y z world)
-
-magicLocation(x y z world yaw pitch)
-Return Value
-player()
-When searching for players by coordinates, the target found is a list of players
-
-All others return a single player object
-location()
-Coordinate object
-item()
-The item itself
-cloneItem()
-Item clone
-entity()
-Entity
-bossbar()
-Boss bar
-magicLocation()
-Coordinate object
-Behavior
-Implementation
-consoleCommand()
-Execute a command in the console
-playerCommand()
-Execute a command as a player
-playerAsyncTeleport()
-Asynchronously teleport a player
-playerTeleport()
-Teleport a player
-senderToAllPlayer()
-Send a message to all online players
-senderToPlayer()
-Send a message to a specific player
-updateInventory()
-Refresh the inventory item information
-actionMsg()
-Send action bar message
-playerCloseInv()
-Close the player's inventory
-potionAdd()
-Add a potion effect
-Parameter Format
-consoleCommand(command string)
-
-playerCommand(player command string)
-
-playerAsyncTeleport(player coordinates)
-
-playerTeleport(player coordinates)
-
-senderToAllPlayer(content string)
-
-senderToPlayer(player content string)
-
-updateInventory(player)
-
-actionMsg(player message)
-
-playerCloseInv(player)
-
-potionAdd(player potion type potion level duration)
-PotionEffectType List
-Return Value
-null
-Buff
-Implementation
-buffAdd()
-Add remaining time for a specific buff to a target
-buffTimeGet()
-Get the remaining time of a specific buff for a target
-Parameter Format
-buffAdd(target ID buff ID duration additional attributes string[optional] additional magic[optional]...)
-
-buffTimeGet(target ID buff ID)
-Return Value
-buffAdd()
-null
-buffTimeGet()
-A string representing a number
-Gui
-Implementation
-guiOpen()
-Open a GUI
-guiPreviousPage()
-Open the previous page of a GUI
-guiNextPage()
-Open the next page of a GUI
-guiDataClear()
-Clear GUI data
-guiUpdate()
-Update GUI data
-Parameter Format
-guiOpen(player Gui ID)
-
-guiPreviousPage(player Gui ID)
-
-guiNextPage(player Gui ID)
-
-guiDataClear(player Gui ID)
-
-guiUpdate(player Gui ID)
-Return Value
-guiOpen()
-null
-guiPreviousPage()
-null
-guiNextPage()
-null
-guiDataClear()
-null
-guiUpdate()
-null
-Button Data Source
-Implementation
-onlinePlayerButtons()
-Map online players to button data source
-Parameter Format
-onlinePlayerButtons(item name string list)
-~ represents the player name variable, supports PAPI variables
-Return Value
-items
-HOOK
-LuckPerms
-Implementation
-playerLPMetaSet()
-Set a player's Meta key-value
-playerLPTempMetaSet()
-Set a player's temporary Meta key-value
-playerLPMetaGet()
-Get the value of a key for a player
-playerHasPermission()
-Check if a player has a permission
-Parameter Format
-playerLPMetaSet(player key value)
-
-playerLPTempMetaSet(player key value time (long))
-
-playerLPMetaGet(player key)
-
-playerHasPermission(player permission)
-Return Value
-playerLPMetaSet()
-null
-playerLPTempMetaSet()
-null
-playerLPMetaGet()
-string
-playerHasPermission()
-bool
-PlaceholderAPI
-Implementation
-placeholderAPI()
-Resolve PAPI variables
-papiStr()
-Resolve the entire string
-Parameter Format
-placeholderAPI(variable)
-No need to add %
-papiStr(string)
-Return Value
-string
-AbolethPlus
-Implementation
-aboAdd()
-Use ABO to add data
-aboGet()
-Get ABO data
-aboGetUser()
-Use ABO to get a player's UUID
-aboSet()
-Set ABO data
-aboEdit()
-Edit data
-aboSetTime()
-Set variable duration
-aboAddItem()
-Use ABO to store items
-aboGetItem()
-Use ABO to get items
-Parameter Format
-aboAdd(uuid key value)
-
-aboGet(uuid key)
-
-aboGetUser(player name)
-
-aboSet(uuid key value)
-
-aboEdit(uuid key value action)
-action
-ABO native action, refer to the official documentation
-aboSetTime(uuid key long (time))
-
-aboAddItem(uuid key item)
-
-aboGetItem(uuid key)
-Return Value
-aboAdd()
-null
-aboGet()
-str
-aboUserGet()
-str
-aboSet()
-null
-aboEdit()
-null
-aboSetTime()
-null
-aboAddItem()
-null
-aboGetItem()
-item
-MythicMobs
-Implementation
-castSkill()
-Execute MM skills
-spawnMob()
-Spawn MM mobs
-Parameter Format
-castSkill(player skill name power factor)
-
-spawnMob(mob name coordinates)
-Return Value
-castSkill()
-null
-spawnMob()
-entity
-ItemsAdder
-Implementation
-IAItem()
-Get IA items
-placeIABlock()
-Place IA custom blocks
-Parameter Format
-IAItem(IA item ID)
-
-placeIABlock(IA block ID coordinates)
-Return Value
-IAItem()
-item
-placeIABlock()
-bool
-Vault
-Implementation
-vaultGet()
-Get balance
-vaultGive()
-Give balance
-vaultHas()
-Check if there is enough balance
-vaultTake()
-Deduct balance
-Parameter Format
-vaultGet(player)
-
-vaultGive(player amount)
-
-vaultHas(player amount)
-
-vaultTake(player amount)
-Return Value
-vaultGet()
-int
-vaultGive()
-null
-vaultHas()
-bool
-vaultTake()
-bool
-PlayerPoints
-Implementation
-playerpointsGet()
-Get balance
-playerpointsGive()
-Give balance
-playerpointsHas()
-Check if there is enough balance
-playerpointsSet()
-Set balance
-playerpointsTake()
-Deduct balance
-Parameter Format
-playerpointsGet(player)
-
-playerpointsGive(player amount)
-
-playerpointsHas(player amount)
-
-playerpointsSet(player amount)
-
-playerpointsTake(player amount)
-Return Value
-playerpointsGet()
-double
-playerpointsGive()
-bool
-playerpointsHas()
-bool
-playerpointsSet()
-bool
-playerpointsTake()
-bool
-Execution Control
-Implementation
-foliaSpellAsyncExecute()
-Asynchronous execution under Folia
-foliaSpellExecute()
-Synchronous execution under Folia
-paperSpellAsyncExecute()
-Asynchronous execution under Paper
-paperSpellExecute()
-Synchronous execution under Paper
-publicContextGet()
-Get public data context
-playerTraversal()
-Traverse the list of players
-Parameter Format
-foliaSpellAsyncExecute(spell1 spell2...)
-
-foliaSpellExecute(spell1 spell2...)
-
-paperSpellAsyncExecute(spell1 spell2...)
-
-paperSpellExecute(spell1 spell2...)
-
-publicContextGet()
-
-playerTraversal(players player i)
-Return Value
-null
-Triggers
-Implementation
-addSpellToTrigger()
-Add a spell task to a trigger
-triggerClearSpell()
-Clear tasks from a trigger
-Parameter Format
-addSpellToTrigger(trigger name spell)
-
-triggerClearSpell(trigger name)
-Return Value
-null
-Information
-Implementation
-playerName()
-Get the player's name
-paperConstants()
-Extract configuration file constants
-stringComparison()
-String comparison
-ignoreCaseStringComparison()
-Case-insensitive string comparison
-color()
-Correct color codes
-isTimeRange()
-Determine if it's within a time range
-inLocationRange()
-Determine if coordinates are within a specified area
-Parameter Format
-playerName(player)
-
-paperConstants(key)
-
-stringComparison(string1 string2)
-
-ignoreCaseStringComparison(string1 string2)
-
-color(string)
-
-isTimeRange(time range)
-8:30
-
-8:30-9:30
-inLocationRange(target coordinates range coordinates1 range coordinates2)
-Return Value
-playerName()
-str
-paperConstants()
-str
-stringComparison()
-bool
-ignoreCaseStringComparison()
-bool
-color()
-str
-isTimeRange()
-bool
-inLocationRange()
-bool
-Item Operations
-Implementation
-itemGivePlayer()
-Send an item to a player
-itemSetPlayer()
-Set an item in a player's specific slot
-itemLoreAddLine()
-Add a line to the lore of an item in a player's specific slot
-itemLoreRemove()
-Remove a specific NBT line from an item
-itemToString()
-Convert an item to a string
-stringToItem()
-Convert a string to an item
-itemNBTAdd()
-Add NBT to an item
-itemNBTGet()
-Get the NBT value of an item
-itemNBTRemove()
-Remove a specific NBT from an item
-itemGetName()
-Get the item's name
-itemSetName()
-Set the item's name
-itemTypeGet()
-Get the material name of the item
-itemTypeSet()
-Set the material name of the item
-itemLoreHasLineNoColor()
-Search for a specific line content in the lore, ignoring color
-itemLoreHasLine()
-Search for a specific line content in the lore
-itemVarParse()
-Parse item variables
-itemLoreGet()
-Get a specific lore line
-newItem()
-Create a new item
-refreshVar()
-Refresh lore display according to the template
-itemModelGet()
-Get the custom model value of the item
-itemModelSet()
-Set the custom model value of the item
-itemEnchantmentGet()
-Get the enchantment level of the item
-itemEnchantmentSet()
-Set the enchantment level of the item
-itemDamageSet()
-Set the item's durability loss value
-itemDamageGet()
-Get the item's durability loss value
-itemAmountSet()
-Set the item quantity
-itemAmountGet()
-Get the item quantity
-itemAttributeSet()
-Set the item's attributes
-itemAttributeGet()
-Get a specific attribute value of the item
-itemFlag()
-Change the display label
-itemEnableRefresh()
-Allow MagicPaper to automatically parse the lore of the item
-itemFormatSet()
-Set the parsing template for the current item
-itemInfoSet()
-Set the item description (NBT)
-itemInfoAdd()
-Add a line to the item description
-itemBoreSet()
-Set an embedding hole
-itemSupportBoreAddressSet()
-Allow a specific item to be embedded in a specific embedding hole
-addItemToBore()
-Attempt to embed an item into another item's embedding hole
-removeItemFromBore()
-Attempt to remove a specific embedded item from an item
-itemAddSpell()
-Add a Spell trigger to the item
-mergeNBT()
-Merge NBT
-Parameter Format
-itemGivePlayer(player item)
-
-itemSetPlayer(player item slot)
-Slot details can be found in the item method
-itemLoreAddLine(item text)
-
-itemToString(item)
-
-stringToItem(string)
-
-itemNBTAdd(item path key value)
-Root directory is /
-
-For example, if you want to store data in the TEST directory under the root then the path would be /TEST
-itemNBTGet(item path key value type)
-Type
-STRING
-
-ITEMSTACK
-
-INT
-
-LONG
-
-FLOAT
-
-DOUBLE
-
-UUID
-
-BOOLEAN
-itemNBTRemove(item path key)
-
-itemGetName(item)
-
-itemSetName(item item name)
-
-itemTypeGet(item)
-
-itemTypeSet(item material name)
-
-itemLoreRemove(item line number)
-
-itemLoreHasLineNoColor(item line content)
-
-itemLoreHasLine(item line content)
-
-itemVarParse(item content)
-
-itemLoreGet(item line number)
-
-newItem(material)
-
-refreshVar(item template ID)
-Item display templates are in the plugin's configuration folder item-format
-itemModelGet(item)
-
-itemModelSet(item value)
-
-itemEnchantmentGet(item enchantment name)
-Enchantment name rules
-Default is Minecraft vanilla enchantments
-
-Use format belonging to the enchantment: enchantment name to specify enchantments provided by other modules
-
-Vanilla enchantment list
-Link to Enchantment List
-itemEnchantmentSet(item enchantment name level)
-
-itemDamageSet(item value)
-Sets how much durability has been consumed from the item, not how much durability remains
-
-Setting it to -1 makes the item indestructible
-itemDamageGet(item)
-Indestructible items return -1
-itemAmountSet(item value)
-
-itemAmountGet(item)
-
-itemAttributeSet(item attribute ID attribute name value effect location calculation method)
-Effective Locations
-mh
-Main Hand
-oh
-Offhand
-h
-Helmet
-c
-Chestplate
-l
-Leggings
-s
-Boots
-Calculation Methods
-+
-Direct addition
-+%
-Addition as a percentage
-+*
-Addition using a coefficient
-Attribute Names
-Attribute List
-itemAttributeGet(item attribute ID attribute name effective location calculation method)
-itemFlag(item tag code)
-Code Meanings
-1 - Hide Enchantments
-
-2 - Hide Custom Attributes
-
-3 - Hide Enchantments and Custom Attributes
-
-4 - Hide {Unbreakable} (Indestructible)
-
-8 - Hide {CanDestroy} (Can be Destroyed)
-
-16 - Hide {CanPlaceOn} (Can be Placed On)
-
-32 - Hide Most Information (Potion information, book author, fireworks effects, etc.)
-
-63 - Hide All Information except Name and Lore
-itemEnableRefresh(item)
-
-itemFormatSet(item template ID)
-
-itemInfoSet(item description)
-Separate multiple lines with \n
-itemInfoAdd(item description)
-
-itemBoreSet(item socket address max socket count socketed item attribute address socketing item attribute address)
-Address format refers to NBT address format
-itemSupportBoreAddressSet(item socket address)
-After setting this, the item can be socketed into items with the corresponding socket address
-addItemToBore(socketed item socketing item)
-Item-Related Functions
-Implementation
-itemAddSpell(item triggerMethod SpellName long(cooldown))
-Only for main-hand items
-
-Trigger Methods
-left
-
-right
-
-shiftLeft
-
-shiftRight
-removeItemFromBore(item slot index)
-Index starts from 0
-itemAddSpell(item spellName cooldown effectLocation triggerMethod)
-Trigger Methods
-left
-
-right
-
-shiftLeft
-
-shiftRight
-mergeNBT(item1 item2)
-Merge the NBT of item2 into item1
-Return Value
-itemGivePlayer()
-null
-itemSetPlayer()
-null
-itemLoreAddLine()
-item
-itemToString()
-string
-stringToItem()
-item
-itemNBTAdd()
-null
-itemNBTGet()
-object
-itemNBTRemove()
-null
-itemGetName()
-string
-itemSetName()
-null
-itemTypeGet()
-string
-itemTypeSet()
-null
-itemLoreRemove()
-null
-itemLoreHasLineNoColor()
-boolean
-itemLoreHasLine()
-boolean
-itemVarParse()
-string
-newItem()
-item
-refreshVar()
-item
-itemModelGet()
-int
-itemModelSet()
-null
-itemEnchantmentGet()
-int
-itemEnchantmentSet()
-null
-itemDamageSet()
-null
-itemDamageGet()
-int
-itemAmountSet()
-null
-itemAmountGet()
-int
-itemAttributeSet()
-null
-itemAttributeGet()
-double
-itemFlag()
-null
-itemEnableRefresh()
-null
-itemFormatSet()
-null
-itemInfoSet
-item
-itemInfoAdd()
-item
-itemBoreSet()
-item
-itemSupportBoreAddressSet()
-item
-addItemToBore()
-item
-removeItemFromBore()
-item
-
-If successful, the context variable "removeItem" is obtained
-itemAddSpell()
-item
-mergeNBT()
-item
-Yaml
-Implementation
-yamlManager()
-Create a Yaml manager.
-newYaml()
-Create a new YAML file using the manager.
-yamlGet()
-Retrieve data from YAML.
-yamlSet()
-Store a value in YAML.
-yamlSave()
-Save a specific YAML file from the manager to the hard drive.
-yamlSaveAll()
-Save all YAML files in the manager.
-hasyamlkey()
-Check if a specific key exists.
-hasyaml()
-Check if a YAML file with a specific name exists.
-Parameter Format
-yamlManager(path, folderName)
-
-newYaml(Yaml manager, fileId)
-
-yamlGet(Yaml manager, fileId, key)
-
-yamlSet(Yaml manager, fileId, key, value)
-
-yamlSave(Yaml manager, fileId)
-
-yamlSaveAll(Yaml manager)
-
-hasyamlkey(Yaml manager, fileId, key)
-
-hasyaml(Yaml manager, fileId)
-Return Values
-yamlManager()
-Yaml manager
-newYaml()
-null
-yamlGet()
-object
-yamlSet()
-null
-yamlSave()
-null
-yamlSaveAll()
-null
-hasyamlkey()
-boolean
-hasyaml()
-boolean
-Random
-Implementation
-randomDouble()
-Generate a random decimal within a range.
-weightRandom()
-Select a string with specified weights randomly.
-randomUUID()
-Generate a random UUID.
-Parameter Format
-randomDouble(starting value, ending value, decimal places)
-
-weightRandom(string1, string2, string3...)
-String format
-Content|Weight
-ABC|10
-randomUUID()
-Return Values
-randomDouble()
-double
-weightRandom
-string
-randomUUID()
-string
-Biology
-Implementation
-newEntity()
-Create a new entity.
-Parameter Format
-newEntity(entity type, coordinates)
-Return Values
-newEntity()
-entity
-BOSS Health Bar
-Implementation
-showBossBar()
-Show the boss health bar.
-hideBossBar()
-Hide the boss health bar.
-bossbarVisible()
-Set boss health bar visibility.
-bossbarGet()
-Get the boss health bar.
-addFlag()
-Add a boss health bar flag.
-Parameter Format
-showBossBar(Player bossbar)
-
-hideBossBar(Player bossbar)
-
-bossbarVisible(true/false)
-
-bossbarGet(key)
-
-addFlag(flag)
-Available flags
-List of Flags
-Return Values
-showBossBar()
-null
-hideBossBar()
-null
-bossbarVisible()
-null
-bossbarGet()
-bossbar
-addFlag()
-null
+说明：
+
+- `words` 和 `publicwords` 用于直接执行一行 Magic 语义；命令参数中的逗号会被替换为空格。
+- `spell` 和 `publicspell` 用于执行 `magic/` 目录中载入的魔咒。
+- `public*` 使用全局上下文；普通执行会创建临时上下文并导入 `import/` 内容。
+- `functioninfo` 会从当前已注册的 `ArgsFunction` 读取参数说明。
+- `lookailas` 是当前代码中的命令拼写，用于查看语义别名。
+
+## 编码模式
+
+`/magicpaper coding` 可以切换玩家聊天编码模式。玩家需要 OP 或 `magicpaper.coding` 权限。
+
+快捷执行：
+
+```text
+!m<Magic语句>   在临时上下文执行
+!pm<Magic语句>  在全局上下文执行
+!clear          清空 Coding 临时上下文
+```
+
+进入编码模式后，普通聊天会被写入当前代码缓冲区。可用关键字：
+
+```text
+go                         执行当前缓冲区
+clear                      清空当前缓冲区
+look                       查看当前缓冲区
+spell <spell1> <spell2>    执行已配置魔咒
+save <id> <display> <desc> 保存当前缓冲区为 magic/<id>.yml
+```
+
+## 当前模块
+
+### 触发器
+
+触发器用于在事件发生时执行魔咒。当前内置触发器包括：
+
+- 服务器：`ServerOnLoad`、`ServerOnEnable`、`ServerOnDisable`
+- 玩家：`PlayerJoin`、`PlayerInteract`、`PlayerDrop`、`PlayerBreak`、`PlayerPlace`、`PlayerTeleport`、`AsyncPlayerChat`、`PlayerRespawn`
+- 实体与物品：`EntityDamage`、`ItemDrop`
+- 计时器：`Timer`
+- 可选挂钩：`BungeeCordMessage`、`PlayerKeyboard`、`EpicCraftingsPreCraft`、`EpicCraftingsCraft`、`EpicCraftingsPlaceClick`
+
+也可以通过 `MagicPaperAPI.registerTrigger(...)` 注册自定义触发器。
+
+### 计时器
+
+计时器是按固定 tick 间隔执行魔咒的特殊触发器。当前支持 Paper 与 Folia 两类计时器，并可通过语义动态创建：
+
+- `paperTimer()` / `ptimer()`
+- `foliaTimer()` / `ftimer()`
+- `addToTimer()` / `att()`
+
+### GUI
+
+GUI 系统支持配置菜单、分页、按钮点击执行魔咒，以及动态数据按钮。典型语义包括：
+
+- `guiOpen()` / `opengui()`
+- `guiPreviousPage()` / `ppage()`
+- `guiNextPage()` / `npage()`
+- `guiDataClear()` / `cleargui()`
+- `guiUpdate()` / `upgui()`
+- `onlinePlayerButtons()` / `pbuttons()`
+
+### 物品
+
+物品系统是 MagicPaper 的核心模块之一，当前支持：
+
+- 获取、给予、设置玩家物品。
+- 修改名称、类型、数量、CustomModelData、耐久、附魔、隐藏标签。
+- 读取和写入 NBT。
+- Lore 行增删查、变量解析、模板刷新。
+- 自定义属性写入、属性读取、属性缓存。
+- 物品镶嵌孔、支持镶嵌地址、添加/移除镶嵌物。
+- 主手物品触发魔咒。
+- 物品序列化与反序列化。
+
+常见语义包括 `item()`、`itemGivePlayer()`、`itemSetPlayer()`、`itemNBTAdd()`、`itemNBTGet()`、`itemSetName()`、`newItem()`、`refreshVar()`、`itemAttributeSet()`、`itemBoreSet()`、`addItemToBore()`、`removeItemFromBore()`、`itemAddSpell()`、`mergeNBT()`。
+
+### Buff 与冷却
+
+Buff 模块用于给目标添加有持续时间的状态；冷却模块用于限制行为频率。
+
+- `buffAdd()`
+- `buffTimeGet()`
+- `addCoolDown()` / `addcd()`
+- `checkCoolDown()` / `checkcd()`
+- `gocd()`
+- `getcd()`
+
+### Placeholder 与变量映射
+
+MagicPaper 注册了 PlaceholderAPI 扩展，可通过以下形式取值：
+
+```text
+%magic_spell_name%
+```
+
+也可以在 Magic 中使用：
+
+- `placeholderAPI()` / `papi()`
+- `papiStr()`
+
+用途包括按玩家状态返回不同文本、把战斗力映射为聊天颜色、把经济余额映射为称号等。
+
+### 数据实体与 YAML
+
+数据实体当前默认使用 YAML 存储，配置中预留了数据库连接字段。YAML 语义包括：
+
+- `yamlManager()` / `yamlm()`
+- `newYaml()` / `nyaml()`
+- `yamlGet()` / `yamlg()`
+- `yamlSet()` / `yamls()`
+- `yamlSave()`
+- `yamlSaveAll()`
+- `hasyaml()`
+- `hasyamlkey()`
+
+### 常用对象与行为
+
+对象语义：
+
+- `player()` / `p()`
+- `location()` / `loc()`
+- `item()`
+- `entity()`
+- `bossbar()`
+- `component()` / `minimsg()`
+- `potion()`
+- `particle()`
+
+行为语义：
+
+- `consoleCommand()` / `ccommand()`
+- `playerCommand()` / `pcommand()`
+- `senderToPlayer()` / `stp()`
+- `senderToAllPlayer()` / `stap()`
+- `playerTeleport()` / `ptp()`
+- `playerAsyncTeleport()` / `patp()`
+- `updateInventory()` / `upinv()`
+- `actionMsg()`
+- `playerCloseInv()` / `closeinv()`
+- `potionAdd()`
+
+### 第三方插件挂钩
+
+当前代码中已经包含以下挂钩能力：
+
+- LuckPerms：Meta 设置、临时 Meta、Meta 读取、权限判断。
+- PlaceholderAPI：变量解析、整句解析、Magic 占位符扩展。
+- Vault：余额读取、增加、扣除、判断是否足够。
+- PlayerPoints：点券读取、增加、设置、扣除、判断是否足够。
+- MythicMobs：释放技能、生成生物，并包含 MythicMobs 监听扩展。
+- ItemsAdder：获取自定义物品、放置自定义方块。
+- AbolethPlus：数据读取、写入、编辑、过期时间、物品存取。
+- AuthMe：登录状态判断。
+- EpicCraftingsPlus：合成相关触发器。
+- RemoteKeyboardBukkit：键盘触发器。
+- ProtocolLib：物品变量刷新等发包层支持。
+- MMOItems、Adyeshach、BungeeCord：相关 Hook 与辅助能力。
+
+## 第三方 API
+
+主要入口是 `MagicPaperAPI`。当前 API 支持：
+
+- `registerFunction(PaperFunction function, String... aliases)`：注册 MagicPaper 语义。
+- `registerTrigger(MagicPaperTrigger trigger)`：注册触发器。
+- `registerTimer(String id, MagicTimer timer)`：注册计时器。
+- `getSpell(...)` / `getSpells()` / `isSpell(...)`：读取已载入魔咒。
+- `execute(...)`：执行魔咒或单行语义。
+- `createNormalContext()` / `createSpellContext(...)` / `getMainContext()`：创建和访问上下文。
+- `getCoolDownManager()`、`addCoolDown(...)`、`getCoolDown(...)`：冷却操作。
+- `getMagicItem(...)`：包装 Bukkit `ItemStack`。
+- `hasMagicBuff(...)`、`getMagicBuffs(...)`、`getMagicBuffTime(...)`、`getMagicBuff(...)`：Buff 查询。
+- `openGui(...)`、`addGuiSetting(...)`：GUI 操作。
+
+新增语义时，优先继承 `PaperFunction`；如果不依赖 Bukkit/Paper，也可以继承 Magic 原生的 `ArgsFunction` 或 `OnlyStringFunction`。
+
+## 一个最小示例
+
+`magic/HelloWorld.yml`：
+
+```yaml
+spell:
+  - stap(HelloWorld)
+display: "HelloWorld"
+description:
+  - "Send a message to all players"
+```
+
+命令执行：
+
+```text
+/magicpaper spell HelloWorld
+```
+
+直接执行一行语义：
+
+```text
+/magicpaper words stap(HelloWorld)
+```
+
+在聊天中快捷执行：
+
+```text
+!mstap(HelloWorld)
+```
+
+## 设计理念
+
+MagicPaper 的核心思想是让服务器功能变成可组合语义。
+
+传统插件往往把“什么时候触发、对谁触发、触发什么、如何变化”写死在配置或代码里。MagicPaper 希望把这些拆开：
+
+- 事件由触发器提供。
+- 时间由计时器提供。
+- 环境对象由 Paper 语义提供。
+- 第三方能力由 Hook 语义提供。
+- 具体逻辑由 Magic 文本编排。
+
+这样，复杂 Java 代码可以沉淀为稳定语义，普通使用者只需要组合这些语义即可完成服务器玩法。
+
+## 未来预期
+
+- 继续完善语义文档生成，让 `/magicpaper functioninfo`、README 与源码保持一致。
+- 稳定 Paper/Folia 执行模型，减少不同服务端调度差异带来的使用成本。
+- 扩展数据实体存储，补全数据库实现与持久化策略。
+- 强化 GUI、物品、触发器和 Buff 的组合能力，让它们成为可复用的服务器功能模块。
+- 提供更清晰的第三方接入规范，使其他插件能快速把能力注册成 Magic 语义。
+- 与 MagicRedis 等实际项目一起验证 Magic 在非 Minecraft 场景中的表达能力。
+- 在样本足够时探索自然语言到 Magic 语义的转换，让中文或其他自然语言可以生成对应魔咒。
+
+## 开源协议
+
+本项目采用 GNU GPL-3.0 许可证。使用、修改和分发本项目代码时，请遵循 GPL-3.0 的相关要求。
