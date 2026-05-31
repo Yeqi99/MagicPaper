@@ -1,0 +1,5 @@
+vdef(cdmsg str(&cJump is cooling down.))
+vdef(cdkey str(pname(self) magicpaper_jump))
+gocd(cdkey 5000 color(cdmsg))
+buffAdd(puuid(self) fall_immunity 3000 1)
+pjump(self 2 1)
